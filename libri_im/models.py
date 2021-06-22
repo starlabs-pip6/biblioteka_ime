@@ -1,5 +1,6 @@
 from django.db import models
-
+from django.contrib.auth.models import User
+from django.contrib.postgres.fields import ArrayField
 # Create your models here.
 class librat(models.Model):
     id_libri=models.AutoField(primary_key=True)
@@ -15,3 +16,11 @@ class librat(models.Model):
 
     def __str__(self):
         return self.titulli
+class UserProfile(models.Model):
+    #lidhja e userit me librat
+    user=models.OneToOneField(User, null=True,on_delete=models.CASCADE)
+    lexova=ArrayField(models.IntegerField(),blank=True)
+    do_ta_lexoj=ArrayField(models.IntegerField(),blank=True)
+    duke_lexuar=ArrayField(models.IntegerField(),blank=True)
+    def __str__(self):
+        return self.user.username
