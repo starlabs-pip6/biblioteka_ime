@@ -3,9 +3,10 @@ from . import views
 
 
 urlpatterns = [
-    path('api/', views.apiOverView, name='apiOverView'),
-    path('api/librat', views.libratList, name='libratList'),
-    path('api/librat/<str:pk>/', views.libriSpecifik, name='libriSpecifik')
+    # Temporary endpoints to test serializers
+    path('backend/', views.backendOverView, name='apiOverView'),
+    path('backend/books', views.booksList, name='booksList'),
+    path('backend/books/<str:pk>/', views.specificBook, name='specificBook')
 ]
 
 
