@@ -4,7 +4,13 @@
 
 <div>
   <h1>THIS IS HOME</h1>
+  {% if user.is_authenticated %}
+  <!-- nese eshte useri i kyqt ateher del pershendetja + stili i frontendit-->
   <p>Hello {{current_username}}</p>
+  {% else %}
+  <!-- nese nuk eshte i kyqur del pa pershendetje +stili -->
+  {% endif %}
+ 
 </div>
 
 {% endblock content %}
