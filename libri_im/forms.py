@@ -16,7 +16,7 @@ class RegistrationForm(UserCreationForm):
             user = NewUser.objects.get(email=email)
         except Exception:
             return email
-        raise forms.ValidationError(f'Email {user.email} is already in use.')
+        raise forms.ValidationError(f'Email "{user.email}" is already in use.')
         
     def clean_username(self):
         username = self.cleaned_data['username']
@@ -24,7 +24,7 @@ class RegistrationForm(UserCreationForm):
             user = NewUser.objects.get(username=username)
         except Exception:
            return username
-        raise forms.ValidationError(f'Email {user.username} is already in use.')
+        raise forms.ValidationError(f'Username "{user.username}" is already in use.')
 
 class UserAuthenticationForm(forms.ModelForm):
     password = forms.CharField(label='Password', widget=forms.PasswordInput)

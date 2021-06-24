@@ -22,9 +22,16 @@
   </head>
   <body>
     <header class="header-container">
-      <a href="{% url 'login' %}">LOGIN</a>
+     
+      {% if user.is_authenticated %} 
+      <!-- nese user osht i kyqt -->
       <a href="{% url 'logout' %}">LOGOUT</a>
+      
+      {% else %}
+      <!-- perndryshe nese nuk eshte i kyqur ateher dalin keto meny-->
+      <a href="{% url 'login' %}">LOGIN</a>
       <a href="{% url 'register' %}">REGISTER</a>
+      {% endif %}
     </header>
 
     {% block content %} {% endblock %}
