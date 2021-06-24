@@ -2,49 +2,58 @@
 {% load static %}
 
 {% block content %}
-
+<link rel="stylesheet/css" type="text/css" href="styles/register.css" />
 
 <style type="text/css">
 
-  .card-signin {
-	  width: 100%;
-	  max-width: 400px;
-	  padding: 15px;
-	  margin: auto;
-  }
+  .register-container {
+        border: 2px solid blue;
+        width: 100%;
+        display: flex;
   
-  .form-signin input[type="email"] {
-    margin-bottom: 10px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-  .form-signin input[type="text"] {
-    margin-bottom: 10px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-  .form-signin input[type="password"] {
-    margin-bottom: -1px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-  }
+        justify-content: center;
+        align-items: center;
+      }
+      .register-container > * {
+        padding: 20px;
+      }
+      .body-container{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction:column;
+        align-items: center;
+      }
+      .form {
+            width: 100%;
+        display: flex;
+        justify-content: space-around;
+        flex-direction:column;
+        align-items: center;
+        padding: 10px;
+      }
+      .form > input{
+        padding: 10px;
 
+      }
+	  .form-title{
+		  
+	  }
 
 </style>
 
-<div class="container-fluid">
-	<div class="row justify-content-center">
-		<div class="card card-signin">
-		  <div class="card-body">
-		    <form class="form-signin" method="post">{% csrf_token %}
+<div class="register-container">
+		  <div class="body-container">
+		    <form class="form" method="post">{% csrf_token %}
+				<h1 class="form-title">REGISTER FORM</h1>
 				<input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-
+				  <br>
 				<input type="text" name="username" id="inputUsername" class="form-control" placeholder="Username" required>
-
+ 				 <br>
 				<input type="password" name="password1" id="inputPassword1" class="form-control" placeholder="Password" required>
-
+ 				 <br>
 				<input type="password" name="password2" id="inputPassword2" class="form-control" placeholder="Confirm password" required>
-
+ 				 <br>
 				{% for field in registration_form %}
 				<p>
 				{% for error in field.errors %}
@@ -63,9 +72,6 @@
 
 				</form>
 		  </div>
-		</div>
-		
-	</div>
 </div>
 
 
