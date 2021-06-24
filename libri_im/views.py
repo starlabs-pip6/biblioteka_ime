@@ -1,37 +1,13 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import LibratSerializer ,UsersSerializer
 from .models import Book, NewUser
-from .forms import RegistrationForm
+from .forms import RegistrationForm, UserAuthenticationForm
 
-# Create your views here.
-def register_view(request,*args,**kwargs):
-    user = request.user
-    if user.is_authenticated:
-        return HttpResponse(f'You are already authenticated as {user.email}')
-    context = {}
 
-    if request.POST:
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            email = form.cleaned_data.get('email').lower()
-            raw_pw = form.cleaned_data.get('password1')
-            account = authenticate(email=email, password=raw_pw)
-            login(request, account)
-            destination = kwargs.get("next")
-            if destination:
-                return redirect(destination)
-            return redirect("home")
-        else:
-            context['registration_form'] = form
-
-    return render(request,'libri_im/register.html', context)
-
-    
 @api_view(['GET'])
 def backendOverView(request):
     backendUrls ={
@@ -52,3 +28,76 @@ def specificBook(request,pk):
     bookObj = Book.objects.get(id_libri=pk)
     serializer = LibratSerializer(bookObj, many=False)
     return Response(serializer.data)
+
+
+def home_view(request):
+    current_user = request.user.username
+    if not current_user:
+        current_user='anonimous user(not loged in)'
+    context={
+        'current_username' : current_user
+    }
+    
+    
+    return render(request, 'libri_im/home.html',context)
+
+def register_view(request,*args,**kwargs):
+    user = request.user
+    if user.is_authenticated:
+        return HttpResponse(f'You are already authenticated as {user.email}')
+    context = {}
+
+    if request.POST:
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            email = form.cleaned_data.get('email').lower()
+            raw_pw = form.cleaned_data.get('password1')
+            account = authenticate(email=email, password=raw_pw)
+            login(request, account)
+            destination = get_redirect_if_exists(request)
+            if destination:
+                return redirect(destination)
+            return redirect("home")
+        else:
+            context['registration_form'] = form
+
+    return render(request,'libri_im/register.html', context)
+
+    
+def logout_view(request):
+    logout(request)
+    return redirect("home")
+
+def login_view(request,*args, **kwargs):
+    context = {}
+    user = request.user
+    if user.is_authenticated: 
+        return redirect("home")
+
+    destination = get_redirect_if_exists(request)
+    print("destination: " + str(destination))
+
+    if request.POST:
+        form = UserAuthenticationForm(request.POST)
+        if form.is_valid():
+            email = request.POST['email']
+            password = request.POST['password']
+            user = authenticate(email=email, password=password)
+
+            if user:
+                login(request, user)
+                if destination:
+                    return redirect(destination)
+                return redirect("home")
+    else:
+        form = UserAuthenticationForm()
+    context['login_form'] = form
+    return render(request, "libri_im/login.html", context)
+
+def get_redirect_if_exists(request):
+    redirect=None
+    if request.GET:
+        if request.GET.get("next"):
+            redirect = str(request.GET.get("next"))
+    return redirect

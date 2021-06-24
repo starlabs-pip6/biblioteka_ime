@@ -1,0 +1,74 @@
+{% extends 'libri_im/base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<style type="text/css">
+      .login-container {
+        border: 2px solid red;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .login-container > * {
+        padding: 20px;
+      }
+      .body-container{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction:column;
+        align-items: center;
+      }
+      .form {
+            width: 100%;
+        display: flex;
+        justify-content: space-around;
+        flex-direction:column;
+        align-items: center;
+        padding: 10px;
+      }
+      .form > input{
+        padding: 10px;
+      }
+</style>
+
+<div class="login-container">
+		  <div class="body-container">
+                <form class="form" method="post">{% csrf_token %}
+                    <h1 class="form-title">LOGIN FORM</h1>
+                    <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                    <br>
+                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                    <br>
+                    {% for field in login_form %}
+                    <p>
+                    {% for error in field.errors %}
+                    <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                    </p>
+                    {% endfor %}
+                    {% if login_form.non_field_errors %}
+                    <div style="color: red">
+                    <p>{{login_form.non_field_errors}}</p>
+                    </div>
+
+                    {% endif %}
+
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+                </form>
+
+				<div class="reset">
+					<a href="#">Reset password</a>
+				</div>
+		  </div>
+</div>
+
+
+
+
+
+
+{% endblock content %}
