@@ -24,8 +24,8 @@ SECRET_KEY = 'django-insecure-*u#r0#y8s$q*%92+r=yuyb$zxd0losmi=nm#f=nkp#w58=r+*1
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-if DEBUG:
-    EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend' #send like a fake email only for development
+
+   #send like a fake email only for development
 ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = "libri_im.NewUser"
@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'libri_im',
-    'rest_framework'
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -134,3 +134,9 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT='587'#tls
+EMAIL_USE_TLS=True
+EMAIL_HOST_USER='starlabs.pip6@gmail.com'
+EMAIL_HOST_PASSWORD='cmhqxbkzwppxcgro'
