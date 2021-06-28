@@ -1,0 +1,13 @@
+{% extends 'backend/base.html' %} 
+{% load static %} 
+{% block content %}
+
+
+<h2>Add a book</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">ADD</button>
+</form>
+
+{% endblock content %}

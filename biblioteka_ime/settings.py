@@ -38,13 +38,14 @@ AUTHENTICATION_BACKENDS = (
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',
+    
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'libri_im',
     'rest_framework',
+    'django.contrib.auth',
 ]
 
 MIDDLEWARE = [

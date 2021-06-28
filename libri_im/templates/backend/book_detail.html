@@ -1,0 +1,52 @@
+{% extends 'backend/base.html' %} {% load static %} {% block content %}
+
+<style type="text/css"></style>
+<style>
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align:center
+  }
+  </style>
+<div>
+  <h1>We are in detail page of a book</h1>
+  {% if user.is_authenticated %}
+  <!-- nese eshte useri i kyqt ateher del pershendetja + stili i frontendit-->
+  <p>Hello {{current_username}}</p>
+  {% else %}
+  <!-- nese nuk eshte i kyqur del pa pershendetje +stili -->
+  {% endif %}
+ 
+       
+          <table >
+            <tr>
+              <th>isbn</th>
+              <th>titulli</th>
+              <th>autori</th>
+              <th>kategoria</th> 
+              <th>pershkrimi</th> 
+              <th>mes_vleresimit</th> 
+              <th>nr_vleresimit</th> 
+              <th>nr_faqeve</th> 
+              <th>viti_publikimit</th> 
+            </tr>
+       
+            <tr>
+             
+              <td>{{ object.isbn }}</td>
+              <td>{{ object.titulli }}</td>
+              <td>{{ object.autori }}</td>
+              <td>{{ object.kategoria }}</td> 
+              <td>{{ object.pershkrimi }}</td> 
+              <td>{{ object.mes_vleresimit }}</td> 
+              <td>{{ object.nr_vleresimit }}</td> 
+              <td>{{ object.nr_faqeve }}</td> 
+              <td>{{ object.viti_publikimit }}</td> 
+             
+            </tr>
+         
+          </table>
+ 
+</div>
+
+{% endblock content %}
