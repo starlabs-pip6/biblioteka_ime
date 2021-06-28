@@ -10,7 +10,8 @@ from .forms import RegistrationForm, UserAuthenticationForm
 from django.views.generic import (CreateView, 
                                     ListView,
                                     DetailView,
-                                    DeleteView)
+                                    DeleteView,
+                                    UpdateView)
 from django.urls import reverse
 
 
@@ -108,28 +109,36 @@ def get_redirect_if_exists(request):
             redirect = str(request.GET.get("next"))
     return redirect
 
-class PostCreateView(CreateView):
+class BookCreateView(CreateView):
     model = Book
     fields =['isbn','titulli','autori','kategoria','pershkrimi','mes_vleresimit','nr_vleresimit','nr_faqeve','viti_publikimit']
     def get_success_url(self):
         return reverse('admin_home')
 
         
-class PostListView(ListView):
+class BookListView(ListView):
     model = Book 
     template_name='backend/home.html'
     context_object_name = 'books'
     def get_success_url(self):
         return reverse('admin_home')
 
-class PostDetailView(DetailView):
+class BookDetailView(DetailView):
     model = Book
    
-class PostDeleteView(DeleteView):
+class BookDeleteView(DeleteView):
     model=Book
     success_url = '/'
     template_name='backend/delete.html'
 
    
+    def get_success_url(self):
+        return reverse('admin_home')
+
+class BookUpdateView(UpdateView):
+    model = Book
+    fields = ['isbn','titulli', 'autori', 'kategoria','pershkrimi','mes_vleresimit', 'nr_vleresimit', 'nr_faqeve', 'viti_publikimit']
+    template_name= 'libri_im/backend/addbook.html'
+    
     def get_success_url(self):
         return reverse('admin_home')

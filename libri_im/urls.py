@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from .views import PostCreateView, PostListView,PostDetailView,PostDeleteView
+from .views import BookCreateView, BookListView,BookDetailView,BookDeleteView, BookUpdateView
 
 
 urlpatterns = [
@@ -38,10 +38,11 @@ urlpatterns = [
     path('backend/books', views.booksList, name='booksList'),
     path('backend/books/<str:pk>/', views.specificBook, name='specificBook'),
 
-    path('backend/home/', PostListView.as_view(template_name="backend/admin_home.html"), name="admin_home"),
-    path('backend/book/create/', PostCreateView.as_view(template_name="backend/create.html"), name='create'),  
-    path('backend/book/<int:pk>/', PostDetailView.as_view(template_name="backend/book_detail.html"), name='book_detail'),  
-    path('backend/book/delete/<int:pk>/',PostDeleteView.as_view(template_name="backend/delete.html"),name='delete'),
+    path('backend/home/', BookListView.as_view(template_name="backend/admin_home.html"), name="admin_home"),
+    path('backend/book/create/', BookCreateView.as_view(template_name="backend/book_create.html"), name='create'),  
+    path('backend/book/update/<int:pk>/', BookUpdateView.as_view(template_name="backend/book_update.html"), name='book_update'),
+    path('backend/book/<int:pk>/', BookDetailView.as_view(template_name="backend/book_detail.html"), name='book_detail'),  
+    path('backend/book/delete/<int:pk>/',BookDeleteView.as_view(template_name="backend/delete.html"),name='delete'),
 ]
 
 

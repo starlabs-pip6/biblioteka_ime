@@ -1,0 +1,12 @@
+{% extends 'backend/base.html' %} {% load static %} {% block content %}
+<form method="POST">
+  {% csrf_token %}
+  <fieldset class="form-group">
+    <legend>Update Book</legend>
+    {{ form.as_p }}
+  </fieldset>
+  <div class="form-group">
+    <button type="submit">Update</button>
+  </div>
+</form>
+{% endblock content%}
