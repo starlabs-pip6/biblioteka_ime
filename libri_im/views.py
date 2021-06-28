@@ -122,6 +122,7 @@ class BookListView(ListView):
     context_object_name = 'books'
     def get_success_url(self):
         return reverse('admin_home')
+    ordering = ['id_libri']
 
 class BookDetailView(DetailView):
     model = Book
