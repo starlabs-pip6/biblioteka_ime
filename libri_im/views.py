@@ -7,6 +7,11 @@ from rest_framework.response import Response
 from .serializers import LibratSerializer ,UsersSerializer
 from .models import Book, NewUser
 from .forms import RegistrationForm, UserAuthenticationForm
+from django.views.generic import (CreateView, 
+                                    ListView,
+                                    DetailView,
+                                    DeleteView)
+from django.urls import reverse
 
 
 @api_view(['GET'])
@@ -102,3 +107,29 @@ def get_redirect_if_exists(request):
         if request.GET.get("next"):
             redirect = str(request.GET.get("next"))
     return redirect
+
+class PostCreateView(CreateView):
+    model = Book
+    fields =['isbn','titulli','autori','kategoria','pershkrimi','mes_vleresimit','nr_vleresimit','nr_faqeve','viti_publikimit']
+    def get_success_url(self):
+        return reverse('admin_home')
+
+        
+class PostListView(ListView):
+    model = Book 
+    template_name='backend/home.html'
+    context_object_name = 'books'
+    def get_success_url(self):
+        return reverse('admin_home')
+
+class PostDetailView(DetailView):
+    model = Book
+   
+class PostDeleteView(DeleteView):
+    model=Book
+    success_url = '/'
+    template_name='backend/delete.html'
+
+   
+    def get_success_url(self):
+        return reverse('admin_home')

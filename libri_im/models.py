@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.urls import reverse
 # Books Model
 class Book(models.Model):
     id_libri = models.AutoField(primary_key=True)
@@ -17,6 +18,8 @@ class Book(models.Model):
 
     def __str__(self):
         return self.titulli
+    def get_absolute_url(self):
+       return reverse('libri_im:book_detail', kwargs={'pk': self.pk})
 
 
 #AccountManager Model

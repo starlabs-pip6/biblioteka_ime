@@ -1,0 +1,57 @@
+{% extends 'backend/base.html' %} {% load static %} {% block content %}
+
+<style type="text/css"></style>
+<style>
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align:center
+  }
+  </style>
+<div>
+  <h1>THIS IS HOME</h1>
+  {% if user.is_authenticated %}
+    <p>Hello {{ user.username }}</p>
+  <!-- nese eshte useri i kyqt ateher del pershendetja + stili i frontendit-->
+  <table >
+    <tr>
+      <th>Isbn</th>
+      <th>Titulli</th>
+      <th>Autori</th>
+      <th>Kategoria</th> 
+      <th>Pershkrimi</th> 
+      <th>Mesatarja e vleresimit</th> 
+      <th>Numri i vleresimit</th> 
+      <th>Numri i faqeve</th> 
+      <th>Viti i publikimit</th> 
+      <th>Shiko librin</th>
+    </tr>
+    {% for book in books %}
+    <tr>
+     
+      <td>{{ book.isbn }}</td>
+      <td>{{ book.titulli }}</td>
+      <td>{{ book.autori }}</td>
+      <td>{{ book.kategoria }}</td> 
+      <td>{{ book.pershkrimi }}</td> 
+      <td>{{ book.mes_vleresimit }}</td> 
+      <td>{{ book.nr_vleresimit }}</td> 
+      <td>{{ book.nr_faqeve }}</td> 
+      <td>{{ book.viti_publikimit }}</td> 
+      <td><a  href="{% url 'book_detail' pk=book.id_libri %}">Shiko detajet</a><br>
+          <a href="{% url 'delete' pk=book.id_libri %}">Fshij</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  {% else %}
+  <!-- nese nuk eshte i kyqur del pa pershendetje +stili -->
+  {% endif %}
+ 
+       
+          
+ 
+</div>
+
+{% endblock content %}
