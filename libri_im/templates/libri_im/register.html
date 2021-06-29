@@ -2,58 +2,23 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet/css" type="text/css" href="styles/register.css" />
-
-<style type="text/css">
-
-  .register-container {
-        border: 2px solid blue;
-        width: 100%;
-        display: flex;
-  
-        justify-content: center;
-        align-items: center;
-      }
-      .register-container > * {
-        padding: 20px;
-      }
-      .body-container{
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        flex-direction:column;
-        align-items: center;
-      }
-      .form {
-            width: 100%;
-        display: flex;
-        justify-content: space-around;
-        flex-direction:column;
-        align-items: center;
-        padding: 10px;
-      }
-      .form > input{
-        padding: 10px;
-
-      }
-	  .form-title{
-		  
-	  }
-
-</style>
+<link rel="stylesheet" type=text/css href="{% static 'libri_im/css/login.css' %}">
 
 <div class="register-container">
 		  <div class="body-container">
 		    <form class="form" method="post">{% csrf_token %}
-				<h1 class="form-title">REGISTER FORM</h1>
-				<input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-				  <br>
-				<input type="text" name="username" id="inputUsername" class="form-control" placeholder="Username" required>
- 				 <br>
+				<h1 class="form-title">Register</h1>
+				<p><input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+				</p>
+				<p>
+				<input type="name" name="username" id="inputUsername" class="form-control" placeholder="Username" required>
+ 				 </p>
+				  <p>
 				<input type="password" name="password1" id="inputPassword1" class="form-control" placeholder="Password" required>
- 				 <br>
+ 				 </p>
+				  <p>
 				<input type="password" name="password2" id="inputPassword2" class="form-control" placeholder="Confirm password" required>
- 				 <br>
+ 				</p>
 				{% for field in registration_form %}
 				<p>
 				{% for error in field.errors %}
@@ -67,9 +32,9 @@
 				</div>
 
 				{% endif %}
-
-				<button class="btn btn-lg btn-primary btn-block" type="submit">Register</button>
-
+				<p>
+				<button class="register" type="submit">Register</button>
+					</p>
 				</form>
 		  </div>
 </div>
