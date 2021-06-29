@@ -1,0 +1,115 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap");
+.register-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.body-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.form {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+.form > input {
+  padding: 10px;
+}
+
+form:after {
+  background: linear-gradient(#111111);
+  content: "";
+  display: block;
+  height: 1px;
+  left: 50px;
+  position: absolute;
+  top: 0;
+  width: 150px;
+}
+
+form:before {
+  box-shadow: 0 0 6px 4px #fff;
+  content: "";
+  display: block;
+  height: 5px;
+  left: 34%;
+  position: absolute;
+  top: -7px;
+  width: 8px;
+}
+form h1 {
+  font-family: "Montserrat", sans-serif;
+  border-bottom: 1px solid #000;
+  font-size: 50px;
+  padding: 15px 0;
+  position: relative;
+  text-align: center;
+}
+
+form h1 {
+  color: #f8961e;
+  font-family: "Montserrat", sans-serif;
+  font-weight: normal;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="name"] {
+  width: 20%;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  border-radius: 6px;
+  display: inline-block;
+  width: 100%;
+}
+
+button[type="submit"] {
+  font-family: "Montserrat", sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  border-radius: 6px;
+  padding: 10px 20px;
+  /* height: 2em; */
+  display: block;
+  width: 100%;
+}
+.button:hover {
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.24),
+    0 10px 10px 0 rgba(0, 0, 0, 0.19);
+  cursor: pointer;
+}
+.reset {
+  font-family: "Montserrat", sans-serif;
+}
+
+.register[type="submit"] {
+  font-family: "Montserrat", sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  border-radius: 6px;
+  /* height: 2em; */
+  /* margin-top: 25px; */
+  padding: 10px 20px;
+  width: 100%;
+}
+.register:hover {
+  box-shadow: 0 5px 16px 0 rgba(0, 0, 0, 0.24),
+    0 10px 50px 0 rgba(0, 0, 0, 0.19);
+  cursor: pointer;
+}

@@ -2,21 +2,22 @@
 {% load static %}
 
 {% block content %}
+<link rel="stylesheet" type=text/css href="{% static 'libri_im/css/login.css' %}">
 
-
-
-<head>
-  <link rel="stylesheet" type=text/css href="{% static 'libri_im/login.css' %}">
-</head>
-
+<body>
+  <div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-12">
 <div class="login-container">
-		  <div class="body-container">
+		
                 <form class="form" method="post">{% csrf_token %}
-                    <h1 class="form-title">LOGIN FORM</h1>
-                    <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                    <br>
+                  <div class="body-container">
+                    <h1 class="form-title">Login</h1>
+                    
+                  <p>  <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                  </p>
+                   <p>
                     <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                    <br>
+                    </p>
                     {% for field in login_form %}
                     <p>
                     {% for error in field.errors %}
@@ -30,17 +31,20 @@
                     </div>
 
                     {% endif %}
-
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+                    <p>
+                    <button class="button" type="submit">Log in</button>
+                    </p>
                 </form>
+              <br>
 
 				<div class="reset">
 					<a href="{% url 'reset_password' %}">Reset password</a>
 				</div>
-		  </div>
+      </div>
 </div>
-
-
+</div>
+</div>
+</body>
 
 
 

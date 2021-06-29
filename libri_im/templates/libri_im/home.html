@@ -1,28 +1,10 @@
 {% extends 'libri_im/base.html' %} {% load static %} {% block content %}
 
-<style type="text/css"></style>
-<style>
-  table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-    text-align:center
-  }
-  </style>
-<div>
-  <h1>THIS IS HOME</h1>
-  {% if user.is_authenticated %}
-    <p>Hello {{ user.username }}</p>
-  <!-- nese eshte useri i kyqt ateher del pershendetja + stili i frontendit-->
-  
-  
+<link rel="stylesheet" type=text/css href="{% static 'libri_im/home.css' %}">
 
-  {% else %}
-  <!-- nese nuk eshte i kyqur del pa pershendetje +stili -->
-  {% endif %}
- 
-       
-          
- 
+<div class="home-container">
+
+  
 </div>
 
 {% endblock content %}
