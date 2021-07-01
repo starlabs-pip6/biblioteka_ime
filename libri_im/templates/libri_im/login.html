@@ -3,7 +3,7 @@
 
 {% block content %}
 <link rel="stylesheet" type=text/css href="{% static 'libri_im/css/login.css' %}">
-
+<link rel="stylesheet" type=text/css href="{% static 'libri_im/css/global.css' %}">
 <body>
   <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-12">
@@ -32,13 +32,13 @@
 
                     {% endif %}
                     <p>
-                    <button class="button" type="submit">Log in</button>
+                    <button class="mybutton" type="submit" style="padding-top:1%;padding-bottom:1%">Log in</button>
                     </p>
                 </form>
               <br>
-
+                  <div>Nuk keni llogari?<a href="{% url 'register' %}" style="color:white">Regjistrohuni ketu!</a></p></div>
 				<div class="reset">
-					<a href="{% url 'reset_password' %}">Reset password</a>
+					<a href="{% url 'reset_password' %}" style="text-decoration:none;color:white;">Reset password</a>
 				</div>
       </div>
 </div>

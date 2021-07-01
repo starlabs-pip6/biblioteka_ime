@@ -2,7 +2,11 @@
   margin: 0;
   padding: 0;
 }
-
+body{
+  background-color:black !important;
+  font-family: "Montserrat", sans-serif !important;
+  color:white !important;
+}
 .navbar {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
@@ -33,11 +37,14 @@
   border-bottom-style: solid;
   border-color: white;
   border-radius: 9px;
-  width: 330px;
+  width: 330px;  
+
 }
+
 
 .kerkobar input::placeholder {
   color: whitesmoke;
+
 }
 
 .librat {
@@ -65,7 +72,7 @@
 }
 
 .alinks {
-  margin-right: 80px;
+  margin-right: 60px;
 }
 
 nav a {
@@ -109,4 +116,13 @@ nav a:hover {
 
 .carousel-inner img {
   margin: auto;
+}
+.loginRegister{
+  border:2px solid white;
+  border-radius:13px;
+  padding-left:3%;
+  color:#f8961e;
+  background-color:white;
+  margin-right:3%;
+ text-align:center;
 }
