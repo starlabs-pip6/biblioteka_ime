@@ -26,7 +26,7 @@
 
 #btnEvent {
   position: relative;
-  left: 400px;
+  left: 390px;
   bottom: 80px;
   border-radius: 50px;
   padding: 10px 30px;
@@ -35,7 +35,7 @@
   color: white;
   font-size: 17px;
   font-family: "Montserrat", sans-serif;
-  font-weight: 900;
+  font-weight: 300;
 }
 #btnEvent1 {
   position: relative;
@@ -47,7 +47,7 @@
   color: #f48792;
   font-size: 17px;
   font-family: "Montserrat", sans-serif;
-  font-weight: 900;
+  font-weight: 300;
 }
 #btnEvent:hover {
   background-color: white;
@@ -82,6 +82,6 @@
   font-size: 30px;
   font-family: "Montserrat", sans-serif;
   text-align: center;
-  font-weight: 900;
+  font-weight: 300;
   padding: auto;
 }
