@@ -13,3 +13,14 @@
   transform: scale(1.1);
   opacity: 0.3;
 }
+.mybutton{
+    border-radius:15px;
+    border:2px solid #f3722c;
+    padding-left:3%;
+    padding-right:3%;
+    color:white;
+    background-color:transparent;
+    line-height:30px;
+    font-family: "Montserrat", sans-serif;
+}
+   
