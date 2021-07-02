@@ -41,14 +41,24 @@
                 <a href="{% url 'home' %}">Ballina</a>
                 <a href="#">Librat e Mi</a>
                 <a href="#">Shfleto</a>
+                  {% if user.is_admin %}
+                  <a href="{% url 'create' %}">Create</a>
+                  {% endif %}
               </div> 
+
                 {% if user.is_authenticated %}
                 <!-- nese user osht i kyqt -->
                 <!-- <a href="{% url 'home' %}">Home</a> -->
           
                 <a href="{% url 'logout' %}" class="loginRegister">Logout</a>
           
-                {% if user.is_admin %} <a href="{% url 'admin_home' %}">Admin Home</a>
+                {% if user.is_admin %}
+                <div>
+                  <a href="{% url 'admin_home' %}">Admin Home</a>
+               
+                </div>
+                
+
                 {% endif %} {% else %}
                 <!-- perndryshe nese nuk eshte i kyqur ateher dalin keto meny-->
                 <a href="{% url 'login' %}" class="loginRegister">Login/Register</a>
