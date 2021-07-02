@@ -6,7 +6,7 @@ from django.urls import reverse
 # Books Model
 class Book(models.Model):
     id_libri = models.AutoField(primary_key=True)
-    isbn = models.IntegerField()
+    isbn = models.BigIntegerField()
     titulli = models.CharField(max_length=500)#char
     autori = models.CharField(max_length=100) #char
     kategoria = models.CharField(max_length=100)#char

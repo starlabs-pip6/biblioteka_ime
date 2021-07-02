@@ -39,12 +39,17 @@ def specificBook(request,pk):
 
 def home_view(request):
     current_user = request.user.username
+    books = Book.objects.all()
+    users = NewUser.objects.all()
     if not current_user:
         current_user='anonimous user(not loged in)'
     context={
-        'current_username' : current_user
-    }
+        'current_username' : current_user,
+        'booksVP': books.order_by('viti_publikimit'),
+        'booksR' : books.order_by('-mes_vleresimit'),
+        'booksID' : books.order_by('id_libri'),
     
+    }
     
     return render(request, 'libri_im/home.html',context)
 
@@ -111,7 +116,7 @@ def get_redirect_if_exists(request):
 
 class BookCreateView(CreateView):
     model = Book
-    fields =['isbn','titulli','autori','kategoria','pershkrimi','mes_vleresimit','nr_vleresimit','nr_faqeve','viti_publikimit']
+    fields =['isbn','titulli','autori','kategoria','pershkrimi','mes_vleresimit','nr_vleresimit','nr_faqeve','viti_publikimit','image_link']
     def get_success_url(self):
         return reverse('admin_home')
 
@@ -138,7 +143,7 @@ class BookDeleteView(DeleteView):
 
 class BookUpdateView(UpdateView):
     model = Book
-    fields = ['isbn','titulli', 'autori', 'kategoria','pershkrimi','mes_vleresimit', 'nr_vleresimit', 'nr_faqeve', 'viti_publikimit']
+    fields = ['isbn','titulli', 'autori', 'kategoria','pershkrimi','mes_vleresimit', 'nr_vleresimit', 'nr_faqeve', 'viti_publikimit','image_link']
     template_name= 'libri_im/backend/addbook.html'
     
     def get_success_url(self):
