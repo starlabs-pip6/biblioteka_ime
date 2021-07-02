@@ -97,6 +97,10 @@
 .dukelexuarprogress{
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
-
+}
+.dukelexuarprogress .title p {
+  margin:0;
+  padding:10px 0;
 }

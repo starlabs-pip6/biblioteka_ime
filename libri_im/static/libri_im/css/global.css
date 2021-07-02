@@ -25,4 +25,11 @@
   background-color: transparent;
   line-height: 30px;
   font-family: "Montserrat", sans-serif;
+  transition: all 0.3s ease;
+}
+
+.mybutton:hover{
+  color: #f3722c ;
+  background-color: white;
+  border-color: white;
 }
