@@ -30,7 +30,7 @@ body{
 
 .kerkobar input {
   color: white;
-  background-color: #f8961e;
+  background-color: #f3722c;
   border-top-style: solid;
   border-right-style: solid;
   border-left-style: solid;
@@ -61,7 +61,7 @@ body{
 
 .linksNav {
   font-family: "Montserrat", sans-serif;
-  background-color: #f8961e;
+  background-color: #f3722c;
   display: flex;
   align-items: center;
 
@@ -72,7 +72,7 @@ body{
 }
 
 .alinks {
-  margin-right: 60px;
+  /* margin-right: 60px; */
 }
 
 nav a {
@@ -121,7 +121,7 @@ nav a:hover {
   border:2px solid white;
   border-radius:13px;
   padding-left:3%;
-  color:#f8961e;
+  color:#f3722c;
   background-color:white;
   margin-right:3%;
  text-align:center;

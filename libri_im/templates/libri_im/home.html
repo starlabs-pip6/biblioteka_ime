@@ -106,6 +106,14 @@
             Lirak Rushiti filloi te lexoj "Harry Potter"...
           </p>
         </div>
+        {% for ntfc in notification %}
+           <div class="njoftimi">
+          <p class="njoftimicontent">
+           <p>{{njoftimi.content}}</p>
+           <img src="{{book.image_link}}" alt="">
+          </p>
+        </div>
+        {% endfor %}
       </div>
       <!-- </div> -->
     </div>

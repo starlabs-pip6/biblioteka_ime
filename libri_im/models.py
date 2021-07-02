@@ -15,6 +15,7 @@ class Book(models.Model):
     nr_vleresimit = models.IntegerField()#int
     nr_faqeve = models.IntegerField()#int
     viti_publikimit = models.IntegerField() #int
+    image_link = models.CharField(max_length=500, default="https://www.directtextbook.com/large/.jpg")
 
     def __str__(self):
         return self.titulli
