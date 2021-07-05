@@ -108,115 +108,46 @@
     <!-- qetu punon perty -->
     <p class="headingPerTy">Per ty</p>
     <div class="PerTyImages">
-    <div class="ptcover">
-      <img src="{% static 'libri_im/images/sooley.jpg' %}" class="ptimage">
-      <h3 class="pttitle hover-1">John Grisham</h3>
-      <div class="underlinept"></div>
-      <p class="ptdesc">This book is an amazing representation of a well written and well sought after series. </p>
-      <button class="hbpt">Dua ta lexoj</button>
-    </div>
-    <div class="ptcover">
-      <img src="{% static 'libri_im/images/sooley.jpg' %}" class="ptimage">
+      {% for book in booksID %}
+    <div class="mycover ptcover">
+      <img src="{{ book.image_link }}" class="ptimage">
       <h3 class="pttitle">John Grisham</h3>
       <div class="underlinept"></div>
       <p class="ptdesc">This book is an amazing representation of a well written and well sought after series. </p>
       <button class="hbpt">Dua ta lexoj</button>
     </div>
-    <div class="ptcover">
-      <img src="{% static 'libri_im/images/sooley.jpg' %}" class="ptimage">
-      <h3 class="pttitle">John Grisham</h3>
-      <div class="underlinept"></div>
-      <p class="ptdesc">This book is an amazing representation of a well written and well sought after series. </p>
-      <button class="hbpt">Dua ta lexoj</button>
-    </div>
-    <div class="ptcover">
-      <img src="{% static 'libri_im/images/sooley.jpg' %}" class="ptimage">
-      <h3 class="pttitle">John Grisham</h3>
-      <div class="underlinept"></div>
-      <p class="ptdesc">This book is an amazing representation of a well written and well sought after series. </p>
-      <button class="hbpt">Dua ta lexoj</button>
-    </div>
-    <div class="ptcover">
-      <img src="{% static 'libri_im/images/sooley.jpg' %}" class="ptimage">
-      <h3 class="pttitle">John Grisham</h3>
-      <div class="underlinept"></div>
-      <p class="ptdesc">This book is an amazing representation of a well written and well sought after series. </p>
-      <button class="hbpt">Dua ta lexoj</button>
-    </div>
-    <div class="ptcover">
-      <img src="{% static 'libri_im/images/sooley.jpg' %}" class="ptimage">
-      <h3 class="pttitle">John Grisham</h3>
-      <div class="underlinept"></div>
-      <p class="ptdesc">This book is an amazing representation of a well written and well sought after series. </p>
-      <button class="hbpt">Dua ta lexoj</button>
-    </div>
-   
+   {% endfor %}
   </div>
   <p  class="meshume"><a href="#" class="a_meshume">Me shume<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
   
   </div>
   <div class="sortby">
     <!-- qetu punon sortby -->
+  
     <p class="headingSortby">Librat e fundit</p>
-    <div class="sortByImages">
+    <div class="sortByImages"> 
+      {% for book in booksLatest %}
     <div class="mycover">
-      <img src="{% static 'libri_im/images/sooley.jpg' %}" class="myimage">
-      <button class="hoverbutton">Dua ta lexoj</button>
+      <img src="{{ book.image_link}}" class="myimage">
+      <button class=" mybutton hoverbutton">Dua ta lexoj</button>
     </div>
-    <div class="mycover">
-      <img src="{% static 'libri_im/images/sooley.jpg' %}" class="myimage">
-      <button class="hoverbutton">Dua ta lexoj</button>
-    </div>
-    <div class="mycover">
-      <img src="{% static 'libri_im/images/sooley.jpg' %}" class="myimage">
-      <button class="hoverbutton">Dua ta lexoj</button>
-    </div>
-    <div class="mycover">
-      <img src="{% static 'libri_im/images/sooley.jpg' %}" class="myimage">
-      <button class="hoverbutton">Dua ta lexoj</button>
-    </div>
-    <div class="mycover">
-      <img src="{% static 'libri_im/images/sooley.jpg' %}" class="myimage">
-      <button class="hoverbutton">Dua ta lexoj</button>
-    </div>
-    <div class="mycover">
-      <img src="{% static 'libri_im/images/sooley.jpg' %}" class="myimage">
-      <button class="hoverbutton">Dua ta lexoj</button>
-    </div>
+    {% endfor %}
    
-  </div>
+  </div>  
   <p  class="meshume"><a href="#" class="a_meshume">Me shume<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
   
   <p class="headingSortby">Me te vleresuarat</p>
-  <div class="sortByImages">
-    <div class="mycover">
-      <img src="{% static 'libri_im/images/sooley.jpg' %}" class="myimage">
-      <button class="hoverbutton">Dua ta lexoj</button>
-    </div>
-    <div class="mycover">
-      <img src="{% static 'libri_im/images/sooley.jpg' %}" class="myimage">
-      <button class="hoverbutton">Dua ta lexoj</button>
-    </div>
-    <div class="mycover">
-      <img src="{% static 'libri_im/images/sooley.jpg' %}" class="myimage">
-      <button class="hoverbutton">Dua ta lexoj</button>
-    </div>
-    <div class="mycover">
-      <img src="{% static 'libri_im/images/sooley.jpg' %}" class="myimage">
-      <button class="hoverbutton">Dua ta lexoj</button>
-    </div>
-    <div class="mycover">
-      <img src="{% static 'libri_im/images/sooley.jpg' %}" class="myimage">
-      <button class="hoverbutton">Dua ta lexoj</button>
-    </div>
-    <div class="mycover">
-      <img src="{% static 'libri_im/images/sooley.jpg' %}" class="myimage">
-      <button class="hoverbutton">Dua ta lexoj</button>
-    </div>
-  
+  <div class="sortByImages"> 
+    {% for book in booksR %}
+  <div class="mycover">
+    <img src="{{ book.image_link}}" class="myimage">
+    <button class=" mybutton hoverbutton">Dua ta lexoj</button>
   </div>
+  {% endfor %}
+ 
+</div>  
   <p  class="meshume"><a href="#" class="a_meshume">Me shume<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
-  </div>
+
 
     <p id="p1">Eventet</p>
   <div class="events">
