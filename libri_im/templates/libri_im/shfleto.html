@@ -2,5 +2,13 @@
 {% load static %}
 {% block content %}
 
-<h1>THIS IS SHFLETO PAGE</h1>
+{% for book in books %}
+    <!-- Shembull -->
+    <h1>{{book.titulli}}</h1>
+    <h3>{{book.autori}}</h3>
+    <p>{{book.pershkrimi}}</p>
+    <div class="mycover">
+        <img class="myimage" src="{{book.image_link}}" alt="noimg">
+    </div>
+{% endfor %}    
 {% endblock %}

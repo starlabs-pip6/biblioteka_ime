@@ -52,6 +52,7 @@ def home_view(request):
             progressAllPages = progress.id_libri.nr_faqeve
             progressLibriTitulli = progress.id_libri.titulli
             progressPercent =  round(float((progressNowPages/progressAllPages)*100),1)
+            progressBookImage = progress.id_libri.image_link
         except models.ObjectDoesNotExist:
             progressLibri = "no data"
             progressUser = "no data"
@@ -59,6 +60,7 @@ def home_view(request):
             progressAllPages = "no data"
             progressLibriTitulli = "no data"
             progressPercent = "no data"
+            progressBookImage = ""
             print("No user")
         dlcount = len(current_user.reading)
         dtlcount = len(current_user.read)
@@ -70,6 +72,7 @@ def home_view(request):
         progressAllPages = "no data"
         progressLibriTitulli = "no data"
         progressPercent = "no data"
+        progressBookImage = ""
         dlcount = "no data"
         dtlcount = "no data"
         klcount = "no data"   # userR = users.reading
@@ -89,12 +92,16 @@ def home_view(request):
         'progressAllPages' : progressAllPages,
         'progressLibriTitulli' : progressLibriTitulli,
         'progressPercent' : progressPercent,
+        'progressBookImage':progressBookImage,
     }
     
     return render(request, 'libri_im/home.html',context)
 
 def shfleto_view(request):
-
+    books = Book.objects.all()
+    context={
+         'books' : books,
+    }
     return render(request, 'libri_im/shfleto.html',context)
 
 def register_view(request,*args,**kwargs):
