@@ -66,9 +66,9 @@ class NewUser(AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
     hide_email = models.BooleanField(default=True)
     # field for books that are connected to the user
-    read=ArrayField(models.IntegerField(null=True),null=True)
-    want_to_read=ArrayField(models.IntegerField(null=True),null=True)
-    reading=ArrayField(models.IntegerField(null=True),null=True)
+    read=ArrayField(models.IntegerField(),blank=True, null=True)
+    want_to_read=ArrayField(models.IntegerField(),blank=True, null=True)
+    reading=ArrayField(models.IntegerField(),blank=True, null=True)
 
     objects = MyAccountManager()
     USERNAME_FIELD = 'email'
@@ -86,3 +86,10 @@ class NewUser(AbstractBaseUser):
     
     def has_module_perms(self, app_label):
         return True
+
+
+
+class Progress(models.Model):
+    id_libri = models.ForeignKey(Book, on_delete=models.CASCADE)
+    id_user = models.ForeignKey(NewUser, on_delete=models.CASCADE)
+    pages_now = models.IntegerField(default=0)

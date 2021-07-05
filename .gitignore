@@ -1,7 +1,5 @@
-<<<<<<< HEAD
 # Byte-compiled / optimized / DLL files
 __pycache__/
-=======
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,django,visualstudiocode,virtualenv
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,django,visualstudiocode,virtualenv
@@ -22,7 +20,6 @@ media
 
 ### Django.Python Stack ###
 # Byte-compiled / optimized / DLL files
->>>>>>> LirakR-registration
 *.py[cod]
 *$py.class
 
@@ -76,7 +73,6 @@ cover/
 
 # Translations
 *.mo
-<<<<<<< HEAD
 *.pot
 
 # Django stuff:
@@ -84,10 +80,6 @@ cover/
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-=======
-
-# Django stuff:
->>>>>>> LirakR-registration
 
 # Flask stuff:
 instance/
@@ -163,9 +155,6 @@ dmypy.json
 .pytype/
 
 # Cython debug symbols
-<<<<<<< HEAD
-cython_debug/
-=======
 cython_debug/
 
 ### Python ###
@@ -261,4 +250,3 @@ pip-selfcheck.json
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/python,django,visualstudiocode,virtualenv
->>>>>>> LirakR-registration

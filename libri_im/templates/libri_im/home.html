@@ -40,15 +40,15 @@
         <div class="sirtaret text">
           <div class="nrlibrave-container">
             <p>Dua te lexoj</p>
-            <p>10</p>
+            <p>{{dtlcount}}</p>
           </div>
           <div class="nrlibrave-container">
             <p>Duke lexuar</p>
-            <p>3</p>
+            <p>{{dlcount}}</p>
           </div>
           <div class="nrlibrave-container">
             <p>Kam lexuar</p>
-            <p>15</p>
+            <p>{{klcount}}</p>
           </div>
         </div>
       </div>
@@ -57,10 +57,10 @@
                 <img  src="{% static 'libri_im/images/theSilenPatient1.png' %}" alt="noimg">
             </div>
           <div class="title">
-            <p>The silent patient</p>
+            <p>{{progress.id_libri.titulli}}</p>
           </div>
           <div class="text-progress">
-            <p>223/325 ose 78%</p>
+            <p>{{progress.pages_now}}</p>
           </div>
           <button class="mybutton updateBtn">Perditeso</button>
       </div>
@@ -244,10 +244,10 @@
   </div>
   
 
-       <!-- {% for book in booksID %}
+       {% for book in booksVP %}
        <h1>{{book.titulli}}</h1>
       <p>{{book.id_libri}},,,,,{{book.viti_publikimit}},,,,, {{book.mes_vleresimit}}</p>
       <img src='{{book.image_link}}' alt="">
-    {% endfor%} -->
+    {% endfor%}
 </div>
 {% endblock content %}

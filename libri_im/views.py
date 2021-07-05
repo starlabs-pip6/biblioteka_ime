@@ -5,7 +5,7 @@ from django.contrib.auth import login, authenticate, logout
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import LibratSerializer ,UsersSerializer
-from .models import Book, NewUser
+from .models import Book, NewUser, Progress
 from .forms import RegistrationForm, UserAuthenticationForm
 from django.views.generic import (CreateView, 
                                     ListView,
@@ -38,17 +38,28 @@ def specificBook(request,pk):
 
 
 def home_view(request):
-    current_user = request.user.username
+    current_user = request.user
     books = Book.objects.all()
-    users = NewUser.objects.all()
+    progress = Progress.objects.get(id_user=current_user.id)
+    if(not current_user.is_anonymous):
+        dlcount = len(current_user.reading)
+        dtlcount = len(current_user.read)
+        klcount = len(current_user.want_to_read)
+    else:
+        dlcount = "no data"
+        dtlcount = "no data"
+        klcount = "no data"   # userR = users.reading
     if not current_user:
         current_user='anonimous user(not loged in)'
     context={
         'current_username' : current_user,
-        'booksVP': books.order_by('viti_publikimit'),
-        'booksR' : books.order_by('-mes_vleresimit'),
-        'booksID' : books.order_by('id_libri'),
-    
+        'booksVP': books,
+        'booksR' : books.order_by('mes_vleresimit'),
+        'booksID' : books.order_by('?'),
+        'dlcount' : dlcount,
+        'klcount' : klcount,
+        'dtlcount': dtlcount,
+        'progress': progress
     }
     
     return render(request, 'libri_im/home.html',context)
