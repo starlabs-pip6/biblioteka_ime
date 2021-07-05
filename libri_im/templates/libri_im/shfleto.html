@@ -1,14 +1,27 @@
 {% extends 'libri_im/base.html' %}
 {% load static %}
 {% block content %}
-
+<link rel="stylesheet" type=text/css href="{% static 'libri_im/css/perty.css' %}"> 
+<link rel="stylesheet" type=text/css href="{% static 'libri_im/css/shfleto.css' %}"> 
+<div class="PerTyImages">
 {% for book in books %}
-    <!-- Shembull -->
-    <h1>{{book.titulli}}</h1>
-    <h3>{{book.autori}}</h3>
-    <p>{{book.pershkrimi}}</p>
-    <div class="mycover">
-        <img class="myimage" src="{{book.image_link}}" alt="noimg">
+    <div class="ptcover">
+      <img src="{{book.image_link}}" class="ptimage" alt="noimg">
+      <h3 class="pttitle hover-1">{{book.autori}}</h3>
+      <div class="underlinept"></div>
+      <p class="ptdesc">{{book.pershkrimi}} </p>
+      <button class="hbpt">Dua ta lexoj</button>
     </div>
-{% endfor %}    
+ 
+{% endfor %}  
+</div>
+<div class="content-list">
+    <h3>Categories</h3> 
+    {%for book1 in books%}
+        <ul class="ulShfleto">
+            <li>{{book1.kategoria}}</li>
+        </ul>
+
+    {%endfor%}
+</div>
 {% endblock %}
