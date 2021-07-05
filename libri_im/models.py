@@ -66,9 +66,9 @@ class NewUser(AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
     hide_email = models.BooleanField(default=True)
     # field for books that are connected to the user
-    read=ArrayField(models.IntegerField(),blank=True, null=True)
-    want_to_read=ArrayField(models.IntegerField(),blank=True, null=True)
-    reading=ArrayField(models.IntegerField(),blank=True, null=True)
+    read=ArrayField(models.IntegerField(),blank=True, null=True, default=list)
+    want_to_read=ArrayField(models.IntegerField(),blank=True, null=True, default=list)
+    reading=ArrayField(models.IntegerField(),blank=True, null=True, default=list)
 
     objects = MyAccountManager()
     USERNAME_FIELD = 'email'

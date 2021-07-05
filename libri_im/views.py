@@ -13,6 +13,7 @@ from django.views.generic import (CreateView,
                                     DeleteView,
                                     UpdateView)
 from django.urls import reverse
+from django.db import models
 
 
 @api_view(['GET'])
@@ -40,12 +41,35 @@ def specificBook(request,pk):
 def home_view(request):
     current_user = request.user
     books = Book.objects.all()
-    progress = Progress.objects.get(id_user=current_user.id)
+    
     if(not current_user.is_anonymous):
+       
+        try :
+            progress = Progress.objects.get(id_user=current_user.id)
+            progressLibri = progress.id_libri
+            progressUser = progress.id_user
+            progressNowPages = progress.pages_now
+            progressAllPages = progress.id_libri.nr_faqeve
+            progressLibriTitulli = progress.id_libri.titulli
+            progressPercent =  round(float((progressNowPages/progressAllPages)*100),1)
+        except models.ObjectDoesNotExist:
+            progressLibri = "no data"
+            progressUser = "no data"
+            progressNowPages = "no data"
+            progressAllPages = "no data"
+            progressLibriTitulli = "no data"
+            progressPercent = "no data"
+            print("No user")
         dlcount = len(current_user.reading)
         dtlcount = len(current_user.read)
         klcount = len(current_user.want_to_read)
     else:
+        progressLibri = "no data"
+        progressUser = "no data"
+        progressNowPages = "no data"
+        progressAllPages = "no data"
+        progressLibriTitulli = "no data"
+        progressPercent = "no data"
         dlcount = "no data"
         dtlcount = "no data"
         klcount = "no data"   # userR = users.reading
@@ -53,16 +77,25 @@ def home_view(request):
         current_user='anonimous user(not loged in)'
     context={
         'current_username' : current_user,
-        'booksVP': books,
+        'books': books,
         'booksR' : books.order_by('mes_vleresimit'),
         'booksID' : books.order_by('?'),
         'dlcount' : dlcount,
         'klcount' : klcount,
         'dtlcount': dtlcount,
-        'progress': progress
+        'progressLibri': progressLibri,
+        'progressUser' : progressUser,
+        'progressNowPages' : progressNowPages,
+        'progressAllPages' : progressAllPages,
+        'progressLibriTitulli' : progressLibriTitulli,
+        'progressPercent' : progressPercent,
     }
     
     return render(request, 'libri_im/home.html',context)
+
+def shfleto_view(request):
+
+    return render(request, 'libri_im/shfleto.html',context)
 
 def register_view(request,*args,**kwargs):
     user = request.user

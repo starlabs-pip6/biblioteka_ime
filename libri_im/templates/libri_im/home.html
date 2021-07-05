@@ -57,10 +57,10 @@
                 <img  src="{% static 'libri_im/images/theSilenPatient1.png' %}" alt="noimg">
             </div>
           <div class="title">
-            <p>{{progress.id_libri.titulli}}</p>
+            <p>{{progressTitulli}}</p>
           </div>
           <div class="text-progress">
-            <p>{{progress.pages_now}}</p>
+            <p>{{progressNowPages}}/{{progressAllPages}} faqe ose {{progressPercent}}%</p>
           </div>
           <button class="mybutton updateBtn">Perditeso</button>
       </div>
@@ -243,11 +243,5 @@
 
   </div>
   
-
-       {% for book in booksVP %}
-       <h1>{{book.titulli}}</h1>
-      <p>{{book.id_libri}},,,,,{{book.viti_publikimit}},,,,, {{book.mes_vleresimit}}</p>
-      <img src='{{book.image_link}}' alt="">
-    {% endfor%}
 </div>
 {% endblock content %}

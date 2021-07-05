@@ -5,15 +5,13 @@ from .views import BookCreateView, BookListView,BookDetailView,BookDeleteView, B
 
 
 urlpatterns = [
-    # Temporary endpoints to test serializers
-   
 
-
-    
     path('', views.home_view, name='home'),
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('register/', views.register_view, name='register'),
+    path('shfleto/', views.shfleto_view, name='shfleto'),
+
     
     #password reset
     path('reset_password/',
@@ -33,7 +31,7 @@ urlpatterns = [
         name="password_reset_complete"),
 
     #Create
-
+        # Temporary endpoints to test serializers
     path('backend/', views.backendOverView, name='backendView'),
     path('backend/books', views.booksList, name='booksList'),
     path('backend/books/<str:pk>/', views.specificBook, name='specificBook'),
