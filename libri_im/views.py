@@ -78,8 +78,9 @@ def home_view(request):
     context={
         'current_username' : current_user,
         'books': books,
-        'booksR' : books.order_by('mes_vleresimit'),
-        'booksID' : books.order_by('?'),
+        'booksLatest' : books.order_by('-viti_publikimit')[0:6],
+        'booksR' : books.order_by('-mes_vleresimit')[0:6],
+        'booksID' : books.order_by('?')[0:6],
         'dlcount' : dlcount,
         'klcount' : klcount,
         'dtlcount': dtlcount,

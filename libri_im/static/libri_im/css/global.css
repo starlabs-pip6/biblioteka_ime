@@ -1,7 +1,8 @@
 .mycover {
   overflow: hidden;
   border-radius: 8%;
-  width: 12%;
+  width: 138px;
+  height:205px;
   border: 2px solid #f3722c;
   margin-right: 0.5%;
   position: relative;
@@ -11,8 +12,7 @@
   width: 100%;
   transition: all 0.3s;
 }
-.mycover:hover .myimage,
-.mybuttonhover:hover {
+.mycover:hover .myimage{
   transform: scale(1.1);
   opacity: 0.3;
 }
