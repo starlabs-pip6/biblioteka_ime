@@ -47,7 +47,7 @@
               <div class="alinks">
                 <a href="{% url 'home' %}">Ballina</a>
                 <a href="#">Librat e Mi</a>
-                <a href="#">Shfleto</a>
+                <a href="{% url 'shfleto' %}">Shfleto</a>
                   {% if user.is_admin %}
                   <a href="{% url 'create' %}">Create</a>
                   {% endif %}
