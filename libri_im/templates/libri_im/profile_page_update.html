@@ -2,11 +2,13 @@
 
 <div class="myprofile">
     <div class="myprofileDiv">
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   <fieldset class="form-group">
     <legend>Update Profile</legend>
-    {{ form.as_p }}
+    <input type="text" name = "username" value="{{object.username}}">
+    <br>
+    <input type="file" name = "profileImg" id="profileImg">
   </fieldset>
   <div class="form-group">
     <button type="submit" class="mybutton">Save</button>

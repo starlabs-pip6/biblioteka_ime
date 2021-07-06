@@ -7,10 +7,12 @@
 </style>
 <div class="myprofile">
     <div class="myprofileDiv">
+         <img src="{{ object.profileImg.url }}" width="200" height="auto"alt="noImg">
         <p>Username:  {{ object.username }}</p>
         <p>Email:  {{ object.email }}</p>
         <p>Joined date:  {{ object.date_joined }}</p>
         <p>Last logged in date:  {{ object.last_login }}</p>  
+       
         <a href="{% url 'profile_page_update' %}" class="mybutton a_meshume" >Modifiko</a>
     </div>
 </div>

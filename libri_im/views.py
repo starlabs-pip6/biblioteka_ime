@@ -216,7 +216,7 @@ class ProfilePageView(DetailView):
     
 class ProfileUpdateView(UpdateView):
     model = NewUser
-    fields = ['username']
+    fields = ['username','profileImg']
     template_name= 'libri_im/profile_page_update.html'
     
     def get_success_url(self):
