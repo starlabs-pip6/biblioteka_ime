@@ -34,138 +34,18 @@
   border-color: white;
 }
 
-.ptimage {
-    width: 100%;
-    transition: all 0.3s;
-  }
-.ptcover:hover .ptimage, .mybuttonhover:hover {
-    transform: scale(1.1);
-    opacity: 0.3;
-  }
+.myprofile{
+  margin-top:5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
 
-.ptcover {
-    cursor: pointer;
-    overflow: hidden;
-    position:relative;
-    transition: all 500ms ease;
-  }
-
-.meshume{
-    text-align:right;
-    margin-right:13%;
-    padding-top:1%;
-    font-weight:lighter;
 }
-.a_meshume{
-    color:white;
-    text-decoration:none;
-}
-.a_meshume:hover{
-    color:white;
-}
-.arrowimage{
-    width:2%;
-    padding-left:1%;  
-}
- .hbpt{
-    display:none;
-    justify-content: center;
-    align-items: center;
-    border-radius:9px;
-    border:1px solid #f3722c;
-    padding-left:9%;
-    padding-right:9%;
-    color:white;
-    background-color:transparent;
-}
-
-.ptcover:hover .hbpt{
-    display:block;
-    margin: 0;
-    position: absolute;
-    left: 50%;
-    bottom: 2%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-}
-
-.ptdesc {
-    display:none;
-    justify-content: center;
-    align-items: center;
-    color:white;
-    background-color:transparent;
-}
-
-.ptcover:hover .ptdesc {
-    width: 80%;
-    font-size:15px;
-    display:block;
-    margin: 0;
-    position: absolute;
-    top: 65%;
-    left: 52%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-}
-
-
-.pttitle {
-    position: relative;
-    width: max-content;
-    display:none;
-    justify-content: center;
-    align-items: center;
-    font-size: 15px !important;
-    color:white;
-    background-color:transparent;
-}
-
-
- .underlinept {
-     visibility: hidden;
-     position: absolute;
-     top: 50%;
-     left: 0.5%;
-     width: max-content;
-     height: 3px;
-     background-color: orange;
-
-     transform: scaleX(0);
-     transition: all 0.3s linear;
-     transform-origin: left;
- }
-
-.ptcover:hover .underlinept {
-    visibility: visible;
-    position: absolute;
-    top: 50%;
-    left: 0.5%;
-    width: 150px;
-    height: 3px;
-    background-color: orange;
-    transform: scaleX(1); 
-    transition: transform 500ms ease;
-    transform-origin: left; 
-}
-
- .ptcover:hover .underlinept::after {
-    transform: scaleX(1);
- }
-
-
-.ptcover:hover .pttitle {
-    width: 80%;
-    font-size:15px;
-    display:block;
-    margin: 0;
-    position: absolute;
-    top: 45%;
-    left: 52%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-}
-
-.ptcover:hover .pttitle::after {
-    transform: scaleX(1) !important;
+.myprofileDiv{
+  border-radius: 20px;
+  border: 2px solid white;
+  width:40%;
+  padding: 20px 20px 20px 20px;
+  text-align:left;
 }
