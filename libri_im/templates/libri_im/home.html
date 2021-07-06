@@ -47,8 +47,8 @@
         </div>
       </div>
         <div class="dukelexuarprogress">
-            <div class="circleImage">
-                <img  src="{{progressBookImage}}" alt="noimg">
+            <div class="circleImage" style="width: 100px; background-image: url({{progressBookImage}}); background-size: cover; clip-path: circle(60px at center);">
+                <!-- <img  src="{{progressBookImage}}" alt="noimg"> -->
             </div>
           <div class="title">
             <p>{{progressTitulli}}</p>
@@ -114,7 +114,7 @@
       <h3 class="pttitle">John Grisham</h3>
       <div class="underlinept"></div>
       <p class="ptdesc">This book is an amazing representation of a well written and well sought after series. </p>
-      <button class="hbpt">Dua ta lexoj</button>
+      <button class="mybutton hbpt">Dua ta lexoj</button>
     </div>
    {% endfor %}
   </div>
@@ -154,11 +154,9 @@
    <div class="events1 left" >
       <div class="img-container">
         <img src="{% static 'libri_im/images/summerEvent.png' %}" class="img">
-        
       </div>
         <button id="btnEvent">Kliko ketu</button>
     </div>
-     
    <div class="events1 right">
     <div class="img-container">
         <img src="{% static 'libri_im/images/YearEvent1.png' %}" class="img">

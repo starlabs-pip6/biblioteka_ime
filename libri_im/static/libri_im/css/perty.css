@@ -15,11 +15,11 @@
 } */
 
 
-.ptimage {
+/* .ptimage {
     width: 100%;
     transition: all 0.3s;
   }
-  .ptcover:hover .ptimage, .mybuttonhover:hover {
+.ptcover:hover .ptimage, .mybuttonhover:hover {
     transform: scale(1.1);
     opacity: 0.3;
   }
@@ -44,9 +44,9 @@
   
     font-size:200%;
     font-weight:lighter;
-}
+} */
 
-.meshume{
+/* .meshume{
     text-align:right;
     margin-right:13%;
     padding-top:1%;
@@ -63,8 +63,8 @@
     width:2%;
     padding-left:1%;
     
-}
- .hbpt{
+} */
+ /* .hbpt{
     display:none;
     justify-content: center;
     align-items: center;
@@ -75,8 +75,8 @@
     color:white;
     background-color:transparent;
   
-}
-.ptcover:hover .hbpt{
+} */
+/* .ptcover:hover .hbpt{
     display:block;
     margin: 0;
     position: absolute;
@@ -84,21 +84,21 @@
     bottom: 2%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-}
+} */
 
-.ptdesc {
+/* .ptdesc {
     display:none;
     justify-content: center;
-    align-items: center;
+    align-items: center; */
     /* border-radius:9px;
     border:1px solid #f3722c; */
     /* padding-left:-9%;
     padding-right:-9%; */
-    color:white;
+    /* color:white;
     background-color:transparent;
-}
+} */
 
-.ptcover:hover .ptdesc {
+/* .ptcover:hover .ptdesc {
     width: 80%;
     font-size:small;
     display:block;
@@ -108,23 +108,23 @@
     left: 52%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-}
+} */
 
 
-.pttitle {
+/* .pttitle {
     position: relative;
     width: max-content;
     display:none;
     justify-content: center;
     align-items: center;
-    font-size: 17px !important;
+    font-size: 17px !important; */
     /* border-radius:9px;
     border:1px solid #f3722c; */
     /* padding-left:-9%;
     padding-right:-9%; */
-    color:white;
-    background-color:transparent;
-}
+    /* color:white;
+    background-color:transparent; */
+/* } */
 /* 
   
   .ptcover:hover .pttitle:after {
@@ -150,7 +150,7 @@
 
  */
 
- .underlinept {
+ /* .underlinept {
      visibility: hidden;
      position: absolute;
      top: 50%;
@@ -162,9 +162,9 @@
      transform: scaleX(0);
      transition: all 0.3s linear;
      transform-origin: left;
- }
+ } */
 
-.ptcover:hover .underlinept {
+/* .ptcover:hover .underlinept {
     visibility: visible;
     position: absolute;
     top: 50%;
@@ -176,11 +176,11 @@
 
     transition: transform 500ms ease;
     transform-origin: left; 
- }
+ } */
 
- .ptcover:hover .underlinept::after {
+ /* .ptcover:hover .underlinept::after {
     transform: scaleX(1);
- }
+ } */
 
 .ptcover:hover .pttitle:after {
     /* content: '';
@@ -198,7 +198,7 @@
 }
 
 
-.ptcover:hover .pttitle {
+/* .ptcover:hover .pttitle {
     width: 80%;
     font-size:small;
     display:block;
@@ -212,4 +212,4 @@
 
 .ptcover:hover .pttitle::after {
     transform: scaleX(1) !important;
-}
+} */
