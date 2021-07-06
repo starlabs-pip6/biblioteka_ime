@@ -1,0 +1,13 @@
+.content-list {
+  padding: 10px 20px;
+  border: 1px solid #dddddd;
+  border-radius: 16px;
+  margin-right: 15px;
+  display: inline;
+  font-size: 25px;
+  float: right;
+}
+.ulShfleto {
+  color: white;
+  font-size: 15px;
+}
