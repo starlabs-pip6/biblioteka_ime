@@ -1,0 +1,60 @@
+.sortby{
+    margin-top:3%;
+}
+.sortByImages{
+    display:flex;
+    flex-wrap:wrap;
+    align-items: center;
+    justify-content: center;
+  
+}
+
+.headingSortby{
+    text-align:center;
+    color:white;
+    display:block;
+    
+  
+    font-size:200%;
+    font-weight:lighter;
+}
+
+.meshume{
+    text-align:right;
+    margin-right:13%;
+    padding-top:1%;
+    font-weight:lighter;
+}
+.a_meshume{
+    color:white;
+    text-decoration:none;
+}
+.a_meshume:hover{
+    color:white;
+}
+.arrowimage{
+    width:2%;
+    padding-left:1%;
+    
+}
+ .hoverbutton{
+    display:none;
+    justify-content: center;
+    align-items: center;
+    border-radius:9px;
+    border:2px solid #f3722c;
+    padding-left:9%;
+    padding-right:9%;
+    color:white;
+    background-color:transparent;
+  
+}
+.mycover:hover .hoverbutton{
+    display:block;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left:50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}

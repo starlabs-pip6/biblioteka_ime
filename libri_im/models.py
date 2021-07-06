@@ -15,7 +15,7 @@ class Book(models.Model):
     nr_vleresimit = models.IntegerField()#int
     nr_faqeve = models.IntegerField()#int
     viti_publikimit = models.IntegerField() #int
-    image_link = models.CharField(max_length=500, default="https://www.directtextbook.com/large/.jpg")
+    image_link = models.CharField(max_length=500, default="https://www.directtextbook.com/medium/.jpg")
 
     def __str__(self):
         return self.titulli
@@ -54,6 +54,11 @@ class MyAccountManager(BaseUserManager):
 
           
 # User Model based on AbsctractBaseUser
+def get_profile_image_filepath(self, filename):
+    return f'profile_images/{str(self.pk)}/{"profile_image.png"}'
+
+def get_default_profile_image():
+    return "profile_images/profile_image.png"
 class NewUser(AbstractBaseUser):
     #User profile fields
     email = models.EmailField(verbose_name="email", max_length=60, unique=True)
@@ -69,6 +74,7 @@ class NewUser(AbstractBaseUser):
     read=ArrayField(models.IntegerField(),blank=True, null=True, default=list)
     want_to_read=ArrayField(models.IntegerField(),blank=True, null=True, default=list)
     reading=ArrayField(models.IntegerField(),blank=True, null=True, default=list)
+    profileImg = models.ImageField(max_length=255, upload_to=get_profile_image_filepath, null=True, blank=True, default=get_default_profile_image)
 
     objects = MyAccountManager()
     USERNAME_FIELD = 'email'

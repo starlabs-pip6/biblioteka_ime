@@ -1,0 +1,106 @@
+.sirtariim {
+  background-color: #000;
+}
+
+.title-container {
+  display: flex;
+  justify-content: center;
+  height: 10vh;
+  align-items: center;
+}
+.title-container h1 {
+  font-weight: 300;
+  font-size: 30px;
+}
+
+.sirtariim-container {
+  height: 70vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  margin: 0;
+  padding: 0 5vw;
+}
+.sirtariim-container > * {
+  border-radius: 20px;
+  border: 2px solid white;
+  padding: 20px 20px 0 20px;
+  height: 70%;
+  margin: 0 20px 0 20px;
+}
+.sirtaret {
+  flex: 1;
+}
+.dukelexuarprogress {
+  flex: 1;
+}
+.njoftimet {
+  scrollbar-width: auto;
+  scrollbar-color: #f3722c #000000;
+  border-radius: 20px 0 0 20px;
+  overflow: scroll;
+  overflow-x: hidden;
+  flex: 1;
+}
+
+.njoftimet::-webkit-scrollbar {
+  width: 10px;
+  margin-right: 10px;
+}
+
+.njoftimet::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);
+}
+
+.njoftimet::-webkit-scrollbar-thumb {
+  background-color: #f3722c;
+  border-radius: 10px;
+  border: rgba(0, 0, 0, 0);
+}
+
+.njoftimi {
+  border: 2px solid #f3722c;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.njoftimicontent {
+  margin: 10px;
+  font-size: 12px;
+}
+.text {
+  color: white;
+}
+
+.nrlibrave-container {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 20px;
+}
+
+.centerFlex {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.circleImage{
+    width: 40%;
+}
+
+.circleImage img {
+    width: 100%;
+        border-radius: 50%;
+}
+
+.dukelexuarprogress{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.dukelexuarprogress .title p {
+  margin:0;
+  padding:10px 0;
+}
