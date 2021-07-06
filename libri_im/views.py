@@ -1,4 +1,5 @@
 from django import forms
+from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate, logout
@@ -12,6 +13,7 @@ from django.views.generic import (CreateView,
                                     DetailView,
                                     DeleteView,
                                     UpdateView)
+                                    
 from django.urls import reverse
 from django.db import models
 
@@ -200,3 +202,24 @@ class BookUpdateView(UpdateView):
     
     def get_success_url(self):
         return reverse('admin_home')
+
+
+class ProfilePageView(DetailView):
+    model = NewUser 
+    template_name='libri_im/profile_page.html'
+    context_object_name = 'user'
+    def get_success_url(self):
+        return reverse('profile_page')
+
+    def get_object(self):
+        return self.request.user
+    
+class ProfileUpdateView(UpdateView):
+    model = NewUser
+    fields = ['username']
+    template_name= 'libri_im/profile_page_update.html'
+    
+    def get_success_url(self):
+        return reverse('profile_page')
+    def get_object(self):
+        return self.request.user

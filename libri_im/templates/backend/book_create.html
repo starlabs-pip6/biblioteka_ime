@@ -1,4 +1,6 @@
 {% extends 'libri_im/base.html' %} {% load static %} {% block content %}
+
+{% if user.is_authenticated and user.is_admin %}
 <form method="POST">
   {% csrf_token %}
   <fieldset class="form-group">
@@ -9,4 +11,10 @@
     <button type="submit">Create</button>
   </div>
 </form>
+{% else %}
+<h2>
+  You should be loged in and have admin premissions to access this page's
+  content
+</h2>
+{% endif %}
 {% endblock content%}

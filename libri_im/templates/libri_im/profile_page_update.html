@@ -1,0 +1,16 @@
+{% extends 'libri_im/base.html' %} {% load static %} {% block content %}
+
+<div class="myprofile">
+    <div class="myprofileDiv">
+<form method="POST">
+  {% csrf_token %}
+  <fieldset class="form-group">
+    <legend>Update Profile</legend>
+    {{ form.as_p }}
+  </fieldset>
+  <div class="form-group">
+    <button type="submit" class="mybutton">Save</button>
+  </div>
+</div>
+</div>
+{% endblock content%}

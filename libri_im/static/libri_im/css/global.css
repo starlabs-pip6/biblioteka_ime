@@ -33,3 +33,19 @@
   background-color: white;
   border-color: white;
 }
+
+.myprofile{
+  margin-top:5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+
+}
+.myprofileDiv{
+  border-radius: 20px;
+  border: 2px solid white;
+  width:40%;
+  padding: 20px 20px 20px 20px;
+  text-align:left;
+}

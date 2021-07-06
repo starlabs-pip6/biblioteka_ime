@@ -1,0 +1,23 @@
+{% extends 'libri_im/base.html' %} {% load static %} {% block content %}
+
+{% if request.user.is_authenticated %}
+<style>
+    .a_meshume:hover{color:#f3722c; }
+    .mybutton{ padding:5px 10px 5px 10px;}
+</style>
+<div class="myprofile">
+    <div class="myprofileDiv">
+        <p>Username:  {{ object.username }}</p>
+        <p>Email:  {{ object.email }}</p>
+        <p>Joined date:  {{ object.date_joined }}</p>
+        <p>Last logged in date:  {{ object.last_login }}</p>  
+        <a href="{% url 'profile_page_update' %}" class="mybutton a_meshume" >Modifiko</a>
+    </div>
+</div>
+{% else %}
+<h2>
+    You should be loged in and have admin premissions to access this page's
+    content
+  </h2>
+{% endif %}
+{% endblock content %}

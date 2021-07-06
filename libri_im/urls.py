@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from .views import BookCreateView, BookListView,BookDetailView,BookDeleteView, BookUpdateView
+from .views import BookCreateView, BookListView,BookDetailView,BookDeleteView, BookUpdateView, ProfilePageView,ProfileUpdateView
 
 
 urlpatterns = [
@@ -41,6 +41,9 @@ urlpatterns = [
     path('backend/book/update/<int:pk>/', BookUpdateView.as_view(template_name="backend/book_update.html"), name='book_update'),
     path('backend/book/<int:pk>/', BookDetailView.as_view(template_name="backend/book_detail.html"), name='book_detail'),  
     path('backend/book/delete/<int:pk>/',BookDeleteView.as_view(template_name="backend/delete.html"),name='delete'),
+
+    path('profile/', ProfilePageView.as_view(template_name="libri_im/profile_page.html"), name="profile_page"),
+    path('profile/update/', ProfileUpdateView.as_view(template_name="libri_im/profile_page_update.html"), name='profile_page_update'),
 ]
 
 
