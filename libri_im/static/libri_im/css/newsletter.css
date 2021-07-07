@@ -1,0 +1,83 @@
+.newsletter {
+  position: relative;
+  padding-top: 30px;
+  padding-left: 220px;
+  flex-grow: 1;
+}
+
+.newsletter svg {
+  position: absolute;
+  z-index: 0;
+  top: -90px;
+  left: 60px;
+  fill: #fcdbe8;
+}
+
+.newsletter .newsletter-title {
+  margin-bottom: 40px;
+  font-family: IMFell DW, Times, Georgia, serif;
+  font-weight: 400;
+  font-style: italic;
+  color: #f8961e;
+  font-size: 4.0625rem;
+  letter-spacing: -0.02em;
+  line-height: 0.9230769231;
+  position: relative;
+  z-index: 999;
+}
+
+.newsletter .newsletter-text {
+  color: #f3722c;
+  padding-right: 140px;
+  position: relative;
+  z-index: 999;
+  max-width: 450px;
+  font-style: "Montserrat";
+}
+
+.newsletter .newsletter-form {
+  position: relative;
+  max-width: 355px;
+  margin-top: 23px;
+  z-index: 999;
+}
+
+.newsletter .newsletter-form input {
+  height: 45px;
+  width: 100%;
+  padding: 18px 135px 17px 30px;
+  font-family: IM Fell English, Times, Georgia, serif;
+  font-weight: 400;
+  font-style: italic;
+  border: 0 none;
+  border-radius: 20px;
+  outline: none;
+  background-color: #fff;
+  color: #577590;
+  font-size: 1.125rem;
+  line-height: 1;
+}
+
+.newsletter .newsletter-form button {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  width: 105px;
+  height: 28px;
+  transition: background-color 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  border-radius: 15px;
+  background-color: #f8961e;
+  color: #fff;
+  font-size: 0.875rem;
+  line-height: 1;
+  position: absolute;
+  right: 9px;
+  bottom: 9px;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  border: 0px;
+  outline: none;
+  text-decoration: none;
+  cursor: pointer;
+}
