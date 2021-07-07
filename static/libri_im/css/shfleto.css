@@ -1,13 +1,54 @@
+.shfletoImages {
+  /* display: flex;
+  flex-direction: row;
+  width: 80%;
+  flex-wrap: wrap;
+  gap: 10px; */
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0;
+  column-gap: 10px;
+  row-gap: 10px;
+  width: 70%;
+}
+.shfletoImages > * {
+  width: 100%;
+  height: 100%;
+}
 .content-list {
-  padding: 10px 20px;
-  border: 1px solid #dddddd;
+  padding: 10px 40px;
+  border: 1px solid #f3722c;
+  text-align: center;
   border-radius: 16px;
-  margin-right: 15px;
-  display: inline;
+
+  display: flex;
   font-size: 25px;
-  float: right;
+
+  justify-content: center;
+  color: #f3722c;
+  font-family: "Montserrat", sans-serif;
+
+  flex-direction: column;
 }
 .ulShfleto {
-  color: white;
+  color: #f3722c;
   font-size: 15px;
+  text-align: center;
+  padding: 0px 20px;
+}
+.ulShfleto :hover {
+  color: white;
+}
+.liShfleto {
+  list-style: none;
+  cursor: pointer;
+}
+.booksCategory {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+.shfleto-Container {
+  width: 100%;
+  height: 100%;
 }
