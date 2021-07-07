@@ -1,14 +1,45 @@
 {% extends 'libri_im/base.html' %} {% load static %} {% block content %}
-
+<link rel="stylesheet" type=text/css href="{% static 'libri_im/css/profile.css' %}">
 <div class="myprofile">
     <div class="myprofileDiv">
 <form method="POST" enctype="multipart/form-data">
   {% csrf_token %}
-  <fieldset class="form-group">
+  <fieldset>
     <legend>Update Profile</legend>
-    <input type="text" name = "username" value="{{object.username}}">
-    <br>
-    <input type="file" name = "profileImg" id="profileImg">
+    <div class="input-container">
+        <div class="form-group">
+              <label  for="username">Change Username</label>
+              <input class="form-control" type="text" name = "username" id="username" value="{{object.username}}">
+         </div>
+         <div class="form-group">
+              <label  for="email">Change Email</label>
+              <input class="form-control" type="text" name = "email" id="email" value="{{object.email}}">
+         </div>
+        <div class="form-group">
+              <label  for="profileImg">Upload profile picture</label>
+               <input class="form-control" type="file"  name = "profileImg" id="profileImg">
+          </div>
+        <div class="form-group">
+              <label  for="profileImg">Change Password</label>
+              <p>To change your password <a href="{% url 'change-password' %}">click here</a></p>
+          </div>
+                    {% for field in form %}
+                    <p>
+                    {% for error in field.errors %}
+                    <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                    </p>
+                    {% endfor %}
+                    {% if form.non_field_errors %}
+                    <div style="color: red">
+                    <p>{{form.non_field_errors}}</p>
+                    </div>
+
+                    {% endif %}
+
+    </div>
+   
+  
   </fieldset>
   <div class="form-group">
     <button type="submit" class="mybutton">Save</button>
