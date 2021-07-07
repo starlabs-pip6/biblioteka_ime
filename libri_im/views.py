@@ -62,7 +62,8 @@ class SignUpView(View):
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': account_activation_token.make_token(user),
             })
-            user.send(subject, message)
+            
+            user.email_user(subject, message)
 
             messages.success(request, ('Please Confirm your email to complete registration.'))
 

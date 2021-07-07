@@ -1,8 +1,7 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from .views import BookCreateView, BookListView,BookDetailView,BookDeleteView, BookUpdateView, ProfilePageView,ProfileUpdateView
-from .views import SignUpView, ActivateAccount
+from .views import BookCreateView, BookListView,BookDetailView,BookDeleteView, BookUpdateView, ProfilePageView,ProfileUpdateView, SignUpView, ActivateAccount
 
 urlpatterns = [
 
