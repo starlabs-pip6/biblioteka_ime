@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth import authenticate
 
 from libri_im.models import NewUser
@@ -40,11 +40,14 @@ class UserAuthenticationForm(forms.ModelForm):
             if not authenticate(email=email,password=password):
                 raise forms.ValidationError("Invalid login. Check email and password again.")
 
-    # def save(self):
-    #     email = request.POST['email']
-    #     password = request.POST['password']
-    #     user = aithenticate(email=email, password=password)
-    #     if user:
-    #         login(request, user)
 
+
+
+class MyPasswordChangeForm(PasswordChangeForm):
+    old_password = forms.CharField(max_length = 100,widget=forms.PasswordInput(attrs={'class': 'form-control', 'type':'password'}))
+    new_password1 = forms.CharField(max_length = 100,widget=forms.PasswordInput(attrs={'class': 'form-control', 'type':'password'}))
+    new_password2 =forms.CharField(max_length = 100,widget=forms.PasswordInput(attrs={'class': 'form-control', 'type':'password'}))
     
+    class Meta:
+        model = NewUser
+        fields = ('old_password','new_password1','new_password2')

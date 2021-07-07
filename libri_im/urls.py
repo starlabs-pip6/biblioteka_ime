@@ -12,6 +12,7 @@ urlpatterns = [
     path('register/', views.register_view, name='register'),
     path('shfleto/', views.shfleto_view, name='shfleto'),
 
+
     
     #password reset
     path('reset_password/',
@@ -44,6 +45,8 @@ urlpatterns = [
 
     path('profile/', ProfilePageView.as_view(template_name="libri_im/profile_page.html"), name="profile_page"),
     path('profile/update/', ProfileUpdateView.as_view(template_name="libri_im/profile_page_update.html"), name='profile_page_update'),
+    path('profile/password', views.MyPasswordChangeView.as_view(template_name="registration/change-password.html"), name="change-password"),
+
 ]
 
 
