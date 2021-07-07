@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
 from .views import BookCreateView, BookListView,BookDetailView,BookDeleteView, BookUpdateView, ProfilePageView,ProfileUpdateView
-
+from .views import SignUpView, ActivateAccount
 
 urlpatterns = [
 
@@ -44,6 +44,9 @@ urlpatterns = [
 
     path('profile/', ProfilePageView.as_view(template_name="libri_im/profile_page.html"), name="profile_page"),
     path('profile/update/', ProfileUpdateView.as_view(template_name="libri_im/profile_page_update.html"), name='profile_page_update'),
+    path('signup/', SignUpView.as_view(), name='signup'),
+    path('activate/<uidb64>/<token>/', ActivateAccount.as_view(), name='activate'),
+
 ]
 
 

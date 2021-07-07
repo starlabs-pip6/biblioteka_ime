@@ -4,6 +4,11 @@ from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.urls import reverse
 # Books Model
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
+
+        
 class Book(models.Model):
     id_libri = models.AutoField(primary_key=True)
     isbn = models.BigIntegerField()
@@ -99,3 +104,14 @@ class Progress(models.Model):
     id_libri = models.ForeignKey(Book, on_delete=models.CASCADE)
     id_user = models.ForeignKey(NewUser, on_delete=models.CASCADE)
     pages_now = models.IntegerField(default=0)
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(NewUser, on_delete=models.CASCADE)
+    email_confirmed = models.BooleanField(default=False)
+
+@receiver(post_save, sender=NewUser)
+def update_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+        instance.profile.save()
