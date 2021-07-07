@@ -1,27 +1,32 @@
 {% extends 'libri_im/base.html' %}
 {% load static %}
 {% block content %}
-<link rel="stylesheet" type=text/css href="{% static 'libri_im/css/perty.css' %}"> 
-<link rel="stylesheet" type=text/css href="{% static 'libri_im/css/shfleto.css' %}"> 
-<div class="PerTyImages">
-{% for book in books %}
-    <div class="ptcover">
-      <img src="{{book.image_link}}" class="ptimage" alt="noimg">
-      <h3 class="pttitle hover-1">{{book.autori}}</h3>
-      <div class="underlinept"></div>
-      <p class="ptdesc">{{book.pershkrimi}} </p>
-      <button class="hbpt">Dua ta lexoj</button>
-    </div>
- 
-{% endfor %}  
-</div>
-<div class="content-list">
-    <h3>Categories</h3> 
-    {%for book1 in books%}
-        <ul class="ulShfleto">
-            <li>{{book1.kategoria}}</li>
-        </ul>
 
-    {%endfor%}
+
+<div class="shfleto-Container">
+    <div class="booksCategory">
+    <div class="shfletoImages" >
+            {% for book in books %}
+                    
+                <div class=" mycover ptcover">
+                <img src="{{book.image_link}}" class="ptimage" alt="noimg">
+                <h3 class="pttitle hover-1">{{book.autori}}</h3>
+                <div class="underlinept"></div>
+                <p class="ptdesc">{{book.pershkrimi}} </p>
+                <button class="mybutton hbpt">Dua ta lexoj</button>
+                
+                </div>
+            {% endfor %}  
+    </div>
+    <div class="content-list">
+            <h3>Categories</h3> 
+            {%for book1 in books%}
+                <ul class="ulShfleto">
+                    <li class="liShfleto">{{book1.kategoria}}</li>
+                </ul>
+
+            {%endfor%}
+    </div>
+</div>
 </div>
 {% endblock %}

@@ -28,8 +28,8 @@
   transition: all 0.3s ease;
 }
 
-.mybutton:hover{
-  color: #f3722c ;
+.mybutton:hover {
+  color: #f3722c;
   background-color: white;
   border-color: white;
 }
