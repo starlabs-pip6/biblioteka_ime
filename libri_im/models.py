@@ -7,9 +7,9 @@ from django.urls import reverse
 class Book(models.Model):
     id_libri = models.AutoField(primary_key=True)
     isbn = models.BigIntegerField()
-    titulli = models.CharField(max_length=500)#char
-    autori = models.CharField(max_length=100) #char
-    kategoria = models.CharField(max_length=100)#char
+    titulli = models.CharField(max_length=2000)#char
+    autori = models.CharField(max_length=2000) #char
+    kategoria = models.CharField(max_length=2000)#char
     pershkrimi = models.TextField()#char
     mes_vleresimit = models.DecimalField(max_digits=5, decimal_places=2)#double
     nr_vleresimit = models.IntegerField()#int
