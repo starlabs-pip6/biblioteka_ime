@@ -3,19 +3,25 @@ from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.forms import PasswordChangeForm
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import LibratSerializer ,UsersSerializer
 from .models import Book, NewUser, Progress
-from .forms import RegistrationForm, UserAuthenticationForm
+from .forms import RegistrationForm, UserAuthenticationForm, MyPasswordChangeForm
 from django.views.generic import (CreateView, 
                                     ListView,
                                     DetailView,
                                     DeleteView,
                                     UpdateView)
                                     
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.db import models
+class MyPasswordChangeView(PasswordChangeView):
+    form_class = MyPasswordChangeForm
+    def get_success_url(self):
+        return reverse('profile_page')
 
 
 @api_view(['GET'])
@@ -81,7 +87,7 @@ def home_view(request):
     if not current_user:
         current_user='anonimous user(not loged in)'
     context={
-        'current_username' : current_user,
+        # 'current_username' : current_user,
         'books': books,
         'booksLatest' : books.order_by('-viti_publikimit')[0:6],
         'booksR' : books.order_by('-mes_vleresimit')[0:6],
@@ -208,6 +214,7 @@ class ProfilePageView(DetailView):
     model = NewUser 
     template_name='libri_im/profile_page.html'
     context_object_name = 'user'
+    
     def get_success_url(self):
         return reverse('profile_page')
 
@@ -216,10 +223,12 @@ class ProfilePageView(DetailView):
     
 class ProfileUpdateView(UpdateView):
     model = NewUser
-    fields = ['username','profileImg']
+    fields = ['username','profileImg','email']
     template_name= 'libri_im/profile_page_update.html'
     
     def get_success_url(self):
         return reverse('profile_page')
     def get_object(self):
         return self.request.user
+
+

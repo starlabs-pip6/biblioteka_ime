@@ -4,14 +4,19 @@
 <style>
     .a_meshume:hover{color:#f3722c; }
     .mybutton{ padding:5px 10px 5px 10px;}
+    
+    .profile1 { width: 200px; height: 200px;}
 </style>
 <div class="myprofile">
     <div class="myprofileDiv">
-         <img src="{{ object.profileImg.url }}" width="200" height="auto"alt="noImg">
-        <p>Username:  {{ object.username }}</p>
-        <p>Email:  {{ object.email }}</p>
-        <p>Joined date:  {{ object.date_joined }}</p>
-        <p>Last logged in date:  {{ object.last_login }}</p>  
+        <div class="profile1">
+            <img class="profileImg" src="{{ object.profileImg.url }}" width="200" height="200"alt="noImg">
+        </div>
+        <div class="personalInfo">
+            <p>Username:  {{ object.username }}</p>
+            <p>Email:  {{ object.email }}</p>
+            <p>Joined date:  {{ object.date_joined }}</p>
+        </div>
        
         <a href="{% url 'profile_page_update' %}" class="mybutton a_meshume" >Modifiko</a>
     </div>

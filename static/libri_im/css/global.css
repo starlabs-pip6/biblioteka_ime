@@ -46,7 +46,6 @@
 .ptcover {
     cursor: pointer;
     overflow: hidden;
-    position:relative;
     transition: all 500ms ease;
   }
 
