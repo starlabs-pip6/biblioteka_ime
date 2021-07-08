@@ -6,8 +6,10 @@
 
 <div class="register-container">
 		  <div class="body-container">
+			 
 		    <form class="form" method="post">{% csrf_token %}
 				<h1 class="form-title">Register</h1>
+					{% include 'alerts/messages.html'%}
 				<p><input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
 				</p>
 				<p>
@@ -19,19 +21,6 @@
 				  <p>
 				<input type="password" name="password2" id="inputPassword2" class="form-control" placeholder="Confirm password" required>
  				</p>
-				{% for field in registration_form %}
-				<p>
-				{% for error in field.errors %}
-				<p style="color: red">{{ error }}</p>
-				{% endfor %}
-				</p>
-				{% endfor %}
-				{% if registration_form.non_field_errors %}
-				<div style="color: red">
-					<p>{{registration_form.non_field_errors}}</p>
-				</div>
-
-				{% endif %}
 				<p>
 				<button class="register" type="submit">Register</button>
 					</p>

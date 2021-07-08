@@ -27,7 +27,6 @@ SECRET_KEY = 'django-insecure-*u#r0#y8s$q*%92+r=yuyb$zxd0losmi=nm#f=nkp#w58=r+*1
 DEBUG = True
 
 # send like a fake email only for development
-ALLOWED_HOSTS = []
 
 AUTH_USER_MODEL = "libri_im.NewUser"
 AUTHENTICATION_BACKENDS = (
@@ -152,4 +151,4 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = '587'  # tls
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'starlabs.pip6@gmail.com'
-EMAIL_HOST_PASSWORD = 'cmhqxbkzwppxcgro'
+EMAIL_HOST_PASSWORD = 'ogmsiyqhmxrfubsf'

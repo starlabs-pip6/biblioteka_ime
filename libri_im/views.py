@@ -15,6 +15,20 @@ from django.views.generic import (CreateView,
                                     DetailView,
                                     DeleteView,
                                     UpdateView)
+from .utils import account_activation_token
+#from validate_email import validate_email
+from django.contrib import messages
+from django.core.mail import EmailMessage
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
+from django.core.mail import send_mail
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.template.loader import render_to_string
+from .utils import account_activation_token
+from django.urls import reverse
+from django.contrib import auth
+from django.views import View
                                     
 from django.urls import reverse, reverse_lazy
 from django.db import models
@@ -117,30 +131,114 @@ def shfleto_view(request):
     }
     return render(request, 'libri_im/shfleto.html',context)
 
-def register_view(request,*args,**kwargs):
-    user = request.user
-    if user.is_authenticated:
-        return HttpResponse(f'You are already authenticated as {user.email}')
-    context = {}
+# def register_view(request,*args,**kwargs):
+    # user = request.user
+    # if user.is_authenticated:
+    #     return HttpResponse(f'You are already authenticated as {user.email}')
+    # context = {}
 
-    if request.POST:
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            email = form.cleaned_data.get('email').lower()
-            raw_pw = form.cleaned_data.get('password1')
-            account = authenticate(email=email, password=raw_pw)
-            login(request, account)
-            destination = get_redirect_if_exists(request)
-            if destination:
-                return redirect(destination)
-            return redirect("home")
+    # if request.POST:
+    #     form = RegistrationForm(request.POST)
+    #     if form.is_valid():
+    #         form.save()
+    #         email = form.cleaned_data.get('email').lower()
+    #         raw_pw = form.cleaned_data.get('password1')
+    #         account = authenticate(email=email, password=raw_pw)
+    #         login(request, account)
+    #         destination = get_redirect_if_exists(request)
+    #         if destination:
+    #             return redirect(destination)
+    #         return redirect("home")
+    #     else:
+    #         context['registration_form'] = form
+
+    # return render(request,'libri_im/register.html', context)
+
+class RegistationView(View): 
+    def get(self, request):
+        return render(request, 'libri_im/register.html')
+
+    def post(self, request):
+        # GET USER DATA
+        # VALIDATE
+        # create a user account
+
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password1']
+        password2 = request.POST['password2']
+
+        context = {
+            'fieldValues': request.POST
+        }
+
+        if not NewUser.objects.filter(username=username).exists():
+            if not NewUser.objects.filter(email=email).exists():
+                if len(password) < 8:
+                    messages.warning(request, 'Fjalekalimi shume i shkurter, duhet te kete te pakten 8 karaktere.')
+                    return render(request, 'libri_im/register.html', context)
+                if password != password2:
+                    messages.warning(request, 'Fjalekalimi dhe konfirmimi nuk perputhen')
+                    return render(request, 'libri_im/register.html', context)
+
+                user = NewUser.objects.create_user( email=email, username=username)
+                user.set_password(password)
+                user.is_active = False
+                user.save()
+                current_site = get_current_site(request)
+                email_body = {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': account_activation_token.make_token(user),
+                }
+
+                link = reverse('activate', kwargs={
+                               'uidb64': email_body['uid'], 'token': email_body['token']})
+
+                email_subject = 'Activate your account'
+
+                activate_url = 'http://'+current_site.domain+link
+
+                email = EmailMessage(
+                    email_subject,
+                    'Hi '+user.username + ', Please the link below to activate your account \n'+activate_url,
+                    'starlabs.pip6@gmail.com',
+                    [request.POST['email']],
+                )
+                email.send(fail_silently=False)
+                messages.success(request, 'Account successfully created')
+                return render(request, 'libri_im/register.html')
+            else:
+                messages.warning(request, f'The email: "{request.POST["email"]}" already exists.')
+                return render(request, 'libri_im/register.html')
         else:
-            context['registration_form'] = form
+            messages.warning(request, f'The username: "{request.POST["username"]}" already exists.')
+            return render(request, 'libri_im/register.html')
 
-    return render(request,'libri_im/register.html', context)
+class VerificationView(View):
+    def get(self, request, uidb64, token):
+        try:
+            id = force_text(urlsafe_base64_decode(uidb64))
+            user = NewUser.objects.get(pk=id)
 
-    
+            if not account_activation_token.check_token(user, token):
+                messages.warning(request, 'Account already activated. You can Log in')
+                return redirect('login')
+
+            if user.is_active:
+                return redirect('login')
+            user.is_active = True
+            user.save()
+
+            messages.success(request, 'Account activated successfully')
+            return redirect('login')
+
+        except Exception as ex:
+            pass
+
+        return redirect('login')
+
 def logout_view(request):
     logout(request)
     return redirect("home")
@@ -166,6 +264,9 @@ def login_view(request,*args, **kwargs):
                 if destination:
                     return redirect(destination)
                 return redirect("home")
+        else:
+            messages.warning(request, 'Email ose fjalekalimi i gabuar')
+            return redirect('login')
     else:
         form = UserAuthenticationForm()
     context['login_form'] = form
