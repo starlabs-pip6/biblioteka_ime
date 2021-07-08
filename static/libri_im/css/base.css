@@ -7,9 +7,17 @@ body{
   font-family: "Montserrat", sans-serif !important;
   color:white !important;
 }
+.header-container{
+  position:fixed;
+  width: 100%;
+  top:0;
+  left: 0;
+  z-index:3;
+}
 .navbar {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
+ 
 }
 
 .logonavbar {
@@ -153,4 +161,10 @@ nav a:hover {
 }
 .adminHome a{
   font-size: 15px;
+}
+
+
+.pushContent{
+  width: 100%;
+  height: 50px;
 }

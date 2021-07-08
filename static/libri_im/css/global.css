@@ -6,11 +6,14 @@
   border: 2px solid #f3722c;
   margin-right: 0.5%;
   position: relative;
+    
 }
 
 .myimage {
   width: 100%;
+  height: 100%;
   transition: all 0.3s;
+  object-fit: cover !important; 
 }
 .mycover:hover .myimage{
   transform: scale(1.1);
@@ -98,7 +101,7 @@
 
 .ptcover:hover .ptdesc {
     width: 80%;
-    font-size:15px;
+    font-size:10px;
     display:block;
     margin: 0;
     position: absolute;
@@ -115,7 +118,7 @@
     display:none;
     justify-content: center;
     align-items: center;
-    font-size: 15px !important;
+    font-size: 10px !important;
     color:white;
     background-color:transparent;
 }
@@ -155,7 +158,7 @@
 
 .ptcover:hover .pttitle {
     width: 80%;
-    font-size:15px;
+    font-size:10px;
     display:block;
     margin: 0;
     position: absolute;

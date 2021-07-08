@@ -110,7 +110,7 @@
     <div class="PerTyImages">
       {% for book in booksID %}
     <div class="mycover ptcover">
-      <img src="{{ book.image_link }}" class="ptimage">
+      <img src="{{ book.image_link }}" class="ptimage myimage">
       <h3 class="pttitle">John Grisham</h3>
       <div class="underlinept"></div>
       <p class="ptdesc">This book is an amazing representation of a well written and well sought after series. </p>
@@ -128,7 +128,7 @@
     <div class="sortByImages"> 
       {% for book in booksLatest %}
     <div class="mycover">
-      <img src="{{ book.image_link}}" class="myimage">
+      <img src="{{ book.image_link}}" class="ptimage myimage">
       <button class=" mybutton hoverbutton">Dua ta lexoj</button>
     </div>
     {% endfor %}
