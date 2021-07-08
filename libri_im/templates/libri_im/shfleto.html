@@ -10,9 +10,9 @@
                     
                 <div class=" mycover ptcover ">
                 <img src="{{book.image_link}}" class="ptimage" alt="noimg">
-                <h3 class="pttitle hover-1">{{book.autori}}</h3>
+                <h3 class="pttitle hover-1">{{book.titulli}}</h3>
                 <div class="underlinept"></div>
-                <p class="ptdesc">{{book.pershkrimi}} </p>
+                <p class="ptdesc text-truncate">{{book.pershkrimi}} </p>
                 <button class="mybutton hbpt">Dua ta lexoj</button>
                 
                 </div>
@@ -20,9 +20,9 @@
     </div>
     <div class="content-list col-sm-2 col-md-3 ">
             <h3>Categories</h3> 
-            {%for book1 in books%}
+            {%for category in books1%}
                 <ul class="ulShfleto">
-                    <li class="liShfleto">{{book1.kategoria}}</li>
+                    <li class="liShfleto">{{category.viti_publikimit}}</li>
                 </ul>
 
             {%endfor%}

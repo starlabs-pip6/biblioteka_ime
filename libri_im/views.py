@@ -71,8 +71,8 @@ def home_view(request):
             progressBookImage = ""
             print("No user")
         dlcount = len(current_user.reading)
-        dtlcount = len(current_user.read)
-        klcount = len(current_user.want_to_read)
+        dtlcount = len(current_user.want_to_read)
+        klcount = len(current_user.read)
     else:
         progressLibri = "no data"
         progressUser = "no data"
@@ -107,9 +107,13 @@ def home_view(request):
     return render(request, 'libri_im/home.html',context)
 
 def shfleto_view(request):
-    books = Book.objects.all()
+    books = Book.objects.all()[0:30]
+    books1 = Book.objects.all()[0:10]
+    # categories = books.viti_publikimit
     context={
          'books' : books,
+         'books1' : books1,
+        #  'categories' : categories,
     }
     return render(request, 'libri_im/shfleto.html',context)
 
