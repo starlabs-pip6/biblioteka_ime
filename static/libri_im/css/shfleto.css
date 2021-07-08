@@ -12,7 +12,6 @@
   width: 70%;
 }
 .shfletoImages > * {
-
 }
 .content-list {
   padding: 10px 40px;
@@ -28,9 +27,9 @@
   font-family: "Montserrat", sans-serif;
 
   flex-direction: column;
-    height: 70vh;
-    position: fixed;
-    left: 70%;
+  height: 70vh;
+  position: fixed;
+  left: 70%;
 }
 .ulShfleto {
   color: #f3722c;
@@ -53,4 +52,20 @@
 .shfleto-Container {
   width: 100%;
   height: 100%;
+}
+.dropdownShfleto {
+  background-color: transparent;
+  color: aliceblue;
+  border: 1px solid #f3722c;
+  padding: 5px 50px;
+  margin: 30px;
+  cursor: inherit;
+  font-family: "Montserrat", sans-serif;
+  border-radius: 10px;
+}
+
+.optionShfleto {
+  background-color: black;
+  color: aliceblue;
+  font-family: "Montserrat", sans-serif;
 }

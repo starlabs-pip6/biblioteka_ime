@@ -4,6 +4,19 @@
 
 
 <div class="shfleto-Container col-md-12 col-xl-12 ">
+    <form >
+        
+        <select name = "dropdown" class="dropdownShfleto">
+           <option value = "Rendit sipas..." selected class="optionShfleto">Rendit sipas... </option>
+           <option value = "Titulli" class="optionShfleto">Titulli</option>
+           <option value = "Autori" class="optionShfleto" >Autori</option>
+           <option value = "Me te vlersuarit"class="optionShfleto" >Me te vlersuarit</option>
+           <option value = "Viti publikimit" class="optionShfleto">Viti publikimit</option>
+           <option value = "Librat e fundit" class="optionShfleto">Librat e fundit</option>
+        </select>
+     </form>
+
+      
     <div class="booksCategory">
     <div class="shfletoImages col-sm-12 col-md-8 col-sm-10" >
             {% for book in books %}
