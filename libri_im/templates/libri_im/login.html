@@ -9,28 +9,16 @@
     <div class="col-sm-12 col-md-6 col-lg-12">
 <div class="login-container">
 		
-                <form class="form" method="post">{% csrf_token %}
+                <form class="form" method="post">
+                  {% csrf_token %}
                   <div class="body-container">
                     <h1 class="form-title">Login</h1>
-                    
+                  {% include 'alerts/messages.html'%}    
                   <p>  <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
                   </p>
                    <p>
                     <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
                     </p>
-                    {% for field in login_form %}
-                    <p>
-                    {% for error in field.errors %}
-                    <p style="color: red">{{ error }}</p>
-                    {% endfor %}
-                    </p>
-                    {% endfor %}
-                    {% if login_form.non_field_errors %}
-                    <div style="color: red">
-                    <p>{{login_form.non_field_errors}}</p>
-                    </div>
-
-                    {% endif %}
                     <p>
                     <button class="mybutton" type="submit" style="padding-top:1%;padding-bottom:1%">Log in</button>
                     </p>

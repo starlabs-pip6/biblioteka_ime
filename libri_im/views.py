@@ -166,6 +166,7 @@ class RegistationView(View):
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password1']
+        password2 = request.POST['password2']
 
         context = {
             'fieldValues': request.POST
@@ -173,8 +174,11 @@ class RegistationView(View):
 
         if not NewUser.objects.filter(username=username).exists():
             if not NewUser.objects.filter(email=email).exists():
-                if len(password) < 6:
-                    messages.error(request, 'Password too short')
+                if len(password) < 8:
+                    messages.warning(request, 'Fjalekalimi shume i shkurter, duhet te kete te pakten 8 karaktere.')
+                    return render(request, 'libri_im/register.html', context)
+                if password != password2:
+                    messages.warning(request, 'Fjalekalimi dhe konfirmimi nuk perputhen')
                     return render(request, 'libri_im/register.html', context)
 
                 user = NewUser.objects.create_user( email=email, username=username)
@@ -200,13 +204,17 @@ class RegistationView(View):
                     email_subject,
                     'Hi '+user.username + ', Please the link below to activate your account \n'+activate_url,
                     'starlabs.pip6@gmail.com',
-                    [email],
+                    [request.POST['email']],
                 )
                 email.send(fail_silently=False)
                 messages.success(request, 'Account successfully created')
-                return render(request, 'authentication/register.html')
-
-        return render(request, 'authentication/register.html')
+                return render(request, 'libri_im/register.html')
+            else:
+                messages.warning(request, f'The email: "{request.POST["email"]}" already exists.')
+                return render(request, 'libri_im/register.html')
+        else:
+            messages.warning(request, f'The username: "{request.POST["username"]}" already exists.')
+            return render(request, 'libri_im/register.html')
 
 class VerificationView(View):
     def get(self, request, uidb64, token):
@@ -215,7 +223,8 @@ class VerificationView(View):
             user = NewUser.objects.get(pk=id)
 
             if not account_activation_token.check_token(user, token):
-                return redirect('login'+'?message='+'User already activated')
+                messages.warning(request, 'Account already activated. You can Log in')
+                return redirect('login')
 
             if user.is_active:
                 return redirect('login')
@@ -255,6 +264,9 @@ def login_view(request,*args, **kwargs):
                 if destination:
                     return redirect(destination)
                 return redirect("home")
+        else:
+            messages.warning(request, 'Email ose fjalekalimi i gabuar')
+            return redirect('login')
     else:
         form = UserAuthenticationForm()
     context['login_form'] = form
