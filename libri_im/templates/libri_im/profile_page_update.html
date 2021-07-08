@@ -1,5 +1,8 @@
 {% extends 'libri_im/base.html' %} {% load static %} {% block content %}
 <link rel="stylesheet" type=text/css href="{% static 'libri_im/css/profile.css' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
 <div class="myprofile">
     <div class="myprofileDiv">
 <form method="POST" enctype="multipart/form-data">
@@ -23,19 +26,6 @@
               <label  for="profileImg">Change Password</label>
               <p>To change your password <a href="{% url 'change-password' %}">click here</a></p>
           </div>
-                    {% for field in form %}
-                    <p>
-                    {% for error in field.errors %}
-                    <p style="color: red">{{ error }}</p>
-                    {% endfor %}
-                    </p>
-                    {% endfor %}
-                    {% if form.non_field_errors %}
-                    <div style="color: red">
-                    <p>{{form.non_field_errors}}</p>
-                    </div>
-
-                    {% endif %}
 
     </div>
    
@@ -44,6 +34,19 @@
   <div class="form-group">
     <button type="submit" class="mybutton">Save</button>
   </div>
+ 
+   <!-- <div id="theModal" class="modal fade height-50vh" style="background-color: black;">
+    <div class="modal-dialog">
+      <div class="modal-content">
+      </div>
+    </div>
+  </div> -->
 </div>
 </div>
+  <!-- <script>
+    $('.modal1').on('click', function(e){
+      e.preventDefault();
+      $('#theModal').modal('show').find('.modal-content').load($(this).attr('href'));
+    });
+  </script> -->
 {% endblock content%}
