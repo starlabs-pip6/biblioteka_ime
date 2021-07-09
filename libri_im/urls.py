@@ -11,6 +11,11 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('register/', views.register_view, name='register'),
     path('shfleto/', views.shfleto_view, name='shfleto'),
+    path('shfleto/', views.specific_search, name='specificsearch'),
+
+    # path('shfleto/<str:srid>', views.specific_search, name='specificsearch'),
+    # path('search_books', views.search_books, name='search-books'),
+    
 
 
     
@@ -30,6 +35,7 @@ urlpatterns = [
     path('reset_password_complete/', 
         auth_views.PasswordResetCompleteView.as_view(template_name="password_reset/password_reset_done.html"), 
         name="password_reset_complete"),
+
 
     #Create
         # Temporary endpoints to test serializers

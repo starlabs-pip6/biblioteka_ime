@@ -18,6 +18,11 @@ from django.views.generic import (CreateView,
                                     
 from django.urls import reverse, reverse_lazy
 from django.db import models
+from django import template
+import requests
+
+
+
 class MyPasswordChangeView(PasswordChangeView):
     form_class = MyPasswordChangeForm
     def get_success_url(self):
@@ -108,6 +113,9 @@ def home_view(request):
 
 def shfleto_view(request):
     books = Book.objects.all()[0:30]
+    query = request.GET.get('search')
+    if query:
+        books =Book.objects.filter(titulli__icontains=query)
     books1 = Book.objects.all()[0:10]
     # categories = books.viti_publikimit
     context={
@@ -235,4 +243,57 @@ class ProfileUpdateView(UpdateView):
     def get_object(self):
         return self.request.user
 
+# def search_books(request):
+#     if request.method == "POST":
+#         searched = request.POST.get('searched')
+#         books = Book.objects.filter(titulli__icontains=searched)
+        
+#         return render(request,
+#         'libri_im/search_books.html',
+#         {'searched':searched,'books':books})
+#     else:
+#         return render(request,
+#         'libri_im/search_books.html',
+#         {})
 
+def specific_search(request,srid):
+    bfg = request.GET.get('search')
+    
+
+    books = Book.objects.filter(titulli__icontains=bfg)
+    
+    context={
+         'books' : books,
+         
+    }
+    
+    return render(request, 'libri_im/shfleto.html',context)
+    
+    
+
+
+
+# register = template.Library()
+
+# @register.simple_tag(takes_context=True)
+# def query_transform(request,srid,context, **kwargs):
+#     booksfrompostget = request.POST.get('searched')r
+
+    # query = context['searched'].GET.copy()
+    # for k, v in kwargs.items():
+    #     query[k] = v
+    # return query.urlencode()
+
+
+
+    '''
+    Returns the URL-encoded querystring for the current page,
+    updating the params with the key/value pairs passed to the tag.
+    
+    E.g: given the querystring ?foo=1&bar=2
+    {% query_transform bar=3 %} outputs ?foo=1&bar=3
+    {% query_transform foo='baz' %} outputs ?foo=baz&bar=2
+    {% query_transform foo='one' bar='two' baz=99 %} outputs ?foo=one&bar=two&baz=99
+    
+    A RequestContext is required for access to the current querystring.
+    '''
