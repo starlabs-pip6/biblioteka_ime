@@ -1,11 +1,11 @@
 .welcome {
   background-color: black;
-  height:80vh;
+  height: 80vh;
 }
 
 #slideshow {
   margin: 0 auto;
-  padding-top: 10px;
+  padding-top: 40px;
   height: 350px;
   width: 100%;
   background-color: #000000;
@@ -55,7 +55,7 @@
 .entire-content {
   margin: auto;
   width: 120px;
-  perspective: 1000px;
+  perspective: 700px;
   position: relative;
   padding-top: 80px;
 }
@@ -79,6 +79,8 @@
   border: 1px solid #3b444b;
   overflow: hidden;
   position: absolute;
+  border-radius: 8%;
+  border: 2px solid #f3722c;
 }
 
 .content-carrousel figure:nth-child(1) {

@@ -9,15 +9,9 @@
     <section id="slideshow">
       <div class="entire-content">
           <div class="content-carrousel">
-              <figure class="shadow"><img src="https://directtextbook.com/large/9788497646987.jpg"/></figure>
-              <figure class="shadow"><img src="https://directtextbook.com/large/9788497646988.jpg"/></figure>
-              <figure class="shadow"><img src="https://directtextbook.com/large/9788497646977.jpg"/></figure>
-              <figure class="shadow"><img src="https://directtextbook.com/large/9788497646966.jpg"/></figure>
-              <figure class="shadow"><img src="https://directtextbook.com/large/9788497646955.jpg"/></figure>
-              <figure class="shadow"><img src="https://directtextbook.com/large/9788497646944.jpg"/></figure>
-              <figure class="shadow"><img src="https://directtextbook.com/large/9788497646933.jpg"/></figure>
-              <figure class="shadow"><img src="https://directtextbook.com/large/9788497646922.jpg"/></figure>
-              <figure class="shadow"><img src="https://directtextbook.com/large/9788497646911.jpg"/></figure>
+            {% for cBook in cbooks %}
+              <figure class="shadow"><img src="{{ cBook.image_link }}"/></figure>
+            {% endfor %}
           </div>
       </div>
     </section>

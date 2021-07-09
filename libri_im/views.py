@@ -7,14 +7,14 @@ from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import PasswordChangeForm
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .serializers import LibratSerializer ,UsersSerializer
+from .serializers import LibratSerializer, UsersSerializer
 from .models import Book, NewUser, Progress
 from .forms import RegistrationForm, UserAuthenticationForm, MyPasswordChangeForm
-from django.views.generic import (CreateView, 
-                                    ListView,
-                                    DetailView,
-                                    DeleteView,
-                                    UpdateView)
+from django.views.generic import (CreateView,
+                                  ListView,
+                                  DetailView,
+                                  DeleteView,
+                                  UpdateView)
 from .utils import account_activation_token
 #from validate_email import validate_email
 from django.contrib import messages
@@ -28,21 +28,22 @@ from django.template.loader import render_to_string
 from .utils import account_activation_token
 from django.urls import reverse
 from django.contrib import auth
-from django.views import View 
+from django.views import View
 from django.urls import reverse, reverse_lazy
 from django.db import models
 
 
 class MyPasswordChangeView(PasswordChangeView):
     form_class = MyPasswordChangeForm
+
     def get_success_url(self):
         return reverse('profile_page')
 
 
 @api_view(['GET'])
 def backendOverView(request):
-    backendUrls ={
-        'Books' : '/books',
+    backendUrls = {
+        'Books': '/books',
         'Specific Books': '/books/<id>',
     }
     return Response(backendUrls)
@@ -54,8 +55,9 @@ def booksList(request):
     serializer = LibratSerializer(booksObj, many=True)
     return Response(serializer.data)
 
+
 @api_view(['GET'])
-def specificBook(request,pk):
+def specificBook(request, pk):
     bookObj = Book.objects.get(id_libri=pk)
     serializer = LibratSerializer(bookObj, many=False)
     return Response(serializer.data)
@@ -64,18 +66,19 @@ def specificBook(request,pk):
 def home_view(request):
     current_user = request.user
     books = Book.objects.all()
-    cBooks = books[0:9]
-    
+    cBooks = books.order_by("?")[0:9]
+
     if(not current_user.is_anonymous):
-       
-        try :
+
+        try:
             progress = Progress.objects.get(id_user=current_user.id)
             progressLibri = progress.id_libri
             progressUser = progress.id_user
             progressNowPages = progress.pages_now
             progressAllPages = progress.id_libri.nr_faqeve
             progressLibriTitulli = progress.id_libri.titulli
-            progressPercent =  round(float((progressNowPages/progressAllPages)*100),1)
+            progressPercent = round(
+                float((progressNowPages/progressAllPages)*100), 1)
             progressBookImage = progress.id_libri.image_link
         except models.ObjectDoesNotExist:
             progressLibri = "no data"
@@ -101,38 +104,39 @@ def home_view(request):
         dtlcount = "no data"
         klcount = "no data"   # userR = users.reading
     if not current_user:
-        current_user='anonimous user(not loged in)'
-    context={
+        current_user = 'anonimous user(not loged in)'
+    context = {
         # 'current_username' : current_user,
         'books': books,
         'cbooks': cBooks,
-        'booksLatest' : books.order_by('-viti_publikimit')[0:6],
-        'booksR' : books.order_by('-mes_vleresimit')[0:6],
-        'booksID' : books.order_by('?')[0:6],
-        'dlcount' : dlcount,
-        'klcount' : klcount,
+        'booksLatest': books.order_by('-viti_publikimit')[0:6],
+        'booksR': books.order_by('-mes_vleresimit')[0:6],
+        'booksID': books.order_by('?')[0:6],
+        'dlcount': dlcount,
+        'klcount': klcount,
         'dtlcount': dtlcount,
         'progressLibri': progressLibri,
-        'progressUser' : progressUser,
-        'progressNowPages' : progressNowPages,
-        'progressAllPages' : progressAllPages,
-        'progressLibriTitulli' : progressLibriTitulli,
-        'progressPercent' : progressPercent,
-        'progressBookImage':progressBookImage,
+        'progressUser': progressUser,
+        'progressNowPages': progressNowPages,
+        'progressAllPages': progressAllPages,
+        'progressLibriTitulli': progressLibriTitulli,
+        'progressPercent': progressPercent,
+        'progressBookImage': progressBookImage,
     }
-    
-    return render(request, 'libri_im/home.html',context)
+
+    return render(request, 'libri_im/home.html', context)
+
 
 def shfleto_view(request):
     books = Book.objects.all()[0:30]
     books1 = Book.objects.all()[0:10]
     # categories = books.viti_publikimit
-    context={
-         'books' : books,
-         'books1' : books1,
+    context = {
+        'books': books,
+        'books1': books1,
         #  'categories' : categories,
     }
-    return render(request, 'libri_im/shfleto.html',context)
+    return render(request, 'libri_im/shfleto.html', context)
 
 # def register_view(request,*args,**kwargs):
     # user = request.user
@@ -157,7 +161,8 @@ def shfleto_view(request):
 
     # return render(request,'libri_im/register.html', context)
 
-class RegistationView(View): 
+
+class RegistationView(View):
     def get(self, request):
         return render(request, 'libri_im/register.html')
 
@@ -178,13 +183,16 @@ class RegistationView(View):
         if not NewUser.objects.filter(username=username).exists():
             if not NewUser.objects.filter(email=email).exists():
                 if len(password) < 8:
-                    messages.warning(request, 'Fjalekalimi shume i shkurter, duhet te kete te pakten 8 karaktere.')
+                    messages.warning(
+                        request, 'Fjalekalimi shume i shkurter, duhet te kete te pakten 8 karaktere.')
                     return render(request, 'libri_im/register.html', context)
                 if password != password2:
-                    messages.warning(request, 'Fjalekalimi dhe konfirmimi nuk perputhen')
+                    messages.warning(
+                        request, 'Fjalekalimi dhe konfirmimi nuk perputhen')
                     return render(request, 'libri_im/register.html', context)
 
-                user = NewUser.objects.create_user( email=email, username=username)
+                user = NewUser.objects.create_user(
+                    email=email, username=username)
                 user.set_password(password)
                 user.is_active = False
                 user.save()
@@ -205,19 +213,24 @@ class RegistationView(View):
 
                 email = EmailMessage(
                     email_subject,
-                    'Pershendetje '+user.username + ', ju lutem klikoni ne linkun e me poshtem per te aktivizuar llogarine ne "Sirtari" \n'+activate_url,
+                    'Pershendetje '+user.username +
+                    ', ju lutem klikoni ne linkun e me poshtem per te aktivizuar llogarine ne "Sirtari" \n'+activate_url,
                     'starlabs.pip6@gmail.com',
                     [request.POST['email']],
                 )
                 email.send(fail_silently=False)
-                messages.success(request, 'Llogaria u krijua me sukses. Per ta perdorur aktivizojeni me linkun e derguar ne email')
+                messages.success(
+                    request, 'Llogaria u krijua me sukses. Per ta perdorur aktivizojeni me linkun e derguar ne email')
                 return render(request, 'libri_im/register.html')
             else:
-                messages.warning(request, f'Emaili: "{request.POST["email"]}" eshte ne perdorim.')
+                messages.warning(
+                    request, f'Emaili: "{request.POST["email"]}" eshte ne perdorim.')
                 return render(request, 'libri_im/register.html')
         else:
-            messages.warning(request, f'Emri i perdoruesit: "{request.POST["username"]}" eshte ne perdorim.')
+            messages.warning(
+                request, f'Emri i perdoruesit: "{request.POST["username"]}" eshte ne perdorim.')
             return render(request, 'libri_im/register.html')
+
 
 class VerificationView(View):
     def get(self, request, uidb64, token):
@@ -226,7 +239,8 @@ class VerificationView(View):
             user = NewUser.objects.get(pk=id)
 
             if not account_activation_token.check_token(user, token):
-                messages.warning(request, 'Llogaria juaj eshte aktivizuar me pare. Ju mund te kyqeni.')
+                messages.warning(
+                    request, 'Llogaria juaj eshte aktivizuar me pare. Ju mund te kyqeni.')
                 return redirect('login')
 
             if user.is_active:
@@ -234,7 +248,8 @@ class VerificationView(View):
             user.is_active = True
             user.save()
 
-            messages.success(request, 'Llogaria juaj eshte aktivizuar. Ju mund te kyqeni.')
+            messages.success(
+                request, 'Llogaria juaj eshte aktivizuar. Ju mund te kyqeni.')
             return redirect('login')
 
         except Exception as ex:
@@ -242,32 +257,35 @@ class VerificationView(View):
 
         return redirect('login')
 
+
 def logout_view(request):
     logout(request)
     return redirect("home")
 
-def login_view(request,*args, **kwargs):
+
+def login_view(request, *args, **kwargs):
     context = {}
     user = request.user
-    
-    if user.is_authenticated: 
+
+    if user.is_authenticated:
         return redirect("home")
-    
+
     destination = get_redirect_if_exists(request)
     print("destination: " + str(destination))
-   
+
     if request.POST:
         form = UserAuthenticationForm(request.POST)
-       
+
         if form.is_valid():
-            
+
             email = request.POST['email']
             password = request.POST['password']
             user = authenticate(email=email, password=password)
 
             if user:
                 if not user.is_active:
-                    messages.warning(request, 'Llogaria juaj nuk eshte aktivizuar ende. Per ta perdorur aktivizojeni me linkun e derguar ne email.')
+                    messages.warning(
+                        request, 'Llogaria juaj nuk eshte aktivizuar ende. Per ta perdorur aktivizojeni me linkun e derguar ne email.')
                     return redirect('login')
                 login(request, user)
                 if destination:
@@ -281,68 +299,76 @@ def login_view(request,*args, **kwargs):
     context['login_form'] = form
     return render(request, "libri_im/login.html", context)
 
+
 def get_redirect_if_exists(request):
-    redirect=None
+    redirect = None
     if request.GET:
         if request.GET.get("next"):
             redirect = str(request.GET.get("next"))
     return redirect
 
+
 class BookCreateView(CreateView):
     model = Book
-    fields =['isbn','titulli','autori','kategoria','pershkrimi','mes_vleresimit','nr_vleresimit','nr_faqeve','viti_publikimit','image_link']
+    fields = ['isbn', 'titulli', 'autori', 'kategoria', 'pershkrimi',
+              'mes_vleresimit', 'nr_vleresimit', 'nr_faqeve', 'viti_publikimit', 'image_link']
+
     def get_success_url(self):
         return reverse('admin_home')
 
-        
+
 class BookListView(ListView):
-    model = Book 
-    template_name='backend/home.html'
+    model = Book
+    template_name = 'backend/home.html'
     context_object_name = 'books'
+
     def get_success_url(self):
         return reverse('admin_home')
     ordering = ['id_libri']
 
+
 class BookDetailView(DetailView):
     model = Book
-   
-class BookDeleteView(DeleteView):
-    model=Book
-    success_url = '/'
-    template_name='backend/delete.html'
 
-   
+
+class BookDeleteView(DeleteView):
+    model = Book
+    success_url = '/'
+    template_name = 'backend/delete.html'
+
     def get_success_url(self):
         return reverse('admin_home')
 
+
 class BookUpdateView(UpdateView):
     model = Book
-    fields = ['isbn','titulli', 'autori', 'kategoria','pershkrimi','mes_vleresimit', 'nr_vleresimit', 'nr_faqeve', 'viti_publikimit','image_link']
-    template_name= 'libri_im/backend/addbook.html'
-    
+    fields = ['isbn', 'titulli', 'autori', 'kategoria', 'pershkrimi',
+              'mes_vleresimit', 'nr_vleresimit', 'nr_faqeve', 'viti_publikimit', 'image_link']
+    template_name = 'libri_im/backend/addbook.html'
+
     def get_success_url(self):
         return reverse('admin_home')
 
 
 class ProfilePageView(DetailView):
-    model = NewUser 
-    template_name='libri_im/profile_page.html'
+    model = NewUser
+    template_name = 'libri_im/profile_page.html'
     context_object_name = 'user'
-    
+
     def get_success_url(self):
         return reverse('profile_page')
 
     def get_object(self):
         return self.request.user
-    
+
+
 class ProfileUpdateView(UpdateView):
     model = NewUser
-    fields = ['username','profileImg','email']
-    template_name= 'libri_im/profile_page_update.html'
-    
+    fields = ['username', 'profileImg', 'email']
+    template_name = 'libri_im/profile_page_update.html'
+
     def get_success_url(self):
         return reverse('profile_page')
+
     def get_object(self):
         return self.request.user
-
-
