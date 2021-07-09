@@ -64,6 +64,7 @@ def specificBook(request,pk):
 def home_view(request):
     current_user = request.user
     books = Book.objects.all()
+    cBooks = books[0:9]
     
     if(not current_user.is_anonymous):
        
@@ -104,6 +105,7 @@ def home_view(request):
     context={
         # 'current_username' : current_user,
         'books': books,
+        'cbooks': cBooks,
         'booksLatest' : books.order_by('-viti_publikimit')[0:6],
         'booksR' : books.order_by('-mes_vleresimit')[0:6],
         'booksID' : books.order_by('?')[0:6],
