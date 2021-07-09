@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import os
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -89,7 +90,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'biblioteka_ime',
         'USER': 'postgres',
-        'PASSWORD': 'root',
+        'PASSWORD': config('DATABASEPW'),
         'HOST': 'localhost',
     }
 }
@@ -151,4 +152,4 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = '587'  # tls
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'starlabs.pip6@gmail.com'
-EMAIL_HOST_PASSWORD = 'ogmsiyqhmxrfubsf'
+EMAIL_HOST_PASSWORD = config('EMAILPW')
