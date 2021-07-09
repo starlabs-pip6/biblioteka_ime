@@ -1,0 +1,16 @@
+{% extends 'libri_im/base.html' %}
+{% load static %}
+{% block content %}
+
+
+        {% if searched %}
+            <h1> You searched for {{ searched }} </h1>
+            {% for book in books %}
+                Titulli : {{ book }}<br /> Autori : {{ book.autori }} <br />
+            {% endfor %}
+        {% else %}
+            <h1>Hey! You Forgot to Search for a Book...</h1>
+        {% endif%}
+
+
+{% endblock %}

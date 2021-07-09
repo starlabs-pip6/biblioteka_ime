@@ -11,9 +11,12 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('register/', views.RegistationView.as_view(), name='register'),
     path('shfleto/', views.shfleto_view, name='shfleto'),
+    path('shfleto/', views.specific_search, name='specificsearch'),
+    # path('shfleto/<str:srid>', views.specific_search, name='specificsearch'),
+    # path('search_books', views.search_books, name='search-books'),    
 
 
-    
+
     #password reset
     path('reset_password/',
      auth_views.PasswordResetView.as_view(template_name="password_reset/password_reset.html"),
