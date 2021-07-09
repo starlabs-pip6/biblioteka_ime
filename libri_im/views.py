@@ -28,10 +28,11 @@ from django.template.loader import render_to_string
 from .utils import account_activation_token
 from django.urls import reverse
 from django.contrib import auth
-from django.views import View
-                                    
+from django.views import View 
 from django.urls import reverse, reverse_lazy
 from django.db import models
+
+
 class MyPasswordChangeView(PasswordChangeView):
     form_class = MyPasswordChangeForm
     def get_success_url(self):
@@ -196,24 +197,24 @@ class RegistationView(View):
                 link = reverse('activate', kwargs={
                                'uidb64': email_body['uid'], 'token': email_body['token']})
 
-                email_subject = 'Activate your account'
+                email_subject = 'Aktivizo llogarine ne "Sirtari"'
 
                 activate_url = 'http://'+current_site.domain+link
 
                 email = EmailMessage(
                     email_subject,
-                    'Hi '+user.username + ', Please the link below to activate your account \n'+activate_url,
+                    'Pershendetje '+user.username + ', ju lutem klikoni ne linkun e me poshtem per te aktivizuar llogarine ne "Sirtari" \n'+activate_url,
                     'starlabs.pip6@gmail.com',
                     [request.POST['email']],
                 )
                 email.send(fail_silently=False)
-                messages.success(request, 'Account successfully created')
+                messages.success(request, 'Llogaria u krijua me sukses. Per ta perdorur aktivizojeni me linkun e derguar ne email')
                 return render(request, 'libri_im/register.html')
             else:
-                messages.warning(request, f'The email: "{request.POST["email"]}" already exists.')
+                messages.warning(request, f'Emaili: "{request.POST["email"]}" eshte ne perdorim.')
                 return render(request, 'libri_im/register.html')
         else:
-            messages.warning(request, f'The username: "{request.POST["username"]}" already exists.')
+            messages.warning(request, f'Emri i perdoruesit: "{request.POST["username"]}" eshte ne perdorim.')
             return render(request, 'libri_im/register.html')
 
 class VerificationView(View):
@@ -223,7 +224,7 @@ class VerificationView(View):
             user = NewUser.objects.get(pk=id)
 
             if not account_activation_token.check_token(user, token):
-                messages.warning(request, 'Account already activated. You can Log in')
+                messages.warning(request, 'Llogaria juaj eshte aktivizuar me pare. Ju mund te kyqeni.')
                 return redirect('login')
 
             if user.is_active:
@@ -231,7 +232,7 @@ class VerificationView(View):
             user.is_active = True
             user.save()
 
-            messages.success(request, 'Account activated successfully')
+            messages.success(request, 'Llogaria juaj eshte aktivizuar. Ju mund te kyqeni.')
             return redirect('login')
 
         except Exception as ex:
@@ -246,20 +247,26 @@ def logout_view(request):
 def login_view(request,*args, **kwargs):
     context = {}
     user = request.user
+    
     if user.is_authenticated: 
         return redirect("home")
-
+    
     destination = get_redirect_if_exists(request)
     print("destination: " + str(destination))
-
+   
     if request.POST:
         form = UserAuthenticationForm(request.POST)
+       
         if form.is_valid():
+            
             email = request.POST['email']
             password = request.POST['password']
             user = authenticate(email=email, password=password)
 
             if user:
+                if not user.is_active:
+                    messages.warning(request, 'Llogaria juaj nuk eshte aktivizuar ende. Per ta perdorur aktivizojeni me linkun e derguar ne email.')
+                    return redirect('login')
                 login(request, user)
                 if destination:
                     return redirect(destination)
