@@ -31,6 +31,7 @@ from django.contrib import auth
 from django.views import View
 from django.urls import reverse, reverse_lazy
 from django.db import models
+from django.db.models import Q
 
 
 class MyPasswordChangeView(PasswordChangeView):
@@ -129,6 +130,9 @@ def home_view(request):
 
 def shfleto_view(request):
     books = Book.objects.all()[0:30]
+    query = request.GET.get('search')
+    if query:
+        books =Book.objects.filter(Q(titulli__icontains=query) | (Q(autori__icontains=query)) | (Q(isbn__icontains=query)) | (Q(kategoria__icontains=query)) | (Q(viti_publikimit__icontains=query)))
     books1 = Book.objects.all()[0:10]
     # categories = books.viti_publikimit
     context = {

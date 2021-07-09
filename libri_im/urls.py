@@ -11,6 +11,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('register/', views.RegistationView.as_view(), name='register'),
     path('shfleto/', views.shfleto_view, name='shfleto'),
+    
 
 
     
