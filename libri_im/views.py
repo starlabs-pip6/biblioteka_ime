@@ -33,6 +33,7 @@ from django.urls import reverse, reverse_lazy
 from django.db import models
 from django.db.models import Q
 
+
 class MyPasswordChangeView(PasswordChangeView):
     form_class = MyPasswordChangeForm
 
@@ -131,7 +132,8 @@ def shfleto_view(request):
     books = Book.objects.all()[0:30]
     query = request.GET.get('search')
     if query:
-        books =Book.objects.filter(Q(titulli__icontains=query) | (Q(autori__icontains=query)) | (Q(isbn__icontains=query)) | (Q(kategoria__icontains=query)) | (Q(viti_publikimit__icontains=query)))
+        books = Book.objects.filter(Q(titulli__icontains=query) | (Q(autori__icontains=query)) | (
+            Q(isbn__icontains=query)) | (Q(kategoria__icontains=query)) | (Q(viti_publikimit__icontains=query)))
     books1 = Book.objects.all()[0:10]
     # categories = books.viti_publikimit
     context = {
@@ -376,16 +378,18 @@ class EditProfile(UpdateView):
     def get_object(self):
         return self.request.user
 
+
 def ProfilePageViewDetails(request):
     current_user = request.user
-    WantToRead = NewUser.objects.filter().only('want_to_read')
-    Reading = NewUser.objects.filter().only('reading')
-    Read = NewUser.objects.filter().only('read')
-    
+
+    WantToRead = Book.objects.all()[0:3]
+    Reading = Book.objects.all()[4:7]
+    Read = Book.objects.all()[8:11]
+
     context = {
-            'WantToRead': WantToRead,
-            'Reading': Reading,
-            'Read': Read,
-      
-        }
+        'WantToRead': WantToRead,
+        'Reading': Reading,
+        'Read': Read,
+
+    }
     return render(request, 'libri_im/profile_page_view.html', context)
