@@ -8,7 +8,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import LibratSerializer, UsersSerializer
-from .models import Book, NewUser, Progress
+from .models import Book, NewUser, Progress, Sirtar
 from .forms import RegistrationForm, UserAuthenticationForm, MyPasswordChangeForm
 from django.views.generic import (CreateView,
                                   ListView,
@@ -32,6 +32,7 @@ from django.views import View
 from django.urls import reverse, reverse_lazy
 from django.db import models
 from django.db.models import Q
+from . import myfunctions
 
 class MyPasswordChangeView(PasswordChangeView):
     form_class = MyPasswordChangeForm
@@ -199,6 +200,9 @@ class RegistationView(View):
                 user.set_password(password)
                 user.is_active = False
                 user.save()
+                #creates 3 default sirtars
+                myfunctions.create_default_sirtar(email)
+                
                 current_site = get_current_site(request)
                 email_body = {
                     'user': user,
@@ -206,7 +210,6 @@ class RegistationView(View):
                     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                     'token': account_activation_token.make_token(user),
                 }
-
                 link = reverse('activate', kwargs={
                                'uidb64': email_body['uid'], 'token': email_body['token']})
 
@@ -234,6 +237,9 @@ class RegistationView(View):
                 request, f'Emri i perdoruesit: "{request.POST["username"]}" eshte ne perdorim.')
             return render(request, 'libri_im/register.html')
 
+
+
+                                        
 
 class VerificationView(View):
     def get(self, request, uidb64, token):
@@ -269,6 +275,8 @@ def logout_view(request):
 def login_view(request, *args, **kwargs):
     context = {}
     user = request.user
+    
+   
 
     if user.is_authenticated:
         return redirect("home")

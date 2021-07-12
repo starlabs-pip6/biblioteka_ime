@@ -74,6 +74,7 @@ class NewUser(AbstractBaseUser):
     read=ArrayField(models.IntegerField(),blank=True, null=True, default=list)
     want_to_read=ArrayField(models.IntegerField(),blank=True, null=True, default=list)
     reading=ArrayField(models.IntegerField(),blank=True, null=True, default=list)
+
     profileImg = models.ImageField(max_length=255, upload_to=get_profile_image_filepath, null=True, blank=True, default=get_default_profile_image)
 
     objects = MyAccountManager()
@@ -99,3 +100,16 @@ class Progress(models.Model):
     id_libri = models.ForeignKey(Book, on_delete=models.CASCADE)
     id_user = models.ForeignKey(NewUser, on_delete=models.CASCADE)
     pages_now = models.IntegerField(default=0)
+    def __str__(self):
+            return self.id_user.username+" Progress"
+
+class Sirtar(models.Model):
+    id = models.AutoField(primary_key=True)
+    emri = models.CharField(max_length = 200, null= False, blank = False)
+    id_user = models.ForeignKey(NewUser, on_delete=models.CASCADE)
+    books = ArrayField(models.IntegerField(),blank=True, null=True, default=list)
+    is_public = models.BooleanField(null = False, blank = False, default = True)
+    can_delete = models.BooleanField(null = False, blank = False, default = False)
+
+    def __str__(self):
+            return self.id_user.username+" "+ self.emri
