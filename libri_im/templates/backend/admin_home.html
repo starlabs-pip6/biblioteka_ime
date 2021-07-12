@@ -11,34 +11,37 @@
   }
 </style>
 <div>
-  <h1>THIS IS ADMIN HOME</h1>
+  <h1 style="text-align:center;padding-top:2%;padding-bottom:2%;">Manage books</h1>
   {% if user.is_authenticated and user.is_admin%}
-  <p>Hello {{ user.username }}</p>
+  
   <!-- nese eshte useri i kyqt ateher del pershendetja + stili i frontendit-->
   <table class="table-dark">
     <tr>
       <th>Isbn</th>
       <th>Titulli</th>
       <th>Autori</th>
-      <th>Kategoria</th>
-      <th>Pershkrimi</th>
+   
+     
       <th>Mesatarja e vleresimit</th>
       <th>Numri i vleresimit</th>
       <th>Numri i faqeve</th>
       <th>Viti i publikimit</th>
+      <th>Foto</th>
       <th>Shiko librin</th>
+      
     </tr>
     {% for book in books %}
     <tr>
       <td>{{ book.isbn }}</td>
       <td>{{ book.titulli }}</td>
       <td>{{ book.autori }}</td>
-      <td>{{ book.kategoria }}</td>
-      <td>{{ book.pershkrimi }}</td>
+    
+
       <td>{{ book.mes_vleresimit }}</td>
       <td>{{ book.nr_vleresimit }}</td>
       <td>{{ book.nr_faqeve }}</td>
       <td>{{ book.viti_publikimit }}</td>
+      <td><img src="{{book.image_link}}"></td>
       <td style="width: 20%">
         <a href="{% url 'book_detail' pk=book.id_libri %}">Shiko detajet</a>
         <br />

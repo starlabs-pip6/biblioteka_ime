@@ -1,7 +1,7 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from .views import BookCreateView, BookListView,BookDetailView,BookDeleteView, BookUpdateView, ProfilePageView,ProfileUpdateView
+from .views import BookCreateView, BookListView,BookDetailView,BookDeleteView, EditBook, ProfilePageView,EditProfile
 
 
 urlpatterns = [
@@ -43,14 +43,15 @@ urlpatterns = [
 
     path('backend/home/', BookListView.as_view(template_name="backend/admin_home.html"), name="admin_home"),
     path('backend/book/create/', BookCreateView.as_view(template_name="backend/book_create.html"), name='create'),  
-    path('backend/book/update/<int:pk>/', BookUpdateView.as_view(template_name="backend/book_update.html"), name='book_update'),
+    path('backend/book/update/<int:pk>/', EditBook.as_view(template_name="backend/book_update.html"), name='book_update'),
     path('backend/book/<int:pk>/', BookDetailView.as_view(template_name="backend/book_detail.html"), name='book_detail'),  
     path('backend/book/delete/<int:pk>/',BookDeleteView.as_view(template_name="backend/delete.html"),name='delete'),
 
     path('profile/', ProfilePageView.as_view(template_name="libri_im/profile_page.html"), name="profile_page"),
-    path('profile/update/', ProfileUpdateView.as_view(template_name="libri_im/profile_page_update.html"), name='profile_page_update'),
+    path('profile/update/', EditProfile.as_view(template_name="libri_im/profile_page_update.html"), name='profile_page_update'),
     path('profile/password', views.MyPasswordChangeView.as_view(template_name="registration/change-password.html"), name="change-password"),
 
+    path('profile/view', views.ProfilePageViewDetails, name="profile_page_view"),
 ]
 
 

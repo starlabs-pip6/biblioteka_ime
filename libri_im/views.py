@@ -33,7 +33,6 @@ from django.urls import reverse, reverse_lazy
 from django.db import models
 from django.db.models import Q
 
-
 class MyPasswordChangeView(PasswordChangeView):
     form_class = MyPasswordChangeForm
 
@@ -344,7 +343,7 @@ class BookDeleteView(DeleteView):
         return reverse('admin_home')
 
 
-class BookUpdateView(UpdateView):
+class EditBook(UpdateView):
     model = Book
     fields = ['isbn', 'titulli', 'autori', 'kategoria', 'pershkrimi',
               'mes_vleresimit', 'nr_vleresimit', 'nr_faqeve', 'viti_publikimit', 'image_link']
@@ -366,7 +365,7 @@ class ProfilePageView(DetailView):
         return self.request.user
 
 
-class ProfileUpdateView(UpdateView):
+class EditProfile(UpdateView):
     model = NewUser
     fields = ['username', 'profileImg', 'email']
     template_name = 'libri_im/profile_page_update.html'
@@ -376,3 +375,17 @@ class ProfileUpdateView(UpdateView):
 
     def get_object(self):
         return self.request.user
+
+def ProfilePageViewDetails(request):
+    current_user = request.user
+    WantToRead = NewUser.objects.filter().only('want_to_read')
+    Reading = NewUser.objects.filter().only('reading')
+    Read = NewUser.objects.filter().only('read')
+    
+    context = {
+            'WantToRead': WantToRead,
+            'Reading': Reading,
+            'Read': Read,
+      
+        }
+    return render(request, 'libri_im/profile_page_view.html', context)

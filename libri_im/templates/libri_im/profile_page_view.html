@@ -1,0 +1,11 @@
+{% extends 'libri_im/base.html' %} {% load static %} {% block content %}
+
+{% if request.user.is_authenticated %}
+
+{% else %}
+<h2>
+    You should be loged in and have admin premissions to access this page's
+    content
+  </h2>
+{% endif %}
+{% endblock content %}
