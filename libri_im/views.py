@@ -14,7 +14,8 @@ from django.views.generic import (CreateView,
                                   ListView,
                                   DetailView,
                                   DeleteView,
-                                  UpdateView)
+                                  UpdateView,
+                                  DetailView)
 from .utils import account_activation_token
 #from validate_email import validate_email
 from django.contrib import messages
@@ -397,3 +398,12 @@ def ProfilePageViewDetails(request):
       
         }
     return render(request, 'libri_im/profile_page_view.html', context)
+
+
+class BookDetailView(DetailView):
+    model = Book
+    template_name = 'libri_im/book-detail.html'
+    def get_object(self, queryset=None):
+        return Book.objects.get(isbn=self.kwargs.get("isbn"))
+    
+    

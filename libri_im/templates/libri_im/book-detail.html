@@ -1,0 +1,11 @@
+{% extends 'libri_im/base.html' %} 
+{% load static %} 
+{% block content %}
+
+<center>
+    <img src="{{ book.image_link }}" style="height: 30%; width: 15%;">
+    <h1>{{ book.titulli }} - {{ book.isbn }} - {{ book.autori }} </h1>
+</center>
+
+
+{% endblock content %}

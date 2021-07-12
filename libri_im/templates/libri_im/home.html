@@ -108,7 +108,7 @@
       <h3 class="pttitle">John Grisham</h3>
       <div class="underlinept"></div>
       <p class="ptdesc">This book is an amazing representation of a well written and well sought after series. </p>
-      <button class="mybutton hbpt">Dua ta lexoj</button>
+      <button class="mybutton hbpt"><a href="{% url 'book-detail' book.isbn %}">Dua ta lexoj</a></button>
     </div>
    {% endfor %}
   </div>
