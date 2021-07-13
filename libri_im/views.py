@@ -32,7 +32,7 @@ from django.contrib import auth
 from django.views import View
 from django.urls import reverse, reverse_lazy
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, F
 from . import myfunctions
 
 class MyPasswordChangeView(PasswordChangeView):
@@ -69,6 +69,7 @@ def home_view(request):
     current_user = request.user
     books = Book.objects.all()
     cBooks = books.order_by("?")[0:9]
+    booksR = books.order_by('-mes_vleresimit')[0:6]
 
     if(not current_user.is_anonymous):
 
@@ -112,8 +113,9 @@ def home_view(request):
         'books': books,
         'cbooks': cBooks,
         'booksLatest': books.order_by('-viti_publikimit')[0:6],
-        'booksR': books.order_by('-mes_vleresimit')[0:6],
+        'booksR': booksR,
         'booksID': books.order_by('?')[0:6],
+        'bookelementID' : booksR,
         'dlcount': dlcount,
         'klcount': klcount,
         'dtlcount': dtlcount,
@@ -408,3 +410,10 @@ class BookDV(DetailView):
     
 
     
+def button_test(request):
+    if request.method == "POST":
+        isbn = request.POST.get('isbn')
+        new_sirtar = Sirtar.objects.get(emri="Want to read",id_user = request.user)
+        new_sirtar.books.append(isbn)
+        new_sirtar.save(update_fields=['books'])
+        return HttpResponse('<p>YEIII</p>')

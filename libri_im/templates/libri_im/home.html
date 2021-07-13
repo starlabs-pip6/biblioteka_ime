@@ -3,7 +3,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <div class="home-container">
   <div class="welcome">
     <section id="slideshow">
@@ -135,7 +135,11 @@
     {% for book in booksR %}
   <div class="mycover">
     <img src="{{ book.image_link}}" class="myimage">
-    <button class=" mybutton hoverbutton">Want to read</button>
+    <form id="post-form">
+      {% csrf_token %}
+      <!-- <input type="text" id="isbn" name="isbn" value="{{book.isbn}}" style="display: none;"> -->
+     <button onclick="onClickFunction( book='{{ book.isbn }} ');" id="buttonclick" class="mybutton hoverbutton">Want to read</button>
+    </form>
   </div>
   {% endfor %}
  
@@ -158,6 +162,41 @@
         <button id="btnEvent1">Click here</button>
     </div>
   </div>
-  
+  <!-- <script type="text/javascript">
+      $(document).on('submit', '#post-form', function(e) {
+        e.preventDefault();
+        $.ajax({
+          type: 'POST',
+          url:'/buttontest/' ,
+          data: {
+              isbn: $('#isbn').val(),
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function() {
+
+          }
+        });
+      });
+  </script> -->
+   <script type="text/javascript">
+    
+
+      function onClickFunction(book){
+          $(document).on('click', '#buttonclick', function(e) {
+          e.preventDefault();
+          });       
+          $.ajax({
+          type: 'POST',
+          url:'/buttontest/' ,
+          data: {
+              isbn: book,
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function() {
+
+          }
+        });
+      }
+  </script>
 </div>
 {% endblock content %}

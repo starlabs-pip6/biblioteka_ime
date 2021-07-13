@@ -12,6 +12,7 @@ urlpatterns = [
     path('register/', views.RegistationView.as_view(), name='register'),
     path('shfleto/', views.shfleto_view, name='shfleto'),
     path('libri/<str:isbn>', BookDV.as_view(), name='book-detail'),
+    path('buttontest/', views.button_test, name='buttontest'),
     
 
 

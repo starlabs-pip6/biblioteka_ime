@@ -47,6 +47,7 @@ class MyAccountManager(BaseUserManager):
         user.is_admin = True
         user.is_staff = True
         user.is_superuser = True
+        user.is_active = True
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -107,7 +108,7 @@ class Sirtar(models.Model):
     id = models.AutoField(primary_key=True)
     emri = models.CharField(max_length = 200, null= False, blank = False)
     id_user = models.ForeignKey(NewUser, on_delete=models.CASCADE)
-    books = ArrayField(models.IntegerField(),blank=True, null=True, default=list)
+    books = ArrayField(models.BigIntegerField(),blank=True, null=True, default=list)
     is_public = models.BooleanField(null = False, blank = False, default = True)
     can_delete = models.BooleanField(null = False, blank = False, default = False)
 
