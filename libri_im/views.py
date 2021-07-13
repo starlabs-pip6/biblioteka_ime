@@ -69,32 +69,32 @@ def home_view(request):
     current_user = request.user
     books = Book.objects.all()
     cBooks = books.order_by("?")[0:9]
-    booksR = books.order_by('-mes_vleresimit')[0:6]
-
-    if(not current_user.is_anonymous):
-
-        try:
-            progress = Progress.objects.get(id_user=current_user.id)
-            progressLibri = progress.id_libri
-            progressUser = progress.id_user
-            progressNowPages = progress.pages_now
-            progressAllPages = progress.id_libri.nr_faqeve
-            progressLibriTitulli = progress.id_libri.titulli
-            progressPercent = round(
-                float((progressNowPages/progressAllPages)*100), 1)
-            progressBookImage = progress.id_libri.image_link
-        except models.ObjectDoesNotExist:
-            progressLibri = "no data"
-            progressUser = "no data"
-            progressNowPages = "no data"
-            progressAllPages = "no data"
-            progressLibriTitulli = "no data"
-            progressPercent = "no data"
-            progressBookImage = ""
-            print("No user")
-        dlcount = len(current_user.reading)
-        dtlcount = len(current_user.want_to_read)
-        klcount = len(current_user.read)
+   
+    if(not current_user.is_anonymous):      
+        # sirtar = Sirtar.objects.all()
+        dlcount = Sirtar.objects.get(emri="Reading", id_user = current_user)
+        dlcount = len(dlcount.books)
+        dtlcount = Sirtar.objects.get(emri="Want to read", id_user = current_user)
+        dtlcount = len(dtlcount.books)
+        klcount = Sirtar.objects.get(emri="Read", id_user = current_user)
+        klcount = len(klcount.books)
+        print(dlcount)
+        # dtlcount = len(Sirtar.objects.get(emri="Dua ta lexoj",id_user = current_user)[0].books)
+        # klcount = len(Sirtar.objects.get(emri="Kam lexuar", id_user = current_user)[0].books)
+    else:
+        dlcount = "no data"
+        dtlcount = "no data"
+        klcount = "no data"   # userR = users.reading
+    if Progress.objects.all().exists():
+        progressArr = Progress.objects.filter(id_user=current_user.id)
+        progress = progressArr[1]
+        progressLibri = progress.id_libri
+        progressUser = progress.id_user
+        progressNowPages = progress.pages_now
+        progressAllPages = progress.id_libri.nr_faqeve
+        progressLibriTitulli = progress.id_libri.titulli[0:30]+"..."
+        progressPercent = round(float((progressNowPages/progressAllPages)*100), 1)
+        progressBookImage = progress.id_libri.image_link
     else:
         progressLibri = "no data"
         progressUser = "no data"
@@ -103,9 +103,7 @@ def home_view(request):
         progressLibriTitulli = "no data"
         progressPercent = "no data"
         progressBookImage = ""
-        dlcount = "no data"
-        dtlcount = "no data"
-        klcount = "no data"   # userR = users.reading
+        
     if not current_user:
         current_user = 'anonimous user(not loged in)'
     context = {

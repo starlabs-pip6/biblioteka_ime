@@ -50,6 +50,12 @@ class MyAccountManager(BaseUserManager):
         user.is_active = True
         user.set_password(password)
         user.save(using=self._db)
+        duke_lexuar = Sirtar.objects.create(emri="Duke lexuar",
+                                         id_user = user).save()
+        kam_lexuar = Sirtar.objects.create(emri="Kam lexuar",
+                                         id_user = user).save()
+        do_te_lexoj = Sirtar.objects.create(emri="Dua ta lexoj",
+                                         id_user = user).save()
         return user
 
 

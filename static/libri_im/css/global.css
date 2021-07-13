@@ -8,7 +8,14 @@
   position: relative;
     
 }
-
+ .profile1 { width: 200px; height: 200px;}
+ .profileImg{
+  height: 100%;
+  width: 100%;
+  clip-path: circle(40% at center);
+  object-fit: cover;
+  object-position: 0 0%;
+}
 .myimage {
 
 }

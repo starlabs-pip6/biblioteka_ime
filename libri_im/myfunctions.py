@@ -1,4 +1,4 @@
-from .models import NewUser, Sirtar
+from .models import NewUser, Sirtar, Progress, Book
 def create_default_sirtar(email):
     user1 = NewUser.objects.get(email = email)
     duke_lexuar = Sirtar.objects.create(emri="Reading",
