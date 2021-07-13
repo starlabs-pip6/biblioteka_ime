@@ -7,12 +7,12 @@
     <form >
         
         <select name = "dropdown" class="dropdownShfleto">
-           <option value = "Rendit sipas..." selected class="optionShfleto">Rendit sipas... </option>
-           <option value = "Titulli" class="optionShfleto">Titulli</option>
-           <option value = "Autori" class="optionShfleto" >Autori</option>
-           <option value = "Me te vlersuarit"class="optionShfleto" >Me te vlersuarit</option>
-           <option value = "Viti publikimit" class="optionShfleto">Viti publikimit</option>
-           <option value = "Librat e fundit" class="optionShfleto">Librat e fundit</option>
+           <option value = "Rendit sipas..." selected class="optionShfleto">Sort by... </option>
+           <option value = "Titulli" class="optionShfleto">Title</option>
+           <option value = "Autori" class="optionShfleto" >Author</option>
+           <option value = "Me te vlersuarit"class="optionShfleto" >Most rated</option>
+           <option value = "Viti publikimit" class="optionShfleto">Published year</option>
+           <option value = "Librat e fundit" class="optionShfleto">Latest books</option>
         </select>
      </form>
 
@@ -26,7 +26,7 @@
                 <h3 class="pttitle hover-1">{{book.titulli}}</h3>
                 <div class="underlinept"></div>
                 <p class="ptdesc text-truncate">{{book.pershkrimi}} </p>
-                <button class="mybutton hbpt">Dua ta lexoj</button>
+                <button class="mybutton hbpt">Want to read</button>
                 
                 </div>
             {% endfor %}  

@@ -189,11 +189,11 @@ class RegistationView(View):
             if not NewUser.objects.filter(email=email).exists():
                 if len(password) < 8:
                     messages.warning(
-                        request, 'Fjalekalimi shume i shkurter, duhet te kete te pakten 8 karaktere.')
+                        request, 'Password is too short, it has to be at least 8 characters.')
                     return render(request, 'libri_im/register.html', context)
                 if password != password2:
                     messages.warning(
-                        request, 'Fjalekalimi dhe konfirmimi nuk perputhen')
+                        request, 'Password and confirmation does not match.')
                     return render(request, 'libri_im/register.html', context)
 
                 user = NewUser.objects.create_user(
@@ -214,28 +214,28 @@ class RegistationView(View):
                 link = reverse('activate', kwargs={
                                'uidb64': email_body['uid'], 'token': email_body['token']})
 
-                email_subject = 'Aktivizo llogarine ne "Sirtari"'
+                email_subject = 'Activate your account in "Sirtari"'
 
                 activate_url = 'http://'+current_site.domain+link
 
                 email = EmailMessage(
                     email_subject,
-                    'Pershendetje '+user.username +
-                    ', ju lutem klikoni ne linkun e me poshtem per te aktivizuar llogarine ne "Sirtari" \n'+activate_url,
+                    'Hello '+user.username +
+                    ', please click in the link below to activate your account in "Sirtari" \n'+activate_url,
                     'starlabs.pip6@gmail.com',
                     [request.POST['email']],
                 )
                 email.send(fail_silently=False)
                 messages.success(
-                    request, 'Llogaria u krijua me sukses. Per ta perdorur aktivizojeni me linkun e derguar ne email')
+                    request, 'Your account has been created succesfully. To use this account, activate it with the link that we have sent you by email.')
                 return render(request, 'libri_im/register.html')
             else:
                 messages.warning(
-                    request, f'Emaili: "{request.POST["email"]}" eshte ne perdorim.')
+                    request, f'Email: "{request.POST["email"]}" it\'s taken.')
                 return render(request, 'libri_im/register.html')
         else:
             messages.warning(
-                request, f'Emri i perdoruesit: "{request.POST["username"]}" eshte ne perdorim.')
+                request, f'Username: "{request.POST["username"]}" it\'s taken.')
             return render(request, 'libri_im/register.html')
 
 
@@ -250,7 +250,7 @@ class VerificationView(View):
 
             if not account_activation_token.check_token(user, token):
                 messages.warning(
-                    request, 'Llogaria juaj eshte aktivizuar me pare. Ju mund te kyqeni.')
+                    request, 'Your account has been activated before. You can log in.')
                 return redirect('login')
 
             if user.is_active:
@@ -259,7 +259,7 @@ class VerificationView(View):
             user.save()
 
             messages.success(
-                request, 'Llogaria juaj eshte aktivizuar. Ju mund te kyqeni.')
+                request, 'Your account has been activated. You can log in now.')
             return redirect('login')
 
         except Exception as ex:
@@ -297,14 +297,14 @@ def login_view(request, *args, **kwargs):
             if user:
                 if not user.is_active:
                     messages.warning(
-                        request, 'Llogaria juaj nuk eshte aktivizuar ende. Per ta perdorur aktivizojeni me linkun e derguar ne email.')
+                        request, 'Your account is not activated yet. To use this account please activate with the link we have sent you in email.')
                     return redirect('login')
                 login(request, user)
                 if destination:
                     return redirect(destination)
                 return redirect("home")
         else:
-            messages.warning(request, 'Email ose fjalekalimi i gabuar')
+            messages.warning(request, 'Email or password is wrong.')
             return redirect('login')
     else:
         form = UserAuthenticationForm()
@@ -400,10 +400,11 @@ def ProfilePageViewDetails(request):
     return render(request, 'libri_im/profile_page_view.html', context)
 
 
-class BookDetailView(DetailView):
+class BookDV(DetailView):
     model = Book
     template_name = 'libri_im/book-detail.html'
     def get_object(self, queryset=None):
         return Book.objects.get(isbn=self.kwargs.get("isbn"))
     
+
     

@@ -21,21 +21,21 @@
   <div class="sirtariim">
     <!-- qetu punon sirtariim -->
     <div class="title-container">
-      <h1 class="text">Sirtari im</h1>
+      <h1 class="text">My tray</h1>
     </div>
     <div class="sirtariim-container">
       <div class="centerFlex">
         <div class="sirtaret text">
           <div class="nrlibrave-container">
-            <p>Dua te lexoj</p>
+            <p>Want to read</p>
             <p>{{dtlcount}}</p>
           </div>
           <div class="nrlibrave-container">
-            <p>Duke lexuar</p>
+            <p>Reading</p>
             <p>{{dlcount}}</p>
           </div>
           <div class="nrlibrave-container">
-            <p>Kam lexuar</p>
+            <p>Read</p>
             <p>{{klcount}}</p>
           </div>
         </div>
@@ -48,50 +48,50 @@
             <p>{{progressTitulli}}</p>
           </div>
           <div class="text-progress">
-            <p>{{progressNowPages}}/{{progressAllPages}} faqe ose {{progressPercent}}%</p>
+            <p>{{progressNowPages}}/{{progressAllPages}} pages or {{progressPercent}}%</p>
           </div>
-          <button class="mybutton updateBtn">Perditeso</button>
+          <button class="mybutton updateBtn">Update</button>
       </div>
       <!-- <div class="centerFlex"> -->
       <div class="njoftimet text">
         <div class="njoftimi">
           <p class="njoftimicontent">
-            Lirak Rushiti filloi te lexoj "Harry Potter"...
+            Lirak Rushiti started reading "Harry Potter"...
           </p>
         </div>
         <div class="njoftimi">
           <p class="njoftimicontent">
-            Elidon Morina filloi te lexoj "Harry Potter"...
+            Elidon Morina started reading "Harry Potter"...
           </p>
         </div>
         <div class="njoftimi">
           <p class="njoftimicontent">
-            Vlera Bllaca filloi te lexoj "Harry Potter"...
+            Vlera Bllaca started reading "Harry Potter"...
           </p>
         </div>
         <div class="njoftimi">
           <p class="njoftimicontent">
-            Sara Bajraktari filloi te lexoj "Harry Potter"...
+            Sara Bajraktari started reading "Harry Potter"...
           </p>
         </div>
         <div class="njoftimi">
           <p class="njoftimicontent">
-            Eris Frangu filloi te lexoj "Harry Potter"...
+            Eris Frangu started reading "Harry Potter"...
           </p>
         </div>
         <div class="njoftimi">
           <p class="njoftimicontent">
-            Lirak Rushiti filloi te lexoj "Harry Potter"...
+            Lirak Rushiti started reading "Harry Potter"...
           </p>
         </div>
         <div class="njoftimi">
           <p class="njoftimicontent">
-            Lirak Rushiti filloi te lexoj "Harry Potter"...
+            Lirak Rushiti started reading "Harry Potter"...
           </p>
         </div>
         <div class="njoftimi">
           <p class="njoftimicontent">
-            Lirak Rushiti filloi te lexoj "Harry Potter"...
+            Lirak Rushiti started reading "Harry Potter"...
           </p>
         </div>
       </div>
@@ -100,7 +100,7 @@
   </div>
   <div class="perty">
     <!-- qetu punon perty -->
-    <p class="headingSortby">Per ty</p>
+    <p class="headingSortby">For you</p>
     <div class="PerTyImages">
       {% for book in booksID %}
     <div class="mycover ptcover">
@@ -108,54 +108,54 @@
       <h3 class="pttitle">John Grisham</h3>
       <div class="underlinept"></div>
       <p class="ptdesc">This book is an amazing representation of a well written and well sought after series. </p>
-      <button class="mybutton hbpt"><a href="{% url 'book-detail' book.isbn %}">Dua ta lexoj</a></button>
+      <button class="mybutton hbpt"><a href="{% url 'book-detail' book.isbn %}">Want to read</a></button>
     </div>
    {% endfor %}
   </div>
-  <p  class="meshume"><a href="#" class="a_meshume">Me shume<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
+  <p  class="meshume"><a href="#" class="a_meshume">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
   
   </div>
   <div class="sortby">
     <!-- qetu punon sortby -->
   
-    <p class="headingSortby">Librat e fundit</p>
+    <p class="headingSortby">Latest books</p>
     <div class="sortByImages"> 
       {% for book in booksLatest %}
     <div class="mycover">
       <img src="{{ book.image_link}}" class="ptimage myimage">
-      <button class=" mybutton hoverbutton">Dua ta lexoj</button>
+      <button class=" mybutton hoverbutton">Want to read</button>
     </div>
     {% endfor %}
    
   </div>  
-  <p  class="meshume"><a href="#" class="a_meshume">Me shume<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
+  <p  class="meshume"><a href="#" class="a_meshume">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
   
-  <p class="headingSortby">Me te vleresuarat</p>
+  <p class="headingSortby">Most rated</p>
   <div class="sortByImages"> 
     {% for book in booksR %}
   <div class="mycover">
     <img src="{{ book.image_link}}" class="myimage">
-    <button class=" mybutton hoverbutton">Dua ta lexoj</button>
+    <button class=" mybutton hoverbutton">Want to read</button>
   </div>
   {% endfor %}
  
 </div>  
-  <p  class="meshume"><a href="#" class="a_meshume">Me shume<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
+  <p  class="meshume"><a href="#" class="a_meshume">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
 
 
-    <p id="p1">Eventet</p>
+    <p id="p1">Events</p>
   <div class="events">
    <div class="events1 left" >
       <div class="img-container">
         <img src="{% static 'libri_im/images/summerEvent.png' %}" class="img">
       </div>
-        <button id="btnEvent">Kliko ketu</button>
+        <button id="btnEvent">Click here</button>
     </div>
    <div class="events1 right">
     <div class="img-container">
         <img src="{% static 'libri_im/images/YearEvent1.png' %}" class="img">
         </div>
-        <button id="btnEvent1">Kliko ketu</button>
+        <button id="btnEvent1">Click here</button>
     </div>
   </div>
   

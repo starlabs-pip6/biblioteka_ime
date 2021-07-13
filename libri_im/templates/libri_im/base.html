@@ -44,16 +44,16 @@
               </div>   
               <div> 
                 <form class="d-flex" method="get" action="{% url 'shfleto' %}">
-                    <input type="text" placeholder="&#xF002;&nbsp;&nbsp;Kerko librin.." style="padding-left:2%;font-family:MontSerrat, FontAwesome" name="search" value="{{request.GET.search}}">  
+                    <input type="text" placeholder="&#xF002;&nbsp;&nbsp;Search for a book..." style="padding-left:2%;font-family:MontSerrat, FontAwesome" name="search" value="{{request.GET.search}}">  
                     <!-- <button type="submit" style="padding:5px;"><i class="fa fa-search" aria-hidden="true"></i></button> -->
                   </form>
                </div>            
           </div>
           <div class="librat">
               <div class="alinks">
-                <a href="{% url 'home' %}">Ballina</a>
-                <a href="#">Librat e Mi</a>
-                <a href="{% url 'shfleto' %}">Shfleto</a>
+                <a href="{% url 'home' %}">Home</a>
+                <a href="#">My books</a>
+                <a href="{% url 'shfleto' %}">Discover</a>
                   {% if user.is_admin %}
                   <a href="{% url 'create' %}">Create</a>
                   {% endif %}
