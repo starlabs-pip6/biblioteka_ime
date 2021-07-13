@@ -71,12 +71,11 @@ def home_view(request):
    
     if(not current_user.is_anonymous):      
         # sirtar = Sirtar.objects.all()
-        myfunctions.update_progress_from_dl(current_user)
-        dlcount = Sirtar.objects.get(emri="Duke lexuar", id_user = current_user)
+        dlcount = Sirtar.objects.get(emri="Reading", id_user = current_user)
         dlcount = len(dlcount.books)
-        dtlcount = Sirtar.objects.get(emri="Dua ta lexoj", id_user = current_user)
+        dtlcount = Sirtar.objects.get(emri="Want to read", id_user = current_user)
         dtlcount = len(dtlcount.books)
-        klcount = Sirtar.objects.get(emri="Kam lexuar", id_user = current_user)
+        klcount = Sirtar.objects.get(emri="Read", id_user = current_user)
         klcount = len(klcount.books)
         print(dlcount)
         # dtlcount = len(Sirtar.objects.get(emri="Dua ta lexoj",id_user = current_user)[0].books)
