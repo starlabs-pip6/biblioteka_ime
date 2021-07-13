@@ -111,9 +111,7 @@ def home_view(request):
         'books': books,
         'cbooks': cBooks,
         'booksLatest': books.order_by('-viti_publikimit')[0:6],
-        'booksR': booksR,
-        'booksID': books.order_by('?')[0:6],
-        'bookelementID' : booksR,
+        'booksR': books.order_by('-mes_vleresimit')[0:6],
         'dlcount': dlcount,
         'klcount': klcount,
         'dtlcount': dtlcount,
@@ -410,8 +408,11 @@ class BookDV(DetailView):
     
 def button_test(request):
     if request.method == "POST":
-        isbn = request.POST.get('isbn')
+        isbn = int(request.POST.get('isbn'))
         new_sirtar = Sirtar.objects.get(emri="Want to read",id_user = request.user)
-        new_sirtar.books.append(isbn)
-        new_sirtar.save(update_fields=['books'])
-        return HttpResponse('<p>YEIII</p>')
+        if isbn not in new_sirtar.books:
+            new_sirtar.books.append(isbn)
+            new_sirtar.save(update_fields=['books'])
+        else:
+            print('sun e shton librin e njejt')
+        return HttpResponse('<p>Success book added</p>')
