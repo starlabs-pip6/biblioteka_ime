@@ -69,7 +69,7 @@ def home_view(request):
     current_user = request.user
     books = Book.objects.all()
     cBooks = books.order_by("?")[0:9]
-   
+    
     if(not current_user.is_anonymous):      
         # sirtar = Sirtar.objects.all()
         dlcount = Sirtar.objects.get(emri="Reading", id_user = current_user)
@@ -112,6 +112,7 @@ def home_view(request):
         'cbooks': cBooks,
         'booksLatest': books.order_by('-viti_publikimit')[0:6],
         'booksR': books.order_by('-mes_vleresimit')[0:6],
+        'booksFY': books.order_by('?')[0:6],
         'dlcount': dlcount,
         'klcount': klcount,
         'dtlcount': dtlcount,

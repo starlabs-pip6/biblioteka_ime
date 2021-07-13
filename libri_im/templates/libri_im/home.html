@@ -102,12 +102,12 @@
     <!-- qetu punon perty -->
     <p class="headingSortby">For you</p>
     <div class="PerTyImages">
-      {% for book in booksID %}
+      {% for book in booksFY %}
     <div class="mycover ptcover">
       <img src="{{ book.image_link }}" class="ptimage myimage">
-      <h3 class="pttitle">John Grisham</h3>
+      <h3 class="pttitle">{{book.title}}</h3>
       <div class="underlinept"></div>
-      <p class="ptdesc">This book is an amazing representation of a well written and well sought after series. </p>
+      <p class="ptdesc">{{book.description}}</p>
       <button class="mybutton hbpt"><a href="{% url 'book-detail' book.isbn %}">Want to read</a></button>
     </div>
    {% endfor %}
