@@ -1,12 +1,53 @@
 {% extends 'libri_im/base.html' %} {% load static %} {% block content %}
-<form method="POST">
-  {% csrf_token %}
-  <fieldset class="form-group">
-    <legend>Update Book</legend>
-    {{ form.as_p }}
-  </fieldset>
-  <div class="form-group">
-    <button type="submit">Update</button>
-  </div>
+<h1 style="text-align:center; margin-top:3%;">Update book</h1>
+<div class="createBooks"> 
+ 
+      <form method="POST">
+        {% csrf_token %}
+        <div class="form-group updateForm">
+          <label  for="isbn">Isbn</label>
+          <input class="form-control" type="number" name = "isbn" id="isbn" value="{{ book.isbn }}">
+        </div>
+        <div class="form-group updateForm">
+          <label  for="titulli">Title</label>
+          <input class="form-control" type="text" name = "titulli" id="titulli" value="{{ book.titulli }}">
+        </div>
+        <div class="form-group updateForm">
+          <label  for="autori">Author</label>
+          <input class="form-control" type="text" name = "autori" id="autori" value="{{ book.autori }}">
+        </div>
+        <div class="form-group updateForm"> 
+          <label  for="kategoria">Category</label>
+          <input class="form-control" type="text" name = "kategoria" id="kategoria"value="{{ book.kategoria }}" >
+        </div>
+        <div class="form-group updateForm"> 
+        <label  for="pershkrimi">Description</label>
+        <textarea name="pershkrimi" id="pershkrimi" rows="5" > {{ book.pershkrimi }}</textarea>
+      </div>
+      <div class="form-group updateForm"> 
+        <label  for="mes_vleresimit">Average rating</label>
+        <input class="form-control" type="number" name = "mes_vleresimit" id="mes_vleresimit" value="{{ book.mes_vleresimit }}">
+      </div>
+      <div class="form-group updateForm"> 
+        <label  for="nr_vleresimit">Number of ratings</label>
+        <input class="form-control" type="number" name = "nr_vleresimit" id="nr_vleresimit"value="{{ book.nr_vleresimit }}" >
+      </div>
+      <div class="form-group updateForm"> 
+        <label  for="nr_faqeve">Number of pages</label>
+        <input class="form-control" type="number" name = "nr_faqeve" id="nr_faqeve" value="{{ book.nr_faqeve }}">
+      </div>
+      <div class="form-group updateForm"> 
+        <label  for="viti_publikimit">Published year</label>
+        <input class="form-control" type="number" name = "viti_publikimit" id="viti_publikimit"value="{{ book.viti_publikimit }}" >
+      </div>
+      <div class="form-group updateForm"> 
+        <label  for="image_link">Image link</label>
+        <input class="form-control" type="text" name = "image_link" id="image_link" value="{{ book.image_link }}">
+      </div>
+
+        <div class="form-group updateForm">
+          <button type="submit" class="mybutton createButton">Save</button>
+        </div>
 </form>
+</div>
 {% endblock content%}
