@@ -69,18 +69,18 @@ def home_view(request):
     current_user = request.user
     books = Book.objects.all()
     cBooks = books.order_by("?")[0:9]
-    
     if(not current_user.is_anonymous):      
         # sirtar = Sirtar.objects.all()
+        if not Sirtar.objects.filter(id_user=current_user).exists():
+            myfunctions.create_default_sirtar(current_user.email)
         dlcount = Sirtar.objects.get(emri="Reading", id_user = current_user)
         dlcount = len(dlcount.books)
         dtlcount = Sirtar.objects.get(emri="Want to read", id_user = current_user)
+        wtrBooks = Sirtar.objects.get(emri="Want to read", id_user = current_user).books
         dtlcount = len(dtlcount.books)
         klcount = Sirtar.objects.get(emri="Read", id_user = current_user)
         klcount = len(klcount.books)
-        print(dlcount)
-        # dtlcount = len(Sirtar.objects.get(emri="Dua ta lexoj",id_user = current_user)[0].books)
-        # klcount = len(Sirtar.objects.get(emri="Kam lexuar", id_user = current_user)[0].books)
+        
     else:
         dlcount = "no data"
         dtlcount = "no data"
@@ -116,6 +116,7 @@ def home_view(request):
         'dlcount': dlcount,
         'klcount': klcount,
         'dtlcount': dtlcount,
+        'wtrBooks' : wtrBooks,
         'progressLibri': progressLibri,
         'progressUser': progressUser,
         'progressNowPages': progressNowPages,
@@ -414,6 +415,10 @@ def button_test(request):
         if isbn not in new_sirtar.books:
             new_sirtar.books.append(isbn)
             new_sirtar.save(update_fields=['books'])
+            return HttpResponse('<p>Success book added</p>')
         else:
-            print('sun e shton librin e njejt')
-        return HttpResponse('<p>Success book added</p>')
+            new_sirtar.books.remove(isbn)
+            new_sirtar.save(update_fields=['books'])
+            return HttpResponse('<p>Removed book from want to read</p>')
+
+        return HttpResponse('<p>Error</p>')

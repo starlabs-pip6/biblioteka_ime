@@ -28,7 +28,7 @@
         <div class="sirtaret text">
           <div class="nrlibrave-container">
             <p>Want to read</p>
-            <p>{{dtlcount}}</p>
+            <p id="wtrtext">{{dtlcount}}</p>
           </div>
           <div class="nrlibrave-container">
             <p>Reading</p>
@@ -131,19 +131,23 @@
   <p  class="meshume"><a href="#" class="a_meshume">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
   
   <p class="headingSortby">Most rated</p>
+   <form id="post-form">
+      {% csrf_token %}
   <div class="sortByImages"> 
+   
     {% for book in booksR %}
   <div class="mycover">
     <img src="{{ book.image_link}}" class="myimage">
-    <form id="post-form">
-      {% csrf_token %}
-      <!-- <input type="text" id="isbn" name="isbn" value="{{book.isbn}}" style="display: none;"> -->
-     <button onclick="onClickFunction( book='{{ book.isbn }} ');" id="buttonclick" class="mybutton hoverbutton">Want to read</button>
-    </form>
+    {% if book.isbn in wtrBooks %}
+     <button allBooks1={{booksR}} onclick="onClickFunction( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" id="buttonclick" class="mybutton hoverbutton">Added</button>
+    {% else %}
+     <button onclick="onClickFunction( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" id="buttonclick" class="mybutton hoverbutton">Want to read</button>
+    {% endif%}
   </div>
   {% endfor %}
  
 </div>  
+ </form>
   <p  class="meshume"><a href="#" class="a_meshume">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
 
 
@@ -179,12 +183,36 @@
       });
   </script> -->
    <script type="text/javascript">
+      var localAddedBooks =[]
+      var allBooks = []
+      function strToArr(str){
+        str.replace('[','')
+        str.replace(']','')
+        return str.split(',')
+      }      
+      allBooks = $('#buttonclick').attr(allBooks1)
+      console.log("This is all books: "+ allBooks);
+      function arrayRemove(arr, value) { 
     
+        return arr.filter(function(ele){ 
+            return ele != value; 
+        });
+       } 
+        
 
-      function onClickFunction(book){
+      function onClickFunction(book,wtrBooks){
+      
           $(document).on('click', '#buttonclick', function(e) {
           e.preventDefault();
-          });       
+        
+          //  if (!(jQuery.inArray(book,localAddedBooks) == -1)){
+          //      $(this).text("Want to read")
+          //   }
+          //   else {
+          //       $(this).text("Added")
+          //   }
+           });
+     
           $.ajax({
           type: 'POST',
           url:'/buttontest/' ,
@@ -193,7 +221,34 @@
               csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
           },
           success: function() {
+            if (!wtrBooks.includes(book) && (jQuery.inArray(book,localAddedBooks) == -1)){
+              $('#wtrtext').html(function(i, val) { return +val+1 });
+              localAddedBooks.push(book)
+            }
+            else {
+               $('#wtrtext').html(function(i, val) { return +val-1 });
+               y = $.grep(localAddedBooks, function(value) {
+                return value != book;
+                });
+            }
+            for(el in localAddedBooks) {
+              wtrBooks = wtrBooks + el
+           }  
+            console.log(localAddedBooks);
+            console.log(wtrBooks);
 
+            // for (n in wtrBooks){
+            //   n= n.toString
+            //   array.push(n)
+            // }
+            
+            // if(jQuery.inArray(n, array) !== -1){
+            //  $('#wtrtext').html(function(i, val) { return +val+1 });
+            // }
+            // else{
+            //   alert("Already added")
+            // }
+            
           }
         });
       }
