@@ -101,14 +101,14 @@
   <div class="perty">
     <!-- qetu punon perty -->
     <p class="headingSortby">Per ty</p>
-    <div class="PerTyImages">
+    <div class="sortByImages">
       {% for book in booksID %}
-    <div class="mycover ptcover">
-      <img src="{{ book.image_link }}" class="ptimage myimage">
-      <h3 class="pttitle">John Grisham</h3>
+    <div class="mycover ptcover"><a href="{% url 'book-detail' book.isbn %}" >
+      <img src="{{ book.image_link }}" class="ptimage myimage"></a>
+      <h3 class="pttitle">{{book.titulli}}</h3>
       <div class="underlinept"></div>
-      <p class="ptdesc">This book is an amazing representation of a well written and well sought after series. </p>
-      <button class="mybutton hbpt"><a href="{% url 'book-detail' book.isbn %}">Dua ta lexoj</a></button>
+       <p class="ptdesc">{{book.autori}} </p> 
+      <button class="mybutton hbpt" class="linkStyle">Dua ta lexoj</a></button>
     </div>
    {% endfor %}
   </div>
@@ -121,9 +121,9 @@
     <p class="headingSortby">Librat e fundit</p>
     <div class="sortByImages"> 
       {% for book in booksLatest %}
-    <div class="mycover">
-      <img src="{{ book.image_link}}" class="ptimage myimage">
-      <button class=" mybutton hoverbutton">Dua ta lexoj</button>
+    <div class="mycover"><a href="{% url 'book-detail' book.isbn %}" >
+      <img src="{{ book.image_link}}" class="ptimage myimage"></a>
+      <button class=" mybutton hoverbutton" class="linkStyle">Dua ta lexoj</button>
     </div>
     {% endfor %}
    
@@ -133,9 +133,9 @@
   <p class="headingSortby">Me te vleresuarat</p>
   <div class="sortByImages"> 
     {% for book in booksR %}
-  <div class="mycover">
-    <img src="{{ book.image_link}}" class="myimage">
-    <button class=" mybutton hoverbutton">Dua ta lexoj</button>
+  <div class="mycover"><a href="{% url 'book-detail' book.isbn %}" >
+    <img src="{{ book.image_link}}" class="myimage"></a>
+    <button class=" mybutton hoverbutton"class="linkStyle">Dua ta lexoj</a></button>
   </div>
   {% endfor %}
  
