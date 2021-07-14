@@ -3,7 +3,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <div class="home-container">
   <div class="welcome">
     <section id="slideshow">
@@ -21,77 +21,77 @@
   <div class="sirtariim">
     <!-- qetu punon sirtariim -->
     <div class="title-container">
-      <h1 class="text">Sirtari im</h1>
+      <h1 class="text">My shelf</h1>
     </div>
     <div class="sirtariim-container">
       <div class="centerFlex">
         <div class="sirtaret text">
           <div class="nrlibrave-container">
-            <p>Dua te lexoj</p>
+            <p>Want to read</p>
             <p>{{dtlcount}}</p>
           </div>
           <div class="nrlibrave-container">
-            <p>Duke lexuar</p>
+            <p>Reading</p>
             <p>{{dlcount}}</p>
           </div>
           <div class="nrlibrave-container">
-            <p>Kam lexuar</p>
+            <p>Read</p>
             <p>{{klcount}}</p>
           </div>
         </div>
       </div>
         <div class="dukelexuarprogress">
-            <div class="circleImage" style="width: 100px;background-image: url({{progressBookImage}}); background-size: cover; clip-path: circle(60px at center);">
-                <!-- <img  src="{{progressBookImage}}" alt="noimg"> -->
-            </div>
+           <div class="profile1">
+            <img class="profileImg" src="{{ progressBookImage }}" width="200" height="200"alt="noImg">
+           </div>
           <div class="title">
-            <p>{{progressTitulli}}</p>
+            <p>{{progressLibriTitulli}}</p>
           </div>
           <div class="text-progress">
-            <p>{{progressNowPages}}/{{progressAllPages}} faqe ose {{progressPercent}}%</p>
+            <p>{{progressNowPages}}/{{progressAllPages}} pages or {{progressPercent}}%</p>
           </div>
-          <button class="mybutton updateBtn">Perditeso</button>
+          <button class="mybutton updateBtn">Update</button>
       </div>
       <!-- <div class="centerFlex"> -->
       <div class="njoftimet text">
         <div class="njoftimi">
           <p class="njoftimicontent">
-            Lirak Rushiti filloi te lexoj "Harry Potter"...
+            Lirak Rushiti started reading "Harry Potter"...
           </p>
         </div>
         <div class="njoftimi">
           <p class="njoftimicontent">
-            Elidon Morina filloi te lexoj "Harry Potter"...
+            Elidon Morina started reading "Harry Potter"...
           </p>
         </div>
         <div class="njoftimi">
           <p class="njoftimicontent">
-            Vlera Bllaca filloi te lexoj "Harry Potter"...
+            Vlera Bllaca started reading "Harry Potter"...
           </p>
         </div>
         <div class="njoftimi">
           <p class="njoftimicontent">
-            Sara Bajraktari filloi te lexoj "Harry Potter"...
+            Sara Bajraktari started reading "Harry Potter"...
           </p>
         </div>
         <div class="njoftimi">
           <p class="njoftimicontent">
-            Eris Frangu filloi te lexoj "Harry Potter"...
+            Eris Frangu started reading "Harry Potter"...
           </p>
         </div>
         <div class="njoftimi">
           <p class="njoftimicontent">
-            Lirak Rushiti filloi te lexoj "Harry Potter"...
+            Lirak Rushiti started reading "Harry Potter"...
           </p>
         </div>
         <div class="njoftimi">
           <p class="njoftimicontent">
-            Lirak Rushiti filloi te lexoj "Harry Potter"...
+            Lirak Rushiti started reading "Harry Potter"...
           </p>
         </div>
         <div class="njoftimi">
           <p class="njoftimicontent">
-            Lirak Rushiti filloi te lexoj "Harry Potter"...
+            Lirak Rushiti started reading "Harry Potter"...
           </p>
         </div>
       </div>
@@ -100,64 +100,103 @@
   </div>
   <div class="perty">
     <!-- qetu punon perty -->
-    <p class="headingSortby">Per ty</p>
+    <p class="headingSortby">For you</p>
     <div class="PerTyImages">
-      {% for book in booksID %}
+      {% for book in booksFY %}
     <div class="mycover ptcover">
       <img src="{{ book.image_link }}" class="ptimage myimage">
-      <h3 class="pttitle">John Grisham</h3>
+      <h3 class="pttitle">{{book.title}}</h3>
       <div class="underlinept"></div>
-      <p class="ptdesc">This book is an amazing representation of a well written and well sought after series. </p>
-      <button class="mybutton hbpt">Dua ta lexoj</button>
+      <p class="ptdesc">{{book.description}}</p>
+      <button class="mybutton hbpt"><a href="{% url 'book-detail' book.isbn %}">Want to read</a></button>
     </div>
    {% endfor %}
   </div>
-  <p  class="meshume"><a href="#" class="a_meshume">Me shume<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
+  <p  class="meshume"><a href="#" class="a_meshume">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
   
   </div>
   <div class="sortby">
     <!-- qetu punon sortby -->
   
-    <p class="headingSortby">Librat e fundit</p>
+    <p class="headingSortby">Latest books</p>
     <div class="sortByImages"> 
       {% for book in booksLatest %}
     <div class="mycover">
       <img src="{{ book.image_link}}" class="ptimage myimage">
-      <button class=" mybutton hoverbutton">Dua ta lexoj</button>
+      <button class=" mybutton hoverbutton">Want to read</button>
     </div>
     {% endfor %}
    
   </div>  
-  <p  class="meshume"><a href="#" class="a_meshume">Me shume<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
+  <p  class="meshume"><a href="#" class="a_meshume">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
   
-  <p class="headingSortby">Me te vleresuarat</p>
+  <p class="headingSortby">Most rated</p>
   <div class="sortByImages"> 
     {% for book in booksR %}
   <div class="mycover">
     <img src="{{ book.image_link}}" class="myimage">
-    <button class=" mybutton hoverbutton">Dua ta lexoj</button>
+    <form id="post-form">
+      {% csrf_token %}
+      <!-- <input type="text" id="isbn" name="isbn" value="{{book.isbn}}" style="display: none;"> -->
+     <button onclick="onClickFunction( book='{{ book.isbn }} ');" id="buttonclick" class="mybutton hoverbutton">Want to read</button>
+    </form>
   </div>
   {% endfor %}
  
 </div>  
-  <p  class="meshume"><a href="#" class="a_meshume">Me shume<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
+  <p  class="meshume"><a href="#" class="a_meshume">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
 
 
-    <p id="p1">Eventet</p>
+    <p id="p1">Events</p>
   <div class="events">
    <div class="events1 left" >
       <div class="img-container">
         <img src="{% static 'libri_im/images/summerEvent.png' %}" class="img">
       </div>
-        <button id="btnEvent">Kliko ketu</button>
+        <button id="btnEvent">Click here</button>
     </div>
    <div class="events1 right">
     <div class="img-container">
         <img src="{% static 'libri_im/images/YearEvent1.png' %}" class="img">
         </div>
-        <button id="btnEvent1">Kliko ketu</button>
+        <button id="btnEvent1">Click here</button>
     </div>
   </div>
-  
+  <!-- <script type="text/javascript">
+      $(document).on('submit', '#post-form', function(e) {
+        e.preventDefault();
+        $.ajax({
+          type: 'POST',
+          url:'/buttontest/' ,
+          data: {
+              isbn: $('#isbn').val(),
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function() {
+
+          }
+        });
+      });
+  </script> -->
+   <script type="text/javascript">
+    
+
+      function onClickFunction(book){
+          $(document).on('click', '#buttonclick', function(e) {
+          e.preventDefault();
+          });       
+          $.ajax({
+          type: 'POST',
+          url:'/buttontest/' ,
+          data: {
+              isbn: book,
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function() {
+
+          }
+        });
+      }
+  </script>
 </div>
 {% endblock content %}

@@ -2,7 +2,7 @@ from collections import namedtuple
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from .views import BookCreateView, BookListView, BookDetailView, BookDeleteView, EditBook, ProfilePageView, EditProfile
+from .views import BookCreateView, BookListView, BookDetailView, BookDeleteView, EditBook, ProfilePageView, EditProfile, BookDV
 
 
 urlpatterns = [
@@ -13,6 +13,9 @@ urlpatterns = [
     path('register/', views.RegistationView.as_view(), name='register'),
     path('shfleto/', views.shfleto_view, name='shfleto'),
     path('profile/view/', views.ProfilePageViewDetails, name="profile_page_view"),
+    path('libri/<str:isbn>', BookDV.as_view(), name='book-detail'),
+    path('buttontest/', views.button_test, name='buttontest'),
+
 
     # password reset
     path('reset_password/',

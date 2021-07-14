@@ -3,24 +3,24 @@
 
 {% block content %}
 <link rel="stylesheet" type=text/css href="{% static 'libri_im/css/login.css' %}">
-
+<body>
 <div class="register-container">
 		  <div class="body-container">
 			 
 		    <form class="form" method="post">{% csrf_token %}
 				<h1 class="form-title">Register</h1>
 					{% include 'alerts/messages.html'%}
-				<p><input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+				<p><input type="email" name="email" id="inputEmailRegister" class="form-control" placeholder="Email address" required autofocus>
 				</p>
 				<p>
 				<input type="name" name="username" id="inputUsername" class="form-control" placeholder="Username" required>
  				 </p>
 				  <p>
-				<input type="password" name="password1" id="inputPassword1" class="form-control" placeholder="Password" required>
- 				 </p>
+				<input type="password" name="password1" id="password" class="form-control" placeholder="Password" required>
+				<span id="toggle" class="fa fa-fw fa-eye pass-icon" onclick="showhide();"></span> </p>
 				  <p>
-				<input type="password" name="password2" id="inputPassword2" class="form-control" placeholder="Confirm password" required>
- 				</p>
+				<input type="password" name="password2" id="password1" class="form-control" placeholder="Confirm password" required>
+				<span id="toggle" class="fa fa-fw fa-eye pass-icon" onclick="showhide1();"></span></p>
 				<p>
 				<button class="register" type="submit">Register</button>
 					</p>
@@ -29,8 +29,8 @@
 </div>
 
 
+<script src="{% static 'libri_im/js/register_showHidePassword.js' %}"></script>
 
-
-
+</body>
 
 {% endblock content %}

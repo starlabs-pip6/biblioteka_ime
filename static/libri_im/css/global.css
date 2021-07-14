@@ -11,6 +11,18 @@
 /*.myimage {
 
 }*/
+.profile1 {
+  width: 200px;
+  height: 200px;
+}
+.profileImg {
+  height: 100%;
+  width: 100%;
+  clip-path: circle(40% at center);
+  object-fit: cover;
+  object-position: 0 0%;
+}
+
 .mycover:hover .myimage {
   transform: scale(1.1);
   opacity: 0.3;

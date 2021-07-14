@@ -1,5 +1,5 @@
 from django.contrib import admin
-from libri_im.models import NewUser,Book, Progress
+from libri_im.models import NewUser,Book, Progress, Sirtar
 from django.contrib.auth.admin import UserAdmin
 # Register your models here.
 
@@ -11,8 +11,19 @@ class NewUserAdmin(UserAdmin):
     list_filter = ()
     fieldsets = ()
 
+class NewProgressAdmin(UserAdmin):
+    list_display = ('id_libri','id_user', 'pages_now')
+    #search_fields = ('id_libri', 'id_perdoruesi')
+    # readonly_fields = ('id')
+    filter_horizontal = ()
+    list_filter = ()
+    fieldsets = ()
+    ordering = ('id_user','id_libri')
+
 admin.site.register(Book)
 admin.site.register(NewUser, NewUserAdmin)
-admin.site.register(Progress)
+admin.site.register(Progress, NewProgressAdmin)
+admin.site.register(Sirtar)
+
 
 

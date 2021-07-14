@@ -8,13 +8,14 @@ from django.contrib.auth.forms import PasswordChangeForm
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .serializers import LibratSerializer, UsersSerializer
-from .models import Book, NewUser, Progress
+from .models import Book, NewUser, Progress, Sirtar
 from .forms import RegistrationForm, UserAuthenticationForm, MyPasswordChangeForm
 from django.views.generic import (CreateView,
                                   ListView,
                                   DetailView,
                                   DeleteView,
-                                  UpdateView)
+                                  UpdateView,
+                                  DetailView)
 from .utils import account_activation_token
 #from validate_email import validate_email
 from django.contrib import messages
@@ -31,7 +32,8 @@ from django.contrib import auth
 from django.views import View
 from django.urls import reverse, reverse_lazy
 from django.db import models
-from django.db.models import Q
+from django.db.models import Q, F
+from . import myfunctions
 
 
 class MyPasswordChangeView(PasswordChangeView):
@@ -70,29 +72,32 @@ def home_view(request):
     cBooks = books.order_by("?")[0:9]
 
     if(not current_user.is_anonymous):
-
-        try:
-            progress = Progress.objects.get(id_user=current_user.id)
-            progressLibri = progress.id_libri
-            progressUser = progress.id_user
-            progressNowPages = progress.pages_now
-            progressAllPages = progress.id_libri.nr_faqeve
-            progressLibriTitulli = progress.id_libri.titulli
-            progressPercent = round(
-                float((progressNowPages/progressAllPages)*100), 1)
-            progressBookImage = progress.id_libri.image_link
-        except models.ObjectDoesNotExist:
-            progressLibri = "no data"
-            progressUser = "no data"
-            progressNowPages = "no data"
-            progressAllPages = "no data"
-            progressLibriTitulli = "no data"
-            progressPercent = "no data"
-            progressBookImage = ""
-            print("No user")
-        dlcount = len(current_user.reading)
-        dtlcount = len(current_user.want_to_read)
-        klcount = len(current_user.read)
+        # sirtar = Sirtar.objects.all()
+        dlcount = Sirtar.objects.get(emri="Reading", id_user=current_user)
+        dlcount = len(dlcount.books)
+        dtlcount = Sirtar.objects.get(
+            emri="Want to read", id_user=current_user)
+        dtlcount = len(dtlcount.books)
+        klcount = Sirtar.objects.get(emri="Read", id_user=current_user)
+        klcount = len(klcount.books)
+        print(dlcount)
+        # dtlcount = len(Sirtar.objects.get(emri="Dua ta lexoj",id_user = current_user)[0].books)
+        # klcount = len(Sirtar.objects.get(emri="Kam lexuar", id_user = current_user)[0].books)
+    else:
+        dlcount = "no data"
+        dtlcount = "no data"
+        klcount = "no data"   # userR = users.reading
+    if Progress.objects.all().exists():
+        progressArr = Progress.objects.filter(id_user=current_user.id)
+        progress = progressArr[1]
+        progressLibri = progress.id_libri
+        progressUser = progress.id_user
+        progressNowPages = progress.pages_now
+        progressAllPages = progress.id_libri.nr_faqeve
+        progressLibriTitulli = progress.id_libri.titulli[0:30]+"..."
+        progressPercent = round(
+            float((progressNowPages/progressAllPages)*100), 1)
+        progressBookImage = progress.id_libri.image_link
     else:
         progressLibri = "no data"
         progressUser = "no data"
@@ -101,9 +106,7 @@ def home_view(request):
         progressLibriTitulli = "no data"
         progressPercent = "no data"
         progressBookImage = ""
-        dlcount = "no data"
-        dtlcount = "no data"
-        klcount = "no data"   # userR = users.reading
+
     if not current_user:
         current_user = 'anonimous user(not loged in)'
     context = {
@@ -112,7 +115,7 @@ def home_view(request):
         'cbooks': cBooks,
         'booksLatest': books.order_by('-viti_publikimit')[0:6],
         'booksR': books.order_by('-mes_vleresimit')[0:6],
-        'booksID': books.order_by('?')[0:6],
+        'booksFY': books.order_by('?')[0:6],
         'dlcount': dlcount,
         'klcount': klcount,
         'dtlcount': dtlcount,
@@ -189,11 +192,11 @@ class RegistationView(View):
             if not NewUser.objects.filter(email=email).exists():
                 if len(password) < 8:
                     messages.warning(
-                        request, 'Fjalekalimi shume i shkurter, duhet te kete te pakten 8 karaktere.')
+                        request, 'Password is too short, it has to be at least 8 characters.')
                     return render(request, 'libri_im/register.html', context)
                 if password != password2:
                     messages.warning(
-                        request, 'Fjalekalimi dhe konfirmimi nuk perputhen')
+                        request, 'Password and confirmation does not match.')
                     return render(request, 'libri_im/register.html', context)
 
                 user = NewUser.objects.create_user(
@@ -201,6 +204,9 @@ class RegistationView(View):
                 user.set_password(password)
                 user.is_active = False
                 user.save()
+                # creates 3 default sirtars
+                myfunctions.create_default_sirtar(email)
+
                 current_site = get_current_site(request)
                 email_body = {
                     'user': user,
@@ -208,32 +214,31 @@ class RegistationView(View):
                     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                     'token': account_activation_token.make_token(user),
                 }
-
                 link = reverse('activate', kwargs={
                                'uidb64': email_body['uid'], 'token': email_body['token']})
 
-                email_subject = 'Aktivizo llogarine ne "Sirtari"'
+                email_subject = 'Activate your account in "Sirtari"'
 
                 activate_url = 'http://'+current_site.domain+link
 
                 email = EmailMessage(
                     email_subject,
-                    'Pershendetje '+user.username +
-                    ', ju lutem klikoni ne linkun e me poshtem per te aktivizuar llogarine ne "Sirtari" \n'+activate_url,
+                    'Hello '+user.username +
+                    ', please click in the link below to activate your account in "Sirtari" \n'+activate_url,
                     'starlabs.pip6@gmail.com',
                     [request.POST['email']],
                 )
                 email.send(fail_silently=False)
                 messages.success(
-                    request, 'Llogaria u krijua me sukses. Per ta perdorur aktivizojeni me linkun e derguar ne email')
+                    request, 'Your account has been created succesfully. To use this account, activate it with the link that we have sent you by email.')
                 return render(request, 'libri_im/register.html')
             else:
                 messages.warning(
-                    request, f'Emaili: "{request.POST["email"]}" eshte ne perdorim.')
+                    request, f'Email: "{request.POST["email"]}" it\'s taken.')
                 return render(request, 'libri_im/register.html')
         else:
             messages.warning(
-                request, f'Emri i perdoruesit: "{request.POST["username"]}" eshte ne perdorim.')
+                request, f'Username: "{request.POST["username"]}" it\'s taken.')
             return render(request, 'libri_im/register.html')
 
 
@@ -245,7 +250,7 @@ class VerificationView(View):
 
             if not account_activation_token.check_token(user, token):
                 messages.warning(
-                    request, 'Llogaria juaj eshte aktivizuar me pare. Ju mund te kyqeni.')
+                    request, 'Your account has been activated before. You can log in.')
                 return redirect('login')
 
             if user.is_active:
@@ -254,7 +259,7 @@ class VerificationView(View):
             user.save()
 
             messages.success(
-                request, 'Llogaria juaj eshte aktivizuar. Ju mund te kyqeni.')
+                request, 'Your account has been activated. You can log in now.')
             return redirect('login')
 
         except Exception as ex:
@@ -290,14 +295,14 @@ def login_view(request, *args, **kwargs):
             if user:
                 if not user.is_active:
                     messages.warning(
-                        request, 'Llogaria juaj nuk eshte aktivizuar ende. Per ta perdorur aktivizojeni me linkun e derguar ne email.')
+                        request, 'Your account is not activated yet. To use this account please activate with the link we have sent you in email.')
                     return redirect('login')
                 login(request, user)
                 if destination:
                     return redirect(destination)
                 return redirect("home")
         else:
-            messages.warning(request, 'Email ose fjalekalimi i gabuar')
+            messages.warning(request, 'Email or password is wrong.')
             return redirect('login')
     else:
         form = UserAuthenticationForm()
@@ -393,3 +398,24 @@ def ProfilePageViewDetails(request):
 
     }
     return render(request, 'libri_im/profile_page_view.html', context)
+
+
+class BookDV(DetailView):
+    model = Book
+    template_name = 'libri_im/book-detail.html'
+
+    def get_object(self, queryset=None):
+        return Book.objects.get(isbn=self.kwargs.get("isbn"))
+
+
+def button_test(request):
+    if request.method == "POST":
+        isbn = int(request.POST.get('isbn'))
+        new_sirtar = Sirtar.objects.get(
+            emri="Want to read", id_user=request.user)
+        if isbn not in new_sirtar.books:
+            new_sirtar.books.append(isbn)
+            new_sirtar.save(update_fields=['books'])
+        else:
+            print('sun e shton librin e njejt')
+        return HttpResponse('<p>Success book added</p>')

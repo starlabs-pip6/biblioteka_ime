@@ -4,7 +4,6 @@
 <style>
     .a_meshume:hover{color:#f3722c; }
     .mybutton{ padding:5px 10px 5px 10px;}
-    
     .profile1 { width: 200px; height: 200px;}
 </style>
 <div class="myprofile">
@@ -18,7 +17,7 @@
             <p>Joined date:  {{ object.date_joined }}</p>
         </div>
        
-        <a href="{% url 'profile_page_update' %}" class="mybutton a_meshume" >Modifiko</a>
+        <a href="{% url 'profile_page_update' %}" class="mybutton a_meshume" >Update</a>
     </div>
 </div>
 {% else %}

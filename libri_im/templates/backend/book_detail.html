@@ -20,15 +20,16 @@
        
           <table >
             <tr>
-              <th>isbn</th>
-              <th>titulli</th>
-              <th>autori</th>
-              <th>kategoria</th> 
-              <th>pershkrimi</th> 
-              <th>mes_vleresimit</th> 
-              <th>nr_vleresimit</th> 
-              <th>nr_faqeve</th> 
-              <th>viti_publikimit</th> 
+              <th>ISBN</th>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Categorie</th> 
+              <th>Description</th> 
+              <th>Avg.rate</th> 
+              <th>No. ratings</th> 
+              <th>No. pages</th> 
+              <th>Published Year</th> 
+              <th>Image</th>
             </tr>
        
             <tr>
@@ -42,6 +43,7 @@
               <td>{{ object.nr_vleresimit }}</td> 
               <td>{{ object.nr_faqeve }}</td> 
               <td>{{ object.viti_publikimit }}</td> 
+              <td><img src="{{object.image_link}}"></td>
              
             </tr>
          

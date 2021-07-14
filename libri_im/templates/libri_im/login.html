@@ -3,28 +3,33 @@
 
 {% block content %}
 <link rel="stylesheet" type=text/css href="{% static 'libri_im/css/login.css' %}">
-<link rel="stylesheet" type=text/css href="{% static 'libri_im/css/global.css' %}">
+
+
+<style>
+ 
+
+</style>
 <body>
   <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-12">
 <div class="login-container">
 		
-                <form class="form" method="post">
+                <form class="form" method="post" id="login">
                   {% csrf_token %}
                   <div class="body-container">
                     <h1 class="form-title">Login</h1>
                   {% include 'alerts/messages.html'%}    
-                  <p>  <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                  <p>  <input type="email" name="email" id="inputEmailLogin" class="form-control" placeholder="Email address" required autofocus>
                   </p>
                    <p>
-                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                    </p>
+                    <input type="password" name="password" id="password" class="form-control" placeholder="Password" required style="position:relative;">
+                    <span id="toggle" class="fa fa-fw fa-eye pass-icon" onclick="showhide();"></span></p>
                     <p>
                     <button class="mybutton" type="submit" style="padding-top:1%;padding-bottom:1%">Log in</button>
                     </p>
                 </form>
               <br>
-                  <div>Nuk keni llogari?<a href="{% url 'register' %}" style="color:white">Regjistrohuni ketu!</a></p></div>
+                  <div>Don't have an account? <a href="{% url 'register' %}" style="color:white">Register here!</a></p></div>
 				<div class="reset">
 					<a href="{% url 'reset_password' %}" style="text-decoration:none;color:white;">Reset password</a>
 				</div>
@@ -32,6 +37,9 @@
 </div>
 </div>
 </div>
+<script src="{% static 'libri_im/js/login_showHidePassword.js' %}">
+  
+</script> 
 </body>
 
 
