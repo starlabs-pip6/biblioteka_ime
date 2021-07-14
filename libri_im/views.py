@@ -382,9 +382,9 @@ class EditProfile(UpdateView):
 def ProfilePageViewDetails(request):
     current_user = request.user
 
-    WantToRead = Book.objects.all()[0:3]
+    Read = Book.objects.all()[8:30]
     Reading = Book.objects.all()[4:7]
-    Read = Book.objects.all()[8:11]
+    WantToRead = Book.objects.all()[0:3]
 
     context = {
         'WantToRead': WantToRead,

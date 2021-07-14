@@ -1,106 +1,124 @@
-{% extends 'libri_im/base.html' %} {% load static %} {% block content %} {% if
-request.user.is_authenticated %}
+{% extends 'libri_im/base.html' %} {% load static %} {% block content %}
 
-<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-  <li class="nav-item col-4" role="presentation">
-    <button
-      class="nav-link active text-warning"
-      id="pills-kam-tab"
-      data-bs-toggle="pill"
-      data-bs-target="#pills-kam"
-      type="button"
-      role="tab"
-      aria-controls="pills-kam"
-      aria-selected="true"
+<div>
+  {% if request.user.is_authenticated %}
+
+  <ul class="nav nav-pills m-5" id="pills-tab" role="tablist">
+    <li class="nav-item col-3" role="presentation">
+      <button
+        class="nav-link active text-warning"
+        id="pills-kam-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-kam"
+        type="button"
+        role="tab"
+        aria-controls="pills-kam"
+        aria-selected="true"
+      >
+        Kam lexuar
+      </button>
+    </li>
+    <li class="nav-item col-3" role="presentation">
+      <button
+        class="nav-link text-warning"
+        id="pills-duke-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-duke"
+        type="button"
+        role="tab"
+        aria-controls="pills-duke"
+        aria-selected="false"
+      >
+        Duke lexuar
+      </button>
+    </li>
+    <li class="nav-item col-3" role="presentation">
+      <button
+        class="nav-link text-warning"
+        id="pills-dua-tab"
+        data-bs-toggle="pill"
+        data-bs-target="#pills-dua"
+        type="button"
+        role="tab"
+        aria-controls="pills-dua"
+        aria-selected="false"
+      >
+        Dua te lexoj
+      </button>
+    </li>
+  </ul>
+  <div class="tab-content" id="pills-tabContent">
+    <div
+      class="tab-pane fade show active"
+      id="pills-kam"
+      role="tabpanel"
+      aria-labelledby="pills-kam-tab"
     >
-      Kam lexuar
-    </button>
-  </li>
-  <li class="nav-item col-4" role="presentation">
-    <button
-      class="nav-link text-warning"
-      id="pills-duke-tab"
-      data-bs-toggle="pill"
-      data-bs-target="#pills-duke"
-      type="button"
-      role="tab"
-      aria-controls="pills-duke"
-      aria-selected="false"
-    >
-      Duke lexuar
-    </button>
-  </li>
-  <li class="nav-item col-4" role="presentation">
-    <button
-      class="nav-link text-warning"
-      id="pills-dua-tab"
-      data-bs-toggle="pill"
-      data-bs-target="#pills-dua"
-      type="button"
-      role="tab"
-      aria-controls="pills-dua"
-      aria-selected="false"
-    >
-      Dua te lexoj
-    </button>
-  </li>
-</ul>
-<div class="tab-content" id="pills-tabContent">
-  <div
-    class="tab-pane fade show active"
-    id="pills-kam"
-    role="tabpanel"
-    aria-labelledby="pills-kam-tab"
-  >
-    <div class="d-flex">
-      {% for book in Read %}
-      <div class="mycover ptcover">
-        <img src="{{book.image_link}}" class="ptimage myimage" alt="no-img" />
-        <h3 class="pttitle hover-1">{{book.titulli}}</h3>
-        <div class="underlinept"></div>
-        <p class="ptdesc text-truncate">{{book.pershkrimi}}</p>
+      <div class="row">       
+            {% for book in Read %}
+            <div class="col-lg-2 col-md-4 col-sm-12">
+              <div class="mycover ptcover">
+                <img
+                  src="{{book.image_link}}"
+                  class="ptimage myimage"
+                  alt="no-img"
+                />
+                <h3 class="pttitle hover-1">{{book.titulli}}</h3>
+                <div class="underlinept"></div>
+                <p class="ptdesc text-truncate">{{book.pershkrimi}}</p>
+              </div>
+            </div>
+            {% endfor %}
       </div>
-      {% endfor %}
     </div>
-  </div>
-  <div
-    class="tab-pane fade"
-    id="pills-duke"
-    role="tabpanel"
-    aria-labelledby="pills-duke-tab"
-  >
-    <div class="d-flex">
-      {% for book in Reading %}
-      <div class="mycover ptcover">
-        <img src="{{book.image_link}}" class="ptimage myimage" alt="no-img" />
-        <h3 class="pttitle hover-1">{{book.titulli}}</h3>
-        <div class="underlinept"></div>
-        <p class="ptdesc text-truncate">{{book.pershkrimi}}</p>
+      <div
+        class="tab-pane fade"
+        id="pills-duke"
+        role="tabpanel"
+        aria-labelledby="pills-duke-tab"
+      >
+        <div class="d-flex">
+          {% for book in Reading %}
+          <div class="mycover ptcover">
+            <img
+              src="{{book.image_link}}"
+              class="ptimage myimage"
+              alt="no-img"
+            />
+            <h3 class="pttitle hover-1">{{book.titulli}}</h3>
+            <div class="underlinept"></div>
+            <p class="ptdesc text-truncate">{{book.pershkrimi}}</p>
+          </div>
+          {% endfor %}
+        </div>
       </div>
-      {% endfor %}
-    </div>
-  </div>
-  <div
-    class="tab-pane fade"
-    id="pills-dua"
-    role="tabpanel"
-    aria-labelledby="pills-dua-tab"
-  >
-    <div class="d-flex">
-      {% for book in WantToRead %}
-      <div class="mycover ptcover">
-        <img src="{{book.image_link}}" class="ptimage myimage" alt="no-img" />
-        <h3 class="pttitle hover-1">{{book.titulli}}</h3>
-        <div class="underlinept"></div>
-        <p class="ptdesc text-truncate">{{book.pershkrimi}}</p>
+      <div
+        class="tab-pane fade"
+        id="pills-dua"
+        role="tabpanel"
+        aria-labelledby="pills-dua-tab"
+      >
+        <div class="d-flex">
+          {% for book in WantToRead %}
+          <div class="mycover ptcover">
+            <img
+              src="{{book.image_link}}"
+              class="ptimage myimage"
+              alt="no-img"
+            />
+            <h3 class="pttitle hover-1">{{book.titulli}}</h3>
+            <div class="underlinept"></div>
+            <p class="ptdesc text-truncate">{{book.pershkrimi}}</p>
+          </div>
+          {% endfor %}
+        </div>
       </div>
-      {% endfor %}
     </div>
+    {% else %}
+    <h2>
+      You should be loged in and have admin premissions to access this page's
+      content
+    </h2>
+    {% endif %} {% endblock content %}
   </div>
-  {% else %}
-  <h2>
-    You should be loged in and have admin premissions to access this page's
-    content
-  </h2>
-  {% endif %} {% endblock content %}
 </div>

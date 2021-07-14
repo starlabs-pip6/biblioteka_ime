@@ -1,8 +1,32 @@
-/*.pills-tabContent {
-  color: orange;
+#pills-kam-tab {
+  border-radius: 16px;
+}
+#pills-duke-tab {
+  border-radius: 16px;
+}
+#pills-dua-tab {
+  border-radius: 16px;
 }
 
-.nav-link {
-  color: orange;
-  background-color: orange;
+.tab-content {
+  border-radius: 16px;
+  margin: 50px;
+  grid-template-columns: repeat(8, 1fr);
+  display: grid;
+  display: flex;
+  flex-direction: row;
+  flex-direction: column;
+  width: 62%;
+}
+
+#pills-kam-tab:focus {
+  background-color: white;
+}
+
+#pills-duke-tab:focus {
+  background-color: white;
+}
+
+#pills-dua-tab:focus {
+  background-color: white;
 }
