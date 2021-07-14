@@ -105,9 +105,9 @@
       {% for book in booksFY %}
     <div class="mycover ptcover"><a href="{% url 'book-detail' book.isbn %}">
       <img src="{{ book.image_link }}" class="ptimage myimage"></a>
-      <h3 class="pttitle">{{book.title}}</h3>
+      <h3 class="pttitle">{{book.titulli}}</h3>
       <div class="underlinept"></div>
-      <p class="ptdesc">{{book.description}}</p>
+      <p class="ptdesc">{{book.autori}}</p>
       <button class="mybutton hbpt">Want to read</button>
     </div>
    {% endfor %}
