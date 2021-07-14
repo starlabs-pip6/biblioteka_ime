@@ -2,24 +2,24 @@
   overflow: hidden;
   border-radius: 8%;
   width: 138px;
-  height:205px;
+  height: 205px;
   border: 2px solid #f3722c;
   margin-right: 0.5%;
   position: relative;
-    
 }
- .profile1 { width: 200px; height: 200px;}
- .profileImg{
+.profile1 {
+  width: 200px;
+  height: 200px;
+}
+.profileImg {
   height: 100%;
   width: 100%;
   clip-path: circle(40% at center);
   object-fit: cover;
   object-position: 0 0%;
 }
-.myimage {
 
-}
-.mycover:hover .myimage{
+.mycover:hover .myimage {
   transform: scale(1.1);
   opacity: 0.3;
 }
@@ -35,175 +35,170 @@
   transition: all 0.3s ease;
 }
 
-.mybutton:hover{
-  color: #f3722c ;
+.mybutton:hover {
+  color: #f3722c;
   background-color: white;
   border-color: white;
 }
 
 .ptimage {
-    width: 100%;
-    height: 100%;
-    transition: all 0.3s;
-    object-fit: cover !important; 
-  }
-.ptcover:hover .ptimage, .mybuttonhover:hover {
-    transform: scale(1.1);
-    opacity: 0.3;
-  }
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s;
+  object-fit: cover !important;
+}
+.ptcover:hover .ptimage,
+.mybuttonhover:hover {
+  transform: scale(1.1);
+  opacity: 0.3;
+}
 
 .ptcover {
-    cursor: pointer;
-    overflow: hidden;
-    transition: all 500ms ease;
-  }
-
-.meshume{
-    text-align:right;
-    margin-right:13%;
-    padding-top:1%;
-    font-weight:lighter;
-}
-.a_meshume{
-    color:white;
-    text-decoration:none;
-}
-.a_meshume:hover{
-    color:white;
-}
-.arrowimage{
-    width:2%;
-    padding-left:1%;  
-}
- .hbpt{
-    display:none;
-    justify-content: center;
-    align-items: center;
-    border-radius:9px;
-    border:1px solid #f3722c;
-    padding-left:9%;
-    padding-right:9%;
-    color:white;
-    background-color:transparent;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 500ms ease;
 }
 
-.ptcover:hover .hbpt{
-    display:block;
-    margin: 0;
-    position: absolute;
-    left: 50%;
-    bottom: 2%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+.meshume {
+  text-align: right;
+  margin-right: 13%;
+  padding-top: 1%;
+  font-weight: lighter;
+}
+.a_meshume {
+  color: white;
+  text-decoration: none;
+}
+.a_meshume:hover {
+  color: white;
+}
+.arrowimage {
+  width: 2%;
+  padding-left: 1%;
+}
+.hbpt {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  border-radius: 9px;
+  border: 1px solid #f3722c;
+  padding-left: 9%;
+  padding-right: 9%;
+  color: white;
+  background-color: transparent;
+}
+
+.ptcover:hover .hbpt {
+  display: block;
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  bottom: 2%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .ptdesc {
-    display:none;
-    justify-content: center;
-    align-items: center;
-    color:white;
-    background-color:transparent;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: transparent;
 }
 
 .ptcover:hover .ptdesc {
-    width: 80%;
-    font-size:10px;
-    display:block;
-    margin: 0;
-    position: absolute;
-    top: 65%;
-    left: 52%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+  width: 80%;
+  font-size: 10px;
+  display: block;
+  margin: 0;
+  position: absolute;
+  top: 65%;
+  left: 52%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
-
 
 .pttitle {
-    position: relative;
-    width: max-content;
-    display:none;
-    justify-content: center;
-    align-items: center;
-    font-size: 10px !important;
-    color:white;
-    background-color:transparent;
+  position: relative;
+  width: max-content;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-size: 10px !important;
+  color: white;
+  background-color: transparent;
 }
 
+.underlinept {
+  visibility: hidden;
+  position: absolute;
+  top: 50%;
+  left: 0.5%;
+  width: max-content;
+  height: 3px;
+  background-color: orange;
 
- .underlinept {
-     visibility: hidden;
-     position: absolute;
-     top: 50%;
-     left: 0.5%;
-     width: max-content;
-     height: 3px;
-     background-color: orange;
-
-     transform: scaleX(0);
-     transition: all 0.3s linear;
-     transform-origin: left;
- }
+  transform: scaleX(0);
+  transition: all 0.3s linear;
+  transform-origin: left;
+}
 
 .ptcover:hover .underlinept {
-    visibility: visible;
-    position: absolute;
-    top: 50%;
-    left: 0.5%;
-    width: 150px;
-    height: 3px;
-    background-color: orange;
-    transform: scaleX(1); 
-    transition: transform 500ms ease;
-    transform-origin: left; 
+  visibility: visible;
+  position: absolute;
+  top: 50%;
+  left: 0.5%;
+  width: 150px;
+  height: 3px;
+  background-color: orange;
+  transform: scaleX(1);
+  transition: transform 500ms ease;
+  transform-origin: left;
 }
 
- .ptcover:hover .underlinept::after {
-    transform: scaleX(1);
- }
-
+.ptcover:hover .underlinept::after {
+  transform: scaleX(1);
+}
 
 .ptcover:hover .pttitle {
-    width: 80%;
-    font-size:10px;
-    display:block;
-    margin: 0;
-    position: absolute;
-    top: 45%;
-    left: 52%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
+  width: 80%;
+  font-size: 10px;
+  display: block;
+  margin: 0;
+  position: absolute;
+  top: 45%;
+  left: 52%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
 }
 
 .ptcover:hover .pttitle::after {
-    transform: scaleX(1) !important;
+  transform: scaleX(1) !important;
 }
-.myprofile{
-  margin-top:5%;
-   display: flex;
+.myprofile {
+  margin-top: 5%;
+  display: flex;
   align-items: center;
   justify-content: center;
-  
-
 }
-.myprofileDiv{
+.myprofileDiv {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   border-radius: 20px;
   border: 2px solid white;
-  width:40%;
+  width: 40%;
   padding: 20px 20px 20px 20px;
-  text-align:left;
+  text-align: left;
 }
 
-.pass-icon
-            {
-                float: right;
-                margin-top: -28px;
-                position: relative;
-                z-index: 5;
-                font-size:15px;
-                color: black;
-                padding: 5 5;
-            }
+.pass-icon {
+  float: right;
+  margin-top: -28px;
+  position: relative;
+  z-index: 5;
+  font-size: 15px;
+  color: black;
+  padding: 5 5;
+}
