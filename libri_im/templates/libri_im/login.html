@@ -3,27 +3,11 @@
 
 {% block content %}
 <link rel="stylesheet" type=text/css href="{% static 'libri_im/css/login.css' %}">
-<link rel="stylesheet" type=text/css href="{% static 'libri_im/css/global.css' %}">
+
+
 <style>
  
-  #password {  
-  background-image: url("https://img.icons8.com/material-sharp/20/000000/visible.png");
-  background-position: 97% center;
-  background-repeat: no-repeat;
-}
-#password.visible {
-  background-image: url("https://img.icons8.com/material-outlined/20/000000/invisible.png");
-}#toggle-password {
-  display: none;
-}
-#toggle-password + label {
-  text-indent: -9999px;
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  margin-left: -32px;
-  cursor: pointer;
-}
+
 </style>
 <body>
   <div class="row">
@@ -35,12 +19,11 @@
                   <div class="body-container">
                     <h1 class="form-title">Login</h1>
                   {% include 'alerts/messages.html'%}    
-                  <p>  <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                  <p>  <input type="email" name="email" id="inputEmailLogin" class="form-control" placeholder="Email address" required autofocus>
                   </p>
                    <p>
-                    <input type="password" name="password" id="password" class="form-control" placeholder="Password" required>
-                    <input type="checkbox" id="toggle-password" />
-                    <label for="toggle-password">Show Password</label></p>
+                    <input type="password" name="password" id="password" class="form-control" placeholder="Password" required style="position:relative;">
+                    <span id="toggle" class="fa fa-fw fa-eye pass-icon" onclick="showhide();"></span></p>
                     <p>
                     <button class="mybutton" type="submit" style="padding-top:1%;padding-bottom:1%">Log in</button>
                     </p>
@@ -54,7 +37,9 @@
 </div>
 </div>
 </div>
-<script href="{% static 'libri_im/js/test.js' %}"></script>
+<script src="{% static 'libri_im/js/login_showHidePassword.js' %}">
+  
+</script> 
 </body>
 
 

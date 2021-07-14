@@ -196,3 +196,14 @@
   padding: 20px 20px 20px 20px;
   text-align:left;
 }
+
+.pass-icon
+            {
+                float: right;
+                margin-top: -28px;
+                position: relative;
+                z-index: 5;
+                font-size:15px;
+                color: black;
+                padding: 5 5;
+            }
