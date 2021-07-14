@@ -1,16 +1,57 @@
 {% extends 'libri_im/base.html' %} {% load static %} {% block content %}
 
 {% if user.is_authenticated and user.is_admin %}
-<form method="POST">
-  {% csrf_token %}
-  <fieldset class="form-group">
-    <legend>Create Book</legend>
-    {{ form.as_p }}
-  </fieldset>
-  <div class="form-group">
-    <button type="submit">Create</button>
-  </div>
+<h1 style="text-align:center; margin-top:3%;">Add new book</h1>
+<div class="createBooks"> 
+ 
+      <form method="POST">
+        {% csrf_token %}
+        <div class="form-group createForm">
+          <label  for="isbn">Isbn</label>
+          <input class="form-control" type="number" name = "isbn" id="isbn" >
+        </div>
+        <div class="form-group createForm">
+          <label  for="titulli">Title</label>
+          <input class="form-control" type="text" name = "titulli" id="titulli" >
+        </div>
+        <div class="form-group createForm">
+          <label  for="autori">Author</label>
+          <input class="form-control" type="text" name = "autori" id="autori" >
+        </div>
+        <div class="form-group createForm"> 
+          <label  for="kategoria">Category</label>
+          <input class="form-control" type="text" name = "kategoria" id="kategoria" >
+        </div>
+        <div class="form-group createForm"> 
+        <label  for="pershkrimi">Description</label>
+        <textarea name="pershkrimi" id="pershkrimi" rows="5" ></textarea>
+      </div>
+      <div class="form-group createForm"> 
+        <label  for="mes_vleresimit">Average rating</label>
+        <input class="form-control" type="number" name = "mes_vleresimit" id="mes_vleresimit" >
+      </div>
+      <div class="form-group createForm"> 
+        <label  for="nr_vleresimit">Number of ratings</label>
+        <input class="form-control" type="number" name = "nr_vleresimit" id="nr_vleresimit" >
+      </div>
+      <div class="form-group createForm"> 
+        <label  for="nr_faqeve">Number of pages</label>
+        <input class="form-control" type="number" name = "nr_faqeve" id="nr_faqeve" >
+      </div>
+      <div class="form-group createForm"> 
+        <label  for="viti_publikimit">Published year</label>
+        <input class="form-control" type="number" name = "viti_publikimit" id="viti_publikimit" >
+      </div>
+      <div class="form-group createForm"> 
+        <label  for="image_link">Image link</label>
+        <input class="form-control" type="text" name = "image_link" id="image_link" value="https://www.directtextbook.com/medium/">
+      </div>
+
+        <div class="form-group createForm">
+          <button type="submit" class="mybutton createButton">Add</button>
+        </div>
 </form>
+</div>
 {% else %}
 <h2>
   You should be loged in and have admin premissions to access this page's

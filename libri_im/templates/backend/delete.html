@@ -3,12 +3,12 @@
   
         <form method="POST">
             {% csrf_token %}
-         <h1>Delete File</h1>
-                <h2>Are you sure you want to delete the post "{{ object.titulli }}"</h2>
+         <h1 style="text-align:center; margin-top:3%;">Delete Book</h1>
+                <h2 style="text-align:center; margin-top:3%;">Are you sure you want to delete book titled <br>"{{ object.titulli }}"</h2>
             </fieldset>
-            <div>
-                <button type="submit">Po</button>
-                <a href="{% url 'book_detail' pk=object.id_libri %}">Cancel</a>
+            <div style="text-align:center; margin-top:3%;">
+                <button type="submit" class="mybutton">Yes</button>
+                <a href="{% url 'admin_home'   %}" class="mybutton" style="text-decoration:none; padding:0.5% 2% 0.5%   2%;">Cancel</a>
             </div>
         </form>
     
