@@ -8,10 +8,14 @@
     border: 1px solid black;
     border-collapse: collapse;
     text-align: center;
+    
+  }table{
+    display:flex;
+    justify-content: center;
   }
 </style>
 <div>
-  <h1 style="text-align:center;padding-top:2%;padding-bottom:2%;">Manage books</h1>
+  <h1 style="text-align:center;margin-top:3%;padding-bottom:2%;">Manage books</h1>
   {% if user.is_authenticated and user.is_admin%}
   
   <!-- nese eshte useri i kyqt ateher del pershendetja + stili i frontendit-->
@@ -33,10 +37,10 @@
       <td>{{ book.viti_publikimit }}</td>
       <td><img src="{{book.image_link}}"></td>
       <td style="width: 20%">
-        <a href="{% url 'book_detail' pk=book.id_libri %}">View Details</a>
+        <a href="{% url 'book_detail' pk=book.id_libri %}" class="a_meshume">View Details</a>
         <br />
-        <a href="{% url 'book_update' pk=book.id_libri %}">Update</a><br />
-        <a href="{% url 'delete' pk=book.id_libri %}">Delete</a>
+        <a href="{% url 'book_update' pk=book.id_libri %}" class="a_meshume">Update</a><br />
+        <a href="{% url 'delete' pk=book.id_libri %}" class="a_meshume">Delete</a>
       </td>
     </tr>
     {% endfor %}

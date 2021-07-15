@@ -1,11 +1,36 @@
 {% extends 'libri_im/base.html' %} 
 {% load static %} 
 {% block content %}
+<div class="row">
+<div class="book" col-md-6 col-sm-12>
+<div class="imgDiv"col-md-6 col-sm-12>
+    <img src="{{ book.image_link }}" class="imgStyle">
+</div>
+<div class="textDiv"col-md-2 col-sm-12>
+    <h1 class ="h1style"> {{ book.titulli }} </h1>
+    
+        <h5> {{ book.autori }}</h5>
+        <h5> {{ book.pershkrimi }}</h5>
+        
+        <h5 class="h5style">Rating: </h5>
+        <div class="rate">
+         
+            <input type="radio" id="star5" name="rate" value="5" />
+            <label for="star5" title="text">5 stars</label>
+            <input type="radio" id="star4" name="rate" value="4" />
+            <label for="star4" title="text">4 stars</label>
+            <input type="radio" id="star3" name="rate" value="3" />
+            <label for="star3" title="text">3 stars</label>
+            <input type="radio" id="star2" name="rate" value="2" />
+            <label for="star2" title="text">2 stars</label>
+            <input type="radio" id="star1" name="rate" value="1" />
+            <label for="star1" title="text">1 star</label>
+          </div>
+        <button class="buttonStyle">Dua te lexoj</button>
+</div>
+</div>
+</div>
 
-<center>
-    <img src="{{ book.image_link }}" style="height: 30%; width: 15%;">
-    <h1>{{ book.titulli }} - {{ book.isbn }} - {{ book.autori }} </h1>
-</center>
 
 
 {% endblock content %}

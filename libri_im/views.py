@@ -73,6 +73,8 @@ def home_view(request):
 
     if(not current_user.is_anonymous):
         # sirtar = Sirtar.objects.all()
+        if not Sirtar.objects.filter(id_user=current_user).exists():
+            myfunctions.create_default_sirtar(current_user.email)
         dlcount = Sirtar.objects.get(emri="Reading", id_user=current_user)
         dlcount = len(dlcount.books)
         dtlcount = Sirtar.objects.get(

@@ -103,12 +103,12 @@
     <p class="headingSortby">For you</p>
     <div class="PerTyImages">
       {% for book in booksFY %}
-    <div class="mycover ptcover">
-      <img src="{{ book.image_link }}" class="ptimage myimage">
-      <h3 class="pttitle">{{book.title}}</h3>
+    <div class="mycover ptcover"><a href="{% url 'book-detail' book.isbn %}">
+      <img src="{{ book.image_link }}" class="ptimage myimage"></a>
+      <h3 class="pttitle">{{book.titulli}}</h3>
       <div class="underlinept"></div>
-      <p class="ptdesc">{{book.description}}</p>
-      <button class="mybutton hbpt"><a href="{% url 'book-detail' book.isbn %}">Want to read</a></button>
+      <p class="ptdesc">{{book.autori}}</p>
+      <button class="mybutton hbpt">Want to read</button>
     </div>
    {% endfor %}
   </div>
@@ -121,9 +121,9 @@
     <p class="headingSortby">Latest books</p>
     <div class="sortByImages"> 
       {% for book in booksLatest %}
-    <div class="mycover">
-      <img src="{{ book.image_link}}" class="ptimage myimage">
-      <button class=" mybutton hoverbutton">Want to read</button>
+    <div class="mycover"><a href="{% url 'book-detail' book.isbn %}" >
+      <img src="{{ book.image_link}}" class="ptimage myimage"></a>
+      <button class=" mybutton hoverbutton" class="linkStyle">Want to read</button>
     </div>
     {% endfor %}
    
@@ -133,8 +133,8 @@
   <p class="headingSortby">Most rated</p>
   <div class="sortByImages"> 
     {% for book in booksR %}
-  <div class="mycover">
-    <img src="{{ book.image_link}}" class="myimage">
+  <div class="mycover"><a href="{% url 'book-detail' book.isbn %}" >
+    <img src="{{ book.image_link}}" class="myimage"></a>
     <form id="post-form">
       {% csrf_token %}
       <!-- <input type="text" id="isbn" name="isbn" value="{{book.isbn}}" style="display: none;"> -->
