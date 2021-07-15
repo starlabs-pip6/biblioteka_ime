@@ -36,6 +36,7 @@
   height: 200px;
 }
 .profileImg {
+  margin-left: 15%;
   height: 100%;
   width: 100%;
   clip-path: circle(40% at center);

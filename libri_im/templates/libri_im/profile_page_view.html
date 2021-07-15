@@ -6,6 +6,8 @@
   <div class="profile1">
     <img class="profileImg" src="{{request.user.profileImg.url}}" alt="no-img" >
   </div>
+
+
   <ul class="nav nav-pills m-5" id="pills-tab" role="tablist">
     <li class="nav-item col-3" role="presentation">
       <button
@@ -61,11 +63,7 @@
             {% for book in Read %}
             <div class="col-lg-2 col-md-4 col-sm-12">
               <div class="mycover ptcover">
-                <img
-                  src="{{book.image_link}}"
-                  class="ptimage myimage"
-                  alt="no-img"
-                />
+                <img src="{{book.image_link}}" class="ptimage myimage" alt="no-img"/>
                 <h3 class="pttitle hover-1">{{book.titulli}}</h3>
                 <div class="underlinept"></div>
                 <p class="ptdesc text-truncate">{{book.pershkrimi}}</p>
@@ -80,18 +78,16 @@
         role="tabpanel"
         aria-labelledby="pills-duke-tab"
       >
-        <div class="d-flex">
+        <div class="row">
           {% for book in Reading %}
-          <div class="mycover ptcover">
-            <img
-              src="{{book.image_link}}"
-              class="ptimage myimage"
-              alt="no-img"
-            />
-            <h3 class="pttitle hover-1">{{book.titulli}}</h3>
-            <div class="underlinept"></div>
-            <p class="ptdesc text-truncate">{{book.pershkrimi}}</p>
-          </div>
+          <div class="col-lg-2 col-md-4 col-sm-12">
+            <div class="mycover ptcover">
+              <img src="{{book.image_link}}" class="ptimage myimage" alt="no-img"/>
+              <h3 class="pttitle hover-1">{{book.titulli}}</h3>
+              <div class="underlinept"></div>
+              <p class="ptdesc text-truncate">{{book.pershkrimi}}</p>
+            </div>
+          </div> 
           {% endfor %}
         </div>
       </div>
@@ -101,18 +97,16 @@
         role="tabpanel"
         aria-labelledby="pills-dua-tab"
       >
-        <div class="d-flex">
+        <div class="row">
           {% for book in WantToRead %}
-          <div class="mycover ptcover">
-            <img
-              src="{{book.image_link}}"
-              class="ptimage myimage"
-              alt="no-img"
-            />
-            <h3 class="pttitle hover-1">{{book.titulli}}</h3>
-            <div class="underlinept"></div>
-            <p class="ptdesc text-truncate">{{book.pershkrimi}}</p>
-          </div>
+          <div class="col-lg-2 col-md-4 col-sm-12">
+            <div class="mycover ptcover">
+              <img src="{{book.image_link}}" class="ptimage myimage" alt="no-img"/>
+              <h3 class="pttitle hover-1">{{book.titulli}}</h3>
+              <div class="underlinept"></div>
+              <p class="ptdesc text-truncate">{{book.pershkrimi}}</p>
+            </div>
+          </div>  
           {% endfor %}
         </div>
       </div>
