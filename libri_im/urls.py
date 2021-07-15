@@ -54,6 +54,12 @@ urlpatterns = [
     path('profile/password', views.MyPasswordChangeView.as_view(template_name="registration/change-password.html"), name="change-password"),
 
     path('profile/view', views.ProfilePageViewDetails, name="profile_page_view"),
+
+
+
+    #GET DATA URLS
+    path('getdata/wtr', views.getdata, name="get_wtr"),
+
 ]
 
 

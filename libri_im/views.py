@@ -1,13 +1,14 @@
 from django import forms
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse ,JsonResponse
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import PasswordChangeForm
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
-from .serializers import LibratSerializer, UsersSerializer
+from .serializers import LibratSerializer, UsersSerializer, SirtarSerializer
 from .models import Book, NewUser, Progress, Sirtar
 from .forms import RegistrationForm, UserAuthenticationForm, MyPasswordChangeForm
 from django.views.generic import (CreateView,
@@ -69,6 +70,7 @@ def home_view(request):
     current_user = request.user
     books = Book.objects.all()
     cBooks = books.order_by("?")[0:9]
+    myfunctions.update_progress_db("Reading",current_user.email)
     if(not current_user.is_anonymous):      
         # sirtar = Sirtar.objects.all()
         if not Sirtar.objects.filter(id_user=current_user).exists():
@@ -85,9 +87,9 @@ def home_view(request):
         dlcount = "no data"
         dtlcount = "no data"
         klcount = "no data"   # userR = users.reading
-    if Progress.objects.all().exists():
+    if Progress.objects.filter(id_user=current_user.id).exists():
         progressArr = Progress.objects.filter(id_user=current_user.id)
-        progress = progressArr[1]
+        progress = progressArr[progressArr.count()-1]
         progressLibri = progress.id_libri
         progressUser = progress.id_user
         progressNowPages = progress.pages_now
@@ -143,28 +145,6 @@ def shfleto_view(request):
     }
     return render(request, 'libri_im/shfleto.html', context)
 
-# def register_view(request,*args,**kwargs):
-    # user = request.user
-    # if user.is_authenticated:
-    #     return HttpResponse(f'You are already authenticated as {user.email}')
-    # context = {}
-
-    # if request.POST:
-    #     form = RegistrationForm(request.POST)
-    #     if form.is_valid():
-    #         form.save()
-    #         email = form.cleaned_data.get('email').lower()
-    #         raw_pw = form.cleaned_data.get('password1')
-    #         account = authenticate(email=email, password=raw_pw)
-    #         login(request, account)
-    #         destination = get_redirect_if_exists(request)
-    #         if destination:
-    #             return redirect(destination)
-    #         return redirect("home")
-    #     else:
-    #         context['registration_form'] = form
-
-    # return render(request,'libri_im/register.html', context)
 
 
 class RegistationView(View):
@@ -422,3 +402,11 @@ def button_test(request):
             return HttpResponse('<p>Removed book from want to read</p>')
 
         return HttpResponse('<p>Error</p>')
+
+@api_view(('GET',))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def getdata(request):
+    if request.method == 'GET' and request.is_ajax:
+        wtrCount = Sirtar.objects.get(emri="Want to read", id_user=request.user)
+        serializer = SirtarSerializer(wtrCount, many=False)
+    return Response(serializer.data)

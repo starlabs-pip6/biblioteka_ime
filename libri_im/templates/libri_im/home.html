@@ -41,7 +41,7 @@
         </div>
       </div>
         <div class="dukelexuarprogress">
-           <div class="profile1">
+           <div class="profile1 profileFix">
             <img class="profileImg" src="{{ progressBookImage }}" width="200" height="200"alt="noImg">
            </div>
           <div class="title">
@@ -123,7 +123,11 @@
       {% for book in booksLatest %}
     <div class="mycover">
       <img src="{{ book.image_link}}" class="ptimage myimage">
-      <button class=" mybutton hoverbutton">Want to read</button>
+      {% if book.isbn in wtrBooks %}
+      <button onclick="onClickFunction( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" class=" mybutton hoverbutton" id="buttonclick{{book.isbn}}">Added</button>
+      {% else %}   
+      <button onclick="onClickFunction( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" class=" mybutton hoverbutton" id="buttonclick{{book.isbn}}">Want to read</button>
+       {% endif%}
     </div>
     {% endfor %}
    
@@ -131,23 +135,23 @@
   <p  class="meshume"><a href="#" class="a_meshume">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
   
   <p class="headingSortby">Most rated</p>
-   <form id="post-form">
-      {% csrf_token %}
+  
+      
   <div class="sortByImages"> 
-   
+    {% csrf_token %}
     {% for book in booksR %}
   <div class="mycover">
     <img src="{{ book.image_link}}" class="myimage">
     {% if book.isbn in wtrBooks %}
-     <button allBooks1={{booksR}} onclick="onClickFunction( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" id="buttonclick" class="mybutton hoverbutton">Added</button>
+     <button onclick="onClickFunction( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" id="buttonclick{{book.isbn}}" class="mybutton hoverbutton">Added</button>
     {% else %}
-     <button onclick="onClickFunction( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" id="buttonclick" class="mybutton hoverbutton">Want to read</button>
+     <button onclick="onClickFunction( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" id="buttonclick{{book.isbn}}" class="mybutton hoverbutton">Want to read</button>
     {% endif%}
   </div>
   {% endfor %}
  
 </div>  
- </form>
+
   <p  class="meshume"><a href="#" class="a_meshume">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
 
 
@@ -182,38 +186,14 @@
         });
       });
   </script> -->
-   <script type="text/javascript">
-      var localAddedBooks =[]
-      var allBooks = []
-      function strToArr(str){
-        str.replace('[','')
-        str.replace(']','')
-        return str.split(',')
-      }      
-      allBooks = $('#buttonclick').attr(allBooks1)
-      console.log("This is all books: "+ allBooks);
-      function arrayRemove(arr, value) { 
-    
-        return arr.filter(function(ele){ 
-            return ele != value; 
-        });
-       } 
-        
+   <script type="text/javascript"> 
 
       function onClickFunction(book,wtrBooks){
-      
-          $(document).on('click', '#buttonclick', function(e) {
+        btnClickedId = "#buttonclick"+book
+          $(document).on('click', btnClickedId, function(e) {
           e.preventDefault();
-        
-          //  if (!(jQuery.inArray(book,localAddedBooks) == -1)){
-          //      $(this).text("Want to read")
-          //   }
-          //   else {
-          //       $(this).text("Added")
-          //   }
            });
-     
-          $.ajax({
+            $.ajax({
           type: 'POST',
           url:'/buttontest/' ,
           data: {
@@ -221,37 +201,26 @@
               csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
           },
           success: function() {
-            if (!wtrBooks.includes(book) && (jQuery.inArray(book,localAddedBooks) == -1)){
-              $('#wtrtext').html(function(i, val) { return +val+1 });
-              localAddedBooks.push(book)
-            }
-            else {
-               $('#wtrtext').html(function(i, val) { return +val-1 });
-               y = $.grep(localAddedBooks, function(value) {
-                return value != book;
-                });
-            }
-            for(el in localAddedBooks) {
-              wtrBooks = wtrBooks + el
-           }  
-            console.log(localAddedBooks);
-            console.log(wtrBooks);
-
-            // for (n in wtrBooks){
-            //   n= n.toString
-            //   array.push(n)
-            // }
-            
-            // if(jQuery.inArray(n, array) !== -1){
-            //  $('#wtrtext').html(function(i, val) { return +val+1 });
-            // }
-            // else{
-            //   alert("Already added")
-            // }
-            
+            $.ajax({
+              url : "/getdata/wtr",
+              type : "GET",
+              dataType: "json",
+              success: function(json) {
+                  $('#wtrtext').text(json.books.length)
+                  if( $(btnClickedId).text()==="Want to read"){
+                    $(btnClickedId).text("Added")
+                  } else {
+                    $(btnClickedId).text("Want to read")
+                  }
+              },
+              failure: function(json) { 
+                  alert('Got an error dude');
+              }
+            });    
+          
           }
         });
-      }
+        }
   </script>
 </div>
 {% endblock content %}
