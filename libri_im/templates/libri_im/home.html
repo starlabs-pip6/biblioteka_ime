@@ -28,7 +28,7 @@
         <div class="sirtaret text">
           <div class="nrlibrave-container">
             <p>Want to read</p>
-            <p>{{dtlcount}}</p>
+            <p id="wtrtext">{{dtlcount}}</p>
           </div>
           <div class="nrlibrave-container">
             <p>Reading</p>
@@ -41,7 +41,7 @@
         </div>
       </div>
         <div class="dukelexuarprogress">
-           <div class="profile1">
+           <div class="profile1 profileFix">
             <img class="profileImg" src="{{ progressBookImage }}" width="200" height="200"alt="noImg">
            </div>
           <div class="title">
@@ -123,7 +123,11 @@
       {% for book in booksLatest %}
     <div class="mycover"><a href="{% url 'book-detail' book.isbn %}" >
       <img src="{{ book.image_link}}" class="ptimage myimage"></a>
-      <button class=" mybutton hoverbutton" class="linkStyle">Want to read</button>
+      {% if book.isbn in wtrBooks %}
+      <button onclick="onClickFunction( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" class=" mybutton hoverbutton linkStyle" id="buttonclick{{book.isbn}}">Added</button>
+      {% else %}   
+      <button onclick="onClickFunction( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" class=" mybutton hoverbutton linkStyle" id="buttonclick{{book.isbn}}">Want to read</button>
+       {% endif%}
     </div>
     {% endfor %}
    
@@ -131,19 +135,23 @@
   <p  class="meshume"><a href="#" class="a_meshume">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
   
   <p class="headingSortby">Most rated</p>
+  
+      
   <div class="sortByImages"> 
+    {% csrf_token %}
     {% for book in booksR %}
   <div class="mycover"><a href="{% url 'book-detail' book.isbn %}" >
     <img src="{{ book.image_link}}" class="myimage"></a>
-    <form id="post-form">
-      {% csrf_token %}
-      <!-- <input type="text" id="isbn" name="isbn" value="{{book.isbn}}" style="display: none;"> -->
-     <button onclick="onClickFunction( book='{{ book.isbn }} ');" id="buttonclick" class="mybutton hoverbutton">Want to read</button>
-    </form>
+    {% if book.isbn in wtrBooks %}
+     <button onclick="onClickFunction( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" id="buttonclick{{book.isbn}}" class="mybutton hoverbutton linkStyle">Added</button>
+    {% else %}
+     <button onclick="onClickFunction( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" id="buttonclick{{book.isbn}}" class="mybutton hoverbutton linkStyle">Want to read</button>
+    {% endif%}
   </div>
   {% endfor %}
  
 </div>  
+
   <p  class="meshume"><a href="#" class="a_meshume">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
 
 
@@ -178,14 +186,14 @@
         });
       });
   </script> -->
-   <script type="text/javascript">
-    
+   <script type="text/javascript"> 
 
-      function onClickFunction(book){
-          $(document).on('click', '#buttonclick', function(e) {
+      function onClickFunction(book,wtrBooks){
+        btnClickedId = "#buttonclick"+book
+          $(document).on('click', btnClickedId, function(e) {
           e.preventDefault();
-          });       
-          $.ajax({
+           });
+            $.ajax({
           type: 'POST',
           url:'/buttontest/' ,
           data: {
@@ -193,10 +201,26 @@
               csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
           },
           success: function() {
-
+            $.ajax({
+              url : "/getdata/wtr",
+              type : "GET",
+              dataType: "json",
+              success: function(json) {
+                  $('#wtrtext').text(json.books.length)
+                  if( $(btnClickedId).text()==="Want to read"){
+                    $(btnClickedId).text("Added")
+                  } else {
+                    $(btnClickedId).text("Want to read")
+                  }
+              },
+              failure: function(json) { 
+                  alert('Got an error dude');
+              }
+            });    
+          
           }
         });
-      }
+        }
   </script>
 </div>
 {% endblock content %}

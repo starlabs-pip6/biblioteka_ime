@@ -85,15 +85,13 @@
   flex: 1;
 }
 
-.circleImage{
-    width: 40%;
+.profileFix {
+   
+  width: 35% !important; 
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
-
-.circleImage img {
-    width: 100%;
-        border-radius: 50%;
-}
-
 .dukelexuarprogress{
     display: flex;
     flex-direction: column;
