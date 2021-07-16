@@ -41,5 +41,29 @@
             {%endfor%}
     </div>
 </div>
+{% if books.has_other_pages %}
+<nav>
+<ul class="pagination"  style="margin-top:5%; flex-wrap:wrap; display:flex; margin-left:2%;   ">
+    {% if books.has_previous %}
+      <li class="page-item PageNr "><a class="page-link" href="?page={{ books.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled page-item PageNr ActivePageNr"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in books.paginator.page_range %}
+      {% if books.number == i %}
+        <li class="page-item PageNr ActivePageNr"><span>{{ i }} <span  class="sr-only "></span></span></li>
+      {% else %}
+        <li class="page-item PageNr "><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if books.has_next %}
+      <li class="page-item PageNr"><a class="page-link" href="?page={{ books.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li   class=" disabled page-item PageNr ActivePageNr "><span class=" "></span>&raquo; </span></li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}
+
 </div>
 {% endblock %}

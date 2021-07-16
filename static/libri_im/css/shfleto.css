@@ -26,7 +26,7 @@
   font-family: "Montserrat", sans-serif;
 
   flex-direction: column;
-  height: 70vh;
+  height: 67vh;
   position: fixed;
   left: 70%;
 }
@@ -67,4 +67,26 @@
   background-color: black;
   color: aliceblue;
   font-family: "Montserrat", sans-serif;
+}
+.PageNr{
+  background-color:white !important;
+  color:#f3722c;
+  border:1px solid grey;
+  
+}
+.ActivePageNr{
+  padding: .375rem .75rem !important; 
+  font-size:20px
+}
+.page-link{
+  background-color:black !important;
+  color:#9e897e !important;
+  border-color:#f3722c !important;
+  
+}
+.page-link:hover{
+  background-color:white !important;
+  color:#9e897e !important;
+ 
+  
 }

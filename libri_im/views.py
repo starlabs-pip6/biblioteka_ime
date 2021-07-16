@@ -35,6 +35,8 @@ from django.urls import reverse, reverse_lazy
 from django.db import models
 from django.db.models import Q, F
 from . import myfunctions
+from django.core.paginator import PageNotAnInteger, Paginator
+
 
 class MyPasswordChangeView(PasswordChangeView):
     form_class = MyPasswordChangeForm
@@ -132,19 +134,37 @@ def home_view(request):
 
 
 def shfleto_view(request):
-    books = Book.objects.all()[0:30]
+    books = Book.objects.all()
     query = request.GET.get('search')
+    page=request.GET.get('page',1)
+    paginator=Paginator(books,42)
+     
+    order = request.GET.get('order', 'autori')  # Set 'name' as a default value
+    books = books.order_by(order)
+    
+    try:
+        books=paginator.page(page)
+    except PageNotAnInteger:
+        books=paginator.page(1)
+   
     if query:
         books =Book.objects.filter(Q(titulli__icontains=query) | (Q(autori__icontains=query)) | (Q(isbn__icontains=query)) | (Q(kategoria__icontains=query)) | (Q(viti_publikimit__icontains=query)))
+        page=request.GET.get('page',1)
+        paginator=Paginator(books,42)
+        try:
+            books=paginator.page(page)
+        except PageNotAnInteger:
+            books=paginator.page(1)
     books1 = Book.objects.all()[0:10]
     # categories = books.viti_publikimit
     context = {
         'books': books,
         'books1': books1,
+        
+        
         #  'categories' : categories,
     }
     return render(request, 'libri_im/shfleto.html', context)
-
 
 
 class RegistationView(View):
