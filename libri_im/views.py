@@ -72,15 +72,17 @@ def home_view(request):
     current_user = request.user
     books = Book.objects.all()
     cBooks = books.order_by("?")[0:9]
-    myfunctions.update_progress_db("Reading",current_user.email)
+  
     if(not current_user.is_anonymous):      
         # sirtar = Sirtar.objects.all()
+        myfunctions.update_progress_db("Reading",current_user.email)
         if not Sirtar.objects.filter(id_user=current_user).exists():
+        
             myfunctions.create_default_sirtar(current_user.email)
         dlcount = Sirtar.objects.get(emri="Reading", id_user = current_user)
         dlcount = len(dlcount.books)
         dtlcount = Sirtar.objects.get(emri="Want to read", id_user = current_user)
-        wtrBooks = Sirtar.objects.get(emri="Want to read", id_user = current_user).books
+        
         dtlcount = len(dtlcount.books)
         klcount = Sirtar.objects.get(emri="Read", id_user = current_user)
         klcount = len(klcount.books)
@@ -120,7 +122,7 @@ def home_view(request):
         'dlcount': dlcount,
         'klcount': klcount,
         'dtlcount': dtlcount,
-        'wtrBooks' : wtrBooks,
+        
         'progressLibri': progressLibri,
         'progressUser': progressUser,
         'progressNowPages': progressNowPages,
@@ -132,20 +134,27 @@ def home_view(request):
 
     return render(request, 'libri_im/home.html', context)
 
-
+from django.utils.datastructures import MultiValueDictKeyError
 def shfleto_view(request):
     books = Book.objects.all()
     query = request.GET.get('search')
-    page=request.GET.get('page',1)
-    paginator=Paginator(books,42)
-     
-    order = request.GET.get('order', 'autori')  # Set 'name' as a default value
-    books = books.order_by(order)
-    
-    try:
-        books=paginator.page(page)
-    except PageNotAnInteger:
-        books=paginator.page(1)
+
+    try: 
+        books=Book.objects.all().order_by(request.GET['sort_name'])
+        page=request.GET.get('page',1)
+        paginator=Paginator(books,42)
+        try:
+            books=paginator.page(page)
+        except PageNotAnInteger:
+            books=paginator.page(1)
+    except MultiValueDictKeyError:
+        books=Book.objects.all()
+        page=request.GET.get('page',1)
+        paginator=Paginator(books,42)
+        try:
+            books=paginator.page(page)
+        except PageNotAnInteger:
+            books=paginator.page(1)
    
     if query:
         books =Book.objects.filter(Q(titulli__icontains=query) | (Q(autori__icontains=query)) | (Q(isbn__icontains=query)) | (Q(kategoria__icontains=query)) | (Q(viti_publikimit__icontains=query)))

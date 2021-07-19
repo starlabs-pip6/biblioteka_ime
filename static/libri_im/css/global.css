@@ -210,10 +210,10 @@
                 color: black;
                 padding: 5 5;
             }
-.form-group{
+.form-groupCreate{
   width:170%;
   margin-left:-30%;
-}
+} 
 .createBooks{
   margin-top:3%;
   display: flex;

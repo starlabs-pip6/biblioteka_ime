@@ -2,20 +2,22 @@
 {% load static %}
 {% block content %}
 
+{% load urlparams %}
 
 <div class="shfleto-Container col-md-12 col-xl-12 ">
-    <form >
-        
-        <select name = "dropdown" class="dropdownShfleto">
-           <option value = "Rendit sipas..." selected class="optionShfleto">Sort by... </option>
-           <option value = "Titulli" class="optionShfleto">Title</option>
-           <option value = "Autori" class="optionShfleto" >Author</option>
-           <option value = "Me te vlersuarit"class="optionShfleto" >Most rated</option>
-           <option value = "Viti publikimit" class="optionShfleto">Published year</option>
-           <option value = "Librat e fundit" class="optionShfleto">Latest books</option>
-        </select>
-     </form>
-
+  <form action="">
+    <select name="sort_name" id="sort_name"class="dropdownShfleto" onchange="this.form.submit();">
+        <option class="optionShfleto" selected>Sort by...</option> 
+        <option value="titulli" class="optionShfleto" >Title</option>
+        <option value="autori" class="optionShfleto">Author</option>
+        <option value="-viti_publikimit" class="optionShfleto">Latest books</option>
+        <option value="-mes_vleresimit" class="optionShfleto">Highest rating</option>
+    </select>
+    <!--<button type="submit">Submit</button>-->
+</form>
+<script>
+ 
+</script>
       
     <div class="booksCategory">
     <div class="shfletoImages col-sm-12 col-md-8 col-sm-10" >
@@ -45,19 +47,20 @@
 <nav>
 <ul class="pagination"  style="margin-top:5%; flex-wrap:wrap; display:flex; margin-left:2%;   ">
     {% if books.has_previous %}
-      <li class="page-item PageNr "><a class="page-link" href="?page={{ books.previous_page_number }}">&laquo;</a></li>
+      <li class="page-item PageNr "><a class="page-link" href="?{% url_replace page=books.previous_page_number %}">&laquo;</a></li>
     {% else %}
       <li class="disabled page-item PageNr ActivePageNr"><span>&laquo;</span></li>
     {% endif %}
     {% for i in books.paginator.page_range %}
       {% if books.number == i %}
+      
         <li class="page-item PageNr ActivePageNr"><span>{{ i }} <span  class="sr-only "></span></span></li>
       {% else %}
-        <li class="page-item PageNr "><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+        <li class="page-item PageNr "><a class="page-link" href="?{%url_replace page=i%}">{{ i }}</a></li>
       {% endif %}
     {% endfor %}
     {% if books.has_next %}
-      <li class="page-item PageNr"><a class="page-link" href="?page={{ books.next_page_number }}">&raquo;</a></li>
+      <li class="page-item PageNr"><a class="page-link" href="?{%url_replace page=books.next_page_number%}">&raquo;</a></li>
     {% else %}
       <li   class=" disabled page-item PageNr ActivePageNr "><span class=" "></span>&raquo; </span></li>
     {% endif %}

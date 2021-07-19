@@ -143,9 +143,9 @@
   <div class="mycover"><a href="{% url 'book-detail' book.isbn %}" >
     <img src="{{ book.image_link}}" class="myimage"></a>
     {% if book.isbn in wtrBooks %}
-     <button onclick="onClickFunction( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" id="buttonclick{{book.isbn}}" class="mybutton hoverbutton linkStyle">Added</button>
+     <button onclick="onClickFunction( book='{{ book.isbn }}');" id="buttonclick{{book.isbn}}" class="mybutton hoverbutton linkStyle">Added</button>
     {% else %}
-     <button onclick="onClickFunction( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" id="buttonclick{{book.isbn}}" class="mybutton hoverbutton linkStyle">Want to read</button>
+     <button onclick="onClickFunction( book='{{ book.isbn }}');"  id="buttonclick{{book.isbn}}" class="mybutton hoverbutton linkStyle">Want to read</button>
     {% endif%}
   </div>
   {% endfor %}
@@ -188,7 +188,7 @@
   </script> -->
    <script type="text/javascript"> 
 
-      function onClickFunction(book,wtrBooks){
+      function onClickFunction(book){
         btnClickedId = "#buttonclick"+book
           $(document).on('click', btnClickedId, function(e) {
           e.preventDefault();
