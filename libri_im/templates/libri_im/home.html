@@ -18,6 +18,7 @@
 
     <!-- qetu punon welcome -->
   </div>
+  {% if request.user.is_authenticated %}
   <div class="sirtariim">
     <!-- qetu punon sirtariim -->
     <div class="title-container">
@@ -40,7 +41,9 @@
           </div>
         </div>
       </div>
-        <div class="dukelexuarprogress">
+     
+         <div class="dukelexuarprogress">
+            {% if progressLibriTitulli is "no data" %}
            <div class="profile1 profileFix">
             <img class="profileImg" src="{{ progressBookImage }}" width="200" height="200"alt="noImg">
            </div>
@@ -51,7 +54,12 @@
             <p>{{progressNowPages}}/{{progressAllPages}} pages or {{progressPercent}}%</p>
           </div>
           <button class="mybutton updateBtn">Update</button>
-      </div>
+           {% else %}
+              <h5>You are not reading any books right now.</h5>
+           {% endif %}
+         </div>
+   
+       
       <!-- <div class="centerFlex"> -->
       <div class="njoftimet text">
         <div class="njoftimi">
@@ -115,6 +123,7 @@
   <p  class="meshume"><a href="#" class="a_meshume">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
   
   </div>
+  {% endif %}
   <div class="sortby">
     <!-- qetu punon sortby -->
   
