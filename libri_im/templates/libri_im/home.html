@@ -41,8 +41,12 @@
           </div>
         </div>
       </div>
-     
-         <div class="dukelexuarprogress">
+      
+    
+        <div class="dukelexuarprogress">
+              {% if dlcount is 0 %}
+                 <h6>You should add books to the Reading shelf to show the progress.</h6>
+              {% else %}
                <div class="profile1 profileFix">
                 <img class="profileImg" src="{{ progressBookImage }}" width="200" height="200"alt="noImg">
               </div>
@@ -53,7 +57,11 @@
                 <p>{{progressNowPages}}/{{progressAllPages}} pages or {{progressPercent}}%</p>
               </div>
               <button class="mybutton updateBtn">Update</button>
+                {% endif %}
          </div>
+  
+        
+         
    
        
       <!-- <div class="centerFlex"> -->
