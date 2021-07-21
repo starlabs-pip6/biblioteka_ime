@@ -1,7 +1,8 @@
+from django.utils.datastructures import MultiValueDictKeyError
 from django import forms
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.http import HttpResponse ,JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import PasswordChangeForm
@@ -72,21 +73,22 @@ def home_view(request):
     current_user = request.user
     books = Book.objects.all()
     cBooks = books.order_by("?")[0:9]
-  
-    if(not current_user.is_anonymous):      
+
+    if(not current_user.is_anonymous):
         # sirtar = Sirtar.objects.all()
-        myfunctions.update_progress_db("Reading",current_user.email)
+        myfunctions.update_progress_db("Reading", current_user.email)
         if not Sirtar.objects.filter(id_user=current_user).exists():
-        
+
             myfunctions.create_default_sirtar(current_user.email)
-        dlcount = Sirtar.objects.get(emri="Reading", id_user = current_user)
+        dlcount = Sirtar.objects.get(emri="Reading", id_user=current_user)
         dlcount = len(dlcount.books)
-        dtlcount = Sirtar.objects.get(emri="Want to read", id_user = current_user)
-        
+        dtlcount = Sirtar.objects.get(
+            emri="Want to read", id_user=current_user)
+
         dtlcount = len(dtlcount.books)
-        klcount = Sirtar.objects.get(emri="Read", id_user = current_user)
+        klcount = Sirtar.objects.get(emri="Read", id_user=current_user)
         klcount = len(klcount.books)
-        
+
     else:
         dlcount = "no data"
         dtlcount = "no data"
@@ -99,7 +101,8 @@ def home_view(request):
         progressNowPages = progress.pages_now
         progressAllPages = progress.id_libri.nr_faqeve
         progressLibriTitulli = progress.id_libri.titulli[0:30]+"..."
-        progressPercent = round(float((progressNowPages/progressAllPages)*100), 1)
+        progressPercent = round(
+            float((progressNowPages/progressAllPages)*100), 1)
         progressBookImage = progress.id_libri.image_link
     else:
         progressLibri = "no data"
@@ -109,7 +112,7 @@ def home_view(request):
         progressLibriTitulli = "no data"
         progressPercent = "no data"
         progressBookImage = ""
-        
+
     if not current_user:
         current_user = 'anonimous user(not loged in)'
     context = {
@@ -122,7 +125,7 @@ def home_view(request):
         'dlcount': dlcount,
         'klcount': klcount,
         'dtlcount': dtlcount,
-        
+
         'progressLibri': progressLibri,
         'progressUser': progressUser,
         'progressNowPages': progressNowPages,
@@ -134,43 +137,44 @@ def home_view(request):
 
     return render(request, 'libri_im/home.html', context)
 
-from django.utils.datastructures import MultiValueDictKeyError
+
 def shfleto_view(request):
     books = Book.objects.all()
     query = request.GET.get('search')
 
-    try: 
-        books=Book.objects.all().order_by(request.GET['sort_name'])
-        page=request.GET.get('page',1)
-        paginator=Paginator(books,42)
+    try:
+        books = Book.objects.all().order_by(request.GET['sort_name'])
+        page = request.GET.get('page', 1)
+        paginator = Paginator(books, 42)
         try:
-            books=paginator.page(page)
+            books = paginator.page(page)
         except PageNotAnInteger:
-            books=paginator.page(1)
+            books = paginator.page(1)
     except MultiValueDictKeyError:
-        books=Book.objects.all()
-        page=request.GET.get('page',1)
-        paginator=Paginator(books,42)
+        books = Book.objects.all()
+        page = request.GET.get('page', 1)
+        paginator = Paginator(books, 42)
         try:
-            books=paginator.page(page)
+            books = paginator.page(page)
         except PageNotAnInteger:
-            books=paginator.page(1)
-   
+            books = paginator.page(1)
+
     if query:
-        books =Book.objects.filter(Q(titulli__icontains=query) | (Q(autori__icontains=query)) | (Q(isbn__icontains=query)) | (Q(kategoria__icontains=query)) | (Q(viti_publikimit__icontains=query)))
-        page=request.GET.get('page',1)
-        paginator=Paginator(books,42)
+        books = Book.objects.filter(Q(titulli__icontains=query) | (Q(autori__icontains=query)) | (
+            Q(isbn__icontains=query)) | (Q(kategoria__icontains=query)) | (Q(viti_publikimit__icontains=query)))
+        page = request.GET.get('page', 1)
+        paginator = Paginator(books, 42)
         try:
-            books=paginator.page(page)
+            books = paginator.page(page)
         except PageNotAnInteger:
-            books=paginator.page(1)
+            books = paginator.page(1)
     books1 = Book.objects.all()[0:10]
     # categories = books.viti_publikimit
     context = {
         'books': books,
         'books1': books1,
-        
-        
+
+
         #  'categories' : categories,
     }
     return render(request, 'libri_im/shfleto.html', context)
@@ -210,9 +214,9 @@ class RegistationView(View):
                 user.set_password(password)
                 user.is_active = False
                 user.save()
-                #creates 3 default sirtars
+                # creates 3 default sirtars
                 myfunctions.create_default_sirtar(email)
-                
+
                 current_site = get_current_site(request)
                 email_body = {
                     'user': user,
@@ -248,9 +252,6 @@ class RegistationView(View):
             return render(request, 'libri_im/register.html')
 
 
-
-                                        
-
 class VerificationView(View):
     def get(self, request, uidb64, token):
         try:
@@ -285,8 +286,6 @@ def logout_view(request):
 def login_view(request, *args, **kwargs):
     context = {}
     user = request.user
-    
-   
 
     if user.is_authenticated:
         return redirect("home")
@@ -394,33 +393,36 @@ class EditProfile(UpdateView):
     def get_object(self):
         return self.request.user
 
+
 def ProfilePageViewDetails(request):
     current_user = request.user
-    WantToRead = NewUser.objects.filter().only('want_to_read')
-    Reading = NewUser.objects.filter().only('reading')
-    Read = NewUser.objects.filter().only('read')
-    
+
+    Read = Book.objects.all()[8:30]
+    Reading = Book.objects.all()[4:7]
+    WantToRead = Book.objects.all()[0:3]
+
     context = {
-            'WantToRead': WantToRead,
-            'Reading': Reading,
-            'Read': Read,
-      
-        }
+        'WantToRead': WantToRead,
+        'Reading': Reading,
+        'Read': Read,
+
+    }
     return render(request, 'libri_im/profile_page_view.html', context)
 
 
 class BookDV(DetailView):
     model = Book
     template_name = 'libri_im/book-detail.html'
+
     def get_object(self, queryset=None):
         return Book.objects.get(isbn=self.kwargs.get("isbn"))
-    
 
-    
+
 def wantToReadPost(request):
     if request.method == "POST" and request.is_ajax:
         isbn = int(request.POST.get('isbn'))
-        new_sirtar = Sirtar.objects.get(emri="Want to read",id_user = request.user)
+        new_sirtar = Sirtar.objects.get(
+            emri="Want to read", id_user=request.user)
         if isbn not in new_sirtar.books:
             new_sirtar.books.append(isbn)
             new_sirtar.save(update_fields=['books'])
@@ -432,10 +434,12 @@ def wantToReadPost(request):
 
         return HttpResponse('<p>Error</p>')
 
+
 @api_view(('GET',))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def getdataWtr(request):
     if request.method == 'GET' and request.is_ajax:
-        wtrCount = Sirtar.objects.get(emri="Want to read", id_user=request.user)
+        wtrCount = Sirtar.objects.get(
+            emri="Want to read", id_user=request.user)
         serializer = SirtarSerializer(wtrCount, many=False)
     return Response(serializer.data)
