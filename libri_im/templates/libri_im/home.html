@@ -43,20 +43,16 @@
       </div>
      
          <div class="dukelexuarprogress">
-            {% if progressLibriTitulli is "no data" %}
-           <div class="profile1 profileFix">
-            <img class="profileImg" src="{{ progressBookImage }}" width="200" height="200"alt="noImg">
-           </div>
-          <div class="title">
-            <p>{{progressLibriTitulli}}</p>
-          </div>
-          <div class="text-progress">
-            <p>{{progressNowPages}}/{{progressAllPages}} pages or {{progressPercent}}%</p>
-          </div>
-          <button class="mybutton updateBtn">Update</button>
-           {% else %}
-              <h5>You are not reading any books right now.</h5>
-           {% endif %}
+               <div class="profile1 profileFix">
+                <img class="profileImg" src="{{ progressBookImage }}" width="200" height="200"alt="noImg">
+              </div>
+              <div class="title">
+                <p>{{progressLibriTitulli}}</p>
+              </div>
+              <div class="text-progress">
+                <p>{{progressNowPages}}/{{progressAllPages}} pages or {{progressPercent}}%</p>
+              </div>
+              <button class="mybutton updateBtn">Update</button>
          </div>
    
        
