@@ -417,8 +417,8 @@ class BookDV(DetailView):
     
 
     
-def button_test(request):
-    if request.method == "POST":
+def wantToReadPost(request):
+    if request.method == "POST" and request.is_ajax:
         isbn = int(request.POST.get('isbn'))
         new_sirtar = Sirtar.objects.get(emri="Want to read",id_user = request.user)
         if isbn not in new_sirtar.books:
@@ -434,7 +434,7 @@ def button_test(request):
 
 @api_view(('GET',))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
-def getdata(request):
+def getdataWtr(request):
     if request.method == 'GET' and request.is_ajax:
         wtrCount = Sirtar.objects.get(emri="Want to read", id_user=request.user)
         serializer = SirtarSerializer(wtrCount, many=False)

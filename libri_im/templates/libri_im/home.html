@@ -202,9 +202,9 @@
           $(document).on('click', btnClickedId, function(e) {
           e.preventDefault();
            });
-            $.ajax({
+          $.ajax({
           type: 'POST',
-          url:'/buttontest/' ,
+          url:'/post/wtr' ,
           data: {
               isbn: book,
               csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
@@ -223,10 +223,13 @@
                   }
               },
               failure: function(json) { 
-                  alert('Got an error dude');
+                  alert('Got an error dude GET');
               }
             });    
           
+          },
+          failure: function() {
+               alert('Got an error dude POST');
           }
         });
         }

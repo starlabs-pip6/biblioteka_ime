@@ -12,7 +12,6 @@ urlpatterns = [
     path('register/', views.RegistationView.as_view(), name='register'),
     path('shfleto/', views.shfleto_view, name='shfleto'),
     path('libri/<str:isbn>', BookDV.as_view(), name='book-detail'),
-    path('buttontest/', views.button_test, name='buttontest'),
     
 
 
@@ -56,9 +55,11 @@ urlpatterns = [
     path('profile/view', views.ProfilePageViewDetails, name="profile_page_view"),
 
 
+    #POST DATA URLS
+    path('post/wtr', views.wantToReadPost, name='post_wtr'),
 
     #GET DATA URLS
-    path('getdata/wtr', views.getdata, name="get_wtr"),
+    path('getdata/wtr', views.getdataWtr, name="get_wtr"),
 
 ]
 
