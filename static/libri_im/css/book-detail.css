@@ -4,6 +4,7 @@
   /* border: 1px solid white; */
   position: relative;
   display: inline-block;
+  /* overflow-x: hidden; */
 }
 .imgDiv {
   width: 400px;
@@ -82,4 +83,22 @@
   border: 1px solid #f3722c;
   margin-top: 130px;
   margin-left: -200px;
+}
+.commentDiv {
+  /* border: 1px solid white; */
+  margin-top: 150px;
+  text-align: left;
+  margin-left: 20px;
+  /* position: fixed; */
+}
+.comment-box {
+  border-radius: 16px;
+  width: 350px;
+  padding: 10px 10px;
+}
+.commentButton {
+  margin-left: 285px;
+}
+.dateStyle {
+  margin-left: 90px;
 }
