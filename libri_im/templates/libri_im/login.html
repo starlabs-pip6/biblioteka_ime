@@ -10,13 +10,16 @@
 
 </style>
 <body>
-  <div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-12">
+  <div class="overflowFix row">
+    <div class="col-sm-12 col-md-6 col-lg-12 ">
 <div class="login-container">
-		
+               
                 <form class="form" method="post" id="login">
                   {% csrf_token %}
                   <div class="body-container">
+                     <div class="image-container">
+                        <img src="{% static 'libri_im/images/logonavbar.png' %}" alt="noimg">
+                      </div>
                     <h1 class="form-title">Login</h1>
                   {% include 'alerts/messages.html'%}    
                   <p>  <input type="email" name="email" id="inputEmailLogin" class="form-control" placeholder="Email address" required autofocus>

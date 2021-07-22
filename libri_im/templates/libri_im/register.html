@@ -8,6 +8,9 @@
 		  <div class="body-container">
 			 
 		    <form class="form" method="post">{% csrf_token %}
+				  	<div class="image-container">
+                        <img src="{% static 'libri_im/images/logonavbar.png' %}" alt="noimg">
+                    </div>
 				<h1 class="form-title">Register</h1>
 					{% include 'alerts/messages.html'%}
 				<p><input type="email" name="email" id="inputEmailRegister" class="form-control" placeholder="Email address" required autofocus>

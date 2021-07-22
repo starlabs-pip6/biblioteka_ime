@@ -11,13 +11,16 @@
   justify-content: center;
   align-items: center;
 }
-
+.overflowFix {
+  width:100% !important;
+}
 .body-container {
-  width: 100%;
+  width: 50%;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  overflow-x: hidden;
 }
 .form {
   width: 100%;
@@ -140,3 +143,12 @@ button[type="submit"] {
   cursor: pointer;
 }
  
+
+.image-container {
+  width: 300px;
+  height: auto;
+}
+.image-container img {
+  width: 100%;
+  height: auto;
+}
