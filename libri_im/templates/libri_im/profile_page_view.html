@@ -12,12 +12,12 @@
         <div class="profile-info">
           <div>
             <h1 id="profileName" class="userProfileName d-flex align-items-center">
-             <span class="username">Elidon Morina</span>
-             <a class="editProfile mx-1" href="#" >(edit profile)</a>
+             <span class="username">{{currentUser.username}}</span>
+             <a class="editProfile mx-1" href="{% url 'profile_page' %}" >(edit profile)</a>
             </h1>
             <div class="userProfileStats mb-5">
               <h6>
-                <span class="joined">Joined : April, 2021</span><br>  
+                <span class="joined">{{currentUser.dateJoined}}</span><br>  
                 <a id="ratings" href="#">30 ratings</a><br>
                 <a id="reviews" href="#">10 reviews</a><br>
               </h6>
@@ -25,16 +25,16 @@
           </div>
           <div class="userShelf">
             <div class="d-flex align-items-center flex-column">
+              <a class="linkColor" href="#" >Read</a>
+              <div><p>{{ReadCount}}</p></div>
+            </div>
+            <div class="d-flex align-items-center flex-column">
               <a class="linkColor" href="#" >Reading</a>
-              <div>2</div>
+              <div><p>{{ReadingCount}}</p></div> 
             </div>
             <div class="d-flex align-items-center flex-column">
               <a class="linkColor" href="#" >Want To Read</a>
-              <div>22</div> 
-            </div>
-            <div class="d-flex align-items-center flex-column">
-              <a class="linkColor" href="#" >Favourites</a>
-              <div>12</div>
+              <div><p>{{WantToReadCount}}</p></div>
             </div>
           </div> 
         </div>
@@ -56,7 +56,7 @@
           aria-controls="pills-kam"
           aria-selected="true"
         >
-          Kam lexuar
+          Read
         </button>
       </li>
       <li class="nav-item col-3" role="presentation">
@@ -70,7 +70,7 @@
           aria-controls="pills-duke"
           aria-selected="false"
         >
-          Duke lexuar
+          Reading
         </button>
       </li>
       <li class="nav-item col-3" role="presentation">
@@ -84,7 +84,7 @@
           aria-controls="pills-dua"
           aria-selected="false"
         >
-          Dua te lexoj
+          Want to read
         </button>
       </li>
     </ul>

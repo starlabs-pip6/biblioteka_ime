@@ -111,6 +111,9 @@ class NewUser(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+    
+    def dateJoined(self):
+        return self.date_joined.strftime('%B %Y')
 
 
 class Progress(models.Model):

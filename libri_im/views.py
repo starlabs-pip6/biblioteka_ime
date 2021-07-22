@@ -396,15 +396,35 @@ class EditProfile(UpdateView):
 
 def ProfilePageViewDetails(request):
     current_user = request.user
-
-    Read = Book.objects.all()[8:30]
-    Reading = Book.objects.all()[4:7]
-    WantToRead = Book.objects.all()[0:3]
+    #Get Read Books from the database
+    ReadSirtar = Sirtar.objects.get(emri="Read", id_user=request.user).books
+    ReadBooks = []
+    for bookIsbn in ReadSirtar:
+        ReadBooks.append(Book.objects.get(isbn=bookIsbn))
+    #Get Reading Books from the database
+    ReadingSirtar = Sirtar.objects.get(emri="Reading", id_user=request.user).books
+    ReadingBooks = []
+    for bookIsbn in ReadingSirtar:
+        ReadingBooks.append(Book.objects.get(isbn=bookIsbn))
+    #Get Want to read Books from the database
+    WtrSirtar = Sirtar.objects.get(emri="Want to read", id_user=request.user).books
+    WtrBooks = []
+    for bookIsbn in WtrSirtar:
+        WtrBooks.append(Book.objects.get(isbn=bookIsbn))
+    
+    Read = ReadBooks
+    Reading = ReadingBooks
+    WantToRead = WtrBooks
 
     context = {
+        'currentUser' : current_user,
         'WantToRead': WantToRead,
         'Reading': Reading,
         'Read': Read,
+        'ReadCount': len(Read),
+        'ReadingCount': len(Reading),
+        'WantToReadCount': len(WantToRead),
+        
 
     }
     return render(request, 'libri_im/profile_page_view.html', context)
