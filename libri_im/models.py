@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.urls import reverse
+
+
 # Books Model
 class Book(models.Model):
     id_libri = models.AutoField(primary_key=True)
@@ -119,4 +121,26 @@ class Sirtar(models.Model):
     can_delete = models.BooleanField(null = False, blank = False, default = False)
 
     def __str__(self):
-            return self.id_user.username+" "+ self.emri
+            return self.id_user.username + " " + self.emri
+
+class Comment(models.Model):
+    book = models.ForeignKey(Book,related_name="comments", on_delete=models.CASCADE)
+    name = models.ForeignKey(NewUser, on_delete=models.CASCADE)
+    body = models.TextField()
+    date_added = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(NewUser,blank=True,related_name="comment_likes")
+    dislikes = models.ManyToManyField(NewUser,blank=True,related_name="comment_dislikes")
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True,null=True,related_name='+')
+
+    @property
+    def children(self):
+        return Comment.objects.filter(parent=self).order_by('date_added').all()
+
+    @property
+    def is_parent(self):
+        if self.parent is None:
+            return True
+        return False
+
+    def __str__(self):
+        return '%s - %s' % (self.book.titulli , self.name)

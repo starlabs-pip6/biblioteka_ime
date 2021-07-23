@@ -1,3 +1,4 @@
+from decimal import Context
 from django.utils.datastructures import MultiValueDictKeyError
 from django import forms
 from django.http.response import HttpResponseRedirect
@@ -10,8 +11,8 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 from .serializers import LibratSerializer, UsersSerializer, SirtarSerializer
-from .models import Book, NewUser, Progress, Sirtar
-from .forms import RegistrationForm, UserAuthenticationForm, MyPasswordChangeForm
+from .models import Book, NewUser, Progress, Sirtar,Comment
+from .forms import NewCommentForm, RegistrationForm, UserAuthenticationForm, MyPasswordChangeForm
 from django.views.generic import (CreateView,
                                   ListView,
                                   DetailView,
@@ -410,12 +411,186 @@ def ProfilePageViewDetails(request):
     return render(request, 'libri_im/profile_page_view.html', context)
 
 
-class BookDV(DetailView):
-    model = Book
-    template_name = 'libri_im/book-detail.html'
+# class BookDV(DetailView):
+#     model = Book
+#     template_name = 'libri_im/book-detail.html'
 
-    def get_object(self, queryset=None):
-        return Book.objects.get(isbn=self.kwargs.get("isbn"))
+#     def get_object(self, queryset=None):
+#         return Book.objects.get(isbn=self.kwargs.get("isbn"))
+
+class BookDV(View):
+    def get(self,request,isbn,*args,**kwargs):
+        book = Book.objects.get(isbn=isbn)
+        form = NewCommentForm()
+
+        comments = Comment.objects.filter(book=book).order_by('-date_added')
+
+        context = {
+            'book':book,
+            'form':form,
+            'comments':comments,
+        }
+
+        return render(request,'libri_im/book-detail.html' , context)
+
+    def post(self,request,isbn,*args,**kwargs):
+        book = Book.objects.get(isbn=isbn)
+        form = NewCommentForm(request.POST)
+
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.name = request.user
+            new_comment.book = book
+            new_comment.save()
+            form = NewCommentForm()
+
+        comments = Comment.objects.filter(book=book).order_by('-date_added')
+
+        context = {
+            'book':book,
+            'form':form,
+            'comments':comments,
+        }
+
+        # return HttpResponse("<p>Hello</p>")
+
+        return render(request,'libri_im/book-detail.html' , context)
+
+class CommentReplyView(View):
+    def post(self,request,pk,isbn,*args,**kwargs):
+        book = Book.objects.get(isbn=isbn)
+        parent_comment = Comment.objects.get(pk=pk)
+        form = NewCommentForm(request.POST)
+
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.name = request.user
+            new_comment.book = book
+            new_comment.parent = parent_comment
+            new_comment.save()
+
+        return redirect('book-detail', isbn=isbn)
+
+class AddCommentLike(View):
+    def post(self, request, pk, *args, **kwargs):
+        comment = Comment.objects.get(pk=pk)
+
+        is_dislike = False
+
+        for dislike in comment.dislikes.all():
+            if dislike == request.user:
+                is_dislike = True
+                break
+
+        if is_dislike:
+            comment.dislikes.remove(request.user)
+
+        is_like = False
+
+        for like in comment.likes.all():
+            if like == request.user:
+                is_like = True
+                break
+
+        if not is_like:
+            comment.likes.add(request.user)
+
+        if is_like:
+            comment.likes.remove(request.user)
+
+        next = request.POST.get('next', '/')
+        return HttpResponseRedirect(next)
+
+class AddCommentDislike(View):
+    def post(self, request, pk, *args, **kwargs):
+        comment = Comment.objects.get(pk=pk)
+
+        is_like = False
+
+        for like in comment.likes.all():
+            if like == request.user:
+                is_like = True
+                break
+
+        if is_like:
+            comment.likes.remove(request.user)
+
+        is_dislike = False
+
+        for dislike in comment.dislikes.all():
+            if dislike == request.user:
+                is_dislike = True
+                break
+
+        if not is_dislike:
+            comment.dislikes.add(request.user)
+
+        if is_dislike:
+            comment.dislikes.remove(request.user)
+
+        next = request.POST.get('next', '/')
+        return HttpResponseRedirect(next)
+
+class AddChildCommentLike(View):
+    def post(self, request, pk, *args, **kwargs):
+        comment = Comment.objects.get(pk=pk)
+
+        is_dislike = False
+
+        for dislike in comment.dislikes.all():
+            if dislike == request.user:
+                is_dislike = True
+                break
+
+        if is_dislike:
+            comment.dislikes.remove(request.user)
+
+        is_like = False
+
+        for like in comment.likes.all():
+            if like == request.user:
+                is_like = True
+                break
+
+        if not is_like:
+            comment.likes.add(request.user)
+
+        if is_like:
+            comment.likes.remove(request.user)
+
+        next = request.POST.get('next', '/')
+        return HttpResponseRedirect(next)
+
+class AddChildCommentDislike(View):
+    def post(self, request, pk, *args, **kwargs):
+        comment = Comment.objects.get(pk=pk)
+
+        is_like = False
+
+        for like in comment.likes.all():
+            if like == request.user:
+                is_like = True
+                break
+
+        if is_like:
+            comment.likes.remove(request.user)
+
+        is_dislike = False
+
+        for dislike in comment.dislikes.all():
+            if dislike == request.user:
+                is_dislike = True
+                break
+
+        if not is_dislike:
+            comment.dislikes.add(request.user)
+
+        if is_dislike:
+            comment.dislikes.remove(request.user)
+
+        next = request.POST.get('next', '/')
+        return HttpResponseRedirect(next)
+
 
 
 def wantToReadPost(request):
