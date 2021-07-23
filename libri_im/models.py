@@ -11,7 +11,7 @@ class Book(models.Model):
     isbn = models.BigIntegerField()
     titulli = models.CharField(max_length=2000)  # char
     autori = models.CharField(max_length=2000)  # char
-    kategoria = models.CharField(max_length=2000)  # char
+    kategoria = ArrayField(models.CharField(max_length=2000),blank=True,null=True, default=list)  # ArrayField(char)
     pershkrimi = models.TextField()  # char
     mes_vleresimit = models.DecimalField(
         max_digits=5, decimal_places=2)  # double
