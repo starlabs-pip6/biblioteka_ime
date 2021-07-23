@@ -2,7 +2,7 @@ from collections import namedtuple
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from .views import BookCreateView, BookListView, BookDetailView, BookDeleteView, EditBook, ProfilePageView, EditProfile, BookDV
+from .views import BookCreateView, BookListView, BookDetailView, BookDeleteView, EditBook, ProfilePageView, EditProfile, BookDV,AddCommentDislike,AddCommentLike,CommentReplyView,AddChildCommentDislike,AddChildCommentLike
 
 
 urlpatterns = [
@@ -16,6 +16,14 @@ urlpatterns = [
     path('libri/<str:isbn>', BookDV.as_view(), name='book-detail'),
 
 
+    #Comment likes and dislikes and replies
+    path('libri/<str:isbn>/comment/<int:pk>/reply', CommentReplyView.as_view(), name="comment-reply"), 
+    path('libri/<str:isbn>/comment/<int:pk>/like', AddCommentLike.as_view(), name="comment-like"), 
+    path('libri/<str:isbn>/comment/<int:pk>/dislike', AddCommentDislike.as_view(), name="comment-dislike"), 
+    path('libri/<str:isbn>/comment/<int:pk>/childlike', AddChildCommentLike.as_view(), name="child-comment-like"), 
+    path('libri/<str:isbn>/comment/<int:pk>/childdislike', AddChildCommentDislike.as_view(), name="child-comment-dislike"), 
+
+     
 
     # password reset
     path('reset_password/',

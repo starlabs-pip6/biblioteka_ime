@@ -1,8 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, PasswordChangeForm
 from django.contrib.auth import authenticate
+from django.forms import widgets
 
-from libri_im.models import NewUser
+from libri_im.models import NewUser , Comment
 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(max_length = 255, help_text="Required. Add a valid email address.")
@@ -51,3 +52,18 @@ class MyPasswordChangeForm(PasswordChangeForm):
     class Meta:
         model = NewUser
         fields = ('old_password','new_password1','new_password2')
+
+
+class NewCommentForm(forms.ModelForm):
+    body = forms.CharField(
+        label='',
+        widget =forms.Textarea(attrs={
+            'rows': '3',
+            'class' : 'form-control w-25 p-3',
+            'placeholder':'Say Something...'                             
+            }))
+
+    class Meta:
+        model = Comment
+        fields = ['body']
+        

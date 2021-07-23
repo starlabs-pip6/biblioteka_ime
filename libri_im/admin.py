@@ -1,5 +1,5 @@
 from django.contrib import admin
-from libri_im.models import NewUser,Book, Progress, Sirtar
+from libri_im.models import NewUser,Book, Progress, Sirtar, Comment
 from django.contrib.auth.admin import UserAdmin
 # Register your models here.
 
@@ -24,6 +24,7 @@ admin.site.register(Book)
 admin.site.register(NewUser, NewUserAdmin)
 admin.site.register(Progress, NewProgressAdmin)
 admin.site.register(Sirtar)
+admin.site.register(Comment)
 
 
 

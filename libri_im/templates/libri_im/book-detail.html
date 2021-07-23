@@ -35,27 +35,123 @@
 </div>
 </div>
 
- <div class="commentDiv">
-    <h3 class="h3">Add a comment below</h3>
-    <br>
-
-    <form>
-       
-        <img class="avatar avatar-sm mr-2" style="margin-bottom: 10px;" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png">
-        <b> Filan Fisteku</b>
-        <time class="dateStyle">12.12.2020</time>
-        <div class="media-body">
-          
-
-        <textarea id="form18" class="comment-box" rows="3" placeholder="Enter your comment here..."></textarea>
-
+<div style="padding-left: 75px;padding-top: 100px;">
+    <form class="commentform" method="POST" >
+        {% csrf_token %}
+        {{form.as_p|safe }}
+        <button type="submit" style="padding:5px;border-radius: 1rem;" onclick="reloadpage()">Submit</button>
     </form>
-    
-    <div class="commentButton">
-      <a href="#" class="btn btn-primary">Post</a>
-    </div>
- 
-  </div>
+</div>
+<div class="commentcontainer" style="padding-top: 90px;padding-left: 70px; ">
 
+    <h1 style="padding-bottom: 20px;">{{ book.comments.all.count }} Comments</h1>
+    {% for comment in book.comments.all %}
+    {% if comment.is_parent %}
+    <div class="spcomment" style="padding-bottom: 25px;">
+        <em><h1 class="cmtext" style="font-size: x-large;">{{ comment.name }} - {{ comment.date_added }} </h1></em>
+        <h4> &nbsp;&nbsp;&nbsp;&nbsp;  - {{ comment.body }} - </h4>
+        <div class="d-flex flex-row">
+            <form method="POST" action="{% url 'comment-like' book.isbn comment.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <button class="remove-default-btn" type="submit" style=" background: unset !important;
+                border: unset !important;
+                outline: unset !important;">
+                    <i class="fa fa-thumbs-up" style="color: #FFF;"> <span>{{ comment.likes.all.count }}</span></i>
+                </button>
+            </form>
+
+            <form method="POST" action="{% url 'comment-dislike' book.isbn comment.pk %}" style="padding-left:20px;">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <button class="remove-default-btn" style=" background: unset !important;
+                border: unset !important;
+                outline: unset !important;" type="submit">
+                    <i class="fa fa-thumbs-down" style="color: #FFF;"> <span>{{ comment.dislikes.all.count }}</span></i>
+                </button>
+            </form>
+            <div>
+                <button class="remove-default-btn" style="
+                margin-left: 20px;
+                color: #FFF;
+                background: unset !important;
+                border: unset !important;
+                outline: unset !important;" onclick="commentReplyToggle(parent_id='{{ comment.pk }}')">
+                    <i class="fa fa-commenting-o"></i>
+                </button>
+            </div>
+    </div>
+    </div>
+    <div style="padding-left: 75px;padding-top: 10px;padding-bottom: 5px;" class="d-none" id="{{ comment.pk }}">
+        <form class="commentform" method="POST" action="{% url 'comment-reply' book.isbn comment.pk %}" >
+            {% csrf_token %}
+            {{form.as_p|safe }}
+            <button type="submit" style="padding:5px;border-radius: 1rem;" onclick="reloadpage()">Submit</button>
+        </form>
+    </div>
+    {% for child_comment in comment.children %}
+    <div class="spcomment" style="padding-bottom: 25px;padding-left: 35px;">
+    <em><h1 class="cmtext" style="font-size: x-large;">{{ child_comment.name }} - {{ child_comment.date_added }} </h1></em>
+    <h4> &nbsp;&nbsp;&nbsp;&nbsp;  - {{ child_comment.body }} - </h4>
+    <div class="d-flex flex-row">
+        <form method="POST" action="{% url 'child-comment-like' book.isbn child_comment.pk %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <button class="remove-default-btn" type="submit" style=" background: unset !important;
+            border: unset !important;
+            outline: unset !important;">
+                <i class="fa fa-thumbs-up" style="color: #FFF;"> <span>{{ child_comment.likes.all.count }}</span></i>
+            </button>
+        </form>
+
+        <form method="POST" action="{% url 'child-comment-dislike' book.isbn child_comment.pk %}" style="padding-left:20px;">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.path }}">
+            <button class="remove-default-btn" style=" background: unset !important;
+            border: unset !important;
+            outline: unset !important;" type="submit">
+                <i class="fa fa-thumbs-down" style="color: #FFF;"> <span>{{ child_comment.dislikes.all.count }}</span></i>
+            </button>
+        </form>
+        <div>
+            <button class="remove-default-btn" style="
+            margin-left: 20px;
+            color: #FFF;
+            background: unset !important;
+            border: unset !important;
+            outline: unset !important;" onclick="commentReplyToggle(parent_id='{{ comment.pk }}')">
+                <i class="fa fa-commenting-o"></i>
+            </button>
+        </div>
+</div>
+</div>
+<div style="padding-left: 75px;padding-top: 10px;padding-bottom: 5px;" class="d-none" id="{{ comment.pk }}">
+    <form class="commentform" method="POST" action="{% url 'comment-reply' book.isbn comment.pk %}" >
+        {% csrf_token %}
+        {{form.as_p|safe }}
+        <button type="submit" style="padding:5px;border-radius: 1rem;" onclick="reloadpage()">Submit</button>
+    </form>
+</div>
+                    
+
+
+    {% endfor %}
+    {% endif %}
+    {% endfor%}
+</div>
+
+<script>
+function commentReplyToggle(parent_id) {
+	const row = document.getElementById(parent_id);
+
+	if (row.classList.contains('d-none')) {
+		row.classList.remove('d-none');
+	} else {
+		row.classList.add('d-none');
+	}
+}
+</script>
+
+<script src="{% static 'libri_im/js/reloadpage.js' %}"></script>
 
 {% endblock content %}
