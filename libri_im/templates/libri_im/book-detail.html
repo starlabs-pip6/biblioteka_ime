@@ -2,8 +2,10 @@
 {% load static %} 
 {% block content %}
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<div class="row">
-<div class="book" col-md-6 col-sm-12>
+
+<div class="book" col-md-6 col-sm-12 >
+
+
 <div class="imgDiv"col-md-6 col-sm-12>
     <img src="{{ book.image_link }}" class="imgStyle">
 
@@ -29,13 +31,12 @@
             <label for="star1" title="text">1 star</label>
           </div>
         <button class="buttonStyle">Dua te lexoj</button>
+    </div>
+
 </div>
 
-
-</div>
-</div>
-
- <div class="commentDiv">
+<div class="commentContainer"col-md-6 col-sm-12 > 
+  <div class="commentDiv"col-md-6 col-sm-12 > 
     <h3 class="h3">Add a comment below</h3>
     <br>
 
@@ -43,19 +44,77 @@
        
         <img class="avatar avatar-sm mr-2" style="margin-bottom: 10px;" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png">
         <b> Filan Fisteku</b>
-        <time class="dateStyle">12.12.2020</time>
+        <!-- <time class="dateStyle">12.12.2020</time> -->
         <div class="media-body">
-          
-
-        <textarea id="form18" class="comment-box" rows="3" placeholder="Enter your comment here..."></textarea>
+        <textarea  class="comment-box" rows="6" placeholder="Enter your comment here..."></textarea>
 
     </form>
     
-    <div class="commentButton">
-      <a href="#" class="btn btn-primary">Post</a>
+      <div class="commentButton">
+      <a href="#" class="btnStyle1">Post</a>
+      </div>
+  
+      </div>
+      </div>
+      
+  <div class="comments"col-md-6 col-sm-12>
+          <div class="commentsBox ">
+          <div class="njoftimi1">
+              <img class="avatar avatar-sm mr-2" style="margin-bottom: 10px;" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png">
+             <b> Filan Fisteku</b>
+             <time class="dateStyle">12.12.2020</time>
+             
+             <p>
+              First Comment
+            </p>
+          </div>
+          <div class="njoftimi1">
+            <img class="avatar avatar-sm mr-2" style="margin-bottom: 10px;" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png">
+            <b> Elidon Morina</b>
+            <time class="dateStyle">11.02.2020</time>
+            <p>
+              second Comment.
+            </p>
+          </div>
+          <div class="njoftimi1">
+            <img class="avatar avatar-sm mr-2" style="margin-bottom: 10px;" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png">
+            <b> Sara Bajraktari</b>
+            <time class="dateStyle">12.12.2020</time>
+            <p>
+              Third Comment...
+            </p>
+          </div>
+          <div class="njoftimi1">
+            <img class="avatar avatar-sm mr-2" style="margin-bottom: 10px;" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png">
+            <b> Lirak Rushiti</b>
+            <time class="dateStyle">12.12.2020</time>
+            <p>
+              The author's love and regard for his subject shines through in this detailed and very human account of a 
+              unique ensemble of actors who came together,
+               almost by accident, and created something enduring and magic.
+            </p>
+          </div>
+          <div class="njoftimi1">
+            <img class="avatar avatar-sm mr-2" style="margin-bottom: 10px;" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png">
+            <b> Vlera Bllaca</b>
+            <time class="dateStyle">12.12.2020</time>
+            <p>
+              Very little information in this book. There was a short chapter about creating the show and then a whole lot of padding which had me screaming at the pages 
+            </p>
+          </div>
+          <div class="njoftimi1">
+            <img class="avatar avatar-sm " style="margin-bottom: 10px; " src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png">
+            <b> Elidon Morina</b>
+            <time class="dateStyle">12.12.2020</time>
+            <p>
+              This is an amazing book
+            </p>
+          </div>
+       
+          </div>
+        </div>
     </div>
- 
   </div>
-
-
+</div>
+  
 {% endblock content %}
