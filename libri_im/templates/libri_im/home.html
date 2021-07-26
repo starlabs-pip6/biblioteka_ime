@@ -5,6 +5,26 @@
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <div class="home-container">
+   <!-- Modals --> 
+        <div class="modal fade" id="progressModal" tabindex="-1" role="dialog" aria-labelledby="progressModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content blackBgRoundedWhite">
+              <div class="modal-header">
+                <h5 class="modal-title" id="progressModalLabel">Update your progress</h5>
+              </div>
+              <div class="modal-body">
+                <p>Update pages for {{progressLibriTitulli}}</p>
+                {% csrf_token %}
+                <input type="number" name="progressInput" id ="progressInput">
+              </div>
+              <div class="modal-footer">
+                <button type="button" id="updateProgress" class="mybutton">Update</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
   <div class="welcome">
     <section id="slideshow">
       <div class="entire-content">
@@ -45,7 +65,7 @@
     
         <div class="dukelexuarprogress">
               {% if dlcount is 0 %}
-                 <h6>You should add books to the Reading shelf to show the progress.</h6>
+                 <p>You should add books to the Reading shelf to show the progress.</p>
               {% else %}
                <div class="profile1 profileFix">
                 <img class="profileImg" src="{{ progressBookImage }}" width="200" height="200"alt="noImg">
@@ -54,12 +74,18 @@
                 <p>{{progressLibriTitulli}}</p>
               </div>
               <div class="text-progress">
-                <p>{{progressNowPages}}/{{progressAllPages}} pages or {{progressPercent}}%</p>
+                <p id="progressShowText">{{progressNowPages}}/{{progressAllPages}} pages or {{progressPercent}}%</p>
               </div>
-              <button class="mybutton updateBtn">Update</button>
+               <!-- Button trigger modal -->
+              <button id="progressButton" type="button" class="mybutton" data-toggle="modal1" data-target="progressModal">
+                     Update
+              </button>
                 {% endif %}
          </div>
-  
+        
+
+
+       
         
          
    
@@ -200,7 +226,38 @@
       });
   </script> -->
    <script type="text/javascript"> 
-
+      $(document).on('click', '#progressButton', function(e) {
+          $('#progressModal').modal('show')
+      });
+      $(document).on('click', '#updateProgress', function(e) {
+           $.ajax({
+          type: 'POST',
+          url:'{% url "post_progress" %}' ,
+          data: {
+              progressPages: $('#progressInput').val(),
+              progressBook: '{{progressLibri.isbn}}',
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function() {
+              $.ajax({
+              url : '{% url "get_progress" %}',
+              type : "GET",
+              dataType: "json",
+              success: function(json) {
+                let progressNowPages = json.progressNowPages
+                let progressAllPages = json.progressAllPages
+                let progressPercent = json.progressPercent
+                let allString = ""+progressNowPages+"/"+progressAllPages+" pages or "+progressPercent+"%"
+                 $('#progressShowText').text(allString)
+              },
+              failure: function(json) { 
+                  alert('Got an error dude GET');
+              }
+            });    
+          }
+        });
+         
+      });
       function onClickFunction(book){
         btnClickedId = "#buttonclick"+book
           $(document).on('click', btnClickedId, function(e) {
@@ -208,14 +265,14 @@
            });
           $.ajax({
           type: 'POST',
-          url:'/post/wtr' ,
+          url:'{% url "post_wtr" %}' ,
           data: {
               isbn: book,
               csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
           },
           success: function() {
             $.ajax({
-              url : "/getdata/wtr",
+              url : '{% url "get_wtr" %}',
               type : "GET",
               dataType: "json",
               success: function(json) {
@@ -237,6 +294,8 @@
           }
         });
         }
+
+        
   </script>
 </div>
 {% endblock content %}

@@ -10,7 +10,7 @@ from django.contrib.auth.forms import PasswordChangeForm
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
-from .serializers import LibratSerializer, UsersSerializer, SirtarSerializer
+from .serializers import LibratSerializer, UsersSerializer, SirtarSerializer, ProgressSerializer
 from .models import Book, NewUser, Progress, Sirtar,Comment
 from .forms import NewCommentForm, RegistrationForm, UserAuthenticationForm, MyPasswordChangeForm
 from django.views.generic import (CreateView,
@@ -630,3 +630,36 @@ def getdataWtr(request):
             emri="Want to read", id_user=request.user)
         serializer = SirtarSerializer(wtrCount, many=False)
     return Response(serializer.data)
+
+def progressPost(request):
+    if request.method == "POST" and request.is_ajax:
+        progressBookIsbn = int(request.POST.get('progressBook'))
+        progressBook = Book.objects.get(isbn=progressBookIsbn)
+        progressObj = Progress.objects.get(id_user=request.user,id_libri=progressBook)
+        if not request.POST.get('progressPages')=='':
+            progressInput = int(request.POST.get('progressPages'))
+        else:
+            progressInput=progressObj.pages_now
+      
+        progressObj.pages_now = progressInput
+        progressObj.save(update_fields=['pages_now'])
+        return HttpResponse('<p>Pages Updated Successfuly</p>')
+    return HttpResponse('<p>Error</p>')
+
+@api_view(('GET',))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def getdataProgress(request):
+    if request.method =="GET" and request.is_ajax:
+        progressArr = Progress.objects.filter(id_user=request.user.id)
+        progressObj = progressArr[progressArr.count()-1]
+        progressNowPages = progressObj.pages_now
+        progressAllPages = progressObj.id_libri.nr_faqeve
+        progressPercent = round(
+            float((progressNowPages/progressAllPages)*100), 1)
+        data = {
+            'progressNowPages': progressNowPages,
+            'progressAllPages': progressAllPages,
+            'progressPercent': progressPercent
+        }
+        return Response(data)
+    return HttpResponse('<p>Error</p>')

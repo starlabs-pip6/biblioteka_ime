@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Book, NewUser, Sirtar
+from .models import Book, NewUser, Sirtar, Progress
 
 
 
@@ -19,5 +19,9 @@ class SirtarSerializer(serializers.ModelSerializer):
         model = Sirtar
         fields='__all__'
 
+class ProgressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Progress
+        fields = '__all__'
 
         

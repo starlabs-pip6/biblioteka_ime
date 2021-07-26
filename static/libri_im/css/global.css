@@ -244,3 +244,10 @@
   padding-bottom:2%;
   margin-left:-28%;
 }
+
+.blackBgRoundedWhite{
+  background-color:black !important;
+  border-radius: 20px !important;
+  border-color: white !important;
+
+}
