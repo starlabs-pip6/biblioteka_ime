@@ -215,32 +215,6 @@ class RegistationView(View):
                 user.save()
                 # creates 3 default sirtars
                 myfunctions.create_default_sirtar(email)
-
-                # current_site = get_current_site(request)
-                # email_body = {
-                #     'user': user,
-                #     'domain': current_site.domain,
-                #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                #     'token': account_activation_token.make_token(user),
-                # }
-                # link = reverse('activate', kwargs={
-                #                'uidb64': email_body['uid'], 'token': email_body['token']})
-
-                # email_subject = 'Activate your account in "Sirtari"'
-
-                # activate_url = 'http://'+current_site.domain+link
-
-                # email = EmailMessage(
-                #     email_subject,
-                #     'Hello '+user.username +
-                #     ', please click in the link below to activate your account in "Sirtari" \n'+activate_url,
-                #     'starlabs.pip6@gmail.com',
-                #     [request.POST['email']],
-                # )
-                # email.send(fail_silently=False)
-                # messages.success(
-                #     request, 'Your account has been created succesfully. To use this account, activate it with the link that we have sent you by email.')
-                # return render(request, 'libri_im/register.html')
                 myfunctions.send_email_activation(request,user)
                 messages.success(
                     request, 'Your account has been created succesfully. To use this account, activate it with the link that we have sent you by email.')
