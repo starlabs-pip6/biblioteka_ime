@@ -88,12 +88,7 @@ class NewUser(AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
     hide_email = models.BooleanField(default=True)
     # field for books that are connected to the user
-    read = ArrayField(models.IntegerField(), blank=True,
-                      null=True, default=list)
-    want_to_read = ArrayField(models.IntegerField(),
-                              blank=True, null=True, default=list)
-    reading = ArrayField(models.IntegerField(),
-                         blank=True, null=True, default=list)
+    #currently_reading = models.BigIntegerField(null=True, blank=True)
 
     profileImg = models.ImageField(max_length=255, upload_to=get_profile_image_filepath,
                                    null=True, blank=True, default=get_default_profile_image)

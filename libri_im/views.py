@@ -79,7 +79,11 @@ def home_view(request):
             myfunctions.create_default_sirtar(current_user.email)
         myfunctions.update_progress_db("Reading", current_user.email)
 
+        
+        dukelexuar = []
         dlcount = Sirtar.objects.get(emri="Reading", id_user=current_user)
+        for isbn in dlcount.books:
+            dukelexuar.append(Book.objects.get(isbn=isbn))
         dlcount = len(dlcount.books)
         dtlcount = Sirtar.objects.get(
             emri="Want to read", id_user=current_user)
@@ -89,20 +93,24 @@ def home_view(request):
         klcount = len(klcount.books)
 
     else:
+        dukelexuar = "no data"
         dlcount = "no data"
         dtlcount = "no data"
         klcount = "no data"   # userR = users.reading
     if Progress.objects.filter(id_user=current_user.id).exists():
-        progressArr = Progress.objects.filter(id_user=current_user.id)
-        progress = progressArr[progressArr.count()-1]
-        progressLibri = progress.id_libri
-        progressUser = progress.id_user
-        progressNowPages = progress.pages_now
-        progressAllPages = progress.id_libri.nr_faqeve
-        progressLibriTitulli = progress.id_libri.titulli[0:30]+"..."
+    
+        userReadingBooks = Sirtar.objects.get(id_user=request.user, emri = "Reading").books
+        progressIsbn = userReadingBooks[-1]
+        progressBookObj = Book.objects.get(isbn=progressIsbn)
+        progressBook = Progress.objects.get(id_libri=progressBookObj, id_user=request.user)
+        progressLibri = progressBook.id_libri
+        progressUser = progressBook.id_user
+        progressNowPages = progressBook.pages_now
+        progressAllPages = progressBook.id_libri.nr_faqeve
+        progressLibriTitulli = progressBook.id_libri.titulli[0:35]+"..."
         progressPercent = round(
             float((progressNowPages/progressAllPages)*100), 1)
-        progressBookImage = progress.id_libri.image_link
+        progressBookImage = progressBook.id_libri.image_link
     else:
         progressLibri = "no data"
         progressUser = "no data"
@@ -124,7 +132,7 @@ def home_view(request):
         'dlcount': dlcount,
         'klcount': klcount,
         'dtlcount': dtlcount,
-
+        'dukelexuar': dukelexuar,
         'progressLibri': progressLibri,
         'progressUser': progressUser,
         'progressNowPages': progressNowPages,
@@ -663,3 +671,38 @@ def getdataProgress(request):
         }
         return Response(data)
     return HttpResponse('<p>Error</p>')
+
+def selectBookPost(request):
+    if request.method=="POST" and request.is_ajax:
+        selectedBookIsbn = int(request.POST.get('isbn'))
+        readingSirtar = Sirtar.objects.get(id_user = request.user,emri="Reading")
+        readingSirtar.books.remove(selectedBookIsbn)
+        readingSirtar.books.append(selectedBookIsbn)
+        readingSirtar.save(update_fields=['books'])
+        return HttpResponse("Book appended to end")
+    return HttpResponse("Error")
+        
+
+
+@api_view(('GET',))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def getdataSelectBook(request):
+    if request.method == 'GET' and request.is_ajax:
+        userReadingBooks = Sirtar.objects.get(id_user=request.user, emri = "Reading").books
+        progressIsbn = userReadingBooks[-1]
+        progressBookObj = Book.objects.get(isbn=progressIsbn)
+        progressBook = Progress.objects.get(id_libri=progressBookObj, id_user=request.user)
+        progressNowPages = progressBook.pages_now
+        progressAllPages = progressBook.id_libri.nr_faqeve
+        progressLibriTitulli = progressBook.id_libri.titulli[0:35]+"..."
+        progressPercent = round(
+            float((progressNowPages/progressAllPages)*100), 1)
+        progressBookImage = progressBook.id_libri.image_link
+        data = {
+            'progressBookImage' : progressBookImage,
+            'progressNowPages' : progressNowPages,
+            'progressAllPages' : progressAllPages,
+            'progressLibriTitulli' : progressLibriTitulli,
+            'progressPercent' : progressPercent,
+        }
+    return Response(data)

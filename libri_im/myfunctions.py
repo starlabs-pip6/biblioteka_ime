@@ -19,6 +19,7 @@ def create_default_sirtar(email):
 
 def update_progress_db(emri,email):
     user = NewUser.objects.get(email = email)
+  
     if not Sirtar.objects.get(emri=emri,id_user=user):
         create_default_sirtar(user)
     currentReading = Sirtar.objects.get(emri=emri,id_user=user).books

@@ -79,11 +79,13 @@ urlpatterns = [
     # POST DATA URLS
     path('postdata/wtr', views.wantToReadPost, name='post_wtr'),
     path('postdata/progress', views.progressPost, name='post_progress'),
-
+    path('postdata/selectbook', views.selectBookPost, name='post_selectBook'),
+     
     # GET DATA URLS
     path('getdata/wtr', views.getdataWtr, name="get_wtr"),
     path('getdata/progress', views.getdataProgress, name="get_progress"),
-
+    path('getdata/selectbook', views.getdataSelectBook, name="get_selectBook"),
+ 
 
 
 

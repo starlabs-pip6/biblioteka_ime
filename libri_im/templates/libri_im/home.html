@@ -6,13 +6,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <div class="home-container">
    <!-- Modals --> 
-        <div class="modal fade" id="progressModal" tabindex="-1" role="dialog" aria-labelledby="progressModalLabel" aria-hidden="true">
+        <div class="modal fade" id="progressUpdateModal" tabindex="-1" role="dialog" aria-labelledby="progressUpdateModalLabel" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content blackBgRoundedWhite">
               <div class="modal-header">
-                <h5 class="modal-title" id="progressModalLabel">Update your progress</h5>
+                <h5 class="modal-title" id="progressUpdateModalLabel">Update your progress</h5>
               </div>
-              <div class="modal-body">
+               <div class="modal-body">
                 <p>Update pages for {{progressLibriTitulli}}</p>
                 {% csrf_token %}
                 <input type="number" name="progressInput" id ="progressInput">
@@ -23,6 +23,37 @@
             </div>
           </div>
         </div>
+
+
+        <div class="modal fade" id="progressBooksModal" tabindex="-1" role="dialog" aria-labelledby="progressBooksModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content blackBgRoundedWhite">
+              <div class="modal-header">
+                <h5 class="modal-title" id="progressBooksModalLabel">Select the book you want to show</h5>
+              </div>
+              <div class="modal-body modalShowBooks max-width-modal">
+                
+                {% for book in dukelexuar%}
+                <div class="bookButtonContainer">
+                 <div class="mycover ptcover"><a href="{% url 'book-detail' book.isbn %}">
+                    <img src="{{ book.image_link }}" class="ptimage myimage"></a>
+                    <h3 class="pttitle">{{book.titulli}}</h3>
+                    <div class="underlinept"></div>
+                    <p class="ptdesc">{{book.autori}}</p>
+                  </div>
+                  <div>
+                    <button onclick="selectOnClick(isbn='{{book.isbn}}')"style="border-radius: 10px;" class="mybutton" name="select" id="select{{book.isbn}}">Select</button>
+                  </div>
+                  </div>
+              {% endfor%}
+                
+              
+                </div>
+              </div>
+            </div>
+          </div>
+
+
 
 
   <div class="welcome">
@@ -68,18 +99,25 @@
                  <p>You should add books to the Reading shelf to show the progress.</p>
               {% else %}
                <div class="profile1 profileFix">
-                <img class="profileImg" src="{{ progressBookImage }}" width="200" height="200"alt="noImg">
+                <img id="progressImg"class="profileImg" src="{{ progressBookImage }}" width="200" height="200"alt="noImg">
               </div>
               <div class="title">
-                <p>{{progressLibriTitulli}}</p>
+                <p id="progressTitulli">{{progressLibriTitulli}}</p>
               </div>
               <div class="text-progress">
                 <p id="progressShowText">{{progressNowPages}}/{{progressAllPages}} pages or {{progressPercent}}%</p>
               </div>
                <!-- Button trigger modal -->
-              <button id="progressButton" type="button" class="mybutton" data-toggle="modal1" data-target="progressModal">
+               <div class="progressButtons">
+                  <button id="progressButton" type="button" class="mybutton" data-toggle="modal" data-target="progressUpdateModal">
                      Update
-              </button>
+               </button>
+                  <button  id="progressBooksButton" type="button" class="mybutton" data-toggle="modal1" data-target="progressBooksModal">
+                     View others
+                   </button>
+               
+               </div>
+              
                 {% endif %}
          </div>
         
@@ -209,26 +247,62 @@
         <button id="btnEvent1">Click here</button>
     </div>
   </div>
-  <!-- <script type="text/javascript">
-      $(document).on('submit', '#post-form', function(e) {
-        e.preventDefault();
-        $.ajax({
+   <script type="text/javascript"> 
+
+    // Show modal for selecting the book that you want to show on "My shelf"
+    $(document).on('click', '#progressBooksButton', function(e) {
+          $('#progressBooksModal').modal('show')
+      });
+       
+    // POST and GET methods for the Select book to show button
+    function selectOnClick(isbn){
+      btnClickedId = "select" + isbn
+        $(document).on('click', btnClickedId, function(e) {
+          e.preventDefault();
+           });
+         $.ajax({
           type: 'POST',
-          url:'/buttontest/' ,
+          url:'{% url "post_selectBook" %}' ,
           data: {
-              isbn: $('#isbn').val(),
+              isbn: isbn,
               csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
           },
           success: function() {
+            $.ajax({
+              url : '{% url "get_selectBook" %}',
+              type : "GET",
+              dataType: "json",
+              success: function(json) {
+                 $('#progressImg').attr("src",json.progressBookImage)
+                 $('#progressTitulli').text(json.progressLibriTitulli)
+                let progressNowPages = json.progressNowPages
+                let progressAllPages = json.progressAllPages
+                let progressPercent = json.progressPercent
+                let allString = ""+progressNowPages+"/"+progressAllPages+" pages or "+progressPercent+"%"
+                 $('#progressShowText').text(allString)
 
+
+              },
+              failure: function(json) { 
+                  alert('Got an error dude GET');
+              }
+            });    
+          
+          },
+          failure: function() {
+               alert('Got an error dude POST');
           }
+          
         });
-      });
-  </script> -->
-   <script type="text/javascript"> 
+        $('#progressBooksModal').modal('hide')
+    }
+
+    // Show modal for updating the book current pages that is shown in "My shelf"
       $(document).on('click', '#progressButton', function(e) {
-          $('#progressModal').modal('show')
+          $('#progressUpdateModal').modal('show')
       });
+
+    // POST and GET methods for the Update button to show the changes of current progress pages
       $(document).on('click', '#updateProgress', function(e) {
            $.ajax({
           type: 'POST',
@@ -255,9 +329,12 @@
               }
             });    
           }
+             
         });
-         
+         $('#progressUpdateModal').modal('hide')
       });
+
+       // POST and GET methods for the Want to read button in every book cover
       function onClickFunction(book){
         btnClickedId = "#buttonclick"+book
           $(document).on('click', btnClickedId, function(e) {
@@ -287,7 +364,6 @@
                   alert('Got an error dude GET');
               }
             });    
-          
           },
           failure: function() {
                alert('Got an error dude POST');
@@ -295,7 +371,7 @@
         });
         }
 
-        
+   
   </script>
 </div>
 {% endblock content %}

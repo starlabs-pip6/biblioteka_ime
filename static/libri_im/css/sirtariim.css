@@ -103,3 +103,37 @@
   margin:0;
   padding:10px 0;
 }
+
+.progressButtons {
+  display: flex;
+  width:90%;
+  justify-content: space-evenly;
+  flex-direction: row;
+}
+.progressButtons > * {
+  height: 100%;
+}
+
+.modalShowBooks {
+  display: flex;
+  gap: 10px;
+
+    flex-wrap: wrap;
+}
+
+.bookButtonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+
+}
+
+.bookButtonContainer > * {
+  margin-bottom: 10px;
+}
+.max-width-modal{
+  /* max-width: 60% !important; */
+  max-height: 65vh !important;
+  overflow-x: hidden;
+}
