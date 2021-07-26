@@ -351,9 +351,12 @@ class ProfilePageView(DetailView):
     model = NewUser
     template_name = 'libri_im/profile_page.html'
     context_object_name = 'user'
-    def post(self):
-        if self.request.user.is_active == False:
-            return redirect('logout')
+    def dispatch(self, request, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return redirect('home')
+        return super().dispatch(request, *args, **kwargs)
+        
+        
     def get_success_url(self):
         return reverse('profile_page')
 
