@@ -1,4 +1,13 @@
 from .models import NewUser, Sirtar, Progress, Book
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
+from .utils import account_activation_token
+from django.urls import reverse
+from django.core.mail import EmailMessage
+from django.contrib import messages
+from django.shortcuts import render, redirect
+
 def create_default_sirtar(email):
     user1 = NewUser.objects.get(email = email)
     duke_lexuar = Sirtar.objects.create(emri="Reading",
@@ -25,3 +34,28 @@ def update_progress_db(emri,email):
     for progress in currentProgress:
             if progress not in currentReading:
                 Progress.objects.get(id_libri=Book.objects.get(isbn=progress),id_user=user).delete()
+
+def send_email_activation(request,user):
+                current_site = get_current_site(request)
+                email_body = {
+                    'user': user,
+                    'domain': current_site.domain,
+                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                    'token': account_activation_token.make_token(user),
+                }
+                link = reverse('activate', kwargs={
+                               'uidb64': email_body['uid'], 'token': email_body['token']})
+
+                email_subject = 'Activate your account in "Sirtari"'
+
+                activate_url = 'http://'+current_site.domain+link
+
+                email = EmailMessage(
+                    email_subject,
+                    'Hello '+user.username +
+                    ', please click in the link below to activate your account in "Sirtari" \n'+activate_url,
+                    'starlabs.pip6@gmail.com',
+                    [request.POST['email']],
+                )
+                email.send(fail_silently=False)
+                

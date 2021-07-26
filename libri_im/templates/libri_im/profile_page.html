@@ -21,9 +21,12 @@
     </div>
 </div>
 {% else %}
-<h2>
-    You should be loged in and have admin premissions to access this page's
-    content
-  </h2>
+    <div class="flexMessageContainer">
+        <div class="messageContainer">
+             {% include 'alerts/messages.html'%}  
+        </div>
+    </div>
+    
+    
 {% endif %}
 {% endblock content %}

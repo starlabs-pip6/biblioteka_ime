@@ -26,10 +26,8 @@ from django.core.mail import EmailMessage
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
 from django.core.mail import send_mail
-from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.template.loader import render_to_string
-from .utils import account_activation_token
 from django.urls import reverse
 from django.contrib import auth
 from django.views import View
@@ -209,7 +207,7 @@ class RegistationView(View):
                     messages.warning(
                         request, 'Password and confirmation does not match.')
                     return render(request, 'libri_im/register.html', context)
-
+                
                 user = NewUser.objects.create_user(
                     email=email, username=username)
                 user.set_password(password)
@@ -218,28 +216,32 @@ class RegistationView(View):
                 # creates 3 default sirtars
                 myfunctions.create_default_sirtar(email)
 
-                current_site = get_current_site(request)
-                email_body = {
-                    'user': user,
-                    'domain': current_site.domain,
-                    'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                    'token': account_activation_token.make_token(user),
-                }
-                link = reverse('activate', kwargs={
-                               'uidb64': email_body['uid'], 'token': email_body['token']})
+                # current_site = get_current_site(request)
+                # email_body = {
+                #     'user': user,
+                #     'domain': current_site.domain,
+                #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                #     'token': account_activation_token.make_token(user),
+                # }
+                # link = reverse('activate', kwargs={
+                #                'uidb64': email_body['uid'], 'token': email_body['token']})
 
-                email_subject = 'Activate your account in "Sirtari"'
+                # email_subject = 'Activate your account in "Sirtari"'
 
-                activate_url = 'http://'+current_site.domain+link
+                # activate_url = 'http://'+current_site.domain+link
 
-                email = EmailMessage(
-                    email_subject,
-                    'Hello '+user.username +
-                    ', please click in the link below to activate your account in "Sirtari" \n'+activate_url,
-                    'starlabs.pip6@gmail.com',
-                    [request.POST['email']],
-                )
-                email.send(fail_silently=False)
+                # email = EmailMessage(
+                #     email_subject,
+                #     'Hello '+user.username +
+                #     ', please click in the link below to activate your account in "Sirtari" \n'+activate_url,
+                #     'starlabs.pip6@gmail.com',
+                #     [request.POST['email']],
+                # )
+                # email.send(fail_silently=False)
+                # messages.success(
+                #     request, 'Your account has been created succesfully. To use this account, activate it with the link that we have sent you by email.')
+                # return render(request, 'libri_im/register.html')
+                myfunctions.send_email_activation(request,user)
                 messages.success(
                     request, 'Your account has been created succesfully. To use this account, activate it with the link that we have sent you by email.')
                 return render(request, 'libri_im/register.html')
@@ -375,7 +377,9 @@ class ProfilePageView(DetailView):
     model = NewUser
     template_name = 'libri_im/profile_page.html'
     context_object_name = 'user'
-
+    def post(self):
+        if self.request.user.is_active == False:
+            return redirect('logout')
     def get_success_url(self):
         return reverse('profile_page')
 
@@ -384,16 +388,27 @@ class ProfilePageView(DetailView):
 
 
 class EditProfile(UpdateView):
+ 
     model = NewUser
     fields = ['username', 'profileImg', 'email']
     template_name = 'libri_im/profile_page_update.html'
-
+    
+   
     def get_success_url(self):
         return reverse('profile_page')
 
     def get_object(self):
         return self.request.user
 
+    def form_valid(self, form):
+        if 'email' in form.changed_data:
+            self.request.user.is_active = False
+            myfunctions.send_email_activation(self.request,self.request.user)
+            logout(self.request)
+            messages.success(
+                  self.request, 'Your email has been changed succesfully. To use this account, activate it with the link that we have sent you by email.')
+
+        return super().form_valid(form)
 
 def ProfilePageViewDetails(request):
     current_user = request.user
