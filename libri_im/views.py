@@ -84,14 +84,17 @@ def home_view(request):
         wtrBooks = []
         
         dlcount = Sirtar.objects.get(emri="Reading", id_user=current_user)
+        #ReadingBooks
         for isbn in dlcount.books:
             dukelexuar.append(Book.objects.get(isbn=isbn))
-        dlcount = len(dlcount.books)
+      
         #wtrBooks
         dtlcount = Sirtar.objects.get(
             emri="Want to read", id_user=current_user)
         for bookIsbn in dtlcount.books:
             wtrBooks.append(Book.objects.get(isbn=bookIsbn).isbn)
+     
+        dlcount = len(dlcount.books)
         dtlcount = len(dtlcount.books)
         klcount = Sirtar.objects.get(emri="Read", id_user=current_user)
         klcount = len(klcount.books)
@@ -633,6 +636,28 @@ def wantToReadPost(request):
             return HttpResponse('<p>Removed book from want to read</p>')
 
         return HttpResponse('<p>Error</p>')
+
+def ReadingPost(request):
+    if request.method == "POST" and request.is_ajax:
+        isbn = int(request.POST.get('isbn'))
+        new_sirtar = Sirtar.objects.get(emri="Reading", id_user=request.user)
+        if isbn not in new_sirtar.books:
+            new_sirtar.books.append(isbn)
+            new_sirtar.save(update_fields=['books'])
+            return HttpResponse('<p>Success book added</p>')
+        else:
+            new_sirtar.books.remove(isbn)
+            new_sirtar.save(update_fields=['books'])
+            return HttpResponse('<p>Removed book from reading</p>')
+
+        return HttpResponse('<p>Error</p>')
+@api_view(('GET',))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def getdataReading(request):
+    if request.method == 'GET' and request.is_ajax:
+        ReadingCount = Sirtar.objects.get(emri="Reading", id_user=request.user)
+        serializer = SirtarSerializer(ReadingCount, many=False)
+    return Response(serializer.data)
 
 
 @api_view(('GET',))

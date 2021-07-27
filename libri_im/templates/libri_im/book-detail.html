@@ -2,6 +2,7 @@
 {% load static %} 
 {% block content %}
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <div class="row">
 <div class="book" col-md-6 col-sm-12>
 <div class="imgDiv"col-md-6 col-sm-12>
@@ -28,8 +29,13 @@
             <input type="radio" id="star1" name="rate" value="1" />
             <label for="star1" title="text">1 star</label>
           </div>
-        <button class="buttonStyle">Dua te lexoj</button>
-</div>
+        <button class="buttonStyle">Want to read</button>
+        {% if books in dukelexuar %}
+        <button onclick="onClickFunction( book='{{ book.isbn }}');" id="buttonclick{{book.isbn}}" class="mybutton hoverbutton linkStyle">Reading</button>
+        {% else %}
+        <button type="submit" onclick="onClickFunction( book='{{ book.isbn }}');" id="buttonclick{{book.isbn}}" class="mybutton buttonStyle" style="margin-left:5%">Reading</button>
+        {%endif%}
+    </div>
 
 
 </div>
@@ -151,7 +157,44 @@ function commentReplyToggle(parent_id) {
 	}
 }
 </script>
-
+<script>
+    function onClickFunction(book){
+           btnClickedId = "#buttonclick"+book
+             $(document).on('click', btnClickedId, function(e) {
+             e.preventDefault();
+              });
+             $.ajax({
+             type: 'POST',
+             url:'{% url "post_reading" %}' ,
+             data: {
+                 isbn: book,
+                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+             },
+             success: function() {
+               $.ajax({
+                 url : '{% url "get_reading" %}',
+                 type : "GET",
+                 dataType: "json",
+                 success: function(json) {
+                     $('#wtrtext').text(json.books.length)
+                     if( $(btnClickedId).text()==="Reading"){
+                       $(btnClickedId).text("Reading")
+                     } else {
+                       $(btnClickedId).text("Reading")
+                     }
+                 },
+                 failure: function(json) { 
+                     alert('Got an error dude GET');
+                 }
+               });    
+             },
+             failure: function() {
+                  alert('Got an error dude POST');
+             }
+           });
+           }
+   
+   </script>
 <script src="{% static 'libri_im/js/reloadpage.js' %}"></script>
 
 {% endblock content %}
