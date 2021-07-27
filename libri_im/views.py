@@ -621,8 +621,7 @@ class AddChildCommentDislike(View):
 def wantToReadPost(request):
     if request.method == "POST" and request.is_ajax:
         isbn = int(request.POST.get('isbn'))
-        new_sirtar = Sirtar.objects.get(
-            emri="Want to read", id_user=request.user)
+        new_sirtar = Sirtar.objects.get(emri="Want to read", id_user=request.user)
         if isbn not in new_sirtar.books:
             new_sirtar.books.append(isbn)
             new_sirtar.save(update_fields=['books'])
@@ -639,10 +638,20 @@ def wantToReadPost(request):
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def getdataWtr(request):
     if request.method == 'GET' and request.is_ajax:
-        wtrCount = Sirtar.objects.get(
-            emri="Want to read", id_user=request.user)
+        sirtari = Sirtar.objects.get(emri="Want to read", id_user=request.user).books
+        clickedIsbn = int(request.GET.get('isbn'))
+        Added = None
+        if clickedIsbn in sirtari:
+            Added = True
+        else:
+            Added = False
+        wtrCount = Sirtar.objects.get(emri="Want to read", id_user=request.user)
         serializer = SirtarSerializer(wtrCount, many=False)
-    return Response(serializer.data)
+        data = {
+            'Added': Added
+        }
+        data.update(serializer.data)
+    return Response(data)
 
 def progressPost(request):
     if request.method == "POST" and request.is_ajax:

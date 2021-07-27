@@ -321,7 +321,7 @@
                 let progressAllPages = json.progressAllPages
                 let progressPercent = json.progressPercent
                 let allString = ""+progressNowPages+"/"+progressAllPages+" pages or "+progressPercent+"%"
-                 $('#progressShowText').text(allString)
+                $('#progressShowText').text(allString)
               },
               failure: function(json) { 
                   alert('Got an error dude GET');
@@ -352,9 +352,14 @@
               url : '{% url "get_wtr" %}',
               type : "GET",
               dataType: "json",
+              data: {
+                  isbn: book
+              },
               success: function(json) {
+                // Change number in Want to read Counter
                   $('#wtrtext').text(json.books.length)
-                  if( $(btnClickedId).text()==="Want to read"){
+                // Change text in Want to read Button and vice-versa
+                  if(json.Added){
                     $(btnClickedId).text("Added")
                   } else {
                     $(btnClickedId).text("Want to read")
