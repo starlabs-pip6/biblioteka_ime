@@ -93,7 +93,7 @@ def home_view(request):
         klcount = len(klcount.books)
 
     else:
-        dukelexuar = "no data"
+        dukelexuar = []
         dlcount = "no data"
         dtlcount = "no data"
         klcount = "no data"   # userR = users.reading
