@@ -309,7 +309,6 @@
           url:'{% url "post_progress" %}' ,
           data: {
               progressPages: $('#progressInput').val(),
-              progressBook: '{{progressLibri.isbn}}',
               csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
           },
           success: function() {
@@ -331,6 +330,7 @@
           }
              
         });
+          $('#progressInput').val(''),
          $('#progressUpdateModal').modal('hide')
       });
 
@@ -371,7 +371,7 @@
         });
         }
 
-   
+
   </script>
 </div>
 {% endblock content %}

@@ -81,19 +81,23 @@ def home_view(request):
 
         
         dukelexuar = []
+        wtrBooks = []
+        
         dlcount = Sirtar.objects.get(emri="Reading", id_user=current_user)
         for isbn in dlcount.books:
             dukelexuar.append(Book.objects.get(isbn=isbn))
         dlcount = len(dlcount.books)
+        #wtrBooks
         dtlcount = Sirtar.objects.get(
             emri="Want to read", id_user=current_user)
-
+        for bookIsbn in dtlcount.books:
+            wtrBooks.append(Book.objects.get(isbn=bookIsbn).isbn)
         dtlcount = len(dtlcount.books)
         klcount = Sirtar.objects.get(emri="Read", id_user=current_user)
         klcount = len(klcount.books)
-
     else:
         dukelexuar = []
+        wtrBooks = []
         dlcount = "no data"
         dtlcount = "no data"
         klcount = "no data"   # userR = users.reading
@@ -133,6 +137,7 @@ def home_view(request):
         'klcount': klcount,
         'dtlcount': dtlcount,
         'dukelexuar': dukelexuar,
+        'wtrBooks' : wtrBooks,
         'progressLibri': progressLibri,
         'progressUser': progressUser,
         'progressNowPages': progressNowPages,
@@ -641,7 +646,8 @@ def getdataWtr(request):
 
 def progressPost(request):
     if request.method == "POST" and request.is_ajax:
-        progressBookIsbn = int(request.POST.get('progressBook'))
+        userSirtar = Sirtar.objects.get(emri="Reading", id_user=request.user).books
+        progressBookIsbn = int(userSirtar[len(userSirtar)-1])
         progressBook = Book.objects.get(isbn=progressBookIsbn)
         progressObj = Progress.objects.get(id_user=request.user,id_libri=progressBook)
         if not request.POST.get('progressPages')=='':
@@ -658,8 +664,10 @@ def progressPost(request):
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def getdataProgress(request):
     if request.method =="GET" and request.is_ajax:
-        progressArr = Progress.objects.filter(id_user=request.user.id)
-        progressObj = progressArr[progressArr.count()-1]
+        userSirtar = Sirtar.objects.get(emri="Reading", id_user=request.user).books
+        progressBookIsbn = int(userSirtar[len(userSirtar)-1])
+        progressBook = Book.objects.get(isbn=progressBookIsbn)
+        progressObj = Progress.objects.get(id_user=request.user.id,id_libri=progressBook)
         progressNowPages = progressObj.pages_now
         progressAllPages = progressObj.id_libri.nr_faqeve
         progressPercent = round(
