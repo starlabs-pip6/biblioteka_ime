@@ -2101,20 +2101,6 @@
     }},
     {
         "model":  "libri_im.Book",
-        "pk":  "157",
-        "fields" : {"isbn":  "9789732102978",
-        "titulli":  "Scrisoarea III",
-        "autori":  "Mihai Eminescu",
-        "kategoria":  ["European Literature-Romanian Literature","Poetry "],
-        "pershkrimi":  "",
-        "mes_vleresimit":  "4.36",
-        "nr_vleresimit":  "169",
-        "nr_faqeve":  "157",
-        "viti_publikimit":  "2012",
-        "image_link":  "https://www.directtextbook.com/medium/9789732102978.jpg"
-    }},
-    {
-        "model":  "libri_im.Book",
         "pk":  "158",
         "fields" : {"isbn":  "9780312981662",
         "titulli":  "Crooked House",
@@ -2280,20 +2266,6 @@
         "nr_faqeve":  "385",
         "viti_publikimit":  "2008",
         "image_link":  "https://www.directtextbook.com/medium/9781416595205.jpg"
-    }},
-    {
-        "model":  "libri_im.Book",
-        "pk":  "170",
-        "fields" : {"isbn":  "9781301073849",
-        "titulli":  "With Everything I Am",
-        "autori":  "Kristen Ashley",
-        "kategoria":  ["Fantasy-Paranormal","Romance","Romance-Paranormal Romance","Fantasy","Paranormal-Vampires "],
-        "pershkrimi":  "One night;; Callum is driven into the woods by instinct;; an instinct to protect. In the form of wolf;; he meets a young human child who he is instantly drawn to in a fierce way he doesn�??t quite understand.  Sonia Arlington has lived a lonely life. She has certain abilities that make her strange and she has a rare disease that;; if untreated;; could kill her. Her father makes he One night;; Callum is driven into the woods by instinct;; an instinct to protect. In the form of wolf;; he meets a young human child who he is instantly drawn to in a fierce way he doesn�??t quite understand.  Sonia Arlington has lived a lonely life. She has certain abilities that make her strange and she has a rare disease that;; if untreated;; could kill her. Her father makes her vow that she will never let others discover her abilities. This forces Sonia to stay distant;; always guarding against exposure.  Intelligence leaks that Sonia is Callum�??s human mate. He is now King of the Werewolves and has war on his hands. He�??s forced to claim his mate and integrate Sonia into a world that is strange and frightening.  As Sonia attempts to adjust;; Callum attempts to cope with the knowledge that his mate is mortal. He will have her beauty and gentleness only the length of a mortal life making their union unbearably bitter even as Sonia makes it unbelievably sweet.",
-        "mes_vleresimit":  "4.29",
-        "nr_vleresimit":  "18089",
-        "nr_faqeve":  "594",
-        "viti_publikimit":  "2000",
-        "image_link":  "https://www.directtextbook.com/medium/9781301073849.jpg"
     }},
     {
         "model":  "libri_im.Book",
@@ -5657,20 +5629,6 @@
     }},
     {
         "model":  "libri_im.Book",
-        "pk":  "411",
-        "fields" : {"isbn":  "9781465921028",
-        "titulli":  "The Cahokian",
-        "autori":  "Zoe Saadia",
-        "kategoria":  ["Historical-Historical Fiction","Historical","Anthropology","Fiction "],
-        "pershkrimi":  "�??The Cahokian�?� is a historical novel;; based on the final years of the largest North American pre-contact empire. Acoto;; the Chief Warlord of Cahokia;; accepts a mission in the far north-east. Determined to restore the fading glory of the Empire;; he leads a campaign against the northern barbarians.  However;; the League of the Iroquois is not an easy target. Before the day of t �??The Cahokian�?� is a historical novel;; based on the final years of the largest North American pre-contact empire. Acoto;; the Chief Warlord of Cahokia;; accepts a mission in the far north-east. Determined to restore the fading glory of the Empire;; he leads a campaign against the northern barbarians.  However;; the League of the Iroquois is not an easy target. Before the day of the crucial battle is over he discovers his life is about to take a very unexpected turn.",
-        "mes_vleresimit":  "3.92",
-        "nr_vleresimit":  "60",
-        "nr_faqeve":  "320",
-        "viti_publikimit":  "1985",
-        "image_link":  "https://www.directtextbook.com/medium/9781465921028.jpg"
-    }},
-    {
-        "model":  "libri_im.Book",
         "pk":  "412",
         "fields" : {"isbn":  "9780440219361",
         "titulli":  "Nightjohn",
@@ -5724,20 +5682,6 @@
         "nr_faqeve":  "292",
         "viti_publikimit":  "2003",
         "image_link":  "https://www.directtextbook.com/medium/9781470128913.jpg"
-    }},
-    {
-        "model":  "libri_im.Book",
-        "pk":  "416",
-        "fields" : {"isbn":  "9789715849630",
-        "titulli":  "KABABAIHAN sa Kalinangan at Kasaysayang Pilipino",
-        "autori":  "Mary Dorothy dL. Jose; Atoy M. Navarro",
-        "kategoria":  ["Writing-Essays user"],
-        "pershkrimi":  "Pinagsama-sama sa kasalukuyang pagpupunyaging ito ang mga batayang sanaysay gayundin ang mga bagong sanaysay ukol sa KABABAIHAN sa Kalinangan at Kasaysayang Pilipino. Tampok sa aklat na ito ang mga sinulat nina Dr. Zeus A. Salazar;; Dr. Lilia Quindoza-Santiago;; Dr. Judy M. Taguiwalo;; Dr. Francis A. Gealogo;; Ma. Reina Boro-Magbanua;; Mary Jane Salazar-Tatel;; Mary Dorothy dL.  Pinagsama-sama sa kasalukuyang pagpupunyaging ito ang mga batayang sanaysay gayundin ang mga bagong sanaysay ukol sa KABABAIHAN sa Kalinangan at Kasaysayang Pilipino. Tampok sa aklat na ito ang mga sinulat nina Dr. Zeus A. Salazar;; Dr. Lilia Quindoza-Santiago;; Dr. Judy M. Taguiwalo;; Dr. Francis A. Gealogo;; Ma. Reina Boro-Magbanua;; Mary Jane Salazar-Tatel;; Mary Dorothy dL. Jose;; Atoy M. Navarro;; Jerome A. Ong;; Francisco M. Nunez Jr.;; Jely A. Galang;; Janet S. Reguindin;; at Adonis Ramy L. Elumbre. Sadyang pinagsama-sama rito ang mga batikan at bagong mananaliksik sa Araling Kababaihan -- babae man o lalaking mananaliksik -- upang salungguhitan ang pagiging kolektibo ng pag-aaral at pananaliksik hinggil sa kababaihan kaugnay ng paninindigang feminista at panunuring malay sa kasarian. Sa  ;; iginigiit bilang pangkahalatang layunin at tunguhin ang kolektibong pag-aaral at pananaliksik hindi lamang upang makapagbigay ng pangkahalatang larawan sa konteksto ng kababaihan sa kalinangan at kasaysayang Pilipino kundi upang makapagbigay rin ng mainam na tuntungan sa patuloy na kabayanihan at kilusang kababaihan sa Pilipinas",
-        "mes_vleresimit":  "4.23",
-        "nr_vleresimit":  "13",
-        "nr_faqeve":  "286",
-        "viti_publikimit":  "2014",
-        "image_link":  "https://www.directtextbook.com/medium/9789715849630.jpg"
     }},
     {
         "model":  "libri_im.Book",
@@ -5825,20 +5769,6 @@
     }},
     {
         "model":  "libri_im.Book",
-        "pk":  "423",
-        "fields" : {"isbn":  "9789121922473",
-        "titulli":  "What Dies in Summer",
-        "autori":  "Tom   Wright",
-        "kategoria":  ["Mystery","Fiction","Mystery-Crime","Young Adult-Coming Of Age","Thriller-Mystery Thriller","Young Adult","Audiobook","Suspense","Fantasy-Supernatural","Adult Fiction "],
-        "pershkrimi":  "Jim Beaudry is a teenage boy trying to stay out of trouble. But trouble has a way of finding him. Especially after his cousin L.A. turns up on his doorstep;; bedraggled and shaking and unable to sleep. However he looks at it;; this can only mean bad news. Then a dead girl starts visiting Biscuit as he sleeps. When Jim and L.A. discover the body of a teenage girl in the wilde Jim Beaudry is a teenage boy trying to stay out of trouble. But trouble has a way of finding him. Especially after his cousin L.A. turns up on his doorstep;; bedraggled and shaking and unable to sleep. However he looks at it;; this can only mean bad news. Then a dead girl starts visiting Biscuit as he sleeps. When Jim and L.A. discover the body of a teenage girl in the wilderness;; brutally raped and murdered;; an investigation begins that will put both ther lives in danger. Over the course of one sweltering summer;; Biscuit and L.A. become embroiled in a dark mystery that will put both of their lives at risk and will force them to leave childhood behind forever.",
-        "mes_vleresimit":  "3.38",
-        "nr_vleresimit":  "998",
-        "nr_faqeve":  "284",
-        "viti_publikimit":  "1986",
-        "image_link":  "https://www.directtextbook.com/medium/9789121922473.jpg"
-    }},
-    {
-        "model":  "libri_im.Book",
         "pk":  "424",
         "fields" : {"isbn":  "9781938120954",
         "titulli":  "Riddle in Stone",
@@ -5923,20 +5853,6 @@
     }},
     {
         "model":  "libri_im.Book",
-        "pk":  "430",
-        "fields" : {"isbn":  "9781301903122",
-        "titulli":  "Codename: Chimera",
-        "autori":  "Jake \u0026 Kate Persy",
-        "kategoria":  ["Mystery","Fiction","Thriller-Mystery Thriller "],
-        "pershkrimi":  "Adventures. Twists \u0026 Turns. Unexpected Final.  Dear reader!  If you like Indiana Jones;; Kingsman;; James Bond;; Sam Spade;; Sherlock Holmes by Guy Ritchie;; try �??Codename: Chimera�?�.  This is a fast-paced action/adventure/whodunit mystery with elements of mystical mythology. It does not involve much character development;; but instead has interesting plot with twists;; turns;; and pu Adventures. Twists \u0026 Turns. Unexpected Final.  Dear reader!  If you like Indiana Jones;; Kingsman;; James Bond;; Sam Spade;; Sherlock Holmes by Guy Ritchie;; try �??Codename: Chimera�?�.  This is a fast-paced action/adventure/whodunit mystery with elements of mystical mythology. It does not involve much character development;; but instead has interesting plot with twists;; turns;; and puzzles.  The corpse of a millionaire collecting antiques is found in New York on the eve of a major auction. The last thing he saw in the darkness seconds before his death was a certain Man-With-No-Face. Is it a man or a ghost? Is he capable of causing paralyzing fear and death by his appearance? Is he the embodiment of Chimera;; the ancient Greek monster? Following in the tracks of the Man-With-No-Face the detective finds out about the stolen precious locket and a secret project under the codename \"Chimera\". How are these connected? Does the locket have a mystical curse or is it a fiction? Together with the private detective Kevin Kris;; you are being waited for by amazing adventures;; interesting puzzles and unexpected twists.",
-        "mes_vleresimit":  "3.42",
-        "nr_vleresimit":  "71",
-        "nr_faqeve":  "329",
-        "viti_publikimit":  "1995",
-        "image_link":  "https://www.directtextbook.com/medium/9781301903122.jpg"
-    }},
-    {
-        "model":  "libri_im.Book",
         "pk":  "431",
         "fields" : {"isbn":  "9781492110224",
         "titulli":  "Untangle Me",
@@ -6018,20 +5934,6 @@
         "nr_faqeve":  "158",
         "viti_publikimit":  "2002",
         "image_link":  "https://www.directtextbook.com/medium/9780720612684.jpg"
-    }},
-    {
-        "model":  "libri_im.Book",
-        "pk":  "437",
-        "fields" : {"isbn":  "9781618422149",
-        "titulli":  "POWERFUL PRAYERS OF PRAISE AND PETITION FOR EVERY CHRISTIAN: 20 BEAUTIFUL PRAYERS THAT IS SURE TO CHANGE YOUR WORLD",
-        "autori":  "Rita Pam Tarachi",
-        "kategoria":  [""],
-        "pershkrimi":  "Rita Pam has been devoting her time of late to writing. This time;; she's penned a prayer book and shared some of her powerful prayers with the world. Some of these prayers have helped Rita discern and given her wisdom in very difficult situations as well as helped her to tell a true friend from a false friend. Some of these prayers have helped her find lost articles and ha Rita Pam has been devoting her time of late to writing. This time;; she's penned a prayer book and shared some of her powerful prayers with the world. Some of these prayers have helped Rita discern and given her wisdom in very difficult situations as well as helped her to tell a true friend from a false friend. Some of these prayers have helped her find lost articles and has earned GOD's favour. It's no wonder Rita receives instant answers to her prayers. When said in a state of grace;; these prayers are sure to bring you closer to JESUS and closer to peace and joy which is the LORD Himself. Don't miss this book.",
-        "mes_vleresimit":  "5",
-        "nr_vleresimit":  "16",
-        "nr_faqeve":  "13",
-        "viti_publikimit":  "2013",
-        "image_link":  "https://www.directtextbook.com/medium/9781618422149.jpg"
     }},
     {
         "model":  "libri_im.Book",
@@ -7435,20 +7337,6 @@
     }},
     {
         "model":  "libri_im.Book",
-        "pk":  "544",
-        "fields" : {"isbn":  "9780692889275",
-        "titulli":  "Planning Penelope",
-        "autori":  "Erin Lockwood",
-        "kategoria":  ["Thriller","Dark","Academic-College "],
-        "pershkrimi":  "Alexander George Bishop V has an obsession. He controls every detail of her life;; and she doesn't even know he exists.  Everything always goes as planned ... until it doesn't.",
-        "mes_vleresimit":  "3.4",
-        "nr_vleresimit":  "147",
-        "nr_faqeve":  "224",
-        "viti_publikimit":  "2014",
-        "image_link":  "https://www.directtextbook.com/medium/9780692889275.jpg"
-    }},
-    {
-        "model":  "libri_im.Book",
         "pk":  "545",
         "fields" : {"isbn":  "9780571175499",
         "titulli":  "Death in the Andes",
@@ -7629,20 +7517,7 @@
         "viti_publikimit":  "2000",
         "image_link":  "https://www.directtextbook.com/medium/9781508513278.jpg"
     }},
-    {
-        "model":  "libri_im.Book",
-        "pk":  "558",
-        "fields" : {"isbn":  "9781484724200",
-        "titulli":  "Sparks Rise",
-        "autori":  "Alexandra Bracken",
-        "kategoria":  ["Young Adult","Science Fiction-Dystopia","Fantasy","Novella "],
-        "pershkrimi":  "Sam didn�??t think things could get worse at Thurmond rehabilitation camp. Then the Reds arrive. Everyone assumed the kids with firepower had been killed years ago. Instead they were taken away;; brainwashed;; and returned as terrifyingly effective guard Sam didn�??t think things could get worse at Thurmond rehabilitation camp. Then the Reds arrive. Everyone assumed the kids with firepower had been killed years ago. Instead they were taken away;; brainwashed;; and returned as terrifyingly effective guards. To her horror;; Sam recognizes one of them: Lucas;; the one spark of light in Sam�??s dark childhood. Lucas has a deadly secret�??he beat the brutal training that turned his fellow Reds into mindless drones. When Sam defends herself against an attack by a vile PSF guard and faces a harrowing punishment;; Lucas must risk his everything to save her.  Includes a bonus preview chapter from the final   novel;; ",
-        "mes_vleresimit":  "4.35",
-        "nr_vleresimit":  "4759",
-        "nr_faqeve":  "110",
-        "viti_publikimit":  "1990",
-        "image_link":  "https://www.directtextbook.com/medium/9781484724200.jpg"
-    }},
+
     {
         "model":  "libri_im.Book",
         "pk":  "559",
@@ -7796,20 +7671,6 @@
         "nr_faqeve":  "372",
         "viti_publikimit":  "2006",
         "image_link":  "https://www.directtextbook.com/medium/9781949002010.jpg"
-    }},
-    {
-        "model":  "libri_im.Book",
-        "pk":  "570",
-        "fields" : {"isbn":  "9789562603133",
-        "titulli":  "Harakiri",
-        "autori":  "Claudio Bertoni",
-        "kategoria":  ["Poetry "],
-        "pershkrimi":  "",
-        "mes_vleresimit":  "4.35",
-        "nr_vleresimit":  "55",
-        "nr_faqeve":  "313",
-        "viti_publikimit":  "1991",
-        "image_link":  "https://www.directtextbook.com/medium/9789562603133.jpg"
     }},
     {
         "model":  "libri_im.Book",
@@ -9673,20 +9534,7 @@
         "viti_publikimit":  "1996",
         "image_link":  "https://www.directtextbook.com/medium/9780439961868.jpg"
     }},
-    {
-        "model":  "libri_im.Book",
-        "pk":  "704",
-        "fields" : {"isbn":  "9781619212138",
-        "titulli":  "Wicked Wonderland",
-        "autori":  "Lisa Whitefern",
-        "kategoria":  ["Erotica-Menage","Fantasy-Paranormal","Adult Fiction-Erotica","Menage-M M F","Romance","Romance-M M Romance","Romance-Paranormal Romance "],
-        "pershkrimi":  "It�??s a lovely night for a sleigh ride�?? until something evil takes the reins.   When Nick and Kris;; the half-fae sons of human mothers;; aren�??t using Santa�??s sleigh in the off-season to make deliveries for their booming sex toy business;; they�??re setting off sensual fireworks in the bedroom.   Yet they dream of a feminine third to complete their lives. There�??s only one woman they It�??s a lovely night for a sleigh ride�?? until something evil takes the reins.   When Nick and Kris;; the half-fae sons of human mothers;; aren�??t using Santa�??s sleigh in the off-season to make deliveries for their booming sex toy business;; they�??re setting off sensual fireworks in the bedroom.   Yet they dream of a feminine third to complete their lives. There�??s only one woman they can picture filling that role: Lilly;; the girl they both dated in college.   Lilly thought earning extra money stripping was a good plan;; until she�??s left battered;; bruised;; and stuffed in a back-alley trash can. Her rescuers turn out to be the dark;; brooding dom and the golden-haired sub whose faces�??and shockingly entwined bodies�??are still the stuff of her most searing fantasies.   While she�??s more than willing to take them up on their offer of one perfect night of magic;; she questions whether anyone can break into Nick and Kris�??s powerful bond. But there�??s someone who�??s been waiting for this moment all Lilly�??s life. An evil psychopath who holds the secrets of her past�??unless Nick and Kris can unravel them in time to save her from a fate worse than death. Product Warnings Explicit ménage a trois;; hot m/f/m scenes;; hot male/male scenes;; a ruthless stalker who torments the heroine;; sex toys;; sex on roof tops;; spankings;; BDSM;; Dark Fae;; birdmen;; orphans;; strippers;; centaurs;; a violent battle between good and evil creatures on board a ship;; true love;; and sex in Santa�??s sleigh.",
-        "mes_vleresimit":  "3.68",
-        "nr_vleresimit":  "167",
-        "nr_faqeve":  "263",
-        "viti_publikimit":  "2008",
-        "image_link":  "https://www.directtextbook.com/medium/9781619212138.jpg"
-    }},
+
     {
         "model":  "libri_im.Book",
         "pk":  "705",
@@ -10375,20 +10223,6 @@
     }},
     {
         "model":  "libri_im.Book",
-        "pk":  "754",
-        "fields" : {"isbn":  "9781646785339",
-        "titulli":  "The Nameless Encounter",
-        "autori":  "Vineeta Malhotra Taneja",
-        "kategoria":  ["Romance","Young Adult user"],
-        "pershkrimi":  "Two strangers... One long flight... A soul connection. What happens when you meet your soulmate in a chance meeting;; and realise that those few hours are the only time you have with them? Have you ever felt a soul connection so strong that it defies all logic...all sensibility? Meet HIM and HER...two strangers who meet on a flight and begin a series of conversations that b Two strangers... One long flight... A soul connection. What happens when you meet your soulmate in a chance meeting;; and realise that those few hours are the only time you have with them? Have you ever felt a soul connection so strong that it defies all logic...all sensibility? Meet HIM and HER...two strangers who meet on a flight and begin a series of conversations that bring them closer to each other in ways they had never imagined. Come and experience their short journey of love;; longing and the final goodbye.",
-        "mes_vleresimit":  "4.75",
-        "nr_vleresimit":  "12",
-        "nr_faqeve":  "91",
-        "viti_publikimit":  "2011",
-        "image_link":  "https://www.directtextbook.com/medium/9781646785339.jpg"
-    }},
-    {
-        "model":  "libri_im.Book",
         "pk":  "755",
         "fields" : {"isbn":  "9780316478526",
         "titulli":  "Talking to Strangers: What We Should Know About the People We Don�??t Know",
@@ -10666,20 +10500,6 @@
         "nr_faqeve":  "339",
         "viti_publikimit":  "1985",
         "image_link":  "https://www.directtextbook.com/medium/9780316166706.jpg"
-    }},
-    {
-        "model":  "libri_im.Book",
-        "pk":  "775",
-        "fields" : {"isbn":  "9789953213033",
-        "titulli":  "�?�?�\u0085�?ات ا�?حز�? ا�?عاد�?",
-        "autori":  "Mahmoud Darwish; �\u0085ح�\u0085�?د در�?�?ش",
-        "kategoria":  ["Poetry","Writing-Essays "],
-        "pershkrimi":  "�?�?�\u0085�?ات �?تبت ع�? فترة ع�?ش در�?�?ش ا�?أ�?�?�? ف�? ف�?سط�?�? �?ب�? ت�?ج�?ر�?�? تتس�\u0085 با�?حز�? �?ا�?ث�?ر�?ة ف�? �?ذا ا�?�?تاب �?�?ص�?ف �\u0085ح�\u0085�?د در�?�?ش �?ثرا�? �\u0085ا آ�?ت إ�?�?�? حا�?ة ا�?شعب ا�?ف�?سط�?�?�? �?�\u0085ا �?عا�?�?�? �\u0085�? ا�?عد�? ا�?إسرائ�?�?�? ا�?شرس ف�? ا�?�?ط�? ا�?�\u0085حت�? �?ف�? ا�?�\u0085�?اف�? حت�? باتت أ�?ا�\u0085�? �?�?�\u0085ا�? ط�?�?�?ا�? �\u0085�? ا�?�?�?ر �?ا�?حز�?. صح�?ح ع�?د�\u0085ا بدأ �?�?تب �\u0085ح�\u0085�?د در�?�?ش �?تب ع�? �?فس�? �?�\u0085عا�?ات�? ا�?شخص�?ة. �?�?�? �\u0085ا �?عا�?�?�? ا�?شاعر �?عا�?�?�? ا�?�\u0085�?ا�?�?�? �\u0085�? شعب�?",
-        "mes_vleresimit":  "4.27",
-        "nr_vleresimit":  "1171",
-        "nr_faqeve":  "154",
-        "viti_publikimit":  "2008",
-        "image_link":  "https://www.directtextbook.com/medium/9789953213033.jpg"
     }},
     {
         "model":  "libri_im.Book",
@@ -11058,20 +10878,6 @@
         "nr_faqeve":  "408",
         "viti_publikimit":  "2014",
         "image_link":  "https://www.directtextbook.com/medium/9780330518826.jpg"
-    }},
-    {
-        "model":  "libri_im.Book",
-        "pk":  "803",
-        "fields" : {"isbn":  "9781903490693",
-        "titulli":  "The Widow Makers",
-        "autori":  "Jean Mead",
-        "kategoria":  ["Historical-Historical Fiction "],
-        "pershkrimi":  "The story is set in the quarrylands of North Wales amidst the Snowdonia Mountains;; ancient castles;; opulent Penrhyn Castle;; grand mansions and the straggling cottages of a mountain community in the 19th century. A blend of fact and fiction;; it traces the lives of two very different families. Following a pit disaster in Manchester;; Joe Standish takes his wife Emily and tiny  The story is set in the quarrylands of North Wales amidst the Snowdonia Mountains;; ancient castles;; opulent Penrhyn Castle;; grand mansions and the straggling cottages of a mountain community in the 19th century. A blend of fact and fiction;; it traces the lives of two very different families. Following a pit disaster in Manchester;; Joe Standish takes his wife Emily and tiny son Tommy to live in North Wales where he settles to the hard and dangerous existence as a quarryman. Home life for Emily and Joe is happy but for the small problem of Tommy's increasing wilfulness. As the boy grows;; his cleverness comes to the fore and he catches the attention of the quarry owner;; Bertram Bellamy;; who offers to educate the boy with his own son.  Growing into manhood;; Tommy's life changes drastically;; split between his working class family living in a simple cottage and the immensely rich benefactor in the grand mansion;; Plas Mawr.  Unaware of the destructive force hidden behind Tommy's charm and charisma;; Bertram Bellamy accepts and encourages him and the destiny and the destruction of the Bellamy family is shaped.",
-        "mes_vleresimit":  "3.82",
-        "nr_vleresimit":  "224",
-        "nr_faqeve":  "296",
-        "viti_publikimit":  "2015",
-        "image_link":  "https://www.directtextbook.com/medium/9781903490693.jpg"
     }},
     {
         "model":  "libri_im.Book",
@@ -13007,20 +12813,6 @@
     }},
     {
         "model":  "libri_im.Book",
-        "pk":  "948",
-        "fields" : {"isbn":  "9789797806590",
-        "titulli":  "After Rain",
-        "autori":  "Anggun Prameswari",
-        "kategoria":  ["Romance","Novels","Asian Literature-Indonesian Literature "],
-        "pershkrimi":  "Mungkin aku dibutakan oleh cinta;; sebab akalku dikacaukan olehmu.  Seberapa banyak pun aku meminta;; kau takkan memilihku.  Ini yang kau sebut cinta? Menunggumu bukan pilihan. Izinkan aku meninggalkanmu;; dengan serpihan hati yang tersisa. Dan jika ternyata dia yang ada di sana;;  sama-sama menanggung keping-keping hati yang berhamburan;;  saat kami saling menyembuhkan�??salahkah itu?",
-        "mes_vleresimit":  "3.84",
-        "nr_vleresimit":  "829",
-        "nr_faqeve":  "323",
-        "viti_publikimit":  "1991",
-        "image_link":  "https://www.directtextbook.com/medium/9789797806590.jpg"
-    }},
-    {
-        "model":  "libri_im.Book",
         "pk":  "949",
         "fields" : {"isbn":  "9780061438455",
         "titulli":  "Return to Sullivan's Island",
@@ -13032,20 +12824,6 @@
         "nr_faqeve":  "400",
         "viti_publikimit":  "1991",
         "image_link":  "https://www.directtextbook.com/medium/9780061438455.jpg"
-    }},
-    {
-        "model":  "libri_im.Book",
-        "pk":  "950",
-        "fields" : {"isbn":  "9781627981484",
-        "titulli":  "Slide",
-        "autori":  "Garrett Leigh",
-        "kategoria":  ["Romance-M M Romance","Romance","Contemporary","Sociology-Abuse","Dark","LGBT","Romance-Contemporary Romance","Disability","LGBT-Gay","Adult "],
-        "pershkrimi":  "RAINBOW AWARD WINNER 2014 -- Best Bisexual Debut Don�??t look back. Don�??t you ever look back�?�  Shy tattoo artist Ash has a troubled past. Years of neglect;; drug abuse;; and life on the streets have taken their toll;; and sometimes it seems the deep;; unspoken bond with his lover is the only balm for wounds he doesn�??t quite understand.  Chicago paramedic Pete is warmth;; love;; and s RAINBOW AWARD WINNER 2014 -- Best Bisexual Debut Don�??t look back. Don�??t you ever look back�?�  Shy tattoo artist Ash has a troubled past. Years of neglect;; drug abuse;; and life on the streets have taken their toll;; and sometimes it seems the deep;; unspoken bond with his lover is the only balm for wounds he doesn�??t quite understand.  Chicago paramedic Pete is warmth;; love;; and strength�??things Ash never knew he could have;; and never even knew he wanted until Pete showed him. But fate is a cruel;; cruel mistress;; and when nightmares collide with the present;; their tentatively built world comes crashing down.  Traumatic events in Pete�??s work life distance him from home;; and he doesn�??t realize until it�??s too late that Ash has slipped away. Betrayal;; secrets;; and lies unfold;; and when a devastating coincidence takes hold;; Pete must fight with all he has to save the love of his life.",
-        "mes_vleresimit":  "4.08",
-        "nr_vleresimit":  "2757",
-        "nr_faqeve":  "274",
-        "viti_publikimit":  "2012",
-        "image_link":  "https://www.directtextbook.com/medium/9781627981484.jpg"
     }},
     {
         "model":  "libri_im.Book",
@@ -13074,20 +12852,6 @@
         "nr_faqeve":  "247",
         "viti_publikimit":  "1986",
         "image_link":  "https://www.directtextbook.com/medium/9780857532930.jpg"
-    }},
-    {
-        "model":  "libri_im.Book",
-        "pk":  "953",
-        "fields" : {"isbn":  "9781423309758",
-        "titulli":  "Peter and the Sword of Mercy",
-        "autori":  "Dave Barry; Ridley Pearson; Jim  Dale",
-        "kategoria":  ["Fantasy","Young Adult","Fiction","Adventure "],
-        "pershkrimi":  "The year is 1902 - it's been twenty-three years since Peter and the Lost Boys returned from Rundoon. Since then;; nobody on the island has grown a day older;; and the Lost Boys continue their friendship with the Mollusk tribe;; and their rivalry with Captain Hook. Meanwhile in London;; Molly has married George Darling and is raising three children: Wendy;; Michael;; and John. On The year is 1902 - it's been twenty-three years since Peter and the Lost Boys returned from Rundoon. Since then;; nobody on the island has grown a day older;; and the Lost Boys continue their friendship with the Mollusk tribe;; and their rivalry with Captain Hook. Meanwhile in London;; Molly has married George Darling and is raising three children: Wendy;; Michael;; and John. One night a visitor appears at her door;; it's James;; one of Peter's original Lost Boys. He is now working for Scotland Yard and suspects that the heir to England's throne;; Prince Albert Edward;; is under the influence of shadow creatures. These shadow creatures are determined to find a secret cache of startstuff which fell to London many centuries ago. The starstuff is hidden in an underground vault which has only one key: the Sword of Mercy;; a legendary weapon kept with the crown jewels. Molly is determined to locate and protect the starstuff;; but when she suddenly goes missing;; it is up to her eleven-year-old daughter;; Wendy;; to keep it out of the Others' clutches. Wendy has heard her mother's stories of a flying boy named Peter Pan;; and he may be her only hope in saving the world from a shadowy doom....",
-        "mes_vleresimit":  "4.2",
-        "nr_vleresimit":  "12621",
-        "nr_faqeve":  "528",
-        "viti_publikimit":  "1996",
-        "image_link":  "https://www.directtextbook.com/medium/9781423309758.jpg"
     }},
     {
         "model":  "libri_im.Book",
@@ -13508,20 +13272,6 @@
         "nr_faqeve":  "365",
         "viti_publikimit":  "2015",
         "image_link":  "https://www.directtextbook.com/medium/9780316384933.jpg"
-    }},
-    {
-        "model":  "libri_im.Book",
-        "pk":  "984",
-        "fields" : {"isbn":  "9781456043650",
-        "titulli":  "The Perennial Wanderer: An American in the World",
-        "autori":  "Steven D. Orr",
-        "kategoria":  ["Travel","Inspirational","Adventure "],
-        "pershkrimi":  "Many authors;; in satisfying the reading public�??s insatiable need for escapist literature;; invest much time and money in their efforts. Don�??t get me wrong�??I read that literature myself. Why not? It is usually entertaining;; if not suspenseful. In The Perennial Wanderer: An American in the World;; however;; it is my intent to demonstrate that life is indeed stranger than fictio Many authors;; in satisfying the reading public�??s insatiable need for escapist literature;; invest much time and money in their efforts. Don�??t get me wrong�??I read that literature myself. Why not? It is usually entertaining;; if not suspenseful. In The Perennial Wanderer: An American in the World;; however;; it is my intent to demonstrate that life is indeed stranger than fiction;; and I;; not unlike the escapist writers;; have invested much time and energy in bringing these life experiences to the reader. After working in so many countries�??including war torn and conflictive countries such as Viet Nam;; Colombia;; Perú;; Mozambique;; Sudan and El Salvador�??I have seen more than my share of violence;; murder;; mayhem;; public corruption and chicanery. And none of my observations have taken place as a military man�??my military experience;; by the way;; was in the peacetime Air Force in the beautiful Hawaiian Islands.",
-        "mes_vleresimit":  "4.12",
-        "nr_vleresimit":  "147",
-        "nr_faqeve":  "438",
-        "viti_publikimit":  "1992",
-        "image_link":  "https://www.directtextbook.com/medium/9781456043650.jpg"
     }},
     {
         "model":  "libri_im.Book",
