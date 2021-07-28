@@ -3,7 +3,7 @@
 {% block content %}
 
 {% load urlparams %}
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <div class="shfleto-Container col-md-12 col-xl-12 ">
   <form action="">
     <select name="sort_name" id="sort_name"class="dropdownShfleto" onchange="this.form.submit();">
@@ -15,24 +15,69 @@
     </select>
     <!--<button type="submit">Submit</button>-->
 </form>
-<script>
- 
-</script>
+
       
     <div class="booksCategory">
     <div class="shfletoImages col-sm-12 col-md-8 col-sm-10" >
             {% for book in books %}
                     
-                <div class=" mycover ptcover ">
-                <img src="{{book.image_link}}" class="ptimage myimage" alt="noimg">
-                <h3 class="pttitle hover-1">{{book.titulli}}</h3>
+                <div class=" mycover ptcover "><a href="{% url 'book-detail' book.isbn %}">
+                  <img src="{{ book.image_link }}" class="ptimage myimage"></a>
+                <h3 class="pttitle">{{book.titulli}}</h3>
                 <div class="underlinept"></div>
-                <p class="ptdesc text-truncate">{{book.pershkrimi}} </p>
-                <button class="mybutton hbpt">Want to read</button>
-                
+                <p class="ptdesc">{{book.autori}}</p> {% csrf_token %}
+                {% if book.isbn in wtrBooks %}
+               
+                <button onclick="onClickFunction2( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" class="mybutton hbpt buttonStyle" id="buttonclick{{book.isbn}}">Added</button>
+                {% else %}   
+                <button onclick="onClickFunction2( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" class="mybutton hbpt buttonStyle" id="buttonclick{{book.isbn}}">Want to read</button>
+                 {% endif%}
                 </div>
             {% endfor %}  
     </div>
+    <script>
+      // POST and GET methods for the Want to read button in every book cover
+      function onClickFunction2(book){
+        btnClickedId = "#buttonclick"+book
+          $(document).on('click', btnClickedId, function(e) {
+          e.preventDefault();
+           });
+          $.ajax({
+          type: 'POST',
+          url:'{% url "post_wtr" %}' ,
+          data: {
+              isbn: book,
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function() {
+            $.ajax({
+              url : '{% url "get_wtr" %}',
+              type : "GET",
+              dataType: "json",
+              data: {
+                  isbn: book
+              },
+              success: function(json) {
+                // Change number in Want to read Counter
+                  $('#wtrtext').text(json.books.length)
+                // Change text in Want to read Button and vice-versa
+                  if(json.Added){
+                    $(btnClickedId).text("Added")
+                  } else {
+                    $(btnClickedId).text("Want to read")
+                  }
+              },
+              failure: function(json) { 
+                  alert('Got an error dude GET');
+              }
+            });    
+          },
+          failure: function() {
+               alert('Got an error dude POST');
+          }
+        });
+        } 
+      </script>
     <div class="content-list col-sm-2 col-md-3 ">
             <h3>Categories</h3> 
             {%for category in books1%}
@@ -66,6 +111,7 @@
     {% endif %}
   </ul>
 </nav>
+
 {% endif %}
 
 </div>

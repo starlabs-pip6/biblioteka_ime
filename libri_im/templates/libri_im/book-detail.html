@@ -29,12 +29,14 @@
             <input type="radio" id="star1" name="rate" value="1" />
             <label for="star1" title="text">1 star</label>
           </div>
-        <button class="buttonStyle">Want to read</button>
+        <div class="book_detail_button">
+        <button class="mybutton">Want to read</button>
         {% if books in dukelexuar %}
-        <button onclick="onClickFunction( book='{{ book.isbn }}');" id="buttonclick{{book.isbn}}" class="mybutton hoverbutton linkStyle">Reading</button>
+        <button onclick="onClickFunction( book='{{ book.isbn }}');" id="buttonclick{{book.isbn}}" class="mybutton ">Reading</button>
         {% else %}
-        <button type="submit" onclick="onClickFunction( book='{{ book.isbn }}');" id="buttonclick{{book.isbn}}" class="mybutton buttonStyle" style="margin-left:5%">Reading</button>
+        <button type="submit" onclick="onClickFunction( book='{{ book.isbn }}');" id="buttonclick{{book.isbn}}" class="mybutton " style="margin-left:5%">Reading</button>
         {%endif%}
+        </div>
     </div>
 
 

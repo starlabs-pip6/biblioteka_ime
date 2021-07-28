@@ -61,7 +61,8 @@
       <div class="entire-content">
           <div class="content-carrousel">
             {% for cBook in cbooks %}
-              <figure class="shadow"><img src="{{ cBook.image_link }}"/></figure>
+              <figure class="shadow"><a href="{% url 'book-detail' cBook.isbn %}">
+                <img src="{{ cBook.image_link }}"/></a></figure>
             {% endfor %}
           </div>
       </div>
@@ -184,11 +185,11 @@
       <h3 class="pttitle">{{book.titulli}}</h3>
       <div class="underlinept"></div>
       <p class="ptdesc">{{book.autori}}</p>
-      <button class="mybutton hbpt">Want to read</button>
+      <button class="mybutton hbpt buttonStyle">Want to read</button>
     </div>
    {% endfor %}
   </div>
-  <p  class="meshume"><a href="#" class="a_meshume">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
+  <p  class="meshume"><a href="{% url 'shfleto' %}" class="a_meshume a_link">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
   
   </div>
   {% endif %}
@@ -198,18 +199,21 @@
     <p class="headingSortby">Latest books</p>
     <div class="sortByImages"> 
       {% for book in booksLatest %}
-    <div class="mycover"><a href="{% url 'book-detail' book.isbn %}" >
+    <div class="mycover ptcover"><a href="{% url 'book-detail' book.isbn %}" >
       <img src="{{ book.image_link}}" class="ptimage myimage"></a>
+      <h3 class="pttitle">{{book.titulli}}</h3>
+      <div class="underlinept"></div>
+      <p class="ptdesc">{{book.autori}}</p>
       {% if book.isbn in wtrBooks %}
-      <button onclick="onClickFunction( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" class=" mybutton hoverbutton linkStyle" id="buttonclick{{book.isbn}}">Added</button>
+      <button onclick="onClickFunction( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" class="mybutton hbpt buttonStyle" id="buttonclick{{book.isbn}}">Added</button>
       {% else %}   
-      <button onclick="onClickFunction( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" class=" mybutton hoverbutton linkStyle" id="buttonclick{{book.isbn}}">Want to read</button>
+      <button onclick="onClickFunction( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" class="mybutton hbpt buttonStyle" id="buttonclick{{book.isbn}}">Want to read</button>
        {% endif%}
     </div>
     {% endfor %}
    
   </div>  
-  <p  class="meshume"><a href="#" class="a_meshume">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
+  <p  class="meshume"><a href="{% url 'shfleto' %}" class="a_meshume a_link">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
   
   <p class="headingSortby">Most rated</p>
   
@@ -217,19 +221,22 @@
   <div class="sortByImages"> 
     {% csrf_token %}
     {% for book in booksR %}
-  <div class="mycover"><a href="{% url 'book-detail' book.isbn %}" >
+  <div class="mycover ptcover"><a href="{% url 'book-detail' book.isbn %}" >
     <img src="{{ book.image_link}}" class="myimage"></a>
+    <h3 class="pttitle">{{book.titulli}}</h3>
+    <div class="underlinept"></div>
+    <p class="ptdesc">{{book.autori}}</p>
     {% if book.isbn in wtrBooks %}
-     <button onclick="onClickFunction( book='{{ book.isbn }}');" id="buttonclick{{book.isbn}}" class="mybutton hoverbutton linkStyle">Added</button>
+     <button onclick="onClickFunction( book='{{ book.isbn }}');" id="buttonclick{{book.isbn}}" class="mybutton hbpt buttonStyle">Added</button>
     {% else %}
-     <button onclick="onClickFunction( book='{{ book.isbn }}');"  id="buttonclick{{book.isbn}}" class="mybutton hoverbutton linkStyle">Want to read</button>
+     <button onclick="onClickFunction( book='{{ book.isbn }}');"  id="buttonclick{{book.isbn}}" class="mybutton hbpt buttonStyle">Want to read</button>
     {% endif%}
   </div>
   {% endfor %}
  
 </div>  
 
-  <p  class="meshume"><a href="#" class="a_meshume">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
+  <p  class="meshume"><a href="{% url 'shfleto' %}" class="a_meshume a_link">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
 
 
     <p id="p1">Events</p>
