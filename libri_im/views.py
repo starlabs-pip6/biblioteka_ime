@@ -7,6 +7,7 @@ from django.http import HttpResponse, JsonResponse
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.views import PasswordChangeView
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.mixins import UserPassesTestMixin,LoginRequiredMixin
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
@@ -160,6 +161,7 @@ def home_view(request):
 
 
 def shfleto_view(request):
+    current_user = request.user
     books = Book.objects.all()
     query = request.GET.get('search')
 
@@ -455,8 +457,22 @@ def ProfilePageViewDetails(request):
 #     def get_object(self, queryset=None):
 #         return Book.objects.get(isbn=self.kwargs.get("isbn"))
 
+class CommentDeleteView(UserPassesTestMixin,LoginRequiredMixin,DeleteView):
+    model = Comment
+    template_name = 'libri_im/CommentDeleteConfirm.html'
+    
+    def get_success_url(self):
+        return self.request.path[:20]
+    
+    def test_func(self):
+        comment = self.get_object()
+        return self.request.user == comment.name
+    
+    
+
 class BookDV(View):
     def get(self,request,isbn,*args,**kwargs):
+        current_user = request.user
         book = Book.objects.get(isbn=isbn)
         form = NewCommentForm()
 
@@ -466,6 +482,7 @@ class BookDV(View):
             'book':book,
             'form':form,
             'comments':comments,
+            'currentUser': current_user,
         }
 
         return render(request,'libri_im/book-detail.html' , context)
