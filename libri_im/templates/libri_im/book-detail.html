@@ -30,12 +30,14 @@
             <label for="star1" title="text">1 star</label>
           </div>
         <div class="book_detail_button">
+            {% if user.is_authenticated %}
         <button class="mybutton">Want to read</button>
         {% if books in dukelexuar %}
         <button onclick="onClickFunction( book='{{ book.isbn }}');" id="buttonclick{{book.isbn}}" class="mybutton ">Reading</button>
         {% else %}
         <button type="submit" onclick="onClickFunction( book='{{ book.isbn }}');" id="buttonclick{{book.isbn}}" class="mybutton " style="margin-left:5%">Reading</button>
         {%endif%}
+        {% endif %}
         </div>
     </div>
 

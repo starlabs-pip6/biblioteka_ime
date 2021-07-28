@@ -412,6 +412,8 @@ class EditProfile(UpdateView):
 
 def ProfilePageViewDetails(request):
     current_user = request.user
+    if current_user.is_anonymous:
+        return redirect('home')
     #Get Read Books from the database
     ReadSirtar = Sirtar.objects.get(emri="Read", id_user=request.user).books
     ReadBooks = []

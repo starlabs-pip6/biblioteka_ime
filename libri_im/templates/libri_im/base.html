@@ -84,7 +84,7 @@
                   {% if user.is_authenticated %}
                   <a href="{% url 'profile_page_view' %}">My books</a>
                   {% else %}
-                  <a href="{% url 'login' %}">My books</a>
+                  
                   {% endif %}
               <a href="{% url 'shfleto' %}">Discover</a>
               {% if user.is_admin %}

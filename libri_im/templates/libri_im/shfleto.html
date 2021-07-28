@@ -26,12 +26,14 @@
                 <h3 class="pttitle">{{book.titulli}}</h3>
                 <div class="underlinept"></div>
                 <p class="ptdesc">{{book.autori}}</p> {% csrf_token %}
+                {% if user.is_authenticated %}
                 {% if book.isbn in wtrBooks %}
                
                 <button onclick="onClickFunction2( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" class="mybutton hbpt buttonStyle" id="buttonclick{{book.isbn}}">Added</button>
                 {% else %}   
                 <button onclick="onClickFunction2( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" class="mybutton hbpt buttonStyle" id="buttonclick{{book.isbn}}">Want to read</button>
                  {% endif%}
+                 {% endif %}
                 </div>
             {% endfor %}  
     </div>

@@ -204,11 +204,14 @@
       <h3 class="pttitle">{{book.titulli}}</h3>
       <div class="underlinept"></div>
       <p class="ptdesc">{{book.autori}}</p>
+  {% if user.is_authenticated %}
       {% if book.isbn in wtrBooks %}
       <button onclick="onClickFunction( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" class="mybutton hbpt buttonStyle" id="buttonclick{{book.isbn}}">Added</button>
       {% else %}   
       <button onclick="onClickFunction( book='{{ book.isbn }}', wtrBooks = '{{wtrBooks}}');" class="mybutton hbpt buttonStyle" id="buttonclick{{book.isbn}}">Want to read</button>
        {% endif%}
+    
+  {% endif%} 
     </div>
     {% endfor %}
    
@@ -226,11 +229,13 @@
     <h3 class="pttitle">{{book.titulli}}</h3>
     <div class="underlinept"></div>
     <p class="ptdesc">{{book.autori}}</p>
+    {% if user.is_authenticated %}
     {% if book.isbn in wtrBooks %}
      <button onclick="onClickFunction( book='{{ book.isbn }}');" id="buttonclick{{book.isbn}}" class="mybutton hbpt buttonStyle">Added</button>
     {% else %}
      <button onclick="onClickFunction( book='{{ book.isbn }}');"  id="buttonclick{{book.isbn}}" class="mybutton hbpt buttonStyle">Want to read</button>
     {% endif%}
+    {% endif %}
   </div>
   {% endfor %}
  
