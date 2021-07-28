@@ -182,7 +182,7 @@
       {% for book in booksFY %}
     <div class="mycover ptcover"><a href="{% url 'book-detail' book.isbn %}">
       <img src="{{ book.image_link }}" class="ptimage myimage"></a>
-      <h3 class="pttitle">{{book.titulli}}</h3>
+      <h3 class="pttitle">{{book.titulli|truncatechars:17}}</h3>
       <div class="underlinept"></div>
       <p class="ptdesc">{{book.autori}}</p>
       <button class="mybutton hbpt buttonStyle">Want to read</button>
@@ -201,7 +201,7 @@
       {% for book in booksLatest %}
     <div class="mycover ptcover"><a href="{% url 'book-detail' book.isbn %}" >
       <img src="{{ book.image_link}}" class="ptimage myimage"></a>
-      <h3 class="pttitle">{{book.titulli}}</h3>
+      <h3 class="pttitle">{{book.titulli|truncatechars:17}}</h3>
       <div class="underlinept"></div>
       <p class="ptdesc">{{book.autori}}</p>
   {% if user.is_authenticated %}
@@ -225,8 +225,8 @@
     {% csrf_token %}
     {% for book in booksR %}
   <div class="mycover ptcover"><a href="{% url 'book-detail' book.isbn %}" >
-    <img src="{{ book.image_link}}" class="myimage"></a>
-    <h3 class="pttitle">{{book.titulli}}</h3>
+    <img src="{{ book.image_link}}" class="ptimage myimage"></a>
+    <h3 class="pttitle">{{book.titulli|truncatechars:17}}</h3>
     <div class="underlinept"></div>
     <p class="ptdesc">{{book.autori}}</p>
     {% if user.is_authenticated %}

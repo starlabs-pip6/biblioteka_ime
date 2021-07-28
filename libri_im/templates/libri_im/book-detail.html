@@ -13,7 +13,7 @@
     <h1 class ="h1style"> {{ book.titulli }} </h1>
     
         <h5> {{ book.autori }}</h5>
-        <h5> {{ book.pershkrimi }}</h5>
+        <p> {{ book.pershkrimi|truncatechars:920 }}</p>
         
         <h5 class="h5style">Rating: </h5>
         <div class="rate">

@@ -15,7 +15,6 @@ from .models import Book, NewUser, Progress, Sirtar,Comment
 from .forms import NewCommentForm, RegistrationForm, UserAuthenticationForm, MyPasswordChangeForm
 from django.views.generic import (CreateView,
                                   ListView,
-                                  DetailView,
                                   DeleteView,
                                   UpdateView,
                                   DetailView)
