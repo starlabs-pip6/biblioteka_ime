@@ -277,7 +277,7 @@
                  $('#progressTitulli').text(json.progressLibriTitulli)
                 let progressNowPages = json.progressNowPages
                 let progressAllPages = json.progressAllPages
-                let progressPercent = json.progressPercent
+                let progressPercent = json.progressPercent.toFixed(1)
                 let allString = ""+progressNowPages+"/"+progressAllPages+" pages or "+progressPercent+"%"
                  $('#progressShowText').text(allString)
 

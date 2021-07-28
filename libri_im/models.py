@@ -123,7 +123,6 @@ class Progress(models.Model):
 
 
 class Sirtar(models.Model):
-    id = models.AutoField(primary_key=True)
     emri = models.CharField(max_length=200, null=False, blank=False)
     id_user = models.ForeignKey(NewUser, on_delete=models.CASCADE)
     books = ArrayField(models.BigIntegerField(),

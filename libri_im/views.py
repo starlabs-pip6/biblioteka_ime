@@ -20,6 +20,7 @@ from django.views.generic import (CreateView,
                                   UpdateView,
                                   DetailView)
 from .utils import account_activation_token
+from . import utils
 #from validate_email import validate_email
 from django.contrib import messages
 from django.core.mail import EmailMessage
@@ -34,7 +35,7 @@ from django.views import View
 from django.urls import reverse, reverse_lazy
 from django.db import models
 from django.db.models import Q, F
-from . import myfunctions
+
 from django.core.paginator import PageNotAnInteger, Paginator
 
 
@@ -76,8 +77,8 @@ def home_view(request):
     if(not current_user.is_anonymous):
         # sirtar = Sirtar.objects.all()
         if not Sirtar.objects.filter(id_user=current_user).exists():
-            myfunctions.create_default_sirtar(current_user.email)
-        myfunctions.update_progress_db("Reading", current_user.email)
+            utils.create_default_sirtar(current_user.email)
+        utils.update_progress_db("Reading", current_user.email)
 
         
         dukelexuar = []
@@ -114,7 +115,12 @@ def home_view(request):
         progressUser = progressBook.id_user
         progressNowPages = progressBook.pages_now
         progressAllPages = progressBook.id_libri.nr_faqeve
-        progressLibriTitulli = progressBook.id_libri.titulli[0:35]+"..."
+        # Progress Title truncation
+        titleLength = 35
+        if len(progressBook.id_libri.titulli)>titleLength:
+            progressLibriTitulli = progressBook.id_libri.titulli[:titleLength]+"..."
+        else:
+            progressLibriTitulli = progressBook.id_libri.titulli[:titleLength]
         progressPercent = round(
             float((progressNowPages/progressAllPages)*100), 1)
         progressBookImage = progressBook.id_libri.image_link
@@ -230,8 +236,8 @@ class RegistationView(View):
                 user.is_active = False
                 user.save()
                 # creates 3 default sirtars
-                myfunctions.create_default_sirtar(email)
-                myfunctions.send_email_activation(request,user)
+                utils.create_default_sirtar(email)
+                utils.send_email_activation(request,user)
                 messages.success(
                     request, 'Your account has been created succesfully. To use this account, activate it with the link that we have sent you by email.')
                 return render(request, 'libri_im/register.html')
@@ -273,7 +279,7 @@ class VerificationView(View):
 
 def logout_view(request):
     logout(request)
-    return redirect("home")
+    return redirect("login")
 
 
 def login_view(request, *args, **kwargs):
@@ -370,6 +376,8 @@ class ProfilePageView(DetailView):
     def dispatch(self, request, *args, **kwargs):
         if not self.request.user.is_authenticated:
             return redirect('home')
+        if not self.request.user.is_active:
+            return redirect('logout')
         return super().dispatch(request, *args, **kwargs)
         
         
@@ -396,10 +404,9 @@ class EditProfile(UpdateView):
     def form_valid(self, form):
         if 'email' in form.changed_data:
             self.request.user.is_active = False
-            myfunctions.send_email_activation(self.request,self.request.user)
-            logout(self.request)
+            utils.send_email_activation(self.request,self.request.user)
             messages.success(
-                  self.request, 'Your email has been changed succesfully. To use this account, activate it with the link that we have sent you by email.')
+                self.request, f'Your email has been changed succesfully. To use this account, activate it with the link that we have sent you by email at "{self.request.user.email}"')
 
         return super().form_valid(form)
 
@@ -736,9 +743,17 @@ def getdataSelectBook(request):
         progressBook = Progress.objects.get(id_libri=progressBookObj, id_user=request.user)
         progressNowPages = progressBook.pages_now
         progressAllPages = progressBook.id_libri.nr_faqeve
-        progressLibriTitulli = progressBook.id_libri.titulli[0:35]+"..."
-        progressPercent = round(
-            float((progressNowPages/progressAllPages)*100), 1)
+        # Progress Title Truncation
+        titleLength = 35
+        if len(progressBook.id_libri.titulli)>titleLength:
+            progressLibriTitulli = progressBook.id_libri.titulli[:titleLength]+"..."
+        else:
+            progressLibriTitulli = progressBook.id_libri.titulli[:titleLength]
+
+            
+        
+        progressPercent = float(round(
+            (progressNowPages/progressAllPages)*100, 1))
         progressBookImage = progressBook.id_libri.image_link
         data = {
             'progressBookImage' : progressBookImage,
