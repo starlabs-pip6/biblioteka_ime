@@ -485,7 +485,7 @@ class BookDV(View):
         current_user = request.user
         book = Book.objects.get(isbn=isbn)
         form = NewCommentForm()
-
+        
         comments = Comment.objects.filter(book=book).order_by('-date_added')
 
         context = {
@@ -677,25 +677,35 @@ def ReadingPost(request):
     if request.method == "POST" and request.is_ajax:
         isbn = int(request.POST.get('isbn'))
         new_sirtar = Sirtar.objects.get(emri="Reading", id_user=request.user)
-        if isbn not in new_sirtar.books:
-            new_sirtar.books.append(isbn)
-            new_sirtar.save(update_fields=['books'])
-            return HttpResponse('<p>Success book added</p>')
-        else:
-            new_sirtar.books.remove(isbn)
-            new_sirtar.save(update_fields=['books'])
-            return HttpResponse('<p>Removed book from reading</p>')
+        utils.add_to_sirtar("Reading", isbn, request)
+      
 
         return HttpResponse('<p>Error</p>')
 @api_view(('GET',))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def getdataReading(request):
     if request.method == 'GET' and request.is_ajax:
-        ReadingCount = Sirtar.objects.get(emri="Reading", id_user=request.user)
-        serializer = SirtarSerializer(ReadingCount, many=False)
-    return Response(serializer.data)
+        sirtari = Sirtar.objects.get(emri="Reading", id_user=request.user).books
+        clickedIsbn = int(request.GET.get('isbn'))
+        added = None
+        if clickedIsbn in sirtari:
+            added = True
+        else:
+            added = False
+        wtrCount = Sirtar.objects.get(emri="Want to read", id_user=request.user)
+        readCount = Sirtar.objects.get(emri="Read", id_user=request.user)
+        readingCount = Sirtar.objects.get(emri="Reading", id_user=request.user)
+        wtrSerialize = SirtarSerializer(wtrCount, many=False)
+        readSerialize = SirtarSerializer(readCount, many=False)
+        readingSerialize = SirtarSerializer(readingCount, many=False)
 
-
+        data = {
+            'added': added,
+            'wtrCount': wtrSerialize.data,
+            'readCount': readSerialize.data,
+            'readingCount': readingSerialize.data,
+        }
+    return Response(data)
 @api_view(('GET',))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def getdataWtr(request):

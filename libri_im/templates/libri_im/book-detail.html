@@ -31,12 +31,17 @@
           </div>
         <div class="book_detail_button">
             {% if user.is_authenticated %}
-        <button class="mybutton">Want to read</button>
-        {% if books in dukelexuar %}
-        <button onclick="onClickFunction( book='{{ book.isbn }}');" id="buttonclick{{book.isbn}}" class="mybutton ">Reading</button>
+            {% if book.isbn in wtrBooks %}
+            <button onclick="onClickFunctionWtr( book='{{ book.isbn }}');" id="buttonclick1{{book.isbn}}" class="mybutton ">Added</button>
+            {% else %}
+            <button onclick="onClickFunctionWtr( book='{{ book.isbn }}');" id="buttonclick1{{book.isbn}}" class="mybutton " style="margin-left:5%">Want to read</button>
+            {%endif%}
+        {% if book.isbn in dukelexuar %}
+        <button onclick="onClickFunction( book='{{ book.isbn }}');" id="buttonclick{{book.isbn}}" class="mybutton ">Added</button>
         {% else %}
-        <button type="submit" onclick="onClickFunction( book='{{ book.isbn }}');" id="buttonclick{{book.isbn}}" class="mybutton " style="margin-left:5%">Reading</button>
+        <button onclick="onClickFunction( book='{{ book.isbn }}');" id="buttonclick{{book.isbn}}" class="mybutton " style="margin-left:5%">Reading</button>
         {%endif%}
+        <button class="mybutton" style="margin-left:5%">Read</button>
         {% endif %}
         </div>
     </div>
@@ -311,40 +316,95 @@ function commentReplyToggle(parent_id) {
 </script>
 <script>
     function onClickFunction(book){
-           btnClickedId = "#buttonclick"+book
-             $(document).on('click', btnClickedId, function(e) {
-             e.preventDefault();
-              });
-             $.ajax({
-             type: 'POST',
-             url:'{% url "post_reading" %}' ,
-             data: {
-                 isbn: book,
-                 csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
-             },
-             success: function() {
-               $.ajax({
-                 url : '{% url "get_reading" %}',
-                 type : "GET",
-                 dataType: "json",
-                 success: function(json) {
-                     $('#wtrtext').text(json.books.length)
-                     if( $(btnClickedId).text()==="Reading"){
-                       $(btnClickedId).text("Reading")
-                     } else {
-                       $(btnClickedId).text("Reading")
-                     }
-                 },
-                 failure: function(json) { 
-                     alert('Got an error dude GET');
-                 }
-               });    
-             },
-             failure: function() {
-                  alert('Got an error dude POST');
-             }
+        btnClickedId = "#buttonclick"+book
+          $(document).on('click', btnClickedId, function(e) {
+          e.preventDefault();
            });
-           }
+          $.ajax({
+          type: 'POST',
+          url:'{% url "post_reading" %}' ,
+          data: {
+              isbn: book,
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function() {
+            $.ajax({
+              url : '{% url "get_reading" %}',
+              type : "GET",
+              dataType: "json",
+              data: {
+                  isbn: book
+              },
+              success: function(json) {
+                // Change number in Want to read Counter
+                  $('#wtrtext').text(json.wtrCount.books.length)
+                  $('#readtext').text(json.readCount.books.length)
+                  $('#readingtext').text(json.readingCount.books.length)
+
+                // Change text in Want to read Button and vice-versa
+                  if(json.added){
+                    $(btnClickedId).text("Added")
+                  } else {
+                    $(btnClickedId).text("Reading")
+                  }
+              },
+              failure: function(json) { 
+                  alert('Got an error dude GET');
+              }
+            });    
+          },
+          failure: function() {
+               alert('Got an error dude POST');
+          }
+        });
+        }
+   
+   
+   </script>
+   <script>
+       function onClickFunctionWtr(book){
+        btnClickedId = "#buttonclick1"+book
+          $(document).on('click', btnClickedId, function(e) {
+          e.preventDefault();
+           });
+          $.ajax({
+          type: 'POST',
+          url:'{% url "post_wtr" %}' ,
+          data: {
+              isbn: book,
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function() {
+            $.ajax({
+              url : '{% url "get_wtr" %}',
+              type : "GET",
+              dataType: "json",
+              data: {
+                  isbn: book
+              },
+              success: function(json) {
+                // Change number in Want to read Counter
+                  $('#wtrtext').text(json.wtrCount.books.length)
+                  $('#readtext').text(json.readCount.books.length)
+                  $('#readingtext').text(json.readingCount.books.length)
+
+                // Change text in Want to read Button and vice-versa
+                  if(json.added){
+                    $(btnClickedId).text("Added")
+                  } else {
+                    $(btnClickedId).text("Want to read")
+                  }
+              },
+              failure: function(json) { 
+                  alert('Got an error dude GET');
+              }
+            });    
+          },
+          failure: function() {
+               alert('Got an error dude POST');
+          }
+        });
+        }
    
    </script>
 <script src="{% static 'libri_im/js/reloadpage.js' %}"></script>
