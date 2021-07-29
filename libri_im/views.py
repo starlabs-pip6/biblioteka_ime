@@ -773,12 +773,25 @@ def getdataRead(request):
 
 def progressPost(request):
     if request.method == "POST" and request.is_ajax:
-        userSirtar = Sirtar.objects.get(emri="Reading", id_user=request.user).books
-        progressBookIsbn = int(userSirtar[len(userSirtar)-1])
+        userSirtar = Sirtar.objects.get(emri="Reading", id_user=request.user)
+        ReadSirtar = Sirtar.objects.get(emri="Read",id_user = request.user)
+        inputPost = request.POST.get('progressPages')
+        progressBookIsbn = int(userSirtar.books[len(userSirtar.books)-1])
         progressBook = Book.objects.get(isbn=progressBookIsbn)
         progressObj = Progress.objects.get(id_user=request.user,id_libri=progressBook)
-        if not request.POST.get('progressPages')=='':
-            progressInput = int(request.POST.get('progressPages'))
+        if not inputPost=='':
+            if int(inputPost)>0 and int(inputPost)<progressBook.nr_faqeve:
+                progressInput = int(inputPost)
+            elif int(inputPost) == progressBook.nr_faqeve:
+                userSirtar.books.remove(progressBook.isbn)
+                ReadSirtar.books.append(progressBook.isbn)
+                userSirtar.save(update_fields=['books'])
+                ReadSirtar.save(update_fields=['books'])
+                progressInput = int(inputPost)
+            elif int(inputPost)>progressBook.nr_faqeve:
+                progressInput = progressBook.nr_faqeve-1
+            elif int(inputPost)<=0:
+                progressInput = 0
         else:
             progressInput=progressObj.pages_now
       
@@ -792,17 +805,42 @@ def progressPost(request):
 def getdataProgress(request):
     if request.method =="GET" and request.is_ajax:
         userSirtar = Sirtar.objects.get(emri="Reading", id_user=request.user).books
-        progressBookIsbn = int(userSirtar[len(userSirtar)-1])
-        progressBook = Book.objects.get(isbn=progressBookIsbn)
-        progressObj = Progress.objects.get(id_user=request.user.id,id_libri=progressBook)
-        progressNowPages = progressObj.pages_now
-        progressAllPages = progressObj.id_libri.nr_faqeve
-        progressPercent = round(
-            float((progressNowPages/progressAllPages)*100), 1)
+        readSirtar = Sirtar.objects.get(emri="Read", id_user=request.user).books
+        if len(userSirtar)>=1:
+            progressBookIsbn = int(userSirtar[len(userSirtar)-1])
+            progressBook = Book.objects.get(isbn=progressBookIsbn)
+            progressImage = progressBook.image_link
+            progressTitle = progressBook.titulli
+            readingCount = len(userSirtar)
+            readCount = len(readSirtar)
+            progressObj = Progress.objects.get(id_user=request.user.id,id_libri=progressBook)
+            progressNowPages = progressObj.pages_now
+            progressAllPages = progressObj.id_libri.nr_faqeve
+            progressPercent = round(
+                    float((progressNowPages/progressAllPages)*100), 1)
+            finalString = ""
+        else:
+            progressBookIsbn = -1
+            progressBook =-1
+            progressImage = -1
+            progressTitle = -1
+            readingCount = len(userSirtar)
+            readCount = len(readSirtar)
+            progressObj = -1
+            progressNowPages = -1
+            progressAllPages = -1
+            progressPercent = -1
+            finalString = "You should add books to the Reading shelf to show the progress."
         data = {
             'progressNowPages': progressNowPages,
             'progressAllPages': progressAllPages,
-            'progressPercent': progressPercent
+            'progressPercent': progressPercent,
+            'finalString' : finalString,
+            'progressImage': progressImage,
+            'progressTitle': progressTitle,
+            'readingCount' : readingCount,
+            'readCount' : readCount,
+
         }
         return Response(data)
     return HttpResponse('<p>Error</p>')

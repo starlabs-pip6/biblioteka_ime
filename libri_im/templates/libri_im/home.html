@@ -95,7 +95,7 @@
       </div>
       
     
-        <div class="dukelexuarprogress">
+        <div id="dukelexuarprogress" class="dukelexuarprogress">
               {% if dlcount is 0 %}
                  <p>You should add books to the Reading shelf to show the progress.</p>
               {% else %}
@@ -333,9 +333,21 @@
               success: function(json) {
                 let progressNowPages = json.progressNowPages
                 let progressAllPages = json.progressAllPages
-                let progressPercent = json.progressPercent
+                let progressPercent = json.progressPercent.toFixed(1)
+                let imageLink = json.progressImage
+                let progressTitle = json.progressTitle
                 let allString = ""+progressNowPages+"/"+progressAllPages+" pages or "+progressPercent+"%"
-                $('#progressShowText').text(allString)
+                if (json.finalString==""){
+                      $('#progressImg').attr("src", imageLink)
+                      $('#progressTitulli').text(progressTitle)
+                      $('#progressShowText').text(allString)
+                }
+                else {
+                    $('#dukelexuarprogress').html("<p>You should add books to the Reading shelf to show the progress.</p>")
+                }
+                  $('#readtext').text(json.readCount)
+                  $('#readingtext').text(json.readingCount)
+                
               },
               failure: function(json) { 
                   alert('Got an error dude GET');
