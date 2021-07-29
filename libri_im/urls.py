@@ -2,7 +2,7 @@ from collections import namedtuple
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from .views import BookCreateView, BookListView, BookDetailView, BookDeleteView, EditBook, ProfilePageView, EditProfile, BookDV,AddCommentDislike,AddCommentLike,CommentReplyView,AddChildCommentDislike,AddChildCommentLike
+from .views import CommentDeleteView,BookCreateView, BookListView, BookDetailView, BookDeleteView, EditBook, ProfilePageView, EditProfile, BookDV,AddCommentDislike,AddCommentLike,CommentReplyView,AddChildCommentDislike,AddChildCommentLike
 
 
 urlpatterns = [
@@ -22,6 +22,7 @@ urlpatterns = [
     path('libri/<str:isbn>/comment/<int:pk>/dislike', AddCommentDislike.as_view(), name="comment-dislike"), 
     path('libri/<str:isbn>/comment/<int:pk>/childlike', AddChildCommentLike.as_view(), name="child-comment-like"), 
     path('libri/<str:isbn>/comment/<int:pk>/childdislike', AddChildCommentDislike.as_view(), name="child-comment-dislike"), 
+    path('libri/<str:isbn>/comment/commentdelete/<int:pk>/', CommentDeleteView.as_view(), name="comment-delete"),
 
      
 
