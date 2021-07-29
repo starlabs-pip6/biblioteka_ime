@@ -467,7 +467,18 @@ class CommentDeleteView(UserPassesTestMixin,LoginRequiredMixin,DeleteView):
         comment = self.get_object()
         return self.request.user == comment.name
     
+class CommentEditView(UserPassesTestMixin,LoginRequiredMixin,UpdateView):
+    model = Comment
+    fields = ['body']
+    template_name = 'libri_im/Comment_edit.html'
     
+    def get_success_url(self):
+        return self.request.path[:20]
+
+    def test_func(self):
+        comment = self.get_object()
+        return self.request.user == comment.name
+
 
 class BookDV(View):
     def get(self,request,isbn,*args,**kwargs):
