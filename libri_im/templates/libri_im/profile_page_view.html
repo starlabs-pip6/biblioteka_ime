@@ -101,9 +101,9 @@
             <div class="col-lg-2 col-md-4 col-sm-12">
               <div class="mycover ptcover">
                 <img src="{{book.image_link}}" class="ptimage myimage" alt="no-img"/>
-                <h3 class="pttitle hover-1">{{book.titulli}}</h3>
+                <h3 class="pttitle hover-1">{{book.titulli|truncatechars:17}}</h3>
                 <div class="underlinept"></div>
-                <p class="ptdesc text-truncate">{{book.pershkrimi}}</p>
+                <p class="ptdesc text-truncate">{{book.pershkrimi|truncatechars:25}}</p>
               </div>
             </div>
             {% endfor %}
@@ -120,9 +120,9 @@
           <div class="col-lg-2 col-md-4 col-sm-12">
             <div class="mycover ptcover">
               <img src="{{book.image_link}}" class="ptimage myimage" alt="no-img"/>
-              <h3 class="pttitle hover-1">{{book.titulli}}</h3>
+              <h3 class="pttitle hover-1">{{book.titulli|truncatechars:17}}</h3>
               <div class="underlinept"></div>
-              <p class="ptdesc text-truncate">{{book.pershkrimi}}</p>
+              <p class="ptdesc text-truncate">{{book.pershkrimi|truncatechars:25}}</p>
             </div>
           </div> 
           {% endfor %}
@@ -139,9 +139,9 @@
           <div class="col-lg-2 col-md-4 col-sm-12">
             <div class="mycover ptcover">
               <img src="{{book.image_link}}" class="ptimage myimage" alt="no-img"/>
-              <h3 class="pttitle hover-1">{{book.titulli}}</h3>
+              <h3 class="pttitle hover-1">{{book.titulli|truncatechars:17}}</h3>
               <div class="underlinept"></div>
-              <p class="ptdesc text-truncate">{{book.pershkrimi}}</p>
+              <p class="ptdesc text-truncate">{{book.pershkrimi|truncatechars:25}}</p>
             </div>
           </div>  
           {% endfor %}

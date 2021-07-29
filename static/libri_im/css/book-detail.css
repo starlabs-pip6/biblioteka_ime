@@ -220,3 +220,15 @@
   margin-bottom: 10px;
   padding: 10px 15px; */
 }
+
+.book_detail_button{
+    /* margin-top: 15% !important; */
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.fixedWidth{
+  padding: 0 10px !important;
+  width: 150px;
+}

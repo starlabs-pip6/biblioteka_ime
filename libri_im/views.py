@@ -487,12 +487,18 @@ class BookDV(View):
         form = NewCommentForm()
         
         comments = Comment.objects.filter(book=book).order_by('-date_added')
-
+        wtrSirtar = Sirtar.objects.get(emri="Want to read", id_user=current_user)
+        readSirtar = Sirtar.objects.get(emri="Read", id_user=current_user)
+        readingSirtar = Sirtar.objects.get(emri="Reading", id_user=current_user)
         context = {
             'book':book,
             'form':form,
             'comments':comments,
             'currentUser': current_user,
+            'wtrBooks': wtrSirtar.books,
+            'readBooks': readSirtar.books,
+            'readingBooks': readingSirtar.books,
+
         }
 
         return render(request,'libri_im/book-detail.html' , context)
@@ -661,14 +667,6 @@ def wantToReadPost(request):
     if request.method == "POST" and request.is_ajax:
         isbn = int(request.POST.get('isbn'))
         new_sirtar = Sirtar.objects.get(emri="Want to read", id_user=request.user)
-        # if isbn not in new_sirtar.books:
-        #     new_sirtar.books.append(isbn)
-        #     new_sirtar.save(update_fields=['books'])
-        #     return HttpResponse('<p>Success book added</p>')
-        # else:
-        #     new_sirtar.books.remove(isbn)
-        #     new_sirtar.save(update_fields=['books'])
-        #     return HttpResponse('<p>Removed book from want to read</p>')
         utils.add_to_sirtar("Want to read", isbn, request)
 
         return HttpResponse('<p>Error</p>')
@@ -706,6 +704,7 @@ def getdataReading(request):
             'readingCount': readingSerialize.data,
         }
     return Response(data)
+
 @api_view(('GET',))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def getdataWtr(request):
@@ -731,6 +730,41 @@ def getdataWtr(request):
             'readingCount': readingSerialize.data,
         }
     return Response(data)
+
+def ReadPost(request):
+    if request.method == "POST" and request.is_ajax:
+        isbn = int(request.POST.get('isbn'))
+        new_sirtar = Sirtar.objects.get(emri="Read", id_user=request.user)
+        utils.add_to_sirtar("Read", isbn, request)
+        return HttpResponse('<p>Error</p>')
+
+
+@api_view(('GET',))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def getdataRead(request):
+    if request.method == 'GET' and request.is_ajax:
+        sirtari = Sirtar.objects.get(emri="Read", id_user=request.user).books
+        clickedIsbn = int(request.GET.get('isbn'))
+        added = None
+        if clickedIsbn in sirtari:
+            added = True
+        else:
+            added = False
+        wtrCount = Sirtar.objects.get(emri="Want to read", id_user=request.user)
+        readCount = Sirtar.objects.get(emri="Read", id_user=request.user)
+        readingCount = Sirtar.objects.get(emri="Reading", id_user=request.user)
+        wtrSerialize = SirtarSerializer(wtrCount, many=False)
+        readSerialize = SirtarSerializer(readCount, many=False)
+        readingSerialize = SirtarSerializer(readingCount, many=False)
+
+        data = {
+            'added': added,
+            'wtrCount': wtrSerialize.data,
+            'readCount': readSerialize.data,
+            'readingCount': readingSerialize.data,
+        }
+    return Response(data)
+
 
 def progressPost(request):
     if request.method == "POST" and request.is_ajax:
@@ -767,6 +801,8 @@ def getdataProgress(request):
         }
         return Response(data)
     return HttpResponse('<p>Error</p>')
+
+
 
 def selectBookPost(request):
     if request.method=="POST" and request.is_ajax:
