@@ -54,19 +54,14 @@
 </div>
 </div>
 
-<!-- <div style="padding-left: 75px;padding-top: 100px;">
-    <form class="commentform" method="POST" >
-        {% csrf_token %}
-        {{form.as_p|safe }}
-        <button type="submit" style="padding:5px;border-radius: 1rem;" onclick="reloadpage()">Submit</button>
-    </form>
-</div> -->
 
 <div class="commentContainer"col-md-6 col-sm-12 > 
     <div class="commentDiv"col-md-6 col-sm-12 > 
-
+        <div style="margin-bottom: 20px;">
+        <h1 style="padding-bottom: 0px; ">{{ book.comments.all.count }} Comments</h1>
+         </div>
+        {% if user.is_authenticated %}
       <br>
-  
       <form method="POST" action="" >
           <img class="avatar avatar-sm mr-2" style="margin-bottom: 10px;" src="{{request.user.profileImg.url}}">
           <b> {{ request.user.username }}</b>
@@ -74,20 +69,20 @@
           <div class="media-body">
               {% csrf_token %}
               {{ form.as_p|safe }}
-          <!-- <textarea  class="comment-box" rows="6" placeholder="Enter your comment here..." name="bodysubmit" id="bodysubmit"></textarea> -->
-          <button type="submit" class="btnStyle1">Post</button>
-  
+          <button type="submit" class="mybutton">Post</button>
       </form>
-      
-        <div class="commentButton">
-        <!-- <a href="#" class="btnStyle1">Post</a> -->
+        {% else %}
+        <div class="loginToC">
+                <h2>Login to comment</h2>
+             <a href="{% url 'login' %}"><button  class="mybutton" >Login</button></a>
         </div>
+        
+
+        {% endif %}
     
     </div>
     </div>
-    <div style="margin-bottom: 20px;">
-        <h1 style="padding-bottom: 0px;">{{ book.comments.all.count }} Comments</h1>
-    </div>
+    
 
 <!-- <div class="commentcontainer" style="padding-top: 10px;padding-left: 70px; "> -->
     <div class="comments" col-md-6 col-sm-12>
