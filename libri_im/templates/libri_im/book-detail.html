@@ -97,6 +97,7 @@
            <b> {{ comment.name }}</b>
            <time class="dateStyle">{{ comment.date_added }}</time>
            {% if request.user == comment.name %}
+           <a href="{% url 'comment-edit' book.isbn comment.pk  %}" style="margin-left:10px;margin-top:4px;" ><i class="fa fa-pencil" style="color: rgb(0, 60, 255);"></i></a>
            <a href="{% url 'comment-delete' book.isbn comment.pk  %}" style="margin-left:10px;margin-top:4px;" ><i class="fa fa-trash fa-1x" style="color: rgb(192, 87, 87);"></i></a>
            {% endif %}
            

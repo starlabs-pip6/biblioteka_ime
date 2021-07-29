@@ -1,0 +1,23 @@
+{% extends 'libri_im/base.html' %} 
+{% load static %} 
+{% block content %}
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-3 col-sm-6">
+
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-5 col-sm-12" style="max-width: 800px;">
+            <h5>Edit Comment</h5>
+        <form method="POST" action="" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p}}
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-danger" >Update</button>
+            </div>
+        </form>
+    </div>
+    </div>
+</div>
+{% endblock content %}
