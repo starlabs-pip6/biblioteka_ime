@@ -69,3 +69,38 @@ def send_email_activation(request,user):
                 )
                 email.send(fail_silently=False)
                 
+
+def add_to_sirtar(emri, isbn, request):
+    readSirtar = Sirtar.objects.get(emri='Read', id_user=request.user)
+    readingSirtar = Sirtar.objects.get(emri='Reading', id_user=request.user)
+    wtrSirtar = Sirtar.objects.get(emri='Want to read', id_user=request.user)
+    requestSirtar = Sirtar.objects.get(emri=emri, id_user=request.user)                 #[1,2,3]  []    [2] 
+    #Add or remove isbn from requestSirtar
+    if isbn not in requestSirtar.books:
+        requestSirtar.books.append(isbn)
+        requestSirtar.save(update_fields=['books'])   
+    else:
+        requestSirtar.books.remove(isbn)
+        requestSirtar.save(update_fields=['books'])    
+    #Remove isbn from other sirtars
+    if emri == "Read":
+        if isbn in readingSirtar.books:
+            readingSirtar.books.remove(isbn)
+            readingSirtar.save(update_fields=['books'])
+        if isbn in wtrSirtar.books:
+            wtrSirtar.books.remove(isbn)
+            wtrSirtar.save(update_fields=['books'])
+    elif emri == "Reading":
+        if isbn in readSirtar.books:
+            readSirtar.books.remove(isbn)
+            readSirtar.save(update_fields=['books'])
+        if isbn in wtrSirtar.books:
+            wtrSirtar.books.remove(isbn)
+            wtrSirtar.save(update_fields=['books'])
+    elif emri == "Want to read":
+        if isbn in readSirtar.books:
+            readSirtar.books.remove(isbn)
+            readSirtar.save(update_fields=['books'])
+        if isbn in readingSirtar.books:
+            readingSirtar.books.remove(isbn)
+            readingSirtar.save(update_fields=['books'])

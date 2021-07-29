@@ -46,7 +46,7 @@
 }
 .booksCategory {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   margin-top: 20px;
 }
 .shfleto-Container {
@@ -89,5 +89,12 @@
   background-color:white !important;
   color:#9e897e !important;
  
+  
+}
+
+.filters{
+  
+  display: flex;
+  justify-content: center;
   
 }

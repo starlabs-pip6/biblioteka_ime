@@ -633,14 +633,15 @@ def wantToReadPost(request):
     if request.method == "POST" and request.is_ajax:
         isbn = int(request.POST.get('isbn'))
         new_sirtar = Sirtar.objects.get(emri="Want to read", id_user=request.user)
-        if isbn not in new_sirtar.books:
-            new_sirtar.books.append(isbn)
-            new_sirtar.save(update_fields=['books'])
-            return HttpResponse('<p>Success book added</p>')
-        else:
-            new_sirtar.books.remove(isbn)
-            new_sirtar.save(update_fields=['books'])
-            return HttpResponse('<p>Removed book from want to read</p>')
+        # if isbn not in new_sirtar.books:
+        #     new_sirtar.books.append(isbn)
+        #     new_sirtar.save(update_fields=['books'])
+        #     return HttpResponse('<p>Success book added</p>')
+        # else:
+        #     new_sirtar.books.remove(isbn)
+        #     new_sirtar.save(update_fields=['books'])
+        #     return HttpResponse('<p>Removed book from want to read</p>')
+        utils.add_to_sirtar("Want to read", isbn, request)
 
         return HttpResponse('<p>Error</p>')
 
@@ -673,17 +674,24 @@ def getdataWtr(request):
     if request.method == 'GET' and request.is_ajax:
         sirtari = Sirtar.objects.get(emri="Want to read", id_user=request.user).books
         clickedIsbn = int(request.GET.get('isbn'))
-        Added = None
+        added = None
         if clickedIsbn in sirtari:
-            Added = True
+            added = True
         else:
-            Added = False
+            added = False
         wtrCount = Sirtar.objects.get(emri="Want to read", id_user=request.user)
-        serializer = SirtarSerializer(wtrCount, many=False)
+        readCount = Sirtar.objects.get(emri="Read", id_user=request.user)
+        readingCount = Sirtar.objects.get(emri="Reading", id_user=request.user)
+        wtrSerialize = SirtarSerializer(wtrCount, many=False)
+        readSerialize = SirtarSerializer(readCount, many=False)
+        readingSerialize = SirtarSerializer(readingCount, many=False)
+
         data = {
-            'Added': Added
+            'added': added,
+            'wtrCount': wtrSerialize.data,
+            'readCount': readSerialize.data,
+            'readingCount': readingSerialize.data,
         }
-        data.update(serializer.data)
     return Response(data)
 
 def progressPost(request):
