@@ -58,9 +58,10 @@ class NewCommentForm(forms.ModelForm):
     body = forms.CharField(
         label='',
         widget =forms.Textarea(attrs={
-            'rows': '3',
-            'class' : 'form-control w-25 p-3',
-            'placeholder':'Say Something...'                             
+            'rows': '6',
+            'class' : 'form-control w-100 p-3 ',
+            'placeholder':'Say Something...',
+            'style': 'max-width: 600px;',                  
             }))
 
     class Meta:
