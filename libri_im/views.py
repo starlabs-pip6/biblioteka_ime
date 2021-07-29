@@ -487,17 +487,22 @@ class BookDV(View):
         form = NewCommentForm()
         
         comments = Comment.objects.filter(book=book).order_by('-date_added')
-        wtrSirtar = Sirtar.objects.get(emri="Want to read", id_user=current_user)
-        readSirtar = Sirtar.objects.get(emri="Read", id_user=current_user)
-        readingSirtar = Sirtar.objects.get(emri="Reading", id_user=current_user)
+        if not current_user.is_anonymous:
+            wtrSirtar = Sirtar.objects.get(emri="Want to read", id_user=current_user).books
+            readSirtar = Sirtar.objects.get(emri="Read", id_user=current_user).books
+            readingSirtar = Sirtar.objects.get(emri="Reading", id_user=current_user).books
+        else:
+            wtrSirtar = []
+            readSirtar = []
+            readingSirtar = []
         context = {
             'book':book,
             'form':form,
             'comments':comments,
             'currentUser': current_user,
-            'wtrBooks': wtrSirtar.books,
-            'readBooks': readSirtar.books,
-            'readingBooks': readingSirtar.books,
+            'wtrBooks': wtrSirtar,
+            'readBooks': readSirtar,
+            'readingBooks': readingSirtar,
 
         }
 

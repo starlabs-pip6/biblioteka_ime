@@ -214,13 +214,6 @@
   padding: 10px 15px;
 }
 
-.njoftimi2 {
-  /* border: 2px solid #f3722c;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  padding: 10px 15px; */
-}
-
 .book_detail_button{
     /* margin-top: 15% !important; */
     width: 100%;
@@ -231,4 +224,10 @@
 .fixedWidth{
   padding: 0 10px !important;
   width: 150px;
+}
+
+.loginToC {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
 }
