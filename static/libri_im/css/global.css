@@ -218,12 +218,12 @@
 .pass-icon
             {
                 float: right;
-                margin-top: -28px;
+                margin-top: -30px;
                 position: relative;
                 z-index: 5;
                 font-size:15px;
                 color: black;
-                padding: 5 5;
+               margin-right:4%;
             }
 .form-groupCreate{
   width:170%;
