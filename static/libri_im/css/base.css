@@ -81,6 +81,8 @@ body{
 
 .alinks {
   /* margin-right: 60px; */
+
+  
 }
 
 nav a {
@@ -91,6 +93,7 @@ nav a {
 
 nav a:hover {
   color: #577590;
+  text-decoration:none;
 }
 
 #mainheader {
