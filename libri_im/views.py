@@ -163,7 +163,8 @@ def shfleto_view(request):
     current_user = request.user
     books = Book.objects.all()
     query = request.GET.get('search')
-
+    categoryQuery = request.GET.get('category_name')
+    sortQuery =request.GET.get('sort_name')
     try:
         books = Book.objects.all().order_by(request.GET['sort_name'])
         page = request.GET.get('page', 1)
@@ -190,12 +191,28 @@ def shfleto_view(request):
             books = paginator.page(page)
         except PageNotAnInteger:
             books = paginator.page(1)
+    if categoryQuery:
+        books = []
+        booksAll = Book.objects.all()
+        for book in booksAll:
+            for kategori in book.kategoria:
+                if categoryQuery in kategori:
+                    books.append(book)
+        books = list(set(books))
+        page = request.GET.get('page', 1)
+        paginator = Paginator(books, 42)
+        try:
+            books = paginator.page(page)
+        except PageNotAnInteger:
+            books = paginator.page(1)
     books1 = Book.objects.all()[0:10]
     # categories = books.viti_publikimit
     context = {
         'books': books,
         'books1': books1,
-
+        'sortQuery' : sortQuery,
+        'categoryQuery' : categoryQuery,
+ 
 
         #  'categories' : categories,
     }

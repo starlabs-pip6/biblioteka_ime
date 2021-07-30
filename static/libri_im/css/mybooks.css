@@ -23,15 +23,18 @@
 
 .tab-content {
   border-radius: 16px;
-  margin: 50px;
-  /*grid-template-columns: repeat(8, 1fr);*/
-  display: grid;
   display: flex;
   flex-direction: row;
   flex-direction: column;
-  width: 62%;
-}
 
+}
+.col-3 {
+  width: 100%;
+}
+#pills-tab {
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
 .nav-link.active {
   background-color: #f3722c !important;
 }
@@ -48,7 +51,6 @@
 
 .profile-container {
   display: flex;
-  max-width: 700px;
 }
 
 .editProfile {
@@ -104,6 +106,7 @@
 }
 
 .userShelf {
+  width: 50%;
   color: white;
   font-size: 11px;
   display: flex;

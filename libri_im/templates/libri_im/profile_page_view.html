@@ -1,5 +1,5 @@
 {% extends 'libri_im/base.html' %} {% load static %} {% block content %}
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <div class = "allContainer">
   <div class = "allContainer1">
   {% if request.user.is_authenticated %}
@@ -26,16 +26,16 @@
           </div>
           <div class="userShelf">
             <div class="d-flex align-items-center flex-column">
-              <a class="linkColor" href="#" >Read</a>
-              <div><p>{{readCount}}</p></div>
+              <a  class="linkColor" href="#" >Read</a>
+              <div><p id= "readtext">{{readCount}}</p></div>
             </div>
             <div class="d-flex align-items-center flex-column">
-              <a class="linkColor" href="#" >Reading</a>
-              <div><p>{{readingCount}}</p></div> 
+              <a  class="linkColor" href="#" >Reading</a>
+              <div><p id= "readingtext">{{readingCount}}</p></div> 
             </div>
             <div class="d-flex align-items-center flex-column">
               <a class="linkColor" href="#" >Want To Read</a>
-              <div><p>{{wantToReadCount}}</p></div>
+              <div><p id= "wtrtext">{{wantToReadCount}}</p></div>
             </div>
           </div> 
         </div>
@@ -100,15 +100,19 @@
       <div class="row">   
         {% if readCount != 0 %}    
             {% for book in read %}
-            <div style="margin-bottom: 15px;" class="col-lg-2 col-md-4 col-sm-12">\
-              <a href="{% url 'book-detail' book.isbn %}" >
+            <div id="buttonclick{{book.isbn}}" style="margin-bottom: 15px;" class="col-lg-2 col-md-4 col-sm-12">
+            
               <div class="mycover ptcover">
+                  <a href="{% url 'book-detail' book.isbn %}" >
                 <img src="{{book.image_link}}" class="ptimage myimage" alt="no-img"/>
+                </a>
                 <h3 class="pttitle hover-1">{{book.titulli|truncatechars:17}}</h3>
                 <div class="underlinept"></div>
                 <p class="ptdesc text-truncate">{{book.pershkrimi|truncatechars:25}}</p>
+                  {% csrf_token %}
+                 <button onclick="onClickReadRemove(bookIsbn='{{ book.isbn }}')" class="mybutton hbpt buttonStyle">Remove</button>
               </div>
-              </a>
+              
             </div>
             {% endfor %}
             {% else %}
@@ -125,15 +129,18 @@
         <div class="row">
           {% if readingCount != 0 %}
           {% for book in reading %}
-          <div style="margin-bottom: 15px;" class="col-lg-2 col-md-4 col-sm-12">
-            <a href="{% url 'book-detail' book.isbn %}" >
+          <div id="buttonclick{{book.isbn}}" style="margin-bottom: 15px;" class="col-lg-2 col-md-4 col-sm-12">
+            
             <div class="mycover ptcover">
+              <a href="{% url 'book-detail' book.isbn %}" >
               <img src="{{book.image_link}}" class="ptimage myimage" alt="no-img"/>
+              </a>
               <h3 class="pttitle hover-1">{{book.titulli|truncatechars:17}}</h3>
               <div class="underlinept"></div>
               <p class="ptdesc text-truncate">{{book.pershkrimi|truncatechars:25}}</p>
+                   {% csrf_token %}
+                 <button onclick="onClickReadingRemove(bookIsbn='{{ book.isbn }}')" class="mybutton hbpt buttonStyle">Remove</button>
             </div>
-            </a>
           </div> 
           {% endfor %}
           {% else %}
@@ -150,15 +157,18 @@
         <div class="row">
           {% if wantToReadCount != 0 %}
           {% for book in wantToRead %}
-          <div style="margin-bottom: 15px;" class="col-lg-2 col-md-4 col-sm-12">
-            <a href="{% url 'book-detail' book.isbn %}" >
+          <div id="buttonclick{{book.isbn}}" style="margin-bottom: 15px;" class="col-lg-2 col-md-4 col-sm-12">
+         
             <div class="mycover ptcover">
+              <a href="{% url 'book-detail' book.isbn %}" >
               <img src="{{book.image_link}}" class="ptimage myimage" alt="no-img"/>
+              </a>
               <h3 class="pttitle hover-1">{{book.titulli|truncatechars:17}}</h3>
               <div class="underlinept"></div>
               <p class="ptdesc text-truncate">{{book.pershkrimi|truncatechars:25}}</p>
+                  {% csrf_token %}
+                 <button onclick="onClickWtrRemove(bookIsbn='{{ book.isbn }}')" class="mybutton hbpt buttonStyle">Remove</button>
             </div>
-            </a>
           </div>  
           {% endfor %}
           {% else %}
@@ -172,7 +182,137 @@
       You should be loged in and have admin premissions to access this page's
       content
     </h2>
-    {% endif %} {% endblock content %}
-  </div>
+      </div>
     </div>
   </div>
+ 
+    {% endif %}
+
+     <script type="text/javascript" >
+     function onClickReadRemove(bookIsbn){
+        btnClickedId = "#buttonclick"+bookIsbn
+          $(document).on('click', btnClickedId, function(e) {
+          e.preventDefault();
+           });
+          $.ajax({
+          type: 'POST',
+          url:'{% url "post_read" %}' ,
+          data: {
+              isbn: bookIsbn,
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function() {
+            $.ajax({
+              url : '{% url "get_read" %}',
+              type : "GET",
+              dataType: "json",
+              data: {
+                  isbn: bookIsbn
+              },
+              success: function(json) {
+                // Change number in Want to read Counter
+                  $('#wtrtext').text(json.wtrCount.books.length)
+                  $('#readtext').text(json.readCount.books.length)
+                  $('#readingtext').text(json.readingCount.books.length)
+
+                // Change text in Want to read Button and vice-versa
+                  if(!json.added){
+                    $(btnClickedId).remove()
+                  }
+              },
+              failure: function(json) { 
+                  alert('Got an error dude GET');
+              }
+            });    
+          },
+          failure: function() {
+               alert('Got an error dude POST');
+          }
+        });
+        }
+        function onClickReadingRemove(bookIsbn){
+        btnClickedId = "#buttonclick"+bookIsbn
+          $(document).on('click', btnClickedId, function(e) {
+          e.preventDefault();
+           });
+          $.ajax({
+          type: 'POST',
+          url:'{% url "post_reading" %}' ,
+          data: {
+              isbn: bookIsbn,
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function() {
+            $.ajax({
+              url : '{% url "get_reading" %}',
+              type : "GET",
+              dataType: "json",
+              data: {
+                  isbn: bookIsbn
+              },
+              success: function(json) {
+                // Change number in Want to read Counter
+                  $('#wtrtext').text(json.wtrCount.books.length)
+                  $('#readtext').text(json.readCount.books.length)
+                  $('#readingtext').text(json.readingCount.books.length)
+
+                // Change text in Want to read Button and vice-versa
+                  if(!json.added){
+                    $(btnClickedId).remove()
+                  }
+              },
+              failure: function(json) { 
+                  alert('Got an error dude GET');
+              }
+            });    
+          },
+          failure: function() {
+               alert('Got an error dude POST');
+          }
+        });
+        }
+        function onClickWtrRemove(bookIsbn){
+        btnClickedId = "#buttonclick"+bookIsbn
+          $(document).on('click', btnClickedId, function(e) {
+          e.preventDefault();
+           });
+          $.ajax({
+          type: 'POST',
+          url:'{% url "post_wtr" %}' ,
+          data: {
+              isbn: bookIsbn,
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function() {
+            $.ajax({
+              url : '{% url "get_wtr" %}',
+              type : "GET",
+              dataType: "json",
+              data: {
+                  isbn: bookIsbn
+              },
+              success: function(json) {
+                // Change number in Want to read Counter
+                  $('#wtrtext').text(json.wtrCount.books.length)
+                  $('#readtext').text(json.readCount.books.length)
+                  $('#readingtext').text(json.readingCount.books.length)
+
+                // Change text in Want to read Button and vice-versa
+                  if(!json.added){
+                    $(btnClickedId).remove()
+                  }
+              },
+              failure: function(json) { 
+                  alert('Got an error dude GET');
+              }
+            });    
+          },
+          failure: function() {
+               alert('Got an error dude POST');
+          }
+        });
+        }
+  </script>
+    
+    {% endblock content %}
+

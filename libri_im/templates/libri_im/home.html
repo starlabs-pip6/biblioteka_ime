@@ -92,7 +92,7 @@
             <p id="readtext">{{klcount}}</p>
           </div>
           <div style="display: flex; justify-content: center;" class="viewAll">
-                <a id="viewAllLink" style="color:#f3722c; text-decoration: none" href="{% url 'profile_page_view'%}"><p>View all</p></a>
+                <a id="viewAllLink" style="color:#f3722c; text-decoration: none" href="{% url 'profile_page_view' %}"><p>View all</p></a>
           </div>
       
 
@@ -202,7 +202,6 @@
     </div>
    {% endfor %}
   </div >
-    <p  class="meshume"><a href="{% url 'shfleto' %}" class="a_meshume a_link">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
   </div>
   {% endif %}
   <div class="sortby">
@@ -228,7 +227,7 @@
     {% endfor %}
    
   </div>  
-  <p  class="meshume"><a href="{% url 'shfleto' %}" class="a_meshume a_link">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
+  <p  class="meshume"><a href="{% url 'shfleto'%}?sort_name=-viti_publikimit" class="a_meshume a_link">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
   
   <p class="headingSortby">Most rated</p>
   
@@ -253,7 +252,7 @@
  
 </div>  
 
-  <p  class="meshume"><a href="{% url 'shfleto' %}" class="a_meshume a_link">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
+  <p  class="meshume"><a href="{% url 'shfleto'%}?sort_name=-mes_vleresimit" class="a_meshume a_link">More<img class="arrowimage" src="{% static 'libri_im/images/arrow.png' %}"></a></p>
 
   <div class="eventsContainer">
         <p id="p1">Events</p>
