@@ -46,7 +46,7 @@
 }
 .booksCategory {
   display: flex;
-  justify-content: center;
+  margin-left: 140px;
   margin-top: 20px;
 }
 .shfleto-Container {
