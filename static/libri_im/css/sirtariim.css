@@ -20,7 +20,6 @@
   justify-content: center;
 
   margin: 0;
-  padding: 0 5vw;
 }
 .sirtariim-container > * {
   border-radius: 20px;
@@ -136,4 +135,19 @@
   /* max-width: 60% !important; */
   max-height: 65vh !important;
   overflow-x: hidden;
+}
+.viewAll {
+  display: flex; 
+  justify-content: center;
+}
+
+#viewAllLink {
+  color:#f3722c; 
+  text-decoration: none;
+
+}
+
+#viewAllLink:hover{
+  color:white;
+  text-decoration: underline;
 }

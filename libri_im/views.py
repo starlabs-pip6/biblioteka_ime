@@ -437,12 +437,12 @@ def ProfilePageViewDetails(request):
 
     context = {
         'currentUser' : current_user,
-        'WantToRead': WantToRead,
-        'Reading': Reading,
-        'Read': Read,
-        'ReadCount': len(Read),
-        'ReadingCount': len(Reading),
-        'WantToReadCount': len(WantToRead),
+        'wantToRead': WantToRead,
+        'reading': Reading,
+        'read': Read,
+        'readCount': len(Read),
+        'readingCount': len(Reading),
+        'wantToReadCount': len(WantToRead),
         
 
     }

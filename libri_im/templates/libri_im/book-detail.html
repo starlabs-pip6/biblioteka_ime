@@ -74,7 +74,7 @@
         {% else %}
         <div class="loginToC">
                 <h2>Login to comment</h2>
-             <a href="{% url 'login' %}"><button  class="mybutton" >Login</button></a>
+             <a href="{% url 'login' %}" target="_blank"><button  class="mybutton" >Login</button></a>
         </div>
         
 
@@ -92,7 +92,7 @@
     
         <div class="commentsBox ">
         <div class="njoftimi1">
-            <img class="avatar avatar-sm mr-2" style="margin-bottom: 10px;" src="{{request.user.profileImg.url}}" alt="">
+            <img class="avatar avatar-sm mr-2" style="margin-bottom: 10px;" src="{{comment.name.profileImg.url}}" alt="">
            <b> {{ comment.name }}</b>
            <time class="dateStyle">{{ comment.date_added }}</time>
            {% if request.user == comment.name %}
@@ -150,7 +150,7 @@
     <div class=""col-md-6 col-sm-12 style="padding-left:40px;padding-top: 20px;">
         <div class="commentsBox ">
         <div class="njoftimi2">
-            <img class="avatar avatar-sm mr-2" style="margin-bottom: 10px;" src="{{request.user.profileImg.url}}">
+            <img class="avatar avatar-sm mr-2" style="margin-bottom: 10px;" src="{{comment.name.profileImg.url}}">
            <b> {{ child_comment.name }}</b>
            <time class="dateStyle">{{ child_comment.date_added }}</time>
            {% if request.user == comment.name %}

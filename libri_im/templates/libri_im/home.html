@@ -91,7 +91,13 @@
             <p>Read</p>
             <p id="readtext">{{klcount}}</p>
           </div>
+          <div style="display: flex; justify-content: center;" class="viewAll">
+                <a id="viewAllLink" style="color:#f3722c; text-decoration: none" href="{% url 'profile_page_view'%}"><p>View all</p></a>
+          </div>
+      
+
         </div>
+       
       </div>
       
     
@@ -99,8 +105,11 @@
               {% if dlcount is 0 %}
                  <p>You should add books to the Reading shelf to show the progress.</p>
               {% else %}
+                  
                <div class="profile1 profileFix">
+                 <a href="{% url 'book-detail' progressLibri.isbn %}" >
                 <img id="progressImg"class="profileImg" src="{{ progressBookImage }}" width="200" height="200"alt="noImg">
+                </a>
               </div>
               <div class="title">
                 <p id="progressTitulli">{{progressLibriTitulli}}</p>
