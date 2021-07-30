@@ -352,7 +352,7 @@ class BookCreateView(CreateView):
 
     def get_success_url(self):
         return reverse('admin_home')
-
+   
 
 class BookListView(ListView):
     model = Book
@@ -361,7 +361,7 @@ class BookListView(ListView):
 
     def get_success_url(self):
         return reverse('admin_home')
-    ordering = ['id_libri']
+    ordering = ['-id_libri']
 
 
 class BookDetailView(DetailView):
