@@ -353,8 +353,11 @@ class BookCreateView(CreateView):
     def get_success_url(self):
         return reverse('admin_home')
    
-
+'''Takes the Book model and returns to the home.html page
+        This model lists all the books that are saved in
+         the database and orders DESC (from the end) '''
 class BookListView(ListView):
+   
     model = Book
     template_name = 'backend/home.html'
     context_object_name = 'books'
@@ -363,11 +366,13 @@ class BookListView(ListView):
         return reverse('admin_home')
     ordering = ['-id_libri']
 
-
+'''This class lists details of a single book'''
 class BookDetailView(DetailView):
     model = Book
 
-
+'''This class deletes a book, it redirects you to delete.html file and asks you 
+if you are sure that you want to delete this specific home. After you click yes or cancel
+it returns you to admin_home'''
 class BookDeleteView(DeleteView):
     model = Book
     success_url = '/'
@@ -376,7 +381,8 @@ class BookDeleteView(DeleteView):
     def get_success_url(self):
         return reverse('admin_home')
 
-
+'''This model helps you to edit informations of a specific book, it takes fields that are
+declared below at variable fields and after clicking save it redirects you to admin_home '''
 class EditBook(UpdateView):
     model = Book
     fields = ['isbn', 'titulli', 'autori', 'kategoria', 'pershkrimi',
@@ -692,7 +698,9 @@ def wantToReadPost(request):
         utils.add_to_sirtar("Want to read", isbn, request)
 
         return HttpResponse('<p>Error</p>')
-
+'''This function takes the action of a clicked button READING that is handled with ajax and 
+gets the isbn and adds it to array READING in sirtari model and checks if this book is in 
+Want to read array and it removes it then adds the isbn in READING array'''
 def ReadingPost(request):
     if request.method == "POST" and request.is_ajax:
         isbn = int(request.POST.get('isbn'))
@@ -701,6 +709,8 @@ def ReadingPost(request):
       
 
         return HttpResponse('<p>Error</p>')
+
+
 @api_view(('GET',))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def getdataReading(request):

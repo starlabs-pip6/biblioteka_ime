@@ -9,6 +9,8 @@ from django.core.mail import EmailMessage
 from django.contrib import messages
 from django.shortcuts import render, redirect
 
+
+'''This class generates tokens to send you specific tokens in every email for account activation'''
 class AppTokenGenerator(PasswordResetTokenGenerator):
 
     def _make_hash_value(self, user, timestamp):
@@ -16,7 +18,7 @@ class AppTokenGenerator(PasswordResetTokenGenerator):
 
 
 account_activation_token = AppTokenGenerator()
-
+'''This function creates three different sirtars for each user that is signs up in webpage.'''
 def create_default_sirtar(email):
     user1 = NewUser.objects.get(email = email)
     duke_lexuar = Sirtar.objects.create(emri="Reading",
@@ -45,6 +47,11 @@ def update_progress_db(emri,email):
             if progress not in currentReading:
                 Progress.objects.get(id_libri=Book.objects.get(isbn=progress),id_user=user).delete()
 
+
+
+'''This function is used to send emails for account activation. Takes user, domain, token that is 
+generated from the function that is declared in the beggining of this page and sends the link in 
+users email'''
 def send_email_activation(request,user):
                 current_site = get_current_site(request)
                 email_body = {
