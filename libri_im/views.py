@@ -158,18 +158,25 @@ def home_view(request):
 
     return render(request, 'libri_im/home.html', context)
 
-
+'''This function shows you books in many pages. This is discovery page'''
 def shfleto_view(request):
     current_user = request.user
     books = Book.objects.all()
+    '''Takes the keyword in the search input'''
     query = request.GET.get('search')
+    '''Takes the categorie that you select in the dropdown'''
     categoryQuery = request.GET.get('category_name')
+    '''Takes the sort_by option that you select'''
     sortQuery =request.GET.get('sort_name')
     try:
+        '''Orders books by sort_by selected option'''
         books = Book.objects.all().order_by(request.GET['sort_name'])
+        '''Shows you books from the first page. There are 42 books that are displayed
+        max in one page'''
         page = request.GET.get('page', 1)
         paginator = Paginator(books, 42)
         try:
+        
             books = paginator.page(page)
         except PageNotAnInteger:
             books = paginator.page(1)
@@ -183,6 +190,8 @@ def shfleto_view(request):
             books = paginator.page(1)
 
     if query:
+        '''Query variable takes the keyword that you searched and it begins to search books that
+        conatins that keyword'''
         books = Book.objects.filter(Q(titulli__icontains=query) | (Q(autori__icontains=query)) | (
             Q(isbn__icontains=query)) | (Q(kategoria__icontains=query)) | (Q(viti_publikimit__icontains=query)))
         page = request.GET.get('page', 1)
@@ -193,6 +202,7 @@ def shfleto_view(request):
             books = paginator.page(1)
     if categoryQuery:
         books = []
+        '''Takes the category that you selected and lists all the books that contain that categorie'''
         booksAll = Book.objects.all()
         for book in booksAll:
             for kategori in book.kategoria:
@@ -205,16 +215,11 @@ def shfleto_view(request):
             books = paginator.page(page)
         except PageNotAnInteger:
             books = paginator.page(1)
-    books1 = Book.objects.all()[0:10]
-    # categories = books.viti_publikimit
-    context = {
-        'books': books,
-        'books1': books1,
-        'sortQuery' : sortQuery,
-        'categoryQuery' : categoryQuery,
  
-
-        #  'categories' : categories,
+    context = {
+        'books': books,                     #lists all books
+        'sortQuery' : sortQuery,            #sort_by value
+        'categoryQuery' : categoryQuery,    #category value
     }
     return render(request, 'libri_im/shfleto.html', context)
 
@@ -345,6 +350,9 @@ def get_redirect_if_exists(request):
     return redirect
 
 
+'''This class creates a books with fields that are declared in the fields variable
+then returns you to admin_home page'''
+
 class BookCreateView(CreateView):
     model = Book
     fields = ['isbn', 'titulli', 'autori', 'kategoria', 'pershkrimi',
@@ -434,38 +442,48 @@ class EditProfile(UpdateView):
 
         return super().form_valid(form)
 
+
+'''This function lists the books according to which sirtar we want to check.
+example:
+If we want to see the sirtar "Reading" it will show us all the books that we are reading'''
 def ProfilePageViewDetails(request):
     current_user = request.user
+    '''If you are not logged in, you will be redirected in home page'''
     if current_user.is_anonymous:
         return redirect('home')
+    '''Lists all the books that are in the read array (sirari model)'''
     #Get Read Books from the database
     ReadSirtar = Sirtar.objects.get(emri="Read", id_user=request.user).books
     ReadBooks = []
     for bookIsbn in ReadSirtar:
         ReadBooks.append(Book.objects.get(isbn=bookIsbn))
+    '''Lists all the books that are in the reading array (sirari model)'''
     #Get Reading Books from the database
     ReadingSirtar = Sirtar.objects.get(emri="Reading", id_user=request.user).books
     ReadingBooks = []
     for bookIsbn in ReadingSirtar:
         ReadingBooks.append(Book.objects.get(isbn=bookIsbn))
+    '''Lists all the books that are in the "want to read" array (sirari model)'''
     #Get Want to read Books from the database
     WtrSirtar = Sirtar.objects.get(emri="Want to read", id_user=request.user).books
     WtrBooks = []
     for bookIsbn in WtrSirtar:
         WtrBooks.append(Book.objects.get(isbn=bookIsbn))
     
-    Read = ReadBooks
+
+    #here we are assigning values to variables
+    Read = ReadBooks                
     Reading = ReadingBooks
     WantToRead = WtrBooks
 
     context = {
-        'currentUser' : current_user,
-        'wantToRead': WantToRead,
-        'reading': Reading,
-        'read': Read,
-        'readCount': len(Read),
-        'readingCount': len(Reading),
-        'wantToReadCount': len(WantToRead),
+        'currentUser' : current_user,               #user that is logged in
+        'wantToRead': WantToRead,                   #books that are in "WANT TO READ" array
+        'reading': Reading,                         #books that are in "READING" array
+        'read': Read,                               #books that are in "READ" array
+        'readCount': len(Read),                     #counting how many books are in READ array
+        'readingCount': len(Reading),               #counting how many books are in READING array
+        'wantToReadCount': len(WantToRead),         #counting how many books are in WANT TO READ array
         
 
     }
@@ -502,14 +520,16 @@ class CommentEditView(UserPassesTestMixin,LoginRequiredMixin,UpdateView):
         comment = self.get_object()
         return self.request.user == comment.name
 
-
+'''This class show us a single book'''
 class BookDV(View):
     def get(self,request,isbn,*args,**kwargs):
         current_user = request.user
         book = Book.objects.get(isbn=isbn)
         form = NewCommentForm()
-        
+        #we order comments by date
         comments = Comment.objects.filter(book=book).order_by('-date_added')
+        '''If user is logged in give user a chance to add this specific book in his sirtar,
+        and if a book is added in one of the sirtars let user know'''
         if not current_user.is_anonymous:
             wtrSirtar = Sirtar.objects.get(emri="Want to read", id_user=current_user).books
             readSirtar = Sirtar.objects.get(emri="Read", id_user=current_user).books
@@ -519,10 +539,10 @@ class BookDV(View):
             readSirtar = []
             readingSirtar = []
         context = {
-            'book':book,
-            'form':form,
-            'comments':comments,
-            'currentUser': current_user,
+            'book':book,                            #lists book details
+            'form':form,                            #show you the form to comment
+            'comments':comments,                    #order comments and count them    
+            'currentUser': current_user,            #gets the user that is logged in
             'wtrBooks': wtrSirtar,
             'readBooks': readSirtar,
             'readingBooks': readingSirtar,
@@ -710,7 +730,7 @@ def ReadingPost(request):
 
         return HttpResponse('<p>Error</p>')
 
-
+'''This function '''
 @api_view(('GET',))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def getdataReading(request):
