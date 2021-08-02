@@ -28,21 +28,25 @@ def create_default_sirtar(email):
     do_te_lexoj = Sirtar.objects.create(emri="Want to read",
                                          id_user = user1).save()
 
-def update_progress_db(emri,email):
+
+'''This function makes sure that the user has the 3 default Sirtars and it will sync the Reading Sirtar with Progress table'''
+def update_progress_db(emri,email):   
     user = NewUser.objects.get(email = email)
   
+    '''If there are no default Sirtars create them for the current user'''
     if not Sirtar.objects.get(emri=emri,id_user=user):
         create_default_sirtar(user)
     currentReading = Sirtar.objects.get(emri=emri,id_user=user).books
     userProgress = Progress.objects.filter(id_user=user)
     currentProgress = []
+    '''Fills the empty array with isbn-s from the current progress data'''
     for progress in userProgress:
         currentProgress.append(progress.id_libri.isbn)
-    #Check if there are new books in reading sirtar that need to be added in Progress
+    '''Check if there are new books in reading sirtar that need to be added in Progress'''
     for book in currentReading:
         if book not in currentProgress:
             Progress.objects.create(id_libri=Book.objects.get(isbn=book),id_user=user,pages_now=0)
-    #Check if there are deleted books in reading sirtar that need to be deleted in Progress
+    '''Check if there are deleted books in reading sirtar that need to be deleted in Progress'''
     for progress in currentProgress:
             if progress not in currentReading:
                 Progress.objects.get(id_libri=Book.objects.get(isbn=progress),id_user=user).delete()
@@ -76,20 +80,21 @@ def send_email_activation(request,user):
                 )
                 email.send(fail_silently=False)
                 
-
+'''This function is used to add a book in any of the default Sirtars("Want to read", "Reading", "Read") and it removes the same book
+if it exists within the other default sirtars'''
 def add_to_sirtar(emri, isbn, request):
     readSirtar = Sirtar.objects.get(emri='Read', id_user=request.user)
     readingSirtar = Sirtar.objects.get(emri='Reading', id_user=request.user)
     wtrSirtar = Sirtar.objects.get(emri='Want to read', id_user=request.user)
     requestSirtar = Sirtar.objects.get(emri=emri, id_user=request.user)                 #[1,2,3]  []    [2] 
-    #Add or remove isbn from requestSirtar
+    '''Add or remove isbn from requestSirtar'''
     if isbn not in requestSirtar.books:
         requestSirtar.books.append(isbn)
         requestSirtar.save(update_fields=['books'])   
     else:
         requestSirtar.books.remove(isbn)
         requestSirtar.save(update_fields=['books'])    
-    #Remove isbn from other sirtars
+    '''Remove isbn from other sirtars'''
     if emri == "Read":
         if isbn in readingSirtar.books:
             readingSirtar.books.remove(isbn)

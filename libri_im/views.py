@@ -38,46 +38,29 @@ from django.db.models import Q, F
 
 from django.core.paginator import PageNotAnInteger, Paginator
 
-
+'''This is a class based view which is provided by the Django Framework and it is used to 
+change the current user's password '''
 class MyPasswordChangeView(PasswordChangeView):
     form_class = MyPasswordChangeForm
 
+    '''Redirects to profile_page after completion'''
     def get_success_url(self):
         return reverse('profile_page')
 
 
-@api_view(['GET'])
-def backendOverView(request):
-    backendUrls = {
-        'Books': '/books',
-        'Specific Books': '/books/<id>',
-    }
-    return Response(backendUrls)
 
-
-@api_view(['GET'])
-def booksList(request):
-    booksObj = Book.objects.all()
-    serializer = LibratSerializer(booksObj, many=True)
-    return Response(serializer.data)
-
-
-@api_view(['GET'])
-def specificBook(request, pk):
-    bookObj = Book.objects.get(id_libri=pk)
-    serializer = LibratSerializer(bookObj, many=False)
-    return Response(serializer.data)
-
-
+'''This is the home view and it displays the first page that the user sees'''
 def home_view(request):
     current_user = request.user
     books = Book.objects.all()
     cBooks = books.order_by("?")[0:9]
 
+    '''Different values for different request states'''
     if(not current_user.is_anonymous):
-        # sirtar = Sirtar.objects.all()
+        '''Add default Sirtars'''
         if not Sirtar.objects.filter(id_user=current_user).exists():
             utils.create_default_sirtar(current_user.email)
+        '''Update the progress by syncing it with Reading Sirtar'''
         utils.update_progress_db("Reading", current_user.email)
 
         
@@ -85,16 +68,17 @@ def home_view(request):
         wtrBooks = []
         
         dlcount = Sirtar.objects.get(emri="Reading", id_user=current_user)
-        #ReadingBooks
+        '''Add Reading isbn-s of books to the dukelexuar array so we can use it as a variable in the home template'''
         for isbn in dlcount.books:
             dukelexuar.append(Book.objects.get(isbn=isbn))
       
-        #wtrBooks
+        '''Add Want to read isbn-s of books to the wtrarray array so we can use it as a variable in the home template'''
         dtlcount = Sirtar.objects.get(
             emri="Want to read", id_user=current_user)
         for bookIsbn in dtlcount.books:
             wtrBooks.append(Book.objects.get(isbn=bookIsbn).isbn)
-     
+
+        '''Get length of arrays to show them as a count on the home page'''
         dlcount = len(dlcount.books)
         dtlcount = len(dtlcount.books)
         klcount = Sirtar.objects.get(emri="Read", id_user=current_user)
@@ -106,27 +90,26 @@ def home_view(request):
         dtlcount = "no data"
         klcount = "no data"   # userR = users.reading
     if Progress.objects.filter(id_user=current_user.id).exists():
-    
+        '''Check and update the Progress variables that will be used in the home template'''
         userReadingBooks = Sirtar.objects.get(id_user=request.user, emri = "Reading").books
         progressIsbn = userReadingBooks[-1]
         progressBookObj = Book.objects.get(isbn=progressIsbn)
         progressBook = Progress.objects.get(id_libri=progressBookObj, id_user=request.user)
         progressLibri = progressBook.id_libri
-        progressUser = progressBook.id_user
         progressNowPages = progressBook.pages_now
         progressAllPages = progressBook.id_libri.nr_faqeve
-        # Progress Title truncation
+        progressPercent = round(float((progressNowPages/progressAllPages)*100), 1)
+        progressBookImage = progressBook.id_libri.image_link
+        '''Progress Title truncation so it won't overflow the place that it is shown'''
         titleLength = 35
         if len(progressBook.id_libri.titulli)>titleLength:
             progressLibriTitulli = progressBook.id_libri.titulli[:titleLength]+"..."
         else:
             progressLibriTitulli = progressBook.id_libri.titulli[:titleLength]
-        progressPercent = round(
-            float((progressNowPages/progressAllPages)*100), 1)
-        progressBookImage = progressBook.id_libri.image_link
+        
+      
     else:
         progressLibri = "no data"
-        progressUser = "no data"
         progressNowPages = "no data"
         progressAllPages = "no data"
         progressLibriTitulli = "no data"
@@ -135,25 +118,24 @@ def home_view(request):
 
     if not current_user:
         current_user = 'anonimous user(not loged in)'
+    '''Context variables to use in Home template'''
     context = {
-        # 'current_username' : current_user,
-        'books': books,
-        'cbooks': cBooks,
-        'booksLatest': books.order_by('-viti_publikimit')[0:6],
-        'booksR': books.order_by('-mes_vleresimit')[0:6],
-        'booksFY': books.order_by('?')[0:6],
-        'dlcount': dlcount,
-        'klcount': klcount,
-        'dtlcount': dtlcount,
-        'dukelexuar': dukelexuar,
-        'wtrBooks' : wtrBooks,
-        'progressLibri': progressLibri,
-        'progressUser': progressUser,
-        'progressNowPages': progressNowPages,
-        'progressAllPages': progressAllPages,
-        'progressLibriTitulli': progressLibriTitulli,
-        'progressPercent': progressPercent,
-        'progressBookImage': progressBookImage,
+        'books': books,                                                 #All books
+        'cbooks': cBooks,                                               #Carousel Books(taken randomly)
+        'booksLatest': books.order_by('-viti_publikimit')[0:6],         #Latest books ordered by Published Year
+        'booksR': books.order_by('-mes_vleresimit')[0:6],               #Most rated books ordered by Rating Averaga
+        'booksFY': books.order_by('?')[0:6],                            #For you books that for now are chosen randomly
+        'dlcount': dlcount,                                             #Reading book count
+        'klcount': klcount,                                             #Read book count
+        'dtlcount': dtlcount,                                           #Want to read book count
+        'dukelexuar': dukelexuar,                                       #Reading array(only with isbn-s in an array)
+        'wtrBooks' : wtrBooks,                                          #Want to read array(only with isbn-s in an array)
+        'progressLibri': progressLibri,                                 #The book that is shown as the current Progress book in the Home page
+        'progressNowPages': progressNowPages,                           #The number of pages that have been read of the current Progress Book
+        'progressAllPages': progressAllPages,                           #The total number of pages of the current Progress Book
+        'progressLibriTitulli': progressLibriTitulli,                   #The title of the current Progress Book
+        'progressPercent': progressPercent,                             #The calculated percentage of the current Progress Book
+        'progressBookImage': progressBookImage,                         #The cover image of the current Progress Book
     }
 
     return render(request, 'libri_im/home.html', context)
@@ -218,43 +200,47 @@ def shfleto_view(request):
     }
     return render(request, 'libri_im/shfleto.html', context)
 
-
+'''This is a class based view that is used to create and process the user registration form'''
 class RegistationView(View):
     def get(self, request):
         return render(request, 'libri_im/register.html')
 
+    '''The method that defines what happens if the request is a POST request.
+       This method is used to: GET USER DATA, VALIDATE, create a user account'''
     def post(self, request):
-        # GET USER DATA
-        # VALIDATE
-        # create a user account
 
+        '''Get the fields that the user submited'''
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password1']
         password2 = request.POST['password2']
-
         context = {
             'fieldValues': request.POST
         }
 
+        '''Check if it is a unique username'''
         if not NewUser.objects.filter(username=username).exists():
+            '''Check if it is a unique email'''
             if not NewUser.objects.filter(email=email).exists():
+                '''Check if the password has at least 8 characters'''
                 if len(password) < 8:
                     messages.warning(
                         request, 'Password is too short, it has to be at least 8 characters.')
                     return render(request, 'libri_im/register.html', context)
+                    '''Check if the password and confirm password are the same'''
                 if password != password2:
                     messages.warning(
                         request, 'Password and confirmation does not match.')
                     return render(request, 'libri_im/register.html', context)
-                
+                '''Create a new user from the submited data''' 
                 user = NewUser.objects.create_user(
                     email=email, username=username)
                 user.set_password(password)
                 user.is_active = False
                 user.save()
-                # creates 3 default sirtars
+                '''Create the 3 default sirtars'''
                 utils.create_default_sirtar(email)
+                '''Send te activation email'''
                 utils.send_email_activation(request,user)
                 messages.success(
                     request, 'Your account has been created succesfully. To use this account, activate it with the link that we have sent you by email.')
@@ -268,18 +254,18 @@ class RegistationView(View):
                 request, f'Username: "{request.POST["username"]}" it\'s taken.')
             return render(request, 'libri_im/register.html')
 
-
+'''This is a class based view that handles the authentication of the activation token and redirects the user to the login page'''
 class VerificationView(View):
     def get(self, request, uidb64, token):
         try:
             id = force_text(urlsafe_base64_decode(uidb64))
             user = NewUser.objects.get(pk=id)
-
+            '''Check if the token has been already used(users can't use the same link twice)'''
             if not account_activation_token.check_token(user, token):
                 messages.warning(
                     request, 'Your account has been activated before. You can log in.')
                 return redirect('login')
-
+            '''What happensn after activation'''
             if user.is_active:
                 return redirect('login')
             user.is_active = True
@@ -294,36 +280,40 @@ class VerificationView(View):
 
         return redirect('login')
 
-
+'''This is a function based view that defines where to redirect the user after he logs out'''
 def logout_view(request):
     logout(request)
     return redirect("login")
 
-
+'''This is a function based view that defines the process of checking the data and logging in the user after data validation'''
 def login_view(request, *args, **kwargs):
     context = {}
     user = request.user
-
+    '''Redirect the user if already logged in'''
     if user.is_authenticated:
         return redirect("home")
+
 
     destination = get_redirect_if_exists(request)
     print("destination: " + str(destination))
 
+    '''Validate the login form from the POST request that is submited'''
     if request.POST:
         form = UserAuthenticationForm(request.POST)
-
+        '''Check the form data'''
         if form.is_valid():
-
+            '''Authenticate the user'''
             email = request.POST['email']
             password = request.POST['password']
             user = authenticate(email=email, password=password)
-
+            '''If user exists'''
             if user:
+                '''Check if the user activated the account'''
                 if not user.is_active:
                     messages.warning(
                         request, 'Your account is not activated yet. To use this account please activate with the link we have sent you in email.')
                     return redirect('login')
+                '''login the user'''
                 login(request, user)
                 if destination:
                     return redirect(destination)
@@ -392,7 +382,7 @@ class EditBook(UpdateView):
     def get_success_url(self):
         return reverse('admin_home')
 
-
+'''This is a class based view that shows to the user their data like Username, Email, Profile pic and registration date'''
 class ProfilePageView(DetailView):
     model = NewUser
     template_name = 'libri_im/profile_page.html'
@@ -411,20 +401,20 @@ class ProfilePageView(DetailView):
     def get_object(self):
         return self.request.user
 
-
+'''This is a class based view that allows the user to change their data'''
 class EditProfile(UpdateView):
  
     model = NewUser
     fields = ['username', 'profileImg', 'email']
     template_name = 'libri_im/profile_page_update.html'
     
-   
+    '''Redirect after submit'''
     def get_success_url(self):
         return reverse('profile_page')
 
     def get_object(self):
         return self.request.user
-
+    '''Change the default form validation behaviour'''
     def form_valid(self, form):
         if 'email' in form.changed_data:
             self.request.user.is_active = False
@@ -471,13 +461,6 @@ def ProfilePageViewDetails(request):
     }
     return render(request, 'libri_im/profile_page_view.html', context)
 
-
-# class BookDV(DetailView):
-#     model = Book
-#     template_name = 'libri_im/book-detail.html'
-
-#     def get_object(self, queryset=None):
-#         return Book.objects.get(isbn=self.kwargs.get("isbn"))
 
 class CommentDeleteView(UserPassesTestMixin,LoginRequiredMixin,DeleteView):
     model = Comment

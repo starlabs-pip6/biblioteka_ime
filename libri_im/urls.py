@@ -51,12 +51,6 @@ urlpatterns = [
     path('activate/<uidb64>/<token>',
          views.VerificationView.as_view(), name='activate'),
 
-    # Create
-    # Temporary endpoints to test serializers
-    path('backend/', views.backendOverView, name='backendView'),
-    #lists all books
-    path('backend/books', views.booksList, name='booksList'),
-    path('backend/books/<str:pk>/', views.specificBook, name='specificBook'),
      #admin_home
     path('backend/home/',
          BookListView.as_view(template_name="backend/admin_home.html"), name="admin_home"),
