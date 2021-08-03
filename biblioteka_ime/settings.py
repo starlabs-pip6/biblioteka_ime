@@ -88,7 +88,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'biblioteka_ime',
-        'USER': 'postgres',
+        'USER': config('DBUSER'),
         'PASSWORD': config('DATABASEPW'),
         'HOST': 'localhost',
     }

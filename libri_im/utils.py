@@ -8,7 +8,8 @@ from django.urls import reverse
 from django.core.mail import EmailMessage
 from django.contrib import messages
 from django.shortcuts import render, redirect
-
+from .serializers import  SirtarSerializer
+from rest_framework.response import Response
 
 '''This class generates tokens to send you specific tokens in every email for account activation'''
 class AppTokenGenerator(PasswordResetTokenGenerator):
@@ -50,8 +51,6 @@ def update_progress_db(emri,email):
     for progress in currentProgress:
             if progress not in currentReading:
                 Progress.objects.get(id_libri=Book.objects.get(isbn=progress),id_user=user).delete()
-
-
 
 '''This function is used to send emails for account activation. Takes user, domain, token that is 
 generated from the function that is declared in the beggining of this page and sends the link in 
@@ -116,3 +115,31 @@ def add_to_sirtar(emri, isbn, request):
         if isbn in readingSirtar.books:
             readingSirtar.books.remove(isbn)
             readingSirtar.save(update_fields=['books'])
+
+
+
+def get_data_function(request, emri):
+    sirtari = Sirtar.objects.get(emri=emri, id_user=request.user).books
+    clickedIsbn = int(request.GET.get('isbn'))
+    '''The added variable is used to determine the state of the book and change
+    how it is displayed in the front-end'''
+    added = None
+    if clickedIsbn in sirtari:
+        added = True
+    else:
+        added = False
+    '''the needed variables'''
+    wtrCount = Sirtar.objects.get(emri="Want to read", id_user=request.user)
+    readCount = Sirtar.objects.get(emri="Read", id_user=request.user)
+    readingCount = Sirtar.objects.get(emri="Reading", id_user=request.user)
+    wtrSerialize = SirtarSerializer(wtrCount, many=False)
+    readSerialize = SirtarSerializer(readCount, many=False)
+    readingSerialize = SirtarSerializer(readingCount, many=False)
+
+    data = {
+        'added': added,                             #The state of the book
+        'wtrCount': wtrSerialize.data,              #The number of Want to read books
+        'readCount': readSerialize.data,            #The number of Read books
+        'readingCount': readingSerialize.data,      #The number of Reading books
+    }
+    return Response(data)

@@ -344,8 +344,8 @@ class BookCreateView(CreateView):
         return reverse('admin_home')
    
 '''Takes the Book model and returns to the home.html page
-        This model lists all the books that are saved in
-         the database and orders DESC (from the end) '''
+This class based view lists all the books that are saved in
+the database and orders DESC (from the end)'''
 class BookListView(ListView):
    
     model = Book
@@ -371,7 +371,7 @@ class BookDeleteView(DeleteView):
     def get_success_url(self):
         return reverse('admin_home')
 
-'''This model helps you to edit informations of a specific book, it takes fields that are
+'''This class based view helps you to edit informations of a specific book, it takes fields that are
 declared below at variable fields and after clicking save it redirects you to admin_home '''
 class EditBook(UpdateView):
     model = Book
@@ -387,6 +387,8 @@ class ProfilePageView(DetailView):
     model = NewUser
     template_name = 'libri_im/profile_page.html'
     context_object_name = 'user'
+    '''This function is executed before the other functions and redirects the user
+    if he is not authenticated or not activte'''
     def dispatch(self, request, *args, **kwargs):
         if not self.request.user.is_authenticated:
             return redirect('home')
@@ -394,7 +396,7 @@ class ProfilePageView(DetailView):
             return redirect('logout')
         return super().dispatch(request, *args, **kwargs)
         
-        
+    '''Redirect after all other functions'''
     def get_success_url(self):
         return reverse('profile_page')
 
@@ -673,15 +675,17 @@ class AddChildCommentDislike(View):
         return HttpResponseRedirect(next)
 
 
-
+'''This function based view takes the action of a clicked button "Want to read" that is handled with ajax and 
+gets the isbn and adds it to array WantToReadSirtar.books in sirtari model and checks if this book is in 
+Want to read array and it removes it then adds the isbn in READING array'''
 def wantToReadPost(request):
     if request.method == "POST" and request.is_ajax:
         isbn = int(request.POST.get('isbn'))
         new_sirtar = Sirtar.objects.get(emri="Want to read", id_user=request.user)
         utils.add_to_sirtar("Want to read", isbn, request)
-
         return HttpResponse('<p>Error</p>')
-'''This function takes the action of a clicked button READING that is handled with ajax and 
+
+'''This function based view takes the action of a clicked button READING that is handled with ajax and 
 gets the isbn and adds it to array READING in sirtari model and checks if this book is in 
 Want to read array and it removes it then adds the isbn in READING array'''
 def ReadingPost(request):
@@ -689,62 +693,25 @@ def ReadingPost(request):
         isbn = int(request.POST.get('isbn'))
         new_sirtar = Sirtar.objects.get(emri="Reading", id_user=request.user)
         utils.add_to_sirtar("Reading", isbn, request)
-      
-
         return HttpResponse('<p>Error</p>')
 
-
+'''This function based view handles the GET request sent when the "Reading"
+button is clicked. It provides all of the variables that are needed for the AJAX function'''
 @api_view(('GET',))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def getdataReading(request):
     if request.method == 'GET' and request.is_ajax:
-        sirtari = Sirtar.objects.get(emri="Reading", id_user=request.user).books
-        clickedIsbn = int(request.GET.get('isbn'))
-        added = None
-        if clickedIsbn in sirtari:
-            added = True
-        else:
-            added = False
-        wtrCount = Sirtar.objects.get(emri="Want to read", id_user=request.user)
-        readCount = Sirtar.objects.get(emri="Read", id_user=request.user)
-        readingCount = Sirtar.objects.get(emri="Reading", id_user=request.user)
-        wtrSerialize = SirtarSerializer(wtrCount, many=False)
-        readSerialize = SirtarSerializer(readCount, many=False)
-        readingSerialize = SirtarSerializer(readingCount, many=False)
+        return utils.get_data_function(request, "Reading")
+    return HttpResponse("GET Failed")
 
-        data = {
-            'added': added,
-            'wtrCount': wtrSerialize.data,
-            'readCount': readSerialize.data,
-            'readingCount': readingSerialize.data,
-        }
-    return Response(data)
-
+'''This function based view handles the GET request sent when the "Want to read"
+button is clicked. It provides all of the variables that are needed for the AJAX function'''
 @api_view(('GET',))
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def getdataWtr(request):
     if request.method == 'GET' and request.is_ajax:
-        sirtari = Sirtar.objects.get(emri="Want to read", id_user=request.user).books
-        clickedIsbn = int(request.GET.get('isbn'))
-        added = None
-        if clickedIsbn in sirtari:
-            added = True
-        else:
-            added = False
-        wtrCount = Sirtar.objects.get(emri="Want to read", id_user=request.user)
-        readCount = Sirtar.objects.get(emri="Read", id_user=request.user)
-        readingCount = Sirtar.objects.get(emri="Reading", id_user=request.user)
-        wtrSerialize = SirtarSerializer(wtrCount, many=False)
-        readSerialize = SirtarSerializer(readCount, many=False)
-        readingSerialize = SirtarSerializer(readingCount, many=False)
-
-        data = {
-            'added': added,
-            'wtrCount': wtrSerialize.data,
-            'readCount': readSerialize.data,
-            'readingCount': readingSerialize.data,
-        }
-    return Response(data)
+        return utils.get_data_function(request, "Want to read")
+    return HttpResponse("GET Failed")
 
 def ReadPost(request):
     if request.method == "POST" and request.is_ajax:
@@ -758,27 +725,8 @@ def ReadPost(request):
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def getdataRead(request):
     if request.method == 'GET' and request.is_ajax:
-        sirtari = Sirtar.objects.get(emri="Read", id_user=request.user).books
-        clickedIsbn = int(request.GET.get('isbn'))
-        added = None
-        if clickedIsbn in sirtari:
-            added = True
-        else:
-            added = False
-        wtrCount = Sirtar.objects.get(emri="Want to read", id_user=request.user)
-        readCount = Sirtar.objects.get(emri="Read", id_user=request.user)
-        readingCount = Sirtar.objects.get(emri="Reading", id_user=request.user)
-        wtrSerialize = SirtarSerializer(wtrCount, many=False)
-        readSerialize = SirtarSerializer(readCount, many=False)
-        readingSerialize = SirtarSerializer(readingCount, many=False)
-
-        data = {
-            'added': added,
-            'wtrCount': wtrSerialize.data,
-            'readCount': readSerialize.data,
-            'readingCount': readingSerialize.data,
-        }
-    return Response(data)
+        return utils.get_data_function(request, "Read")
+    return HttpResponse("GET Failed")
 
 
 def progressPost(request):
@@ -885,9 +833,6 @@ def getdataSelectBook(request):
             progressLibriTitulli = progressBook.id_libri.titulli[:titleLength]+"..."
         else:
             progressLibriTitulli = progressBook.id_libri.titulli[:titleLength]
-
-            
-        
         progressPercent = float(round(
             (progressNowPages/progressAllPages)*100, 1))
         progressBookImage = progressBook.id_libri.image_link
