@@ -87,6 +87,7 @@ class NewUser(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     hide_email = models.BooleanField(default=True)
+    first_login = models.BooleanField(default=True)
     # field for books that are connected to the user
     #currently_reading = models.BigIntegerField(null=True, blank=True)
 

@@ -14,6 +14,8 @@ urlpatterns = [
     path('shfleto/', views.shfleto_view, name='shfleto'),
     path('profile/view/', views.ProfilePageViewDetails, name="profile_page_view"),
     path('libri/<str:isbn>', BookDV.as_view(), name='book-detail'),
+    path('user/survey', views.userSurvey, name='survey'),
+
 
 
     #Comment likes and dislikes and replies

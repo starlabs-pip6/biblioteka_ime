@@ -292,6 +292,8 @@ def login_view(request, *args, **kwargs):
     '''Redirect the user if already logged in'''
     if user.is_authenticated:
         return redirect("home")
+    if user.first_login:
+        return redirect("survey")
 
 
     destination = get_redirect_if_exists(request)
@@ -844,3 +846,7 @@ def getdataSelectBook(request):
             'progressPercent' : progressPercent,
         }
     return Response(data)
+
+def userSurvey(request):
+    user = request.user
+    readingSirtar = 
