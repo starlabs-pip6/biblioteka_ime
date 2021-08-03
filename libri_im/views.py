@@ -849,4 +849,4 @@ def getdataSelectBook(request):
 
 def userSurvey(request):
     user = request.user
-    readingSirtar = 
+    readingSirtar = Sirtar.objects.get(emri="Read",id_user = user)
