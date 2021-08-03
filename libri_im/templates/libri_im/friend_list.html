@@ -1,0 +1,7 @@
+{% extends 'libri_im/base.html' %} 
+{% load static %} 
+{% block content %}
+{% for user in userList %}
+<h1>{{user.username}}</h1>
+{%endfor%}
+{% endblock content %}

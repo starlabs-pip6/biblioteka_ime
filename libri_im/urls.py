@@ -2,7 +2,7 @@ from collections import namedtuple
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from .views import CommentEditView,CommentDeleteView,BookCreateView, BookListView, BookDetailView, BookDeleteView, EditBook, ProfilePageView, EditProfile, BookDV,AddCommentDislike,AddCommentLike,CommentReplyView,AddChildCommentDislike,AddChildCommentLike
+from .views import AddFollower, CommentEditView,CommentDeleteView,BookCreateView, BookListView, BookDetailView, BookDeleteView, EditBook, ProfilePageView, EditProfile, BookDV,AddCommentDislike,AddCommentLike,CommentReplyView,AddChildCommentDislike,AddChildCommentLike
 
 
 urlpatterns = [
@@ -27,7 +27,9 @@ urlpatterns = [
     path('libri/<str:isbn>/comment/commentdelete/<int:pk>/', CommentDeleteView.as_view(), name="comment-delete"),
     path('libri/<str:isbn>/comment/commentedit/<int:pk>/', CommentEditView.as_view(), name="comment-edit"),
 
-     
+     #friend system
+    path('profile/view/follow/<int:pk>', AddFollower.as_view(), name="follow"),
+    path('find/friends/', views.findFriends, name="findFriends"),
 
     # password reset - write your email to send you a link
     path('reset_password/',

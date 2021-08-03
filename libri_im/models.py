@@ -94,6 +94,7 @@ class NewUser(AbstractBaseUser):
 
     profileImg = models.ImageField(max_length=255, upload_to=get_profile_image_filepath,
                                    null=True, blank=True, default=get_default_profile_image)
+    friend_list = ArrayField(models.IntegerField(),blank=True, null=True, default=list)
 
     objects = MyAccountManager()
     USERNAME_FIELD = 'email'
@@ -114,7 +115,11 @@ class NewUser(AbstractBaseUser):
     def dateJoined(self):
         return self.date_joined.strftime('%B %Y')
 
-
+class Followers(models.Model):
+    followers = models.ManyToManyField(NewUser, blank=True, related_name='followers')
+    following = models.ManyToManyField(NewUser, blank=True, related_name='following')
+    follow_requests=models.ManyToManyField(NewUser, blank=True, related_name='follow_requests')
+    
 class Progress(models.Model):
     id_libri = models.ForeignKey(Book, on_delete=models.CASCADE)
     id_user = models.ForeignKey(NewUser, on_delete=models.CASCADE)

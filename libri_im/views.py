@@ -12,7 +12,7 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 from .serializers import LibratSerializer, UsersSerializer, SirtarSerializer, ProgressSerializer
-from .models import Book, NewUser, Progress, Sirtar,Comment
+from .models import Book, Followers, NewUser, Progress, Sirtar,Comment
 from .forms import NewCommentForm, RegistrationForm, UserAuthenticationForm, MyPasswordChangeForm
 from django.views.generic import (CreateView,
                                   ListView,
@@ -141,8 +141,18 @@ def home_view(request):
     }
 
     return render(request, 'libri_im/home.html', context)
-
-
+def findFriends(request):
+    current_user = request.user
+    
+    query = request.GET.get('searchFriend')
+    userList=NewUser.objects.all()
+    if query:
+        userList = NewUser.objects.filter(Q(username__icontains=query) | (Q(email__icontains=query)) )
+    context = {
+        'userList' : userList,
+    }
+       
+    return render(request, 'libri_im/friend_list.html', context)
 def shfleto_view(request):
     current_user = request.user
     books = Book.objects.all()
@@ -861,3 +871,20 @@ def userSurvey(request):
         'Categories' : Categories
     }
     return render(request,"libri_im/survey.html", context)
+
+
+class AddFollower(LoginRequiredMixin, View):
+    def Follow(self, request, pk, *args, **kwargs):
+        users=Followers.objects.all()
+
+        users.followers.add(request.user)
+        return redirect('profile_page_view')
+
+
+class RemoveFollower(LoginRequiredMixin, View):
+    def RemoveFollow(self, request, pk, *args, **kwargs):
+        users=Followers.objects.all()
+
+        users.followers.remove(request.user)
+        return redirect('profile_page_view')
+
