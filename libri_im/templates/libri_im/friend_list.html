@@ -132,14 +132,15 @@
 
 <div class="friendscontainer">
   {% for user in userList %}
-    <div class="d-flex flex-row userSearchBox"><a href="{% url 'follower-view' user.pk %}" style="text-decoration: none;color:#FFF;" class="d-flex flex-row">
+  <a href="{% url 'follower-view' user.pk %}" style="text-decoration: none;color:#FFF;" class="d-flex flex-row">
+    <div class="d-flex flex-row userSearchBox">
         <img class="avatar avatar-sm mr-    " src="{{user.profileImg.url}}" style="margin-right: 15px;"></img>
             <h5 style="">
                 {{user.username}} 
                 <br />
                 <span class="userSearchEmail">{{user.email}}</span></h5>
-            </a>
     </div>
+</a>
   {%endfor%}
 
 </div>  
