@@ -153,6 +153,17 @@ def findFriends(request):
     }
        
     return render(request, 'libri_im/friend_list.html', context)
+
+class FollowerDetailView(View):
+    def get(self,request,pk,*args,**kwargs):
+        follower = NewUser.objects.get(pk=pk)
+
+        context = {
+            'follower':follower,
+        }
+
+        return render(request , 'libri_im/follower_view.html' , context)
+
 def shfleto_view(request):
     current_user = request.user
     books = Book.objects.all()

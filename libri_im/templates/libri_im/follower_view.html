@@ -1,0 +1,43 @@
+{% extends 'libri_im/base.html' %} 
+{% load static %} 
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<div class = "allContainer">
+  <div class = "allContainer1">
+
+  <div class="mainContainer">
+    <div class="profile-container align-items-center">
+      <div>
+        <img class="profileImg2" src="{{follower.profileImg.url}}" alt="no-img" >
+      </div>
+      <div class="w-100 left-container">
+        <div class="profile-info">
+          <div>
+            <h1 id="profileName" class="userProfileName d-flex align-items-center">
+             <span class="username">{{follower.username}}</span>
+            </h1>
+            <form class="d-flex" method="get" action="{% url 'findFriends' %}">
+              <input
+                type="text"
+                placeholder="&#xF002;&nbsp;&nbsp;Search for a friend..."
+                style="padding-left: 2%; font-family: MontSerrat, FontAwesome"
+                name="searchFriend"
+                value="{{request.GET.searchFriend}}"
+              />
+              <!-- <button type="submit" style="padding:5px;"><i class="fa fa-search" aria-hidden="true"></i></button> -->
+            </form>
+            <div class="userProfileStats mb-5">
+              <h6>
+                <span class="joined">{{follower.dateJoined}}</span><br>  
+                <!-- <a id="ratings" href="#">30 ratings</a><br>
+                <a id="reviews" href="#">10 reviews</a><br> -->
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<h1>{{follower.username}}</h1>
+{% endblock content %}
