@@ -62,7 +62,7 @@ def home_view(request):
             utils.create_default_sirtar(current_user.email)
         '''Update the progress by syncing it with Reading Sirtar'''
         utils.update_progress_db("Reading", current_user.email)
-        if user.first_login:
+        if current_user.first_login:
             return redirect("survey")
 
         
@@ -850,4 +850,14 @@ def getdataSelectBook(request):
 
 def userSurvey(request):
     '''Survey backend'''
-    pass
+    current_user = request.user
+    current_user.first_login = False
+    current_user.save(update_fields = ['first_login'])
+
+    Books = Book.objects.all()[:6]
+    Categories = ["Art","Economic","Fantasy","Fiction","Gothic","Historical","Horror","Humor","Inspirational","Mystery","Nonfiction","Poetry","Romance","Thriller" ]
+    context= {
+        'Books' : Books,
+        'Categories' : Categories
+    }
+    return render(request,"libri_im/survey.html", context)
