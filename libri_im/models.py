@@ -88,6 +88,7 @@ class NewUser(AbstractBaseUser):
     is_superuser = models.BooleanField(default=False)
     hide_email = models.BooleanField(default=True)
     first_login = models.BooleanField(default=True)
+    fav_categories= ArrayField(models.CharField(max_length=100),blank=True, null=True, default=list)
     # field for books that are connected to the user
     #currently_reading = models.BigIntegerField(null=True, blank=True)
 

@@ -62,6 +62,8 @@ def home_view(request):
             utils.create_default_sirtar(current_user.email)
         '''Update the progress by syncing it with Reading Sirtar'''
         utils.update_progress_db("Reading", current_user.email)
+        if user.first_login:
+            return redirect("survey")
 
         
         dukelexuar = []
@@ -292,8 +294,7 @@ def login_view(request, *args, **kwargs):
     '''Redirect the user if already logged in'''
     if user.is_authenticated:
         return redirect("home")
-    if user.first_login:
-        return redirect("survey")
+    
 
 
     destination = get_redirect_if_exists(request)
@@ -848,5 +849,5 @@ def getdataSelectBook(request):
     return Response(data)
 
 def userSurvey(request):
-    user = request.user
-    readingSirtar = Sirtar.objects.get(emri="Read",id_user = user)
+    '''Survey backend'''
+    pass
