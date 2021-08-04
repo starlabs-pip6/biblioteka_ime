@@ -93,6 +93,8 @@ urlpatterns = [
     path('getdata/read', views.getdataRead, name="get_read"),
     path('getdata/progress', views.getdataProgress, name="get_progress"),
     path('getdata/selectbook', views.getdataSelectBook, name="get_selectBook"),
+    path('getdata/searched', views.getSearched, name="get_searched"),
+
  
 
 
