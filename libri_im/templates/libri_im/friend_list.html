@@ -132,7 +132,7 @@
 
 <div class="friendscontainer">
   {% for user in userList %}
-  <a href="{% url 'follower-view' user.pk %}" style="text-decoration: none;color:#FFF;" class="d-flex flex-row">
+  <a href="{% url 'profile-view' user.pk %}" style="text-decoration: none;color:#FFF;" class="d-flex flex-row">
     <div class="d-flex flex-row userSearchBox">
         <img class="avatar avatar-sm mr-    " src="{{user.profileImg.url}}" style="margin-right: 15px;"></img>
             <h5 style="">

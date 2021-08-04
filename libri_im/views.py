@@ -1,4 +1,5 @@
 from decimal import Context
+from libri_im.friend_request_status import FriendRequestStatus
 from django.utils.datastructures import MultiValueDictKeyError
 from django import forms
 from django.http.response import HttpResponseRedirect
@@ -12,14 +13,14 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 from .serializers import LibratSerializer, UsersSerializer, SirtarSerializer, ProgressSerializer
-from .models import Book, Followers, NewUser, Progress, Sirtar,Comment
+from .models import Book, FriendList, FriendRequest, NewUser, Progress, Sirtar,Comment
 from .forms import NewCommentForm, RegistrationForm, UserAuthenticationForm, MyPasswordChangeForm
 from django.views.generic import (CreateView,
                                   ListView,
                                   DeleteView,
                                   UpdateView,
                                   DetailView)
-from .utils import account_activation_token
+from .utils import account_activation_token,get_friend_request_or_false
 from . import utils
 #from validate_email import validate_email
 from django.contrib import messages
@@ -35,6 +36,7 @@ from django.views import View
 from django.urls import reverse, reverse_lazy
 from django.db import models
 from django.db.models import Q, F
+from .friend_request_status import FriendRequestStatus
 
 from django.core.paginator import PageNotAnInteger, Paginator
 
@@ -141,6 +143,7 @@ def home_view(request):
     }
 
     return render(request, 'libri_im/home.html', context)
+
 def findFriends(request):
     current_user = request.user
     
@@ -154,12 +157,53 @@ def findFriends(request):
        
     return render(request, 'libri_im/friend_list.html', context)
 
-class FollowerDetailView(View):
+class ProfileDetailView(View):
     def get(self,request,pk,*args,**kwargs):
-        follower = NewUser.objects.get(pk=pk)
+        context = {}
+        account = NewUser.objects.get(pk=pk)
+
+        try:
+            friend_list = FriendList.objects.get(user=account)
+        except FriendList.DoesNotExist:
+            friend_list = FriendList(user=account)
+            friend_list.save()
+        friends = friend_list.friends.all()
+
+        is_self = True
+        is_friend = False
+        request_sent = FriendRequestStatus.NO_REQUEST_SENT.value
+        friend_requests = None
+        user = request.user
+        if user.is_authenticated and user != account:
+            is_self = False
+            if friends.filter(pk=user.id):
+                is_friend = True
+            else:
+                is_friend = False
+
+                if get_friend_request_or_false(sender=account,receiver=user) != False:
+                    request_sent = FriendRequestStatus.THEM_SENT_TO_YOU.value
+                    context['pending_friend_request_id'] = get_friend_request_or_false(sender=account,receiver=user).id
+                if get_friend_request_or_false(sender=account,receiver=user) != False:
+                    request_sent = FriendRequestStatus.YOU_SENT_TO_THEM.value
+                else:
+                    request_sent = FriendRequestStatus.NO_REQUEST_SENT.value
+        elif not user.is_authenticated:
+            is_self = False
+        else:
+            try:
+                friend_requests = FriendRequest.objects.filter(receiver=user,is_active=True)
+            except:
+                pass
+        
 
         context = {
-            'follower':follower,
+            'user':account,
+            'friends':friends,
+            'is_self': is_self,
+            'is_friend': is_friend,
+            'request_sent':request_sent,
+            'friend_requests': friend_requests
         }
 
         return render(request , 'libri_im/follower_view.html' , context)
@@ -884,18 +928,18 @@ def userSurvey(request):
     return render(request,"libri_im/survey.html", context)
 
 
-class AddFollower(LoginRequiredMixin, View):
-    def Follow(self, request, pk, *args, **kwargs):
-        users=Followers.objects.all()
+# class AddFollower(LoginRequiredMixin, View):
+#     def Follow(self, request, pk, *args, **kwargs):
+#         users=Followers.objects.all()
 
-        users.followers.add(request.user)
-        return redirect('profile_page_view')
+#         users.followers.add(request.user)
+#         return redirect('profile_page_view')
 
 
-class RemoveFollower(LoginRequiredMixin, View):
-    def RemoveFollow(self, request, pk, *args, **kwargs):
-        users=Followers.objects.all()
+# class RemoveFollower(LoginRequiredMixin, View):
+#     def RemoveFollow(self, request, pk, *args, **kwargs):
+#         users=Followers.objects.all()
 
-        users.followers.remove(request.user)
-        return redirect('profile_page_view')
+#         users.followers.remove(request.user)
+#         return redirect('profile_page_view')
 

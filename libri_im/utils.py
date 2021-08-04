@@ -1,6 +1,6 @@
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from six import text_type
-from .models import NewUser, Sirtar, Progress, Book
+from .models import NewUser, Sirtar, Progress, Book, FriendRequest
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
@@ -143,3 +143,9 @@ def get_data_function(request, emri):
         'readingCount': readingSerialize.data,      #The number of Reading books
     }
     return Response(data)
+
+def get_friend_request_or_false(sender,receiver):
+    try:
+        return FriendRequest.objects.get(sender=sender,receiver=receiver,is_active=True)
+    except FriendRequest.DoesNotExist:
+        return False

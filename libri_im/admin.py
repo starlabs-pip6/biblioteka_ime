@@ -1,5 +1,5 @@
 from django.contrib import admin
-from libri_im.models import Followers, NewUser,Book, Progress, Sirtar, Comment
+from libri_im.models import NewUser,Book, Progress, Sirtar, Comment,FriendList,FriendRequest
 from django.contrib.auth.admin import UserAdmin
 # Register your models here.
 
@@ -20,11 +20,30 @@ class NewProgressAdmin(UserAdmin):
     fieldsets = ()
     ordering = ('id_user','id_libri')
 
+class FriendListAdmin(admin.ModelAdmin):
+    list_filter = ['user']
+    list_display = ['user']
+    search_fields = ['user']
+    readonly_fields = ['user']
+
+    class Meta:
+        model = FriendList
+
+class FriendRequestAdmin(admin.ModelAdmin):
+    list_filter = ['sender' , 'receiver']
+    list_display = ['sender' , 'receiver']
+    search_fields = ['sender__username','sender__email','receiver__username','receiver__email']
+    
+    class Meta:
+        model = FriendRequest
+
+
 admin.site.register(Book)
 admin.site.register(NewUser, NewUserAdmin)
 admin.site.register(Progress, NewProgressAdmin)
 admin.site.register(Sirtar)
 admin.site.register(Comment)
-admin.site.register(Followers)
+admin.site.register(FriendList,FriendListAdmin)
+admin.site.register(FriendRequest,FriendRequestAdmin)
 
 
