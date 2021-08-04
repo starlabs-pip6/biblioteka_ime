@@ -875,11 +875,14 @@ def getSearched(request):
         searchedArray = []
         getInput = request.GET.get('searchInput')
         filteredBooks = Book.objects.filter(Q(titulli__icontains=getInput) | (Q(autori__icontains=getInput)) | (
-            Q(isbn__icontains=getInput)) | (Q(kategoria__icontains=getInput)) | (Q(viti_publikimit__icontains=getInput)))
-        for book in filteredBooks:
-            searchedArray.append(book.isbn)
+           Q(isbn__icontains=getInput)) | (Q(kategoria__icontains=getInput)) | (Q(viti_publikimit__icontains=getInput)))
+        #for book in filteredBooks:
+        #    searchedArray.append(book.isbn)
+        booksobj = Book.objects.all()
+        serialized = LibratSerializer(filteredBooks, many=True)
         data = {
-            'searched' : searchedArray 
+            'searched' : searchedArray ,
+            'filteredBooks': serialized.data
 
         }
         return Response(data)

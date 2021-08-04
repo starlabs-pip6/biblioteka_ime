@@ -114,7 +114,8 @@
       $(document).on('keyup', '#searchBooks', function(e){
         
         e.preventDefault()
-        let input = $('#searchBooks').val()
+        setTimeout(function() {
+          let input = $('#searchBooks').val()
         $.ajax({
               url : '{% url "get_searched" %}',
               type : "GET",
@@ -127,23 +128,33 @@
                   filtered = json.filteredBooks
                   // console.log(filtered);
 
-                  let newHtml = `
-                  {% for book in books %}
-                    <div class="mycover ptcover">
-                      <a href="{% url 'book-detail' book.isbn %}" >
-                    <img src="{{book.image_link}}" class="ptimage myimage" alt="no-img"/>
+                   
+                   function bookHtml(book) {
+                     html= ``
+                     button = ``
+                      if (json.added){
+                      button=`<button onclick="onClickFunctionRead( book='${ book.isbn }');" id="clickRead${book.isbn}" class="mybutton hbpt fixedWidth">Added</button>`
+                    } else {
+                      button = `<button onclick="onClickFunctionRead( book='${ book.isbn }');" id="clickRead${book.isbn}" class="mybutton hbpt fixedWidth">Read</button>`
+                    }
+
+                     html =`<div class="mycover ptcover">
+                      <a href="/libri/${book.isbn}" >
+                    <img src="https://www.directtextbook.com/medium/${book.isbn}.jpg" class="ptimage myimage" alt="no-img"/>
                     </a>
-                    <h3 class="pttitle hover-1">{{book.titulli|truncatechars:17}} </h3>
+                    <h3 class="pttitle hover-1">${book.titulli}</h3>
                     <div class="underlinept"></div>
-                    <p class="ptdesc text-truncate">{{book.pershkrimi|truncatechars:25}}</p>
+                    <p class="ptdesc text-truncate">${book.pershkrimi}</p>
                       {% csrf_token %}
-                      {% if book.isbn in readBooks %}
-                      <button onclick="onClickFunctionRead( book='{{ book.isbn }}');" id="clickRead{{book.isbn}}" class="mybutton hbpt fixedWidth">Added</button>
-                      {% else %}
-                      <button onclick="onClickFunctionRead( book='{{ book.isbn }}');" id="clickRead{{book.isbn}}" class="mybutton hbpt fixedWidth">Read</button>
-                      {%endif%}
-                    </div>
-                   {% endfor %}`
+                      ${button}
+                    </div>` 
+                    return html
+                   }
+                   let newHtml = ``
+                   for(let i=0;i<filtered.length; i++) {
+                    console.log(i);
+                    newHtml = newHtml + bookHtml(filtered[i])
+                   }
                   
               $("#categoryCard").html(newHtml)
               console.log("Key up");
@@ -152,6 +163,8 @@
                   alert('Got an error dude GET');
               }
             });
+        },1000)
+        
         
         
         
@@ -192,7 +205,7 @@
                   isbn: book
               },
               success: function(json) {
-                
+              
                 // Change text in Read Button and vice-versa
                   if(json.added){
                    $(btnClickedId).html('Added')
