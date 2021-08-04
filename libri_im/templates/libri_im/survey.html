@@ -41,7 +41,7 @@
         <div class="modal-header">
           <h5 class="modal-title text" id="surveyActivateModalLabel">What are your favourite categories? Choose up to 3:</h5>
         </div>
-         <div class="modal-body maxHeight">
+         <div class="modal-body maxHeight myscroll">
            <div  class="categoryCard">
             {% for category in categories %}
             <div class="mycover centered">
@@ -65,11 +65,16 @@
         <div class="modal-header">
           <h5 class="modal-title text" id="readModalLabel">What are your favourite categories? Choose up to 3:</h5>
         </div>
-         <div class="modal-body maxHeight">
+         <div class="modal-body maxHeight myscroll">
            <input type="text" id="searchBooks" class="searchBooks">
            <div id="categoryCard" class="categoryCard">
             {% for book in books %}
-            <div class="mycover ptcover">
+            {% if book.isbn in readBooks %}
+            <div id="bookcover{{book.isbn}}" class="mycover ptcover added">
+            {% else %}
+            <div id="bookcover{{book.isbn}}" class="mycover ptcover">
+            {%endif%}
+            
               <a href="{% url 'book-detail' book.isbn %}" >
             <img src="{{book.image_link}}" class="ptimage myimage" alt="no-img"/>
             </a>
@@ -127,22 +132,39 @@
                 // Change number in Want to read Counter
                   filtered = json.filteredBooks
                   // console.log(filtered);
-
+                  function truncate(str, length, ending) {
+                  if (length == null) {
+                    length = 100;
+                  }
+                  if (ending == null) {
+                    ending = '...';
+                  }
+                  if (str.length > length) {
+                    return str.substring(0, length - ending.length) + ending;
+                  } else {
+                    return str;
+                  }
+                };
                    
                    function bookHtml(book) {
+                     titulli = String(book.titulli)
+                     truncate(titulli,17,"...")
                      html= ``
                      button = ``
+                     addedClass =''
                       if (json.added){
+                        addedClass='added'
                       button=`<button onclick="onClickFunctionRead( book='${ book.isbn }');" id="clickRead${book.isbn}" class="mybutton hbpt fixedWidth">Added</button>`
                     } else {
+                      addedClass=''
                       button = `<button onclick="onClickFunctionRead( book='${ book.isbn }');" id="clickRead${book.isbn}" class="mybutton hbpt fixedWidth">Read</button>`
                     }
 
-                     html =`<div class="mycover ptcover">
+                     html =`<div class="mycover ptcover ${addedClass}">
                       <a href="/libri/${book.isbn}" >
                     <img src="https://www.directtextbook.com/medium/${book.isbn}.jpg" class="ptimage myimage" alt="no-img"/>
                     </a>
-                    <h3 class="pttitle hover-1">${book.titulli}</h3>
+                    <h3 class="pttitle text-truncate hover-1">${titulli}</h3>
                     <div class="underlinept"></div>
                     <p class="ptdesc text-truncate">${book.pershkrimi}</p>
                       {% csrf_token %}
@@ -186,6 +208,7 @@
 
         function onClickFunctionRead(book){
         btnClickedId = "#clickRead" + book
+        coverClicked = '#bookcover' + book
           $(document).on('click', btnClickedId, function(e) {
           e.preventDefault();
            });
@@ -209,8 +232,11 @@
                 // Change text in Read Button and vice-versa
                   if(json.added){
                    $(btnClickedId).html('Added')
+                   $(coverClicked).attr('class','mycover ptcover added')
+
                   } else {
                     $(btnClickedId).html('Read')
+                    $(coverClicked).attr('class','mycover ptcover')
                   }
               },
               failure: function(json) { 
