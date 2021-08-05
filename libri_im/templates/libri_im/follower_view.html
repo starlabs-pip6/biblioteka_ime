@@ -31,9 +31,41 @@
                 <span class="joined">{{user.dateJoined}}</span><br>  
                 <!-- <a id="ratings" href="#">30 ratings</a><br>
                 <a id="reviews" href="#">10 reviews</a><br> -->
-              </h6>
-              Friends : {{friends|length}}
+              </h6><a href="#" style="text-decoration:none; color:white;">
+              Friends  ({{friends|length}}) </a><br>
+           
             </div>
+            {% if friend_requests %}
+            <a href="#" style="text-decoration:none; color:white;">
+            <div class="userProfileStats mb-5">
+    
+
+              Friend Requests ({{friend_requests|length}})
+            </div>
+          </a>
+            {% endif %}
+
+
+            <div class="card m-2 px-4 pb-4">
+				<!-- Cancel Friend Request / Send Friend Request / Remove Friend -->
+				{% if is_friend == False and is_self == False %}
+						<!-- You sent them a request -->
+						{% if request_sent == 1 %}
+						<div class="d-flex flex-column align-items-center pt-4">
+							<button class="btn btn-danger" id="id_cancel_friend_request_btn">
+								Cancel Friend Request
+							</button>
+						</div>
+						{% endif %}
+						<!-- No requests have been sent -->
+						{% if request_sent == -1 %}
+						<div class="d-flex flex-column align-items-center pt-4">
+							<button class="btn btn-primary" id="id_send_friend_request_btn">
+								Send Friend Request
+							</button>
+						</div>
+						{% endif %}
+				{% endif %}
           </div>
         </div>
       </div>
@@ -41,4 +73,98 @@
   </div>
 
 <h1>{{follower.username}}</h1>
+
+
+
+<script type="text/javascript">
+
+	// called from base_js.html
+	//preloadImage("{{profile_image|safe}}", 'id_profile_image')
+
+	function onFriendRequestSent(){
+		location.reload();
+	}
+
+	function onFriendRequestCancelled(){
+		location.reload();
+	}
+
+	function onFriendRemoved(){
+		location.reload();
+	}
+
+	function onFriendRequestAccepted(){
+		location.reload();
+	}
+
+	function onFriendRequestDeclined(){
+		location.reload();
+	}
+
+
+	var sendFriendRequestBtn = document.getElementById("id_send_friend_request_btn")
+	if (sendFriendRequestBtn != null){
+		sendFriendRequestBtn.addEventListener("click", function(){
+			sendFriendRequest("{{id}}", onFriendRequestSent)
+		})
+	}
+
+	var cancelFriendRequestBtn = document.getElementById("id_cancel_friend_request_btn")
+	if(cancelFriendRequestBtn != null){
+		cancelFriendRequestBtn.addEventListener("click", function(){
+			cancelFriendRequest("{{id}}", onFriendRequestCancelled)
+		})
+	}
+
+	var removeFriendBtn = document.getElementById("id_unfriend_btn")
+	if (removeFriendBtn != null){
+		removeFriendBtn.addEventListener("click", function(){
+			removeFriend("{{id}}", onFriendRemoved)
+		})
+	}
+
+	function triggerAcceptFriendRequest(friend_request_id){
+		acceptFriendRequest(friend_request_id, onFriendRequestAccepted)
+	}
+
+	function triggerDeclineFriendRequest(friend_request_id){
+		declineFriendRequest(friend_request_id, onFriendRequestDeclined)
+	}
+		
+	function sendFriendRequest(id, uiUpdateFunction){
+		payload = {
+			"csrfmiddlewaretoken": "{{ csrf_token }}",
+			"receiver_user_id": id,
+		}
+		$.ajax({
+			type: 'POST',
+			dataType: "json",
+			url: "{% url 'friend-request' %}",
+			timeout: 5000,
+			data: payload,
+			success: function(data) {
+				console.log("SUCCESS", data)
+				if(data['response'] == "Friend request sent."){
+					// ui is updated
+				}
+				else if(data['response'] != null){
+					alert(data['response'])
+				}
+			},
+			error: function(data) {
+				console.error("ERROR...", data)
+				alert("Something went wrong.")
+			},
+			complete: function(data){
+				uiUpdateFunction()
+			}
+		});
+	}
+	
+
+
+
+</script>
+
+
 {% endblock content %}

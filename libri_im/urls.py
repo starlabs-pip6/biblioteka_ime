@@ -2,7 +2,7 @@ from collections import namedtuple
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from .views import CommentEditView,CommentDeleteView,BookCreateView, BookListView, BookDetailView, BookDeleteView, EditBook, ProfilePageView, EditProfile, BookDV,AddCommentDislike,AddCommentLike,CommentReplyView,AddChildCommentDislike,AddChildCommentLike,ProfileDetailView
+from .views import CommentEditView,CommentDeleteView,BookCreateView, BookListView, BookDetailView, BookDeleteView, EditBook, ProfilePageView, EditProfile, BookDV,AddCommentDislike,AddCommentLike,CommentReplyView,AddChildCommentDislike,AddChildCommentLike,ProfileDetailView, send_friend_request
 
 
 urlpatterns = [
@@ -30,7 +30,7 @@ urlpatterns = [
      #friend system
     path('find/friends/', views.findFriends, name="findFriends"),
     path('profile/view/<int:pk>', ProfileDetailView.as_view(), name="profile-view"),
-
+    path('friend_request/',views.send_friend_request,name="friend-request"),
     # password reset - write your email to send you a link
     path('reset_password/',
          auth_views.PasswordResetView.as_view(

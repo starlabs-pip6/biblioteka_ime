@@ -39,6 +39,43 @@ from django.db.models import Q, F
 from .friend_request_status import FriendRequestStatus
 
 from django.core.paginator import PageNotAnInteger, Paginator
+import json
+
+def send_friend_request(request, *args, **kwargs):
+	user = request.user
+	payload = {}
+	if request.method == "POST" and user.is_authenticated and request.is_ajax:
+		user_id = request.POST.get("receiver_user_id")
+		if user_id:
+			receiver = NewUser.objects.get(pk=user_id)
+			try:
+				# Get any friend requests (active and not-active)
+				friend_requests = FriendRequest.objects.filter(sender=user, receiver=receiver)
+				# find if any of them are active (pending)
+				try:
+					for request in friend_requests:
+						if request.is_active:
+							raise Exception("You already sent them a friend request.")
+					# If none are active create a new friend request
+					friend_request = FriendRequest(sender=user, receiver=receiver)
+					friend_request.save()
+					payload['response'] = "Friend request sent."
+				except Exception as e:
+					payload['response'] = str(e)
+			except FriendRequest.DoesNotExist:
+				# There are no friend requests so create one.
+				friend_request = FriendRequest(sender=user, receiver=receiver)
+				friend_request.save()
+				payload['response'] = "Friend request sent."
+
+			if payload['response'] == None:
+				payload['response'] = "Something went wrong."
+		else:
+			payload['response'] = "Unable to sent a friend request."
+	else:
+		payload['response'] = "You must be authenticated to send a friend request."
+	return HttpResponse(json.dumps(payload), content_type="application/json")
+      
 
 '''This is a class based view which is provided by the Django Framework and it is used to 
 change the current user's password '''
