@@ -1,5 +1,5 @@
 from django.contrib import admin
-from libri_im.models import NewUser,Book, Progress, Sirtar, Comment,FriendList,FriendRequest
+from libri_im.models import NewUser,Book, Progress, Sirtar, Comment,FriendList,FriendRequest, Relation
 from django.contrib.auth.admin import UserAdmin
 # Register your models here.
 
@@ -45,5 +45,6 @@ admin.site.register(Sirtar)
 admin.site.register(Comment)
 admin.site.register(FriendList,FriendListAdmin)
 admin.site.register(FriendRequest,FriendRequestAdmin)
+admin.site.register(Relation)
 
 

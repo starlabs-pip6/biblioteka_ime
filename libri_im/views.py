@@ -42,25 +42,69 @@ from django.core.paginator import PageNotAnInteger, Paginator
 import json
 
 def friendRequestPost(request):
+    # if request.method =="POST" and request.is_ajax:
+    #     user = request.user
+    #     user_id = request.POST.get('userid')
+        
+
+    #     if user_id:
+    #         receiver = NewUser.objects.get(pk=user_id)
+    #         print("sender:" + str(user.id) )
+    #         print("receiver:" + str(receiver.id) )
+    #         if Relation.objects.filter(user1=user, user2=receiver).exists():
+    #             friend_request = Relation.objects.get(user1=user, user2=receiver)
+    #             if Relation.objects.filter(user1=receiver, user2=user, status=1).exists():
+    #                 print("Relation User2 to User1 Exists")
+    #                 Relation.objects.get(user1=receiver, user2=user, status=1).delete()
+    #                 friend_request.status=2
+    #                 friend_request.save(update_fields = ['status'])
+    #                 return HttpResponse("User Relation turned to friends")
+        
+    #             if friend_request.status == 1:
+    #                 friend_request.status = 0
+    #                 friend_request.save(update_fields = ['status'])
+    #                 return HttpResponse("User Relation turned to friends")
+    #             elif friend_request.status == 2:
+    #                 friend_request.status = 0
+    #                 friend_request.save(update_fields = ['status'])
+    #                 return HttpResponse("User Relation turned to friends")
+    #             else:
+    #                 friend_request.status = 1
+    #                 friend_request.save(update_fields = ['status'])
+    #                 return HttpResponse("User Relation turned to friends")
+    #         else:
+    #             if Relation.objects.filter(user1=receiver, user2=user, status=1).exists():
+    #                 print("Relation User2 to User1 Exists")
+    #                 Relation.objects.get(user1=receiver, user2=user, status=1).delete()
+    #                 Relation(user1=user,user2=receiver,status=2).save()
+    #                 return HttpResponse("User Relation turned to friends")
+    #             new_relation = Relation(user1=user,user2=receiver,status=1)
+    #             new_relation.save()
+    #     return HttpResponse("User Relation added or changed")
+    # return HttpResponse("Smth went wrong")
     if request.method =="POST" and request.is_ajax:
         user = request.user
         user_id = request.POST.get('userid')
         if user_id:
             receiver = NewUser.objects.get(pk=user_id)
-            friend_request = Relation.objects.get(user1=user, user2=receiver)
-            if friend_request:
-                friend_request = Relation.objects.get(user1=user, user2=receiver)
-                if friend_request.status == 1:
-                    friend_request.status = 0
-                    friend_request.save(update_fields = ['status'])
-                elif friend_request.status == 2:
-                     friend_request.status = 0
-                     friend_request.save(update_fields = ['status'])
-                else:
-                    friend_request.status = 1
-                    friend_request.save(update_fields = ['status'])
+            if not Relation.objects.filter(user1=user, user2=receiver).exists() and not Relation.objects.filter(user1=receiver, user2=user).exists():
+                Relation(user1=user,user2=receiver,status=1).save()
+                return HttpResponse("No relation but created")
             else:
-                Relation.objects.add(user1=user,user2=receiver,status=1)
+                if Relation.objects.filter(user1=user, user2=receiver).exists() or Relation.objects.filter(user1=receiver, user2=user, status=2).exists():
+                    Relation.objects.filter(user1=user, user2=receiver).delete()
+                    Relation.objects.filter(user1=receiver, user2=user).delete()
+                    return HttpResponse("had a relation but deleted")
+                if Relation.objects.filter(user1=receiver, user2=user, status=1).exists():
+                    Relation(user1=user,user2=receiver,status=2).save()
+                    Relation.objects.get(user1=receiver, user2=user, status=1).delete()
+                    return HttpResponse("had a relation from reciever so you are friends")
+
+
+                
+
+                
+            
 
 
                 
@@ -229,50 +273,58 @@ class ProfileDetailView(View):
     def get(self,request,pk,*args,**kwargs):
         context = {}
         account = NewUser.objects.get(pk=pk)
-
-        try:
-            friend_list = FriendList.objects.get(user=account)
-        except FriendList.DoesNotExist:
-            friend_list = FriendList(user=account)
-            friend_list.save()
-        friends = friend_list.friends.all()
-
-        is_self = True
-        is_friend = False
-        request_sent = FriendRequestStatus.NO_REQUEST_SENT.value
-        friend_requests = None
-        user = request.user
-        if user.is_authenticated and user != account:
-            is_self = False
-            if friends.filter(pk=user.id):
-                is_friend = True
-            else:
-                is_friend = False
-
-                if get_friend_request_or_false(sender=account,receiver=user) != False:
-                    request_sent = FriendRequestStatus.THEM_SENT_TO_YOU.value
-                    context['pending_friend_request_id'] = get_friend_request_or_false(sender=account,receiver=user).id
-                if get_friend_request_or_false(sender=account,receiver=user) != False:
-                    request_sent = FriendRequestStatus.YOU_SENT_TO_THEM.value
-                else:
-                    request_sent = FriendRequestStatus.NO_REQUEST_SENT.value
-        elif not user.is_authenticated:
-            is_self = False
+        if Relation.objects.filter(user1=request.user, user2=account).exists():
+            going_status = Relation.objects.get(user1=request.user, user2=account).status
         else:
-            try:
-                friend_requests = FriendRequest.objects.filter(receiver=user,is_active=True)
-            except:
-                pass
+            going_status = 0
+        if Relation.objects.filter(user1=account, user2=request.user).exists():
+            comming_status = Relation.objects.get(user1=account, user2=request.user).status
+        else:
+            comming_status = 0
+
+        print(going_status)
+        print(comming_status)
+        # try:
+        #     friend_list = FriendList.objects.get(user=account)
+        # except FriendList.DoesNotExist:
+        #     friend_list = FriendList(user=account)
+        #     friend_list.save()
+        # friends = friend_list.friends.all()
+
+        # is_self = True
+        # is_friend = False
+        # request_sent = FriendRequestStatus.NO_REQUEST_SENT.value
+        # friend_requests = None
+        # user = request.user
+        # if user.is_authenticated and user != account:
+        #     is_self = False
+        #     if friends.filter(pk=user.id):
+        #         is_friend = True
+        #     else:
+        #         is_friend = False
+
+        #         if get_friend_request_or_false(sender=account,receiver=user) != False:
+        #             request_sent = FriendRequestStatus.THEM_SENT_TO_YOU.value
+        #             context['pending_friend_request_id'] = get_friend_request_or_false(sender=account,receiver=user).id
+        #         if get_friend_request_or_false(sender=account,receiver=user) != False:
+        #             request_sent = FriendRequestStatus.YOU_SENT_TO_THEM.value
+        #         else:
+        #             request_sent = FriendRequestStatus.NO_REQUEST_SENT.value
+        # elif not user.is_authenticated:
+        #     is_self = False
+        # else:
+        #     try:
+        #         friend_requests = FriendRequest.objects.filter(receiver=user,is_active=True)
+        #     except:
+        #         pass
         
 
         context = {
             'user':account,
             'userid' : account.id,
-            'friends':friends,
-            'is_self': is_self,
-            'is_friend': is_friend,
-            'request_sent':request_sent,
-            'friend_requests': friend_requests
+            'going_status' : going_status,
+            'comming_status' : comming_status,
+           
         }
 
         return render(request , 'libri_im/follower_view.html' , context)

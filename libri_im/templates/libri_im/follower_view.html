@@ -45,30 +45,46 @@
           </a>
             {% endif %}
 
-			<button onclick='test123(userid = "{{user.id}}")' class="btn btn-danger" id="id_cancel_friend_request_btn1">
-				BONGO
-			</button>
-
+{% comment %} and comming_status==0)  {% endcomment %}
 
             <div class="card m-2 px-4 pb-4">
+				{% csrf_token %}
 				<!-- Cancel Friend Request / Send Friend Request / Remove Friend -->
-				{% if is_friend == False and is_self == False %}
-						<!-- You sent them a request -->
-						{% if request_sent == 1 %}
-						<div class="d-flex flex-column align-items-center pt-4">
-							<button onclick='clickFriendRequesttest(userid = "{{user.id}}")' class="btn btn-danger" id="id_cancel_friend_request_btn">
-								Cancel Friend Request
-							</button>
-						</div>
-						{% endif %}
-						<!-- No requests have been sent -->
-						{% if request_sent == -1 %}
-						<div class="d-flex flex-column align-items-center pt-4">
-							<button class="btn btn-primary" id="id_send_friend_request_btn">
-								Send Friend Request
-							</button>
-						</div>
-						{% endif %}
+				{% if going_status == 0 %}
+					{% if comming_status == 0 %}
+					<div class="d-flex flex-column align-items-center pt-4">
+						<button onclick='clickFriendRequest(userid = "{{user.id}}")' class="btn btn-primary" id="id_send_friend_request_btn">
+							Add friend
+						</button>
+					</div>
+					{% elif comming_status == 1 %}
+					<div class="d-flex flex-column align-items-center pt-4">
+						<button onclick='clickFriendRequest(userid = "{{user.id}}")' class="btn btn-primary" id="id_send_friend_request_btn">
+							Accept
+						</button>
+					</div>
+					{% elif comming_status == 2 or going_status == 2%}
+					<div class="d-flex flex-column align-items-center pt-4">
+						<button onclick='clickFriendRequest(userid = "{{user.id}}")' class="btn btn-primary" id="id_send_friend_request_btn">
+							Friend
+						</button>
+					</div>
+					{% endif %}
+					
+				{% elif going_status == 1 %}
+					<div class="d-flex flex-column align-items-center pt-4">
+						<button onclick='clickFriendRequest(userid = "{{user.id}}")' class="btn btn-primary" id="id_send_friend_request_btn">
+							Request sent
+						</button>
+					</div>
+				{% elif comming_status == 2 or going_status == 2%}
+					<div class="d-flex flex-column align-items-center pt-4">
+						<button onclick='clickFriendRequest(userid = "{{user.id}}")' class="btn btn-primary" id="id_send_friend_request_btn">
+							Friend
+						</button>
+					</div>
+				{% else %}
+					<h2>ERRORRRR</h2>
 				{% endif %}
           </div>
         </div>
@@ -186,10 +202,10 @@
               type : "GET",
               dataType: "json",
               data: {
-                  isbn: book
+                  userid: userid
               },
               success: function(json) {
-
+				
               },
               failure: function(json) { 
                   alert('Got an error dude GET');
