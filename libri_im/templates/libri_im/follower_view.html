@@ -45,6 +45,10 @@
           </a>
             {% endif %}
 
+			<button onclick='test123(userid = "{{user.id}}")' class="btn btn-danger" id="id_cancel_friend_request_btn1">
+				BONGO
+			</button>
+
 
             <div class="card m-2 px-4 pb-4">
 				<!-- Cancel Friend Request / Send Friend Request / Remove Friend -->
@@ -52,7 +56,7 @@
 						<!-- You sent them a request -->
 						{% if request_sent == 1 %}
 						<div class="d-flex flex-column align-items-center pt-4">
-							<button onclick='clickFriendRequest(userid = "{{userid}}")' class="btn btn-danger" id="id_cancel_friend_request_btn">
+							<button onclick='clickFriendRequesttest(userid = "{{user.id}}")' class="btn btn-danger" id="id_cancel_friend_request_btn">
 								Cancel Friend Request
 							</button>
 						</div>
@@ -101,27 +105,31 @@
 		location.reload();
 	}
 
-
-	var sendFriendRequestBtn = document.getElementById("id_send_friend_request_btn")
-	if (sendFriendRequestBtn != null){
-		sendFriendRequestBtn.addEventListener("click", function(){
-			sendFriendRequest("{{id}}", onFriendRequestSent)
-		})
+	var clickFriendRequesttest = document.getElementById("id_cancel_friend_request_btn1")
+	function test123(clickFriendRequesttest){
+		console.log(clickFriendRequesttest)
 	}
 
-	var cancelFriendRequestBtn = document.getElementById("id_cancel_friend_request_btn")
-	if(cancelFriendRequestBtn != null){
-		cancelFriendRequestBtn.addEventListener("click", function(){
-			cancelFriendRequest("{{id}}", onFriendRequestCancelled)
-		})
-	}
+	// var sendFriendRequestBtn = document.getElementById("id_send_friend_request_btn")
+	// if (sendFriendRequestBtn != null){
+	// 	sendFriendRequestBtn.addEventListener("click", function(){
+	// 		sendFriendRequest("{{id}}", onFriendRequestSent)
+	// 	})
+	// }
 
-	var removeFriendBtn = document.getElementById("id_unfriend_btn")
-	if (removeFriendBtn != null){
-		removeFriendBtn.addEventListener("click", function(){
-			removeFriend("{{id}}", onFriendRemoved)
-		})
-	}
+	// var cancelFriendRequestBtn = document.getElementById("id_cancel_friend_request_btn")
+	// if(cancelFriendRequestBtn != null){
+	// 	cancelFriendRequestBtn.addEventListener("click", function(){
+	// 		cancelFriendRequest("{{id}}", onFriendRequestCancelled)
+	// 	})
+	// }
+
+	// var removeFriendBtn = document.getElementById("id_unfriend_btn")
+	// if (removeFriendBtn != null){
+	// 	removeFriendBtn.addEventListener("click", function(){
+	// 		removeFriend("{{id}}", onFriendRemoved)
+	// 	})
+	// }
 
 	function triggerAcceptFriendRequest(friend_request_id){
 		acceptFriendRequest(friend_request_id, onFriendRequestAccepted)
@@ -181,17 +189,7 @@
                   isbn: book
               },
               success: function(json) {
-                // Change number in Want to read Counter
-                  $('#wtrtext').text(json.wtrCount.books.length)
-                  $('#readtext').text(json.readCount.books.length)
-                  $('#readingtext').text(json.readingCount.books.length)
 
-                // Change text in Want to read Button and vice-versa
-                  if(json.added){
-                    $(btnClickedId).text("Added")
-                  } else {
-                    $(btnClickedId).text("Want to read")
-                  }
               },
               failure: function(json) { 
                   alert('Got an error dude GET');

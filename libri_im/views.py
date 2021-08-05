@@ -44,16 +44,21 @@ import json
 def friendRequestPost(request):
     if request.method =="POST" and request.is_ajax:
         user = request.user
-        userid = request.POST.get('userid')
+        user_id = request.POST.get('userid')
         if user_id:
             receiver = NewUser.objects.get(pk=user_id)
+            friend_request = Relation.objects.get(user1=user, user2=receiver)
             if friend_request:
-                friend_requests = Relation.objects.get(user1=user, user2=receiver)
+                friend_request = Relation.objects.get(user1=user, user2=receiver)
                 if friend_request.status == 1:
                     friend_request.status = 0
                     friend_request.save(update_fields = ['status'])
                 elif friend_request.status == 2:
-
+                     friend_request.status = 0
+                     friend_request.save(update_fields = ['status'])
+                else:
+                    friend_request.status = 1
+                    friend_request.save(update_fields = ['status'])
             else:
                 Relation.objects.add(user1=user,user2=receiver,status=1)
 
@@ -63,6 +68,7 @@ def friendRequestPost(request):
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def getdataFriendRequest(request):
     if request.method == "GET" and request.is_ajax:
+        pass
 
 
 
@@ -261,7 +267,7 @@ class ProfileDetailView(View):
 
         context = {
             'user':account,
-            'userid' : acount.id,
+            'userid' : account.id,
             'friends':friends,
             'is_self': is_self,
             'is_friend': is_friend,
