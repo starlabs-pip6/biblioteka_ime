@@ -42,11 +42,20 @@
           <h5 class="modal-title text" id="surveyActivateModalLabel">What are your favourite categories? Choose up to 3:</h5>
         </div>
          <div class="modal-body maxHeight myscroll">
-           <div  class="categoryCard">
+           <div  class="categoryCard"> 
+             <div class="alertMessage hideThis">
+               <h3 class="alertText">You can't add more than three categories</h3>
+             </div>
             {% for category in categories %}
-            <div class="mycover centered">
-              <h3 class="text">{{category}}</h3>
+              {% if category in currentFav %}
+            <div onclick="clickedCategory(category = '{{category}}')" id="{{category}}category" class="mycover centered added">
+              <h3 id="{{category}}text" class="text textSize">✓ {{category}}</h3>
             </div>
+            {% else %}
+            <div onclick="clickedCategory(category = '{{category}}')" id="{{category}}category" class="mycover centered">
+              <h3 id="{{category}}text" class="text textSize">{{category}}</h3>
+            </div>
+            {% endif %}
            {% endfor %}
            </div>
         
@@ -66,7 +75,7 @@
           <h5 class="modal-title text" id="readModalLabel">What are your favourite categories? Choose up to 3:</h5>
         </div>
          <div class="modal-body maxHeight myscroll">
-           <input type="text" id="searchBooks" class="searchBooks">
+           <input type="text" id="searchBooks" class="searchBooks" placeholder="Search">
            <div id="categoryCard" class="categoryCard">
             {% for book in books %}
             {% if book.isbn in readBooks %}
@@ -249,7 +258,47 @@
           }
         });
         }
+        
 
+        function clickedCategory(category) {
+          let cardClicked = "#"+category + "category"
+          let textClicked = "#"+category + "text"
+          $.ajax({
+          type: 'POST',
+          url:'{% url "post_category" %}' ,
+          data: {
+              category: category,
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function() {
+
+            $.ajax({
+              url : '{% url "get_category" %}',
+              type : "GET",
+              dataType: "json",
+              data: {
+                  category: category
+              },
+              success: function(json) {
+                if (json.added) {
+                  $(cardClicked).attr('class', 'mycover centered added')
+                  $(textClicked).text('✓ '+ category)
+                } else {
+                  $(cardClicked).attr('class', 'mycover centered')
+                  $(textClicked).text(category)
+                }
+                
+              },
+              failure: function(json) { 
+                  alert('Got an error dude GET');
+              }
+            });    
+          },
+          failure: function() {
+               alert('Got an error dude POST');
+          }
+        });
+        }
 
   </script>
 </body>

@@ -856,13 +856,14 @@ def userSurvey(request):
     current_user = request.user
     current_user.first_login = False
     current_user.save(update_fields=['first_login'])
-
-    books = Book.objects.all()[:6]
+    currentFav = current_user.fav_categories
+    books = Book.objects.all().order_by('-mes_vleresimit')[:32]
     categories = ["Art","Economic","Fantasy","Fiction","Gothic","Historical","Horror","Humor","Inspirational","Mystery","Nonfiction","Poetry","Romance","Thriller" ]
     context= {
         'books' : books,
         'categories' : categories,
         'user': current_user,
+        'currentFav' : currentFav,
         'readBooks': Sirtar.objects.get(emri="Read", id_user=current_user).books,
     }
     return render(request,"libri_im/survey.html", context)
@@ -886,3 +887,46 @@ def getSearched(request):
 
         }
         return Response(data)
+
+
+def categoryPost(request):
+    if request.method == "POST" and request.is_ajax:
+        category = request.POST.get('category')
+        user = request.user
+        currentCategories = user.fav_categories
+        
+        if category in currentCategories:
+            currentCategories.remove(category)
+            print("Removed"+category)
+            user.save(update_fields=['fav_categories'])
+        else:
+            # if len(currentCategories) >=3:
+            #     return HttpResponse("<p>Can't add more than 3 categories</p>")
+                
+            currentCategories.append(category)
+            print("Appended"+category)
+            user.save(update_fields=['fav_categories'])
+        
+        return HttpResponse('<p>Success category added</p>')
+    return HttpResponse('<p>Error</p>')
+
+
+@api_view(('GET',))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def getCategory(request):
+    if request.method == 'GET' and request.is_ajax:
+        user = request.user
+        currentCategories = user.fav_categories
+        clickedCategory = str(request.GET.get('category'))
+        print(currentCategories)
+        print(clickedCategory)
+        added = None
+        if clickedCategory in currentCategories:
+            added = True
+        else:
+            added = False
+        data = {
+            'added' : added
+        }
+        return Response(data)
+    return HttpResponse("GET Failed")
