@@ -1,0 +1,59 @@
+[
+    {
+        "model": "libri_im.newuser",
+        "pk": 1,
+        "fields": {
+            "password": "pbkdf2_sha256$260000$msQ7ZvAcbbmQiNBMxk5iAK$NHZe00/qupdcdC2SFEvwVdKHBXnBzLK+mlvL0M4BhP0=",
+            "email": "starlabs.pip6@gmail.com",
+            "username": "pip6",
+            "date_joined": "2021-08-02T14:15:08.534Z",
+            "last_login": "2021-08-05T07:51:40.272Z",
+            "is_admin": true,
+            "is_active": true,
+            "is_staff": true,
+            "is_superuser": true,
+            "hide_email": true,
+            "first_login": false,
+            "fav_categories": "[]",
+            "profileImg": "profile_images/profile_image.png"
+        }
+    },
+    {
+        "model": "libri_im.newuser",
+        "pk": 7,
+        "fields": {
+            "password": "pbkdf2_sha256$260000$GjBUJ3pHlm5EadaqubRPK3$G3vNET1OE+mFqUDGWXs0ICDXH2Vk/4OrjchWdaBrgYg=",
+            "email": "pip6.user1@gmail.com",
+            "username": "user1",
+            "date_joined": "2021-08-05T07:52:17.725Z",
+            "last_login": "2021-08-05T07:52:17.912Z",
+            "is_admin": false,
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false,
+            "hide_email": true,
+            "first_login": false,
+            "fav_categories": "[]",
+            "profileImg": "profile_images/profile_image.png"
+        }
+    },
+    {
+        "model": "libri_im.newuser",
+        "pk": 8,
+        "fields": {
+            "password": "pbkdf2_sha256$260000$Hf5NEuYTU2i11vLqFL6VJG$TWsw1VL/LylD5VeI8obr0OdQ0dix139E1SIXcbeoV/o=",
+            "email": "pip6.user2@gmail.com",
+            "username": "user2",
+            "date_joined": "2021-08-05T07:52:37.194Z",
+            "last_login": "2021-08-05T07:52:37.413Z",
+            "is_admin": false,
+            "is_active": true,
+            "is_staff": false,
+            "is_superuser": false,
+            "hide_email": true,
+            "first_login": false,
+            "fav_categories": "[]",
+            "profileImg": "profile_images/profile_image.png"
+        }
+    }
+]
