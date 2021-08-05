@@ -52,7 +52,7 @@
 						<!-- You sent them a request -->
 						{% if request_sent == 1 %}
 						<div class="d-flex flex-column align-items-center pt-4">
-							<button class="btn btn-danger" id="id_cancel_friend_request_btn">
+							<button onclick='clickFriendRequest(userid = "{{userid}}")' class="btn btn-danger" id="id_cancel_friend_request_btn">
 								Cancel Friend Request
 							</button>
 						</div>
@@ -132,6 +132,7 @@
 	}
 		
 	function sendFriendRequest(id, uiUpdateFunction){
+		console.log(id);
 		payload = {
 			"csrfmiddlewaretoken": "{{ csrf_token }}",
 			"receiver_user_id": id,
@@ -143,6 +144,8 @@
 			timeout: 5000,
 			data: payload,
 			success: function(data) {
+				
+				
 				console.log("SUCCESS", data)
 				if(data['response'] == "Friend request sent."){
 					// ui is updated
@@ -161,6 +164,45 @@
 		});
 	}
 	
+	function clickFriendRequest(userid){
+		$.ajax({
+          type: 'POST',
+          url:'{% url "post_friendrequest" %}' ,
+          data: {
+              userid: userid, //mun me dal error emri i njejt
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function() {
+            $.ajax({
+              url : '{% url "get_friendrequest" %}',
+              type : "GET",
+              dataType: "json",
+              data: {
+                  isbn: book
+              },
+              success: function(json) {
+                // Change number in Want to read Counter
+                  $('#wtrtext').text(json.wtrCount.books.length)
+                  $('#readtext').text(json.readCount.books.length)
+                  $('#readingtext').text(json.readingCount.books.length)
+
+                // Change text in Want to read Button and vice-versa
+                  if(json.added){
+                    $(btnClickedId).text("Added")
+                  } else {
+                    $(btnClickedId).text("Want to read")
+                  }
+              },
+              failure: function(json) { 
+                  alert('Got an error dude GET');
+              }
+            });    
+          },
+          failure: function() {
+               alert('Got an error dude POST');
+          }
+        });
+	}
 
 
 

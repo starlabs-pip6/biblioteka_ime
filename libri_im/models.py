@@ -151,6 +151,7 @@ class FriendList(models.Model):
 class FriendRequest(models.Model):
     sender = models.ForeignKey(NewUser,on_delete=models.CASCADE, related_name="sender")
     receiver = models.ForeignKey(NewUser,on_delete=models.CASCADE,related_name="receiver")
+    
     is_active = models.BooleanField(blank=True,null=False,default=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
@@ -216,3 +217,12 @@ class Comment(models.Model):
 
     def __str__(self):
         return '%s - %s' % (self.book.titulli , self.name)
+
+
+class Relation(models.Model):
+    user1 = models.ForeignKey(NewUser, related_name="relation1", on_delete=models.CASCADE)
+    user2 = models.ForeignKey(NewUser, related_name="relation2", on_delete=models.CASCADE)
+    status = models.IntegerField(default=0, null=False, blank=False)
+
+    def __str__(self):
+        return f'{self.user1} {self.status} {self.user2}'

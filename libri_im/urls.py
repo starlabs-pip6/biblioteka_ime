@@ -87,6 +87,7 @@ urlpatterns = [
     path('postdata/read', views.ReadPost, name='post_read'),
     path('postdata/progress', views.progressPost, name='post_progress'),
     path('postdata/selectbook', views.selectBookPost, name='post_selectBook'),
+    path('postdata/friendrequest', views.friendRequestPost, name='post_friendrequest'),
     
      
     # GET DATA URLS
@@ -95,6 +96,8 @@ urlpatterns = [
     path('getdata/read', views.getdataRead, name="get_read"),
     path('getdata/progress', views.getdataProgress, name="get_progress"),
     path('getdata/selectbook', views.getdataSelectBook, name="get_selectBook"),
+    path('getdata/friendRequest', views.getdataFriendRequest, name="get_friendrequest"),
+
  
 
 

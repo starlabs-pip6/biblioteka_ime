@@ -13,7 +13,7 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 from .serializers import LibratSerializer, UsersSerializer, SirtarSerializer, ProgressSerializer
-from .models import Book, FriendList, FriendRequest, NewUser, Progress, Sirtar,Comment
+from .models import Book, FriendList, FriendRequest, NewUser, Progress, Sirtar,Comment, Relation
 from .forms import NewCommentForm, RegistrationForm, UserAuthenticationForm, MyPasswordChangeForm
 from django.views.generic import (CreateView,
                                   ListView,
@@ -40,6 +40,31 @@ from .friend_request_status import FriendRequestStatus
 
 from django.core.paginator import PageNotAnInteger, Paginator
 import json
+
+def friendRequestPost(request):
+    if request.method =="POST" and request.is_ajax:
+        user = request.user
+        userid = request.POST.get('userid')
+        if user_id:
+            receiver = NewUser.objects.get(pk=user_id)
+            if friend_request:
+                friend_requests = Relation.objects.get(user1=user, user2=receiver)
+                if friend_request.status == 1:
+                    friend_request.status = 0
+                    friend_request.save(update_fields = ['status'])
+                elif friend_request.status == 2:
+
+            else:
+                Relation.objects.add(user1=user,user2=receiver,status=1)
+
+
+                
+@api_view(('GET',))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def getdataFriendRequest(request):
+    if request.method == "GET" and request.is_ajax:
+
+
 
 def send_friend_request(request, *args, **kwargs):
 	user = request.user
@@ -236,6 +261,7 @@ class ProfileDetailView(View):
 
         context = {
             'user':account,
+            'userid' : acount.id,
             'friends':friends,
             'is_self': is_self,
             'is_friend': is_friend,
@@ -979,4 +1005,5 @@ def userSurvey(request):
 
 #         users.followers.remove(request.user)
 #         return redirect('profile_page_view')
+
 
