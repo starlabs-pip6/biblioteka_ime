@@ -2,8 +2,34 @@
 {% load static %} 
 {% block content %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<link rel="stylesheet" type=text/css href="{% static 'libri_im/css/other_profile.css' %}"> 
+
+
 <div class = "allContainer">
   <div class = "allContainer1">
+	<!-- Modal for confirm -->
+	<div class="modal fade" id="confirmRemoveModal" tabindex="-1" role="dialog" aria-labelledby="confirmRemoveModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+		  <div class="modal-content blackBgRoundedWhite">
+			 <div class="modal-body">
+			  {% csrf_token %}
+			  <h5 class="modal-title" id="confirmRemoveModalLabel">Are you sure you don't want to be friends anymore?</h5>
+				<div class="buttons">
+					<button type="button" id="confirmButton" class="mybutton">Confirm</button>
+					<button type="button" id="cancelButton" class="mybutton">Cancel</button>
+				</div>
+				
+			</div>
+			<!-- <div class="modal-footer ">
+			  
+			</div> -->
+		  </div>
+		</div>
+	</div>
+
+
+
+
 
   <div class="mainContainer">
     <div class="profile-container align-items-center">
@@ -53,38 +79,42 @@
 				{% if going_status == 0 %}
 					{% if comming_status == 0 %}
 					<div class="d-flex flex-column align-items-center pt-4">
-						<button onclick='clickFriendRequest(userid = "{{user.id}}")' class="btn btn-primary" id="id_send_friend_request_btn">
+						<button onclick='clickFriendRequest(userid = "{{user.id}}")' class="btn btn-primary" id="requestButton">
 							Add friend
 						</button>
 					</div>
 					{% elif comming_status == 1 %}
 					<div class="d-flex flex-column align-items-center pt-4">
-						<button onclick='clickFriendRequest(userid = "{{user.id}}")' class="btn btn-primary" id="id_send_friend_request_btn">
+						<button onclick='clickFriendRequest(userid = "{{user.id}}")' class="btn btn-primary" id="requestButton">
 							Accept
 						</button>
 					</div>
 					{% elif comming_status == 2 or going_status == 2%}
 					<div class="d-flex flex-column align-items-center pt-4">
-						<button onclick='clickFriendRequest(userid = "{{user.id}}")' class="btn btn-primary" id="id_send_friend_request_btn">
-							Friend
+						<button onclick='clickFriendRequest(userid = "{{user.id}}")' class="btn btn-primary" id="requestButton">
+							Friends
 						</button>
 					</div>
 					{% endif %}
 					
 				{% elif going_status == 1 %}
 					<div class="d-flex flex-column align-items-center pt-4">
-						<button onclick='clickFriendRequest(userid = "{{user.id}}")' class="btn btn-primary" id="id_send_friend_request_btn">
+						<button onclick='clickFriendRequest(userid = "{{user.id}}")' class="btn btn-primary" id="requestButton">
 							Request sent
 						</button>
 					</div>
 				{% elif comming_status == 2 or going_status == 2%}
 					<div class="d-flex flex-column align-items-center pt-4">
-						<button onclick='clickFriendRequest(userid = "{{user.id}}")' class="btn btn-primary" id="id_send_friend_request_btn">
-							Friend
+						<button onclick='clickFriendRequest(userid = "{{user.id}}")' class="btn btn-primary" id="requestButton">
+							Friends
 						</button>
 					</div>
 				{% else %}
-					<h2>ERRORRRR</h2>
+					<div class="d-flex flex-column align-items-center pt-4">
+						<button onclick='clickFriendRequest(userid = "{{user.id}}")' class="btn btn-primary" id="requestButton">
+							Error
+						</button>
+					</div>
 				{% endif %}
           </div>
         </div>
@@ -126,7 +156,7 @@
 		console.log(clickFriendRequesttest)
 	}
 
-	// var sendFriendRequestBtn = document.getElementById("id_send_friend_request_btn")
+	// var sendFriendRequestBtn = document.getElementById("requestButton")
 	// if (sendFriendRequestBtn != null){
 	// 	sendFriendRequestBtn.addEventListener("click", function(){
 	// 		sendFriendRequest("{{id}}", onFriendRequestSent)
@@ -189,6 +219,25 @@
 	}
 	
 	function clickFriendRequest(userid){
+		current_text = $('#requestButton').text()
+		console.log('current text:' + current_text);
+		
+		if(current_text.includes('Friends')){
+			$('#confirmRemoveModal').modal('show')
+		} else {
+			clickFriendRequestPost(userid)
+		}
+	}
+
+	$('#cancelButton').click(function(e){
+		$('#confirmRemoveModal').modal('hide')
+	});
+
+	$('#confirmButton').click(function(e){
+		clickFriendRequestPost(userid)
+	});
+
+	function clickFriendRequestPost(userid) {
 		$.ajax({
           type: 'POST',
           url:'{% url "post_friendrequest" %}' ,
@@ -205,19 +254,21 @@
                   userid: userid
               },
               success: function(json) {
-				
+				let buttonText = json.buttonText
+				$("#requestButton").text(buttonText)
               },
               failure: function(json) { 
                   alert('Got an error dude GET');
               }
-            });    
+            });   
+			
           },
           failure: function() {
                alert('Got an error dude POST');
           }
         });
+		$('#confirmRemoveModal').modal('hide') 
 	}
-
 
 
 </script>

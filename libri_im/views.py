@@ -94,6 +94,7 @@ def friendRequestPost(request):
                 if Relation.objects.filter(user1=user, user2=receiver).exists() or Relation.objects.filter(user1=receiver, user2=user, status=2).exists():
                     Relation.objects.filter(user1=user, user2=receiver).delete()
                     Relation.objects.filter(user1=receiver, user2=user).delete()
+                    
                     return HttpResponse("had a relation but deleted")
                 if Relation.objects.filter(user1=receiver, user2=user, status=1).exists():
                     Relation(user1=user,user2=receiver,status=2).save()
@@ -112,7 +113,42 @@ def friendRequestPost(request):
 @renderer_classes((TemplateHTMLRenderer, JSONRenderer))
 def getdataFriendRequest(request):
     if request.method == "GET" and request.is_ajax:
-        pass
+        receiver= request.GET.get('userid')
+        finalText=""
+        user = request.user
+        if  Relation.objects.filter(user1=user, user2=receiver).exists():
+            going_status = Relation.objects.get(user1=user, user2=receiver).status
+        else:
+            going_status = 0
+        if Relation.objects.filter(user1=receiver, user2=user).exists():
+            comming_status = Relation.objects.get(user1=receiver, user2=user).status
+        else:
+            comming_status = 0
+        
+        if going_status ==0 :
+            if comming_status==0:
+                finalText= "Add friend"
+            elif comming_status==1:
+                finalText= "Accept"
+            elif comming_status ==2 or going_status==2:
+                finalText= "Friends"
+        elif going_status == 1:
+            finalText= "Request sent"
+        elif comming_status ==2 or going_status ==2 :
+            finalText= "Friends"
+        else:
+            finalText= "Error"
+        data = {
+            'buttonText' : finalText
+        }
+        return Response(data)
+    return HttpResponse("It wasn't GET or AJAX")
+
+
+
+        
+
+
 
 
 
@@ -271,6 +307,8 @@ def findFriends(request):
 
 class ProfileDetailView(View):
     def get(self,request,pk,*args,**kwargs):
+        if pk==request.user.id:
+            return redirect('profile_page_view')
         context = {}
         account = NewUser.objects.get(pk=pk)
         if Relation.objects.filter(user1=request.user, user2=account).exists():
