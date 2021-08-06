@@ -910,7 +910,8 @@ def wantToReadPost(request):
         isbn = int(request.POST.get('isbn'))
         new_sirtar = Sirtar.objects.get(emri="Want to read", id_user=request.user)
         utils.add_to_sirtar("Want to read", isbn, request)
-        return HttpResponse('<p>Error</p>')
+        return HttpResponse('<p>Success</p>')
+    return HttpResponse('<p>Error</p>')
 
 '''This function based view takes the action of a clicked button READING that is handled with ajax and 
 gets the isbn and adds it to array READING in sirtari model and checks if this book is in 
@@ -920,7 +921,8 @@ def ReadingPost(request):
         isbn = int(request.POST.get('isbn'))
         new_sirtar = Sirtar.objects.get(emri="Reading", id_user=request.user)
         utils.add_to_sirtar("Reading", isbn, request)
-        return HttpResponse('<p>Error</p>')
+        return HttpResponse('<p>Success</p>')
+    return HttpResponse('<p>Error</p>')
 
 '''This function based view handles the GET request sent when the "Reading"
 button is clicked. It provides all of the variables that are needed for the AJAX function'''
@@ -945,7 +947,8 @@ def ReadPost(request):
         isbn = int(request.POST.get('isbn'))
         new_sirtar = Sirtar.objects.get(emri="Read", id_user=request.user)
         utils.add_to_sirtar("Read", isbn, request)
-        return HttpResponse('<p>Error</p>')
+        return HttpResponse('<p>Success</p>')
+    return HttpResponse('<p>Error</p>')
 
 
 @api_view(('GET',))
@@ -1076,13 +1079,16 @@ def userSurvey(request):
     '''Survey backend'''
     current_user = request.user
     current_user.first_login = False
-    current_user.save(update_fields = ['first_login'])
-
-    Books = Book.objects.all()[:6]
-    Categories = ["Art","Economic","Fantasy","Fiction","Gothic","Historical","Horror","Humor","Inspirational","Mystery","Nonfiction","Poetry","Romance","Thriller" ]
+    current_user.save(update_fields=['first_login'])
+    currentFav = current_user.fav_categories
+    books = Book.objects.all().order_by('-mes_vleresimit')[:32]
+    categories = ["Art","Economic","Fantasy","Fiction","Gothic","Historical","Horror","Humor","Inspirational","Mystery","Nonfiction","Poetry","Romance","Thriller" ]
     context= {
-        'Books' : Books,
-        'Categories' : Categories
+        'books' : books,
+        'categories' : categories,
+        'user': current_user,
+        'currentFav' : currentFav,
+        'readBooks': Sirtar.objects.get(emri="Read", id_user=current_user).books,
     }
     return render(request,"libri_im/survey.html", context)
 
@@ -1103,3 +1109,64 @@ def userSurvey(request):
 #         return redirect('profile_page_view')
 
 
+@api_view(('GET',))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def getSearched(request):
+    if request.method=="GET" and request.is_ajax:
+        searchedArray = []
+        getInput = request.GET.get('searchInput')
+        filteredBooks = Book.objects.filter(Q(titulli__icontains=getInput) | (Q(autori__icontains=getInput)) | (
+           Q(isbn__icontains=getInput)) | (Q(kategoria__icontains=getInput)) | (Q(viti_publikimit__icontains=getInput)))
+        #for book in filteredBooks:
+        #    searchedArray.append(book.isbn)
+        booksobj = Book.objects.all()
+        serialized = LibratSerializer(filteredBooks, many=True)
+        data = {
+            'searched' : searchedArray ,
+            'filteredBooks': serialized.data
+
+        }
+        return Response(data)
+
+
+def categoryPost(request):
+    if request.method == "POST" and request.is_ajax:
+        category = request.POST.get('category')
+        user = request.user
+        currentCategories = user.fav_categories
+        
+        if category in currentCategories:
+            currentCategories.remove(category)
+            print("Removed"+category)
+            user.save(update_fields=['fav_categories'])
+        else:
+            # if len(currentCategories) >=3:
+            #     return HttpResponse("<p>Can't add more than 3 categories</p>")
+                
+            currentCategories.append(category)
+            print("Appended"+category)
+            user.save(update_fields=['fav_categories'])
+        
+        return HttpResponse('<p>Success category added</p>')
+    return HttpResponse('<p>Error</p>')
+
+
+@api_view(('GET',))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def getCategory(request):
+    if request.method == 'GET' and request.is_ajax:
+        user = request.user
+        currentCategories = user.fav_categories
+        clickedCategory = str(request.GET.get('category'))
+        print(currentCategories)
+        print(clickedCategory)
+        added = None
+        if clickedCategory in currentCategories:
+            added = True
+        else:
+            added = False
+        data = {
+            'added' : added
+        }
+        return Response(data)
+    return HttpResponse("GET Failed")

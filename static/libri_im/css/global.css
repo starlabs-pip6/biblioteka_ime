@@ -262,3 +262,32 @@
   border-color: white !important;
 
 }
+
+.text {
+  color: white;
+}
+
+
+.myscroll {
+  scrollbar-width: auto;
+  scrollbar-color: #f3722c #000000;
+  border-radius: 20px 0 0 20px;
+  overflow: scroll;
+  overflow-x: hidden;
+  flex: 1;
+}
+
+.myscroll::-webkit-scrollbar {
+  width: 10px;
+  margin-right: 10px;
+}
+
+.myscroll::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);
+}
+
+.myscroll::-webkit-scrollbar-thumb {
+  background-color: #f3722c;
+  border-radius: 10px;
+  border: rgba(0, 0, 0, 0);
+}
