@@ -18,6 +18,9 @@ urlpatterns = [
 
 
 
+    path('home1/', views.home1,name="home1"),
+
+
     #Comment likes and dislikes and replies
     path('libri/<str:isbn>/comment/<int:pk>/reply', CommentReplyView.as_view(), name="comment-reply"), 
     path('libri/<str:isbn>/comment/<int:pk>/like', AddCommentLike.as_view(), name="comment-like"), 
@@ -101,7 +104,8 @@ urlpatterns = [
     path('getdata/searched', views.getSearched, name="get_searched"),
     path('getdata/category', views.getCategory, name="get_category"),
 
- 
+   
+
 
 
 

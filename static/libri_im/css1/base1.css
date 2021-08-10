@@ -1,0 +1,216 @@
+body{
+    margin: 0;
+    font-family:"Montserrat", sans-serif;
+
+}
+/* -----nav style-----*/
+.nav{
+    width:100%;
+    height:60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-links{
+    display:flex;
+    justify-content: right;
+    align-items:right;
+    margin-right:2%;
+}
+
+.nav-links a{
+    text-decoration:none;
+    padding:7%;
+    color:#fff;
+    text-transform: uppercase;
+    font-weight:500;
+}
+.nav-links a:hover{
+    background-color:purple;
+    padding:7%;
+}
+.nav-logo {
+    height: 50px;
+}
+
+.nav-logo img {
+    height: 100%;
+    padding-right: 60px;
+}
+
+.nav-container{
+    width:75%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.logo_and_search{
+    display:flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+/* ----- search input ----- */
+
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700,900');
+.search__input {
+    width: 100%;
+    padding: 8px 8px ;
+
+    background-color: transparent;
+    transition: transform 250ms ease-in-out;
+    font-size: 14px;
+    line-height: 18px;
+    
+    color: #fff;
+    background-color: transparent;
+/*         background-image: url(http://mihaeltomic.com/codepen/input-search/ic_search_black_24px.svg); */
+
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath d='M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3Cpath d='M0 0h24v24H0z' /%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: 18px 18px;
+    background-position: 95% center;
+    border-radius: 0px;
+    border: 1px solid white;
+    transition: all 250ms ease-in-out;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    fill: none !important;
+}
+
+.search__input::placeholder {
+        color: rgba(197, 197, 197, 0.8);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+    }
+
+.search__input:hover,
+    .search__input:focus {
+        padding: 8px 8px;
+        outline: 0;
+        border: 1px solid transparent;
+        border-bottom: 1px solid white;
+        border-radius: 0;
+        background-position: 100% center;
+    }
+
+
+/* style of search input ends here*/
+
+
+/* nav style ends here */
+
+/* -----banner style-----*/
+.banner{
+    height:65vh;
+    background-color:brown;
+    width:100%;
+}
+
+.bannerCards{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    gap:5%;
+    flex-wrap: wrap;
+    width:100%;
+}
+
+.bannerCard{
+    width:400px;
+    height:270px;
+    background-color:darksalmon;
+    margin-top:-5%;
+    margin-bottom: 5%;
+}
+/* banner style ends here */
+
+
+
+/* ----- book card designs -----*/
+.books-container{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width:100%;
+    gap:3%;
+}
+
+.bookCard{ 
+    width:178px;
+    height:250px;
+    background-color:burlywood;
+    margin-top:3%;
+    z-index: 1;
+    position:relative;
+
+}
+
+.cardText{
+    width:178px;
+    height:0;
+    overflow:hidden;
+    -webkit-transition: all 0.2s linear;
+    -moz-transition: all 0.2s linear;
+    -o-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+    margin-top:250px;
+	position:absolute;
+	background-color:white;
+    opacity:0.5;
+	font-size: 15px;
+	line-height: 18px;
+	text-align:center;
+	color: black;
+}
+
+.bookCard:hover .cardText{
+    margin-top:160px;
+    height:80px;
+	padding-top: 10px;
+}
+/* book card design ends here*/
+
+
+
+
+
+/* ----- animation on scroll -----*/
+.reveal{
+    position:relative;
+    transform:translateY(150px);
+    opacity:0;
+    transition:all 0.5s ease;
+}
+
+.reveal.active{
+    transform:translateY(0px);
+    opacity:1;
+}
+/* animation ends here */
+
+/* ----- headingStyle in home page ----- */
+.h1-latestBooks{
+    font-size: xx-large;
+    font-weight:normal;
+}
+
+.text-center{
+    text-align:center;
+}
+/* headingStyle in home page ends here*/
+
+
+/* ----- footer style ----- */
+.footer{
+    width:100%;
+    height:400px;
+    background-color:red;
+    margin-top:5%;
+}
+
+/* footer style ends here */

@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sirtari</title>
+    <link rel="stylesheet" type=text/css  href="{% static 'libri_im/css1/base1.css' %}">
+    <!--Font style-->
+    <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet"
+  />
+</head>
+<body>
+   
+    <div class="banner">
+        <div class="nav">
+            <div class="nav-container">
+                <div class="logo_and_search">
+                    <div class="nav-logo">
+                        <img src="{% static '/libri_im/images/logonavbar.png' %}"/>
+                    </div>
+                    <div class="search__container">
+                        <input class="search__input" type="text" placeholder="Search">
+                    </div>
+                </div>
+                </div>
+                <div class="nav-links">
+                    <a href="{% url 'home' %}">Home</a>
+                    <a href="{% url 'home' %}">Discover</a>
+                    <a href="{% url 'home' %}">Profile</a>
+                    <a href="{% url 'home' %}">Login/Register</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bannerCards">
+        <div class="bannerCard">
+            
+        </div>
+        <div class="bannerCard">
+            
+        </div>
+        <div class="bannerCard">
+            
+        </div>
+    </div>
+    <section>
+        <div class="section-home reveal">
+                <h1 class="h1-latestBooks text-center">Latest books</h1>
+            <div class="books-container ">
+                <div class="bookCard">
+                    <div class="cardText">Want to read this book</div>
+                </div>
+                <div class="bookCard">
+                    <div class="cardText">Want to read this book</div>
+                </div>
+                <div class="bookCard">
+                    <div class="cardText">Want to read this book</div>
+                </div>
+                <div class="bookCard">
+                    <div class="cardText">Want to read this book</div>
+                </div>
+                <div class="bookCard">
+                    <div class="cardText">Want to read this book</div>
+                </div>
+                <div class="bookCard">
+                    <div class="cardText">Want to read this book</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+
+    </footer>
+  
+  
+  <script type="text/javascript">
+    window.addEventListener('scroll',reveal);
+    function reveal(){
+        var reveals=document.querySelectorAll('.reveal');
+
+        for (var i=0; i<reveals.length; i++){
+            var windowheight=window.innerHeight;
+            var revealtop=reveals[i].getBoundingClientRect().top;
+            var revealpoint=150;
+
+            if(revealtop<windowheight-revealpoint){
+                reveals[i].classList.add('active');
+            }
+            else{
+                reveals[i].classList.remove('active');
+            }
+        } 
+    }
+    </script>
+</body>

@@ -1170,3 +1170,8 @@ def getCategory(request):
         }
         return Response(data)
     return HttpResponse("GET Failed")
+
+
+
+def home1(request):
+    return render(request, 'libri_im1/home1.html')
