@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.db.models.deletion import CASCADE
 from django.urls import reverse
 
 
@@ -90,6 +91,7 @@ class NewUser(AbstractBaseUser):
     hide_email = models.BooleanField(default=True)
     first_login = models.BooleanField(default=True)
     fav_categories= ArrayField(models.CharField(max_length=100),blank=True, null=True, default=list)
+    events = ArrayField(models.IntegerField(),default=list, null=True, blank=True)
     # field for books that are connected to the user
     #currently_reading = models.BigIntegerField(null=True, blank=True)
 
@@ -226,3 +228,19 @@ class Relation(models.Model):
 
     def __str__(self):
         return f'{self.user1} {self.status} {self.user2}'
+
+class Event(models.Model):
+    name = models.CharField(max_length=100, blank=False, null=False)
+    start_date = models.DateField(null=False, blank=False)
+    end_date = models.DateField(null=False, blank=False)
+    nr_books = models.IntegerField(null=False, blank=False)
+    books = ArrayField(models.BigIntegerField(), null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def startDate(self):
+        return self.start_date.strftime('%Y/%m/%d')
+    
+    def endDate(self):
+        return self.end_date.strftime('%Y/%m/%d')

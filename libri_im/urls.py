@@ -15,6 +15,7 @@ urlpatterns = [
     path('profile/view/', views.ProfilePageViewDetails, name="profile_page_view"),
     path('libri/<str:isbn>', BookDV.as_view(), name='book-detail'),
     path('user/survey', views.userSurvey, name='survey'),
+    path('events', views.eventsView, name='events'),
 
 
 
@@ -89,6 +90,7 @@ urlpatterns = [
     path('postdata/selectbook', views.selectBookPost, name='post_selectBook'),
     path('postdata/friendrequest', views.friendRequestPost, name='post_friendrequest'),
     path('postdata/category', views.categoryPost, name='post_category'),
+    path('postdata/events', views.post_addevent, name='post_addevent'),
     
      
     # GET DATA URLS
@@ -100,6 +102,7 @@ urlpatterns = [
     path('getdata/friendRequest', views.getdataFriendRequest, name="get_friendrequest"),
     path('getdata/searched', views.getSearched, name="get_searched"),
     path('getdata/category', views.getCategory, name="get_category"),
+    path('getdata/events', views.getEvents, name="get_events"),
 
  
 

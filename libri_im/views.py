@@ -1,4 +1,3 @@
-from decimal import Context
 from libri_im.friend_request_status import FriendRequestStatus
 from django.utils.datastructures import MultiValueDictKeyError
 from django import forms
@@ -13,7 +12,7 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 from .serializers import LibratSerializer, UsersSerializer, SirtarSerializer, ProgressSerializer
-from .models import Book, FriendList, FriendRequest, NewUser, Progress, Sirtar,Comment, Relation
+from .models import Book, Event, FriendList, FriendRequest, NewUser, Progress, Sirtar,Comment, Relation
 from .forms import NewCommentForm, RegistrationForm, UserAuthenticationForm, MyPasswordChangeForm
 from django.views.generic import (CreateView,
                                   ListView,
@@ -37,51 +36,11 @@ from django.urls import reverse, reverse_lazy
 from django.db import models
 from django.db.models import Q, F
 from .friend_request_status import FriendRequestStatus
-
+from datetime import date
 from django.core.paginator import PageNotAnInteger, Paginator
 import json
 
 def friendRequestPost(request):
-    # if request.method =="POST" and request.is_ajax:
-    #     user = request.user
-    #     user_id = request.POST.get('userid')
-        
-
-    #     if user_id:
-    #         receiver = NewUser.objects.get(pk=user_id)
-    #         print("sender:" + str(user.id) )
-    #         print("receiver:" + str(receiver.id) )
-    #         if Relation.objects.filter(user1=user, user2=receiver).exists():
-    #             friend_request = Relation.objects.get(user1=user, user2=receiver)
-    #             if Relation.objects.filter(user1=receiver, user2=user, status=1).exists():
-    #                 print("Relation User2 to User1 Exists")
-    #                 Relation.objects.get(user1=receiver, user2=user, status=1).delete()
-    #                 friend_request.status=2
-    #                 friend_request.save(update_fields = ['status'])
-    #                 return HttpResponse("User Relation turned to friends")
-        
-    #             if friend_request.status == 1:
-    #                 friend_request.status = 0
-    #                 friend_request.save(update_fields = ['status'])
-    #                 return HttpResponse("User Relation turned to friends")
-    #             elif friend_request.status == 2:
-    #                 friend_request.status = 0
-    #                 friend_request.save(update_fields = ['status'])
-    #                 return HttpResponse("User Relation turned to friends")
-    #             else:
-    #                 friend_request.status = 1
-    #                 friend_request.save(update_fields = ['status'])
-    #                 return HttpResponse("User Relation turned to friends")
-    #         else:
-    #             if Relation.objects.filter(user1=receiver, user2=user, status=1).exists():
-    #                 print("Relation User2 to User1 Exists")
-    #                 Relation.objects.get(user1=receiver, user2=user, status=1).delete()
-    #                 Relation(user1=user,user2=receiver,status=2).save()
-    #                 return HttpResponse("User Relation turned to friends")
-    #             new_relation = Relation(user1=user,user2=receiver,status=1)
-    #             new_relation.save()
-    #     return HttpResponse("User Relation added or changed")
-    # return HttpResponse("Smth went wrong")
     if request.method =="POST" and request.is_ajax:
         user = request.user
         user_id = request.POST.get('userid')
@@ -1162,6 +1121,66 @@ def getCategory(request):
         print(clickedCategory)
         added = None
         if clickedCategory in currentCategories:
+            added = True
+        else:
+            added = False
+        data = {
+            'added' : added
+        }
+        return Response(data)
+    return HttpResponse("GET Failed")
+
+
+def eventsView(request):
+    user = request.user
+    events = Event.objects.all()
+    currentdate = date.today()
+    nowEvents = []
+    nowEventsId = []
+    joinedEvents = []
+    joinedEventsId = request.user.events
+    for id in joinedEventsId:
+        joinedEvents.append(Event.objects.get(id=id))
+    for event in events:
+        startdate = event.start_date
+        enddate = event.end_date
+        if startdate<=currentdate<=enddate:
+            nowEvents.append(event)
+            nowEventsId.append(event.id)
+    print(nowEvents)
+    context = {
+        'events' : events,
+        'nowEvents': nowEvents,
+        'joinedEvents':joinedEvents,
+        'nowEventsId' : nowEventsId,
+    }
+
+    return render(request, 'libri_im/events.html', context)
+
+
+def post_addevent(request):
+    user = request.user
+    userEvents = user.events
+    eventid = int(request.POST.get('eventid'))
+    if request.method=='POST' and request.is_ajax:
+        if eventid not in userEvents:
+            userEvents.append(eventid)
+            user.save(update_fields=['events'])
+        else:
+            userEvents.remove(eventid)
+            user.save(update_fields=['events'])
+        return HttpResponse('<p>Success</p>')
+    return HttpResponse('<p>Failed, not post or not get or not ajax</p>')
+
+@api_view(('GET',))
+@renderer_classes((TemplateHTMLRenderer, JSONRenderer))
+def getEvents(request):
+    if request.method == 'GET' and request.is_ajax:
+        user = request.user
+        userEvents  = user.events
+        eventid= int(request.GET.get('eventid'))
+        added=None
+        if eventid in userEvents:
             added = True
         else:
             added = False

@@ -1,0 +1,157 @@
+{% extends 'libri_im/base.html' %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'libri_im/css/eventpage.css' %}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <div class="allContainer">
+        <div class="eventsContainer">
+        <h2>ALL EVENTS</h2>
+            <table style="width:100%">
+                <tr>
+                  <th>Name</th>
+                  <row span="1" class="wide">
+                  <th></th>
+                  <th>Start date</th>
+                  <th>End date</th>
+                  <th>Number of books</th>
+                  <th></th>
+                </tr>
+            {% csrf_token %}
+            {% for event in events %}
+                <tr style="height: 40px;">
+                    <td>{{event.name}}</td>
+                    <td></td>
+                    <td>{{event.startDate}}</td>
+                    <td>{{event.endDate}}</td>
+                    <td>{{event.nr_books}} books</td>
+                    <td>
+                    {% if event.id in nowEventsId %}
+                            {% if event.id in user.events %}
+                            <div class="btnSize">
+                                <button onclick="clickAddEvent1(eventid='{{event.id}}')" style = "height: 30px;" class="btn btn-primary join{{event.id}}">Joined</button>
+                            </div>
+                            {% else %}
+                            <div class="btnSize">
+                                <button onclick="clickAddEvent1(eventid='{{event.id}}')" style = "height: 30px;" class="btn btn-primary join{{event.id}}">Join</button>
+                            </div>
+                            {% endif %}
+                    {% else %}
+                    {% endif %}
+                    </td>
+                  </tr>
+            {% endfor %}
+        </table> 
+        <h2>Events Happening now</h2>
+            <table style="width:100%">
+                <tr>
+                  <th>Name</th>
+                  <row span="1" class="wide">
+                  <th></th>
+                  <th>Start date</th>
+                  <th>End date</th>
+                  <th>Number of books</th>
+                  <th></th>
+                </tr>
+            {% csrf_token %}
+            {% for event in nowEvents %}
+                <tr style="height: 40px;">
+                    <td>{{event.name}}</td>
+                    <td></td>
+                    <td>{{event.startDate}}</td>
+                    <td>{{event.endDate}}</td>
+                    <td>{{event.nr_books}} books</td>
+                    <td>
+                        {% if event.id in user.events %}
+                        <div class="btnSize">
+                            <button  onclick="clickAddEvent1(eventid='{{event.id}}')" style = "height: 30px;" class="btn btn-primary join{{event.id}}">Joined</button>
+                        </div>
+                        {% else %}
+                        <div class="btnSize">
+                            <button  onclick="clickAddEvent1(eventid='{{event.id}}')" style = "height: 30px;" class="btn btn-primary join{{event.id}}">Join</button>
+                        </div>
+                        {% endif %}
+                    </td>
+                  </tr>
+            {% endfor %}
+        </table> 
+        <h2>Events that users have joined</h2>
+            <table style="width:100%">
+                <tr>
+                  <th>Name</th>
+                  <row span="1" class="wide">
+                  <th></th>
+                  <th>Start date</th>
+                  <th>End date</th>
+                  <th>Number of books</th>
+                  <th></th>
+                </tr>
+            {% csrf_token %}
+            {% for event in joinedEvents %}
+            <div id="joinedEvents">
+                <tr style="height: 40px;">
+                    <td>{{event.name}}</td>
+                    <td></td>
+                    <td>{{event.startDate}}</td>
+                    <td>{{event.endDate}}</td>
+                    <td>{{event.nr_books}} books</td>
+                    <td>
+                        {% if event.id in user.events %}
+                        <div class="btnSize">
+                            <button  onclick="clickAddEvent1(eventid='{{event.id}}')" style = "height: 30px;" class="btn btn-primary join{{event.id}}">Joined</button>
+                        </div>
+                        {% else %}
+                        <div class="btnSize">
+                            <button  onclick="clickAddEvent1(eventid='{{event.id}}')" style = "height: 30px;" class="btn btn-primary join{{event.id}}">Join</button>
+                        </div>
+                        {% endif %}
+                    </td>
+                  </tr>
+            {% endfor %}
+            </div>
+              
+        </table> 
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        
+        function clickAddEvent1(eventid) {
+            clickedButton = ".join"+eventid
+            $.ajax({
+                url: "{% url 'post_addevent'%}",
+                method: 'POST',
+                data : {
+                    eventid : eventid,
+                    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+                },
+                success: function() {
+                    $.ajax({
+                        url: "{% url 'get_events' %}",
+                        method : 'GET',
+                        dataType: "json",
+                        data: {
+                            eventid: eventid
+                        },
+                        success: function(json){
+                            added = json.added
+                            if (added){
+                                $(clickedButton).text('Joined')
+                            } else {
+                                $(clickedButton).text('Join')
+                            }
+                            let newHtml = ''
+                        },
+                        failure: function(json){
+
+                        }
+
+                    });
+                },
+                failure: function() {
+
+                }
+            });
+        }
+    </script>
+{% endblock %}
