@@ -1,0 +1,32 @@
+.eventsContainer {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+}
+
+.event {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.event .left {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.event .right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10%;
+}
+
+.wide {
+    width: 50%;
+}
+
+.btnSize{
+    height: 80% !important;
+}
