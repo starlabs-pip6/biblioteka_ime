@@ -21,11 +21,11 @@ body{
 }
 
 .logonavbar {
-  height: 70px;
+  height: 30px;
 }
 
 .logonavbar img {
-  height: 150%;
+  height: 100%;
   padding-right: 60px;
 }
 
