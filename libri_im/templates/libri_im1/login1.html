@@ -1,0 +1,35 @@
+{% load static %}
+<link rel="stylesheet" type="text/css"  href="{% static 'libri_im/css1/login1.css' %}">
+
+
+<div class="sectionLogin">
+    <div class="firstSecondHalfs">
+        <div class="firstHalf">
+            <div class="welcome">
+                <div>
+                    <p  class="welcomeMoto"> Today a reader.<br>Tomorrow a leader.</p>
+                </div>
+            </div>
+        </div>
+        <div class="secondHalf">
+            <div class="login">
+                <h2 class="welcomeText">Welcome to Sirtari</h2>
+                <p class="welcomeParagraph">Login to see latest books from authors around the world.</p>
+                <div class="inputElement-login">
+                    <input class="loginInput" type="email" placeholder="email">
+                </div>
+
+                <div class="inputElement-login">
+                    <input class="loginInput" type="password" name="password" id="password" placeholder="password">
+                    <span id="toggle" class="fa fa-fw fa-eye pass-icon" onclick="showhide();"></span></p>
+                </div>
+
+                <div class="inputElement-login">
+                    <button class="loginButton" type="submit" style="padding: 8px 8px;">Log in</button>
+                </div>
+                <p class="LoginText">Don't have an account? <a href="{% url 'register' %}" style="color:black;text-decoration:none">Sign up now</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="{% static 'libri_im/js/login_showHidePassword.js' %}"></script>

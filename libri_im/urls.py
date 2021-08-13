@@ -21,6 +21,7 @@ urlpatterns = [
 
     path('home1/', views.home1,name="home1"),
     path('home1/profile', views.ProfilePageViewDetails,name="profile"),
+    path('home1/login', views.login1, name="login1"),
     
 
     #Comment likes and dislikes and replies

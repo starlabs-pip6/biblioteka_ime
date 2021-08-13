@@ -1101,6 +1101,8 @@ def getCategory(request):
 
 def home1(request):
     return render(request, 'libri_im1/home1.html')
+def login1(request):
+    return render(request, 'libri_im1/login1.html')
 def eventsView(request):
     user = request.user
     events = Event.objects.all()

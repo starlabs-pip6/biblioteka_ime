@@ -1,0 +1,119 @@
+/* ----- Style of left half of login page ----- */
+.sectionLogin{
+    display:flex;
+    border:1px solid black;
+
+}
+.firstHalf{
+    flex:1;
+    height:907px;
+}
+.secondHalf{
+    flex:1;
+    background-color: #fff;
+    height:907px;
+}
+
+
+
+@import url('https://fonts.googleapis.com/css?family=Raleway:400,700,900');
+.loginInput {
+    width: 100%;
+    padding: 8px 8px ;
+    background-color: transparent;
+    transition: transform 250ms ease-in-out;
+    font-size: 14px;
+    line-height: 18px;
+    color: #fff;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 32px 32px;
+    background-position: 95% center;
+    border-radius: 0px;
+    border: 1px solid white;
+    transition: all 250ms ease-in-out;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+
+}
+
+.loginInput::placeholder {
+        color: rgba(255, 251, 251, 0.8);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+    }
+
+.loginInput:hover,
+    .loginInput:focus {
+        padding: 8px 8px;
+        outline: 0;
+        border: 1px solid transparent;
+        border-bottom: 1px solid white;
+        border-radius: 0;
+        background-position: 100% center;
+    }
+
+.login{
+    display:flex;
+    justify-content: center;
+    align-items:center;
+    flex-direction: column;
+    margin-top:25%;
+    
+}
+.inputElement-login{
+  margin-top:3%;
+}
+
+.pass-icon{
+    float: right;
+    margin-top: -25px;
+    position: relative;
+    z-index: 5;
+    font-size:15px;
+    color: white;
+    margin-right:1.5%;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="name"]{
+          
+    width:100%;       
+}
+.loginButton{
+    width:390%;
+    margin-left:-133%;
+}
+#password, #password1{
+    width:93%;
+    margin-left:3%;
+}
+
+
+.LoginText{
+  margin-top:5%;
+}
+
+.welcomeText{
+    margin-top:-5%;
+    margin-bottom:5%;
+}
+.welcomeParagraph{
+    font-size:smaller;
+    opacity:0.7;
+}
+.welcome{
+    display:flex;
+    align-items:center;
+    justify-content: center;
+    height:100%;
+
+}
+
+.welcomeMoto{
+    font-size: 60px;
+    margin-top:5%;
+    width:100%;
+    text-align:left;
+}
