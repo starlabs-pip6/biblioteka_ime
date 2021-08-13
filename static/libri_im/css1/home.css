@@ -1,0 +1,10 @@
+/* ----- headingStyle in home page ----- */
+.h1-latestBooks{
+    font-size: xx-large;
+    font-weight:normal;
+}
+
+.text-center{
+    text-align:center;
+}
+/* headingStyle in home page ends here*/

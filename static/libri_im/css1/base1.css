@@ -65,11 +65,8 @@ body{
     transition: transform 250ms ease-in-out;
     font-size: 14px;
     line-height: 18px;
-    
     color: #fff;
     background-color: transparent;
-/*         background-image: url(http://mihaeltomic.com/codepen/input-search/ic_search_black_24px.svg); */
-
     background-image: url("https://i.ibb.co/qsJFBP5/Ha-PBSoz-search-icon-white-clipart.png");
     background-repeat: no-repeat;
     background-size: 32px 32px;
@@ -97,135 +94,8 @@ body{
         border-radius: 0;
         background-position: 100% center;
     }
-
-
-/* style of search input ends here*/
-
-
 /* nav style ends here */
 
-/* -----banner style-----*/
-.banner{
-    height:65vh;
-    background-image:url("https://i.ibb.co/nD8fXVR/Book-in-library-with-open-textbook-education-learning-concept.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: 0 30%;
-    
-}
-
-.bannerCards{
-    display:flex;
-    justify-content: center;
-    align-items: center;
-    gap:5%;
-    flex-wrap: wrap;
-    width:100%;
-}
-
-.bannerCard{
-    width:400px;
-    height:270px;
-    background-color:white;
-    /* border:1px solid rgba(230, 230, 230, 0.226);
-    box-shadow:2px 2px rgba(97, 96, 96, 0.192); */
-
-    box-shadow: 0px 1px 9px 1px rgba(0,0,0,0.20);
--webkit-box-shadow: 0px 1px 9px 1px rgba(0,0,0,0.20);
--moz-box-shadow: 0px 1px 9px 1px rgba(0,0,0,0.20);
-    margin-top:-7%;
-    margin-bottom: 10%;
-}
-
-.bookIcon{
-    height:100px !important;
-}
-/* banner style ends here */
-
-
-
-/* ----- book card designs -----*/
-.books-container{
-    display:flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    width:100%;
-    gap:3%;
-}
-
-.bookCard{ 
-    width:178px;
-    height:250px;
-    background-color:blueviolet;
-    margin-top:3%;
-    z-index: 1;
-    position:relative;
-    
-
-}
-
-.cardText{
-    width:178px;
-    height:0;
-    overflow:hidden;
-    -webkit-transition: all 0.2s linear;
-    -moz-transition: all 0.2s linear;
-    -o-transition: all 0.2s linear;
-    transition: all 0.2s linear;
-    margin-top:250px;
-	position:absolute;
-	background-color:white;
-    opacity:0.5;
-	font-size: 15px;
-	line-height: 18px;
-	text-align:center;
-	color: black;
-}
-
-.bookCard:hover .cardText{
-    margin-top:160px;
-    height:80px;
-	padding-top: 10px;
-}
-/* book card design ends here*/
-
-
-
-
-
-/* ----- animation on scroll -----*/
-.reveal{
-    position:relative;
-    transform:translateY(150px);
-    opacity:0;
-    transition:all 0.5s ease;
-}
-
-.reveal.active{
-    transform:translateY(0px);
-    opacity:1;
-}
-/* animation ends here */
-
-/* ----- headingStyle in home page ----- */
-.h1-latestBooks{
-    font-size: xx-large;
-    font-weight:normal;
-}
-
-.text-center{
-    text-align:center;
-}
-/* headingStyle in home page ends here*/
-
-
 /* ----- footer style ----- */
-.footer{
-    width:100%;
-    height:400px;
-    background-color:red;
-    margin-top:5%;
-}
 
 /* footer style ends here */

@@ -1,44 +1,12 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Sirtari</title>
-    <link rel="stylesheet" type=text/css  href="{% static 'libri_im/css1/base1.css' %}">
-    <!--Font style-->
-    <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-    rel="stylesheet"
-  />
-  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-</head>
-<body>
-   
-    <div class="banner">
-        <div class="nav">
-            <div class="nav-container">
-                <div class="logo_and_search">
-                    <div class="nav-logo">
-                        <img src="{% static '/libri_im/images/logonavbar.png' %}"/>
-                    </div>
-
-                    <div class="search__container">
-                        <input class="search__input" type="text" placeholder="Search">
-                    </div>
-                </div>
-             
-                <div class="nav-links">
-                    <a href="{% url 'home' %}">Home</a>
-                    <a href="{% url 'home' %}">Discover</a>
-                    <a href="{% url 'home' %}">Profile</a>
-                    <a href="{% url 'home' %}">Login/Register</a>
-                </div>
-            </div>
-        </div>
-    </div>
+{% extends 'libri_im1/base1.html' %}
+{% load static%}
+{% block content %} 
+<link rel="stylesheet" type=text/css  href="{% static 'libri_im/css1/home.css' %}">
     <div class="bannerCards">
         <div class="bannerCard">
-            <i class="fas fa-book-open bookIcon" ></i>
+            <div class="bookIcon">
+                <i class="fas fa-book-open"></i>
+            </div>
         </div>
         <div class="bannerCard">
             
@@ -73,9 +41,6 @@
         </div>
     </section>
 
-    <footer class="footer">
-
-    </footer>
 
   <script type="text/javascript">
     window.addEventListener('scroll',reveal);
@@ -96,4 +61,4 @@
         } 
     }
     </script>
-</body>
+{% endblock %}
