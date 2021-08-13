@@ -20,7 +20,8 @@ urlpatterns = [
 
 
     path('home1/', views.home1,name="home1"),
-
+    path('home1/profile', views.ProfilePageViewDetails,name="profile"),
+    
 
     #Comment likes and dislikes and replies
     path('libri/<str:isbn>/comment/<int:pk>/reply', CommentReplyView.as_view(), name="comment-reply"), 

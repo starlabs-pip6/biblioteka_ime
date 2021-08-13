@@ -8,3 +8,38 @@
     text-align:center;
 }
 /* headingStyle in home page ends here*/
+
+/* -----banner style-----*/
+.banner{
+    height:65vh;
+    background-image:url("../images/banner.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0 30%;
+    
+}
+
+.bannerCards{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    gap:5%;
+    flex-wrap: wrap;
+    width:100%;
+}
+
+.bannerCard{
+    width:400px;
+    height:270px;
+    background-color:white;
+    box-shadow: 0px 1px 9px 1px rgba(0,0,0,0.20);
+    -webkit-box-shadow: 0px 1px 9px 1px rgba(0,0,0,0.20);
+    -moz-box-shadow: 0px 1px 9px 1px rgba(0,0,0,0.20);
+    margin-top:-7%;
+    margin-bottom: 10%;
+}
+
+.fa-book-open{
+    font-size:300px;
+}
+/* banner style ends here */

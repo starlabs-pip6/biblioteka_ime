@@ -281,39 +281,6 @@ class ProfileDetailView(View):
 
         print(going_status)
         print(comming_status)
-        # try:
-        #     friend_list = FriendList.objects.get(user=account)
-        # except FriendList.DoesNotExist:
-        #     friend_list = FriendList(user=account)
-        #     friend_list.save()
-        # friends = friend_list.friends.all()
-
-        # is_self = True
-        # is_friend = False
-        # request_sent = FriendRequestStatus.NO_REQUEST_SENT.value
-        # friend_requests = None
-        # user = request.user
-        # if user.is_authenticated and user != account:
-        #     is_self = False
-        #     if friends.filter(pk=user.id):
-        #         is_friend = True
-        #     else:
-        #         is_friend = False
-
-        #         if get_friend_request_or_false(sender=account,receiver=user) != False:
-        #             request_sent = FriendRequestStatus.THEM_SENT_TO_YOU.value
-        #             context['pending_friend_request_id'] = get_friend_request_or_false(sender=account,receiver=user).id
-        #         if get_friend_request_or_false(sender=account,receiver=user) != False:
-        #             request_sent = FriendRequestStatus.YOU_SENT_TO_THEM.value
-        #         else:
-        #             request_sent = FriendRequestStatus.NO_REQUEST_SENT.value
-        # elif not user.is_authenticated:
-        #     is_self = False
-        # else:
-        #     try:
-        #         friend_requests = FriendRequest.objects.filter(receiver=user,is_active=True)
-        #     except:
-        #         pass
         
 
         context = {
@@ -647,7 +614,7 @@ def ProfilePageViewDetails(request):
         
 
     }
-    return render(request, 'libri_im/profile_page_view.html', context)
+    return render(request, 'libri_im1/profile_page_view1.html', context)
 
 
 class CommentDeleteView(UserPassesTestMixin,LoginRequiredMixin,DeleteView):
