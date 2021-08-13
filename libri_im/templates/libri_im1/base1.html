@@ -18,27 +18,25 @@
 
 </head>
 <body>
-   
-    <div class="banner">
-        <div class="nav">
-            <div class="nav-container">
-                <div class="logo_and_search">
-                    <div class="nav-logo">
-                        <img src="{% static '/libri_im/images/logonavbar.png' %}"/>
-                    </div>
+    <div class="nav">
+        <div class="nav-container">
+            <div class="logo_and_search">
+                <div class="nav-logo">
+                    <img src="{% static '/libri_im/images/logonavbar.png' %}"/>
+                </div>
 
-                    <div class="search__container">
-                        <input class="search__input" type="text" placeholder="Search">
-                    </div>
+                <div class="search__container">
+                    <input class="search__input" type="text" placeholder="Search">
                 </div>
-             
-                <div class="nav-links">
-                    <a href="{% url 'home' %}">Home</a>
-                    <a href="{% url 'home' %}">Discover</a>
-                    <a href="{% url 'home' %}">Profile</a>
-                    <a href="{% url 'home' %}">Login/Register</a>
-                </div>
+            </div>
+         
+            <div class="nav-links">
+                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'home' %}">Discover</a>
+                <a href="{% url 'home' %}">Profile</a>
+                <a href="{% url 'home' %}">Login/Register</a>
             </div>
         </div>
     </div>
+   
     {% block content %} {% endblock %}

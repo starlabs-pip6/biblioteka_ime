@@ -63,3 +63,39 @@
 
 
 
+.bannerCard{
+    width:400px;
+    height:270px;
+    background-color:white;
+    box-shadow: 0px 1px 9px 1px rgba(0,0,0,0.20);
+    -webkit-box-shadow: 0px 1px 9px 1px rgba(0,0,0,0.20);
+    -moz-box-shadow: 0px 1px 9px 1px rgba(0,0,0,0.20);
+    margin-top:-7%;
+    margin-bottom: 10%;
+    display:flex;
+    flex-direction: column;
+    
+}
+.bookIcon{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    margin-top:5%;
+}
+.fa-book-open, .fa-user-friends, .fa-comments{
+    font-size:50px;
+    
+}
+.bannerCard-text{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height:100%;
+    
+}
+.text-Center{
+    width:80%;
+    text-align: center;
+    line-height:150%;
+}
+/* banner style ends here */
