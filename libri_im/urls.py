@@ -21,7 +21,8 @@ urlpatterns = [
 
     path('home1/', views.home1,name="home1"),
     path('home1/profile', views.ProfilePageViewDetails,name="profile"),
-    path('home1/login', views.login1, name="login1"),
+    path('login1/', views.login1, name="login1"),
+    path('register1/',views.register1, name="register1"),
     
 
     #Comment likes and dislikes and replies
