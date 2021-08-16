@@ -1,5 +1,6 @@
 {% load static %}
 <link rel="stylesheet" type="text/css"  href="{% static 'libri_im/css1/login1.css' %}">
+<link rel="stylesheet" type="text/css"  href="{% static 'libri_im/css/sirtariim.css' %}">
 
 {%block content%}
 <div class= "containerLogin">
@@ -12,28 +13,39 @@
                 </div>
             </div>
         </div>
+        
         <div class="secondHalf">      
             <div class="nav-links" style="text-align:right;text-decoration: none; color:black;">
             <a href="{% url 'home1' %}">Home</a></div>
-            <div class="login">
-          
+            
+            
+         
+            
+           
+            <form method="post" id="login">
+             <div class="login">
+               {% csrf_token %}
                 <h2 class="welcomeText">Welcome to Sirtari</h2>
                 <p class="welcomeParagraph">Login to see latest books from authors around the world.</p>
                 <div class="inputElement-login">
-                    <input class="loginInput" type="email" placeholder="email">
+                    <input class="loginInput" type="email" name="email" id="inputEmailLogin" placeholder="email" required>
                 </div>
 
                 <div class="inputElement-login">
-                    <input class="loginInput" type="password" name="password" id="password" placeholder="password">
+                    <input class="loginInput" type="password" name="password" id="password" placeholder="password" required>
                     <span id="toggle" class="fa fa-fw fa-eye pass-icon" onclick="showhide();"></span></p>
                 </div>
 
-                <div class="inputElement-login">
+   
                     <button class="loginButton" type="submit" style="padding: 8px 8px;">Log in</button>
-                </div>
+
+
                 <p class="LoginText">Don't have an account? <a href="{% url 'register1' %}" style="color:black;text-decoration:none">Sign up now</a></p>
                 <br><p><a href="{% url 'reset_password' %}" style="text-decoration:none;color:black;">Reset password</a></p>
-            </div>
+                </div>
+            </form>
+            
+            
         </div>
     </div>
 </div>

@@ -130,8 +130,9 @@ input[type="name"]{
     width:130%;       
 }
 .loginButton{
-    width:390%;
-    margin-left:-99%;
+    margin-top: 15px;
+    margin-left: 1.5%;
+    width: 37.5%;
 }
 #password, #password1{
     width:130%;  

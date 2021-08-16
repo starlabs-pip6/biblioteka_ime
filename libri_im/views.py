@@ -443,7 +443,7 @@ def login_view(request, *args, **kwargs):
     user = request.user
     '''Redirect the user if already logged in'''
     if user.is_authenticated:
-        return redirect("home")
+        return redirect("home1")
     
 
 
@@ -470,14 +470,15 @@ def login_view(request, *args, **kwargs):
                 login(request, user)
                 if destination:
                     return redirect(destination)
-                return redirect("home")
+                return redirect("home1")
         else:
             messages.warning(request, 'Email or password is wrong.')
             return redirect('login')
     else:
         form = UserAuthenticationForm()
     context['login_form'] = form
-    return render(request, "libri_im/login.html", context)
+    #return render(request, "libri_im/login.html", context)
+    return render(request, 'libri_im1/login1.html', context)
 
 
 def get_redirect_if_exists(request):
@@ -1100,7 +1101,93 @@ def getCategory(request):
 
 
 def home1(request):
-    return render(request, 'libri_im1/home1.html')
+    current_user = request.user
+    books = Book.objects.all()
+
+    '''Different values for different request states'''
+    if(not current_user.is_anonymous):
+        '''Add default Sirtars'''
+        if not Sirtar.objects.filter(id_user=current_user).exists():
+            utils.create_default_sirtar(current_user.email)
+        '''Update the progress by syncing it with Reading Sirtar'''
+        utils.update_progress_db("Reading", current_user.email)
+        if current_user.first_login:
+            return redirect("survey")
+
+        
+        dukelexuar = []
+        wtrBooks = []
+        
+        dlcount = Sirtar.objects.get(emri="Reading", id_user=current_user)
+        '''Add Reading isbn-s of books to the dukelexuar array so we can use it as a variable in the home template'''
+        for isbn in dlcount.books:
+            dukelexuar.append(Book.objects.get(isbn=isbn))
+      
+        '''Add Want to read isbn-s of books to the wtrarray array so we can use it as a variable in the home template'''
+        dtlcount = Sirtar.objects.get(
+            emri="Want to read", id_user=current_user)
+        for bookIsbn in dtlcount.books:
+            wtrBooks.append(Book.objects.get(isbn=bookIsbn).isbn)
+
+        '''Get length of arrays to show them as a count on the home page'''
+        dlcount = len(dlcount.books)
+        dtlcount = len(dtlcount.books)
+        klcount = Sirtar.objects.get(emri="Read", id_user=current_user)
+        klcount = len(klcount.books)
+    else:
+        dukelexuar = []
+        wtrBooks = []
+        dlcount = "no data"
+        dtlcount = "no data"
+        klcount = "no data"   # userR = users.reading
+    if Progress.objects.filter(id_user=current_user.id).exists():
+        '''Check and update the Progress variables that will be used in the home template'''
+        userReadingBooks = Sirtar.objects.get(id_user=request.user, emri = "Reading").books
+        progressIsbn = userReadingBooks[-1]
+        progressBookObj = Book.objects.get(isbn=progressIsbn)
+        progressBook = Progress.objects.get(id_libri=progressBookObj, id_user=request.user)
+        progressLibri = progressBook.id_libri
+        progressNowPages = progressBook.pages_now
+        progressAllPages = progressBook.id_libri.nr_faqeve
+        progressPercent = round(float((progressNowPages/progressAllPages)*100), 1)
+        progressBookImage = progressBook.id_libri.image_link
+        '''Progress Title truncation so it won't overflow the place that it is shown'''
+        titleLength = 35
+        if len(progressBook.id_libri.titulli)>titleLength:
+            progressLibriTitulli = progressBook.id_libri.titulli[:titleLength]+"..."
+        else:
+            progressLibriTitulli = progressBook.id_libri.titulli[:titleLength]
+
+    else:
+        progressLibri = "no data"
+        progressNowPages = "no data"
+        progressAllPages = "no data"
+        progressLibriTitulli = "no data"
+        progressPercent = "no data"
+        progressBookImage = ""
+
+    if not current_user:
+        current_user = 'anonimous user(not loged in)'
+    '''Context variables to use in Home template'''
+    context = {
+        'books': books,                                                 #All books
+        'booksRandom': books.order_by('?')[0:6],                         #For you books that for now are chosen randomly
+        'dlcount': dlcount,                                             #Reading book count
+        'klcount': klcount,                                             #Read book count
+        'dtlcount': dtlcount,                                           #Want to read book count
+        'dukelexuar': dukelexuar,                                       #Reading array(only with isbn-s in an array)
+        'wtrBooks' : wtrBooks,                                          #Want to read array(only with isbn-s in an array)
+        'progressLibri': progressLibri,                                 #The book that is shown as the current Progress book in the Home page
+        'progressNowPages': progressNowPages,                           #The number of pages that have been read of the current Progress Book
+        'progressAllPages': progressAllPages,                           #The total number of pages of the current Progress Book
+        'progressLibriTitulli': progressLibriTitulli,                   #The title of the current Progress Book
+        'progressPercent': progressPercent,                             #The calculated percentage of the current Progress Book
+        'progressBookImage': progressBookImage,                         #The cover image of the current Progress Book
+    }
+
+    return render(request, 'libri_im1/home1.html',context)
+
+
 def login1(request):
     return render(request, 'libri_im1/login1.html')
 def register1(request):

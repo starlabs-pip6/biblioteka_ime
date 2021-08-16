@@ -92,18 +92,25 @@
     
 }
 .imgContainer{
-    
+    width: 178px;
+    height: 250px;
 }
-.bookCardFrame:hover .bookCardOnHover {
+
+.cardImage{
+
+}
+
+.bookCardFrame:hover .cardImage {
     opacity:0.5;
     transition:all 0.2s ease;
-    transform:scale(1.1);
     
     
 }
-.bookCardOnHover{
-    object-fit:cover;
+
+.bookCardFrame:hover {
+    transform: scale(1.02);
 }
+
 .bookCardFrame:hover  .cardButton{
     opacity:1;
     
@@ -113,11 +120,11 @@
     background-color:#d0d0d7;
 }
 
-.bookCardOnHover::after{
+.cardImage::after{
     transition: all 2s ease;
     opacity:0;
 }
-.bookCardOnHover:hover::after{
+.cardImage:hover::after{
     opacity:1;
 }
 .bannerCard{
