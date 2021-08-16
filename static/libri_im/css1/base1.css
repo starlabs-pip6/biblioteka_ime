@@ -21,7 +21,7 @@
 }
 
 .nav-links a{
-    text-decoration:none;
+    text-decoration:none !important;
     padding:4%;
     color:#fff;
     text-transform: uppercase;

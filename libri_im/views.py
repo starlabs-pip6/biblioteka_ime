@@ -1105,6 +1105,8 @@ def login1(request):
     return render(request, 'libri_im1/login1.html')
 def register1(request):
     return render(request, 'libri_im1/register1.html')
+def discover1(request):
+    return render(request,'libri_im1/discover1.html')
 def eventsView(request):
     user = request.user
     events = Event.objects.all()
