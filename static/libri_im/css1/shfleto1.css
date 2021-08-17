@@ -1,0 +1,47 @@
+
+
+
+
+.PageNr{
+  background-color:none !important;
+  color:#ff8c6a;
+ 
+  
+}
+.ActivePageNr{
+  padding: .375rem .75rem !important; 
+  font-size:20px
+}
+.page-link{
+  background-color:none !important;
+  color: #5e5e5e !important;
+ border:none !important;
+  
+}
+.page-link:hover{
+  background-color:#5e5e5e;
+  color:white !important;
+ 
+  
+}
+.pagination{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+.filters{
+  padding: 20px 0px;
+  display: flex;
+  justify-content: flex-start;  
+
+}
+
+
+
+.dropdownShfleto {
+  margin-right: 30px;
+  width: fit-content;
+  border:1px solid #ccc; 
+  border-radius: 3px;
+  padding: 5px 5px;
+}

@@ -2,9 +2,62 @@
 {% load static%}
 {% block content %} 
 <link rel="stylesheet" type="text/css"  href="{% static 'libri_im/css1/home1.css' %}">
-<link rel="stylesheet" type="text/css"  href="{% static 'libri_im/css/sirtariim.css' %}">
+<link rel="stylesheet" type="text/css"  href="{% static 'libri_im/css1/sirtariim1.css' %}">
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+ <div class="modal fade" id="progressUpdateModal" tabindex="-1" role="dialog" aria-labelledby="progressUpdateModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content blackBgRoundedWhite">
+              <div class="modal-header">
+                <h5 class="modal-title" id="progressUpdateModalLabel">Update your progress</h5>
+              </div>
+               <div class="modal-body">
+                <p>Update pages for {{progressLibriTitulli}}</p>
+                {% csrf_token %}
+                <input type="number" name="progressInput" id ="progressInput">
+              </div>
+              <div class="modal-footer">
+                <button type="button" id="updateProgress" class="mybutton">Update</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="modal fade" id="progressBooksModal" tabindex="-1" role="dialog" aria-labelledby="progressBooksModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content blackBgRoundedWhite">
+              <div class="modal-header">
+                <h5 class="modal-title" id="progressBooksModalLabel">Select the book you want to show</h5>
+              </div>
+              <div class="modal-body modalShowBooks max-width-modal">
+                
+                {% for book in dukelexuar%}
+                <div class="bookButtonContainer">
+                 <div class="mycover ptcover"><a href="{% url 'book-detail' book.isbn %}">
+                    <img src="{{ book.image_link }}" class="ptimage myimage"></a>
+                    <h3 class="pttitle">{{book.titulli|truncatechars:17}}</h3>
+                    <div class="underlinept"></div>
+                    <p class="ptdesc">{{book.autori|truncatechars:25}}</p>
+                  </div>
+                  <div>
+                    <button onclick="selectOnClick(isbn='{{book.isbn}}')" style="border-radius: 10px;" class="mybutton" name="select" id="select{{book.isbn}}">Select</button>
+                  </div>
+                  </div>
+                {% endfor%}
+                
+              
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+
 <div class="banner">
        
 </div>
@@ -49,7 +102,38 @@
          
         </div>
         <div class="bannerCard">
-            <div class="bookIcon">
+          {% if user.is_authenticated %}
+            <div id="dukelexuarprogress" class="dukelexuarprogress">
+              {% if dlcount is 0 %}
+                 <p>You should add books to the Reading shelf to show the progress.</p>
+              {% else %}
+                  
+               <div class="profile1 profileFix">
+                 <a href="{% url 'book-detail' progressLibri.isbn %}" >
+                <img id="progressImg"class="profileImg" src="{{ progressBookImage }}" width="200" height="200"alt="noImg">
+                </a>
+              </div>
+              <div class="title">
+                <p id="progressTitulli">{{progressLibriTitulli|truncatechars:20}}</p>
+              </div>
+              <div class="text-progress">
+                <p id="progressShowText">{{progressNowPages}}/{{progressAllPages}} pages or {{progressPercent}}%</p>
+              </div>
+               <!-- Button trigger modal -->
+               <div class="progressButtons">
+                  <button id="progressButton" type="button" class="normalButton" data-toggle="modal" data-target="progressUpdateModal">
+                     Update
+               </button>
+                  <button  id="progressBooksButton" type="button" class="normalButton" data-toggle="modal1" data-target="progressBooksModal">
+                     View others
+                   </button>
+               
+               </div>
+              
+                {% endif %}
+         </div>
+          {% else %}
+          <div class="bookIcon">
                 <i class="fas fa-user-friends"></i>
             </div>
             <div class="bannerCard-text">
@@ -57,9 +141,11 @@
                     <p> You can add new friends in our Sirtari platform. You can add new friends in our Sirtari platform.</p>
                 </div>
             </div>
+          {% endif %}
+            
         </div>
         <div class="bannerCard">
-            <div class="bookIcon">
+            <div class="bookIcon">              <h2>Friends</h2>
                 <i class="fas fa-comments"></i>
             </div>
             <div class="bannerCard-text">
@@ -76,6 +162,9 @@
                 {% csrf_token %}
                 {% for book in booksRandom %}
                       <div class="bookCardFrame">
+                        <div class="triangle">
+                          
+                        </div>
                     <div class="bookCard">
                         <div class="imgContainer">
                            <img src="{{ book.image_link}}" class="bookCard cardImage">
@@ -88,7 +177,7 @@
                         {% else %}
                          <button class="cardButton loginButton">Added</button>
                         {% endif %}                                                
-                      
+                        
                        
                     </div>
                 </div>

@@ -20,7 +20,7 @@ urlpatterns = [
 
 
     path('home1/', views.home1,name="home1"),
-    path('home1/profile', views.ProfilePageViewDetails,name="profile"),
+    path('home1/profile', views.ProfilePageViewDetails,name="profile1"),
     path('login1/', views.login_view, name="login1"),
    path('register1/', views.RegistationView.as_view(), name='register1'),
     path('discover1/',views.discover1, name="disover1"),

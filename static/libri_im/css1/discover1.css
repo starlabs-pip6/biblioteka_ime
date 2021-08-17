@@ -1,0 +1,9 @@
+.shfletoContainer {
+    width: 80%;
+}
+
+.centerDiscover {
+    display: flex;
+    justify-content: center;
+
+}

@@ -1,5 +1,152 @@
-{% extends 'libri_im1/base1.html'%}
+{% extends 'libri_im1/base1.html' %}
 {% load static %}
 {% block content %}
 
+{% load urlparams %}
+    <link rel="stylesheet" type=text/css href="{% static 'libri_im/css1/global1.css' %}"> 
+    <link rel="stylesheet" type=text/css href="{% static 'libri_im/css1/discover1.css' %}"> 
+    <link rel="stylesheet" type=text/css href="{% static 'libri_im/css1/shfleto1.css' %}"> 
+
+
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<div class="navBg"></div>
+<div class="centerDiscover">
+
+  <div class="shfletoContainer">
+    <div class="filters">
+         <form action="">
+          <select name="sort_name" id="sort_name" class="dropdownShfleto" onchange="this.form.submit();">                 
+            <option class="optionShfleto" disabled selected hidden>Sort by...</option> 
+            <option value="titulli"  class="optionShfleto" >Title</option>
+            <option value="autori" class="optionShfleto">Author</option>          
+            <option value="-viti_publikimit" class="optionShfleto">Latest books</option>          
+            <option value="-mes_vleresimit" class="optionShfleto">Highest rating</option>
+          </select>
+             <select name="category_name" id="category_name" class="dropdownShfleto" onchange="this.form.submit();">
+              <option class="optionShfleto " disabled  selected hidden>Categories...</option> 
+              <option value="Art" class="optionShfleto" >Art</option>
+              <option value="Economic" class="optionShfleto" >Economic</option>
+              <option value="Fantasy" class="optionShfleto" >Fantasy</option>
+              <option value="Fiction" class="optionShfleto" >Fiction</option>
+              <option value="Gothic" class="optionShfleto" >Gothic</option>
+              <option value="Historical" class="optionShfleto" >Historical</option>
+              <option value="Horror" class="optionShfleto" >Horror</option>
+              <option value="Humor" class="optionShfleto" >Humor</option>
+              <option value="Inspirational" class="optionShfleto" >Inspirational</option>
+              <option value="Mystery" class="optionShfleto" >Mystery</option>
+              <option value="Nonfiction" class="optionShfleto" >Nonfiction</option>
+              <option value="Poetry" class="optionShfleto" >Poetry</option>
+              <option value="Romance" class="optionShfleto" >Romance</option>
+              <option value="Thriller" class="optionShfleto" >Thriller</option>
+            </select>
+          </form>
+    </div>
+  
+        
+      <div class="booksCategory">
+       <div class="booksContainer">
+                  {% csrf_token %}
+                  {% for book in books %}
+                  <div class="bookCardFrame">
+                    <div class="bookCard">
+                          <div class="imgContainer">
+                             <img src="{{ book.image_link}}" class="bookCard cardImage">
+                          </div>
+                          <p class="bookTitleAuthor"><span class="bookTitle">{{book.titulli|truncatechars:15}}</span><br>
+                                                                          - {{book.autori|truncatechars:15}}</p>
+                                                                          
+                          {% if  book.isbn not in wtrBooks %}
+                            <button id="buttonclick{{book.isbn}}" onclick="onClickFunction2('{{book.isbn}}')" class="cardButton loginButton">Want to read</button>
+                          {% else %}
+                           <button id="buttonclick{{book.isbn}}" onclick="onClickFunction2('{{book.isbn}}')" class="cardButton loginButton">Added</button>
+                          {% endif %}                                                
+                    </div>
+                  </div>
+                  {% endfor %}
+         </div>
+      
+      <!-- <div class="content-list col-sm-2 col-md-3 ">
+              <h3>Categories</h3> 
+              {%for category in books1%}
+                  <ul class="ulShfleto">
+                      <li class="liShfleto">{{category.viti_publikimit}}</li>
+                  </ul>
+  
+              {%endfor%}
+      </div> -->
+  </div>
+  {% if books.has_other_pages %}
+  <nav>
+  <ul class="pagination"  style="margin-top:5%; flex-wrap:wrap; display:flex; margin-left:2%;   ">
+      {% if books.has_previous %}
+        <li class="page-item PageNr "><a class="page-link" href="?{% url_replace page=books.previous_page_number %}">&laquo;</a></li>
+      {% else %}
+        <li class="disabled page-item PageNr ActivePageNr"><span>&laquo;</span></li>
+      {% endif %}
+      {% for i in books.paginator.page_range %}
+        {% if books.number == i %}
+        
+          <li class="page-item PageNr ActivePageNr"><span>{{ i }} <span  class="sr-only "></span></span></li>
+        {% else %}
+          <li class="page-item PageNr "><a class="page-link" href="?{%url_replace page=i%}">{{ i }}</a></li>
+        {% endif %}
+      {% endfor %}
+      {% if books.has_next %}
+        <li class="page-item PageNr"><a class="page-link" href="?{%url_replace page=books.next_page_number%}">&raquo;</a></li>
+      {% else %}
+        <li   class=" disabled page-item PageNr ActivePageNr "><span class=" "></span>&raquo; </span></li>
+      {% endif %}
+    </ul>
+  </nav>
+  
+  {% endif %}
+  
+  </div>
+</div>
+
+<script>
+      // POST and GET methods for the Want to read button in every book cover
+      function onClickFunction2(book){
+        btnClickedId = "#buttonclick"+book
+          $(document).on('click', btnClickedId, function(e) {
+          e.preventDefault();
+           });
+          $.ajax({
+          type: 'POST',
+          url:'{% url "post_wtr" %}' ,
+          data: {
+              isbn: book,
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function() {
+            $.ajax({
+              url : '{% url "get_wtr" %}',
+              type : "GET",
+              dataType: "json",
+              data: {
+                  isbn: book
+              },
+              success: function(json) {
+                // Change text in Want to read Button and vice-versa
+                  if(json.added){
+                    $(btnClickedId).text("Added")
+                  } else {
+                    $(btnClickedId).text("Want to read")
+                  }
+              },
+              failure: function(json) { 
+                  alert('Got an error dude GET');
+              }
+            });    
+          },
+          failure: function() {
+               alert('Got an error dude POST');
+          }
+        });
+        } 
+      </script>
 {% endblock %}
