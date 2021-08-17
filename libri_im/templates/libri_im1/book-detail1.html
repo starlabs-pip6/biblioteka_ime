@@ -1,0 +1,362 @@
+{% extends 'libri_im1/base1.html' %} 
+{% load static %} 
+{% block content %}
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link rel="stylesheet" type=text/css  href="{% static 'libri_im/css1/mybooks1.css' %}">
+<link rel="stylesheet" type=text/css  href="{% static 'libri_im/css1/book-detail1.css' %}">
+
+<div class="navBg"></div>
+<div class="row">
+    <div class="book" >
+        <div class="imgDiv">
+            <img src="{{ book.image_link }}" class="imgStyle">
+        </div>
+        <div class="textDiv">
+            <h1 class ="h1style"> {{ book.titulli }} </h1>
+    
+            <h5> {{ book.autori }}</h5>
+        <p> {{ book.pershkrimi|truncatechars:920 }}</p>
+        
+        <h5 class="h5style">Rating: </h5>
+        <div class="rate">
+         
+            <input type="radio" id="star5" name="rate" value="5" />
+            <label for="star5" title="text">5 stars</label>
+            <input type="radio" id="star4" name="rate" value="4" />
+            <label for="star4" title="text">4 stars</label>
+            <input type="radio" id="star3" name="rate" value="3" />
+            <label for="star3" title="text">3 stars</label>
+            <input type="radio" id="star2" name="rate" value="2" />
+            <label for="star2" title="text">2 stars</label>
+            <input type="radio" id="star1" name="rate" value="1" />
+            <label for="star1" title="text">1 star</label>
+          </div>
+        <div class="book_detail_button">
+            {% if user.is_authenticated %}
+            {% if book.isbn in wtrBooks %}
+            <button onclick="onClickFunctionWtr( book='{{ book.isbn }}');" id="clickWtr" class="mybutton fixedWidth">✓ Want to read</button>
+            {% else %}
+            <button onclick="onClickFunctionWtr( book='{{ book.isbn }}');" id="clickWtr" class="mybutton fixedWidth">Want to read</button>
+            {%endif%}
+            {% if book.isbn in readingBooks %}
+            <button onclick="onClickFunction( book='{{ book.isbn }}');" id="clickReading" class="mybutton fixedWidth">✓ Reading</button>
+            {% else %}
+            <button onclick="onClickFunction( book='{{ book.isbn }}');" id="clickReading" class="mybutton fixedWidth" >Reading</button>
+            {%endif%} 
+             {% if book.isbn in readBooks %}
+            <button onclick="onClickFunctionRead( book='{{ book.isbn }}');" id="clickRead" class="mybutton fixedWidth">✓ Read</button>
+            {% else %}
+            <button onclick="onClickFunctionRead( book='{{ book.isbn }}');" id="clickRead" class="mybutton fixedWidth">Read</button>
+            {%endif%}
+            {% endif %}
+        </div>
+    </div>
+
+
+</div>
+</div>
+
+
+<div class="commentContainer"col-md-6 col-sm-12 > 
+    <div class="commentDiv"col-md-6 col-sm-12 > 
+        <div style="margin-bottom: 20px;">
+        <h1 style="padding-bottom: 0px; ">{{ book.comments.all.count }} Comments</h1>
+         </div>
+        {% if user.is_authenticated %}
+      <br>
+      <form method="POST" action="" >
+          <img class="avatar avatar-sm mr-2" style="margin-bottom: 10px;" src="{{request.user.profileImg.url}}">
+          <b> {{ request.user.username }}</b>
+          <!-- <time class="dateStyle">12.12.2020</time> -->
+          <div class="media-body">
+              {% csrf_token %}
+              {{ form.as_p|safe }}
+          <button type="submit" class="mybutton">Post</button>
+      </form>
+        {% else %}
+        <div class="loginToC">
+                <h2>Login to comment</h2>
+             <a href="{% url 'login' %}" target="_blank"><button  class="mybutton" >Login</button></a>
+        </div>
+        
+
+        {% endif %}
+    
+    </div>
+    </div>
+    
+
+<!-- <div class="commentcontainer" style="padding-top: 10px;padding-left: 70px; "> -->
+    <div class="comments" col-md-6 col-sm-12>
+        <div class="commentsBox ">
+    {% for comment in book.comments.all %}
+    {% if comment.is_parent %}
+    
+        <div class="commentsBox ">
+        <div class="njoftimi1">
+            <img class="avatar avatar-sm mr-2" style="margin-bottom: 10px;" src="{{comment.name.profileImg.url}}" alt="">
+           <b> {{ comment.name }}</b>
+           <time class="dateStyle">{{ comment.date_added }}</time>
+           {% if request.user == comment.name %}
+           <a href="{% url 'comment-edit' book.isbn comment.pk  %}" style="margin-left:10px;margin-top:4px;" ><i class="fa fa-pencil" style="color: rgb(0, 60, 255);"></i></a>
+           <a href="{% url 'comment-delete' book.isbn comment.pk  %}" style="margin-left:10px;margin-top:4px;" ><i class="fa fa-trash fa-1x" style="color: rgb(192, 87, 87);"></i></a>
+           {% endif %}
+           
+           <p>
+            {{ comment.body }}
+          </p>
+          <div class="d-flex flex-row">
+            <form method="POST" action="{% url 'comment-like' book.isbn comment.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <button class="remove-default-btn" type="submit" style=" background: unset !important;
+                border: unset !important;
+                outline: unset !important;">
+                    <i class="fa fa-thumbs-up" style="color: #FFF;"> <span>{{ comment.likes.all.count }}</span></i>
+                </button>
+            </form>
+
+            <form method="POST" action="{% url 'comment-dislike' book.isbn comment.pk %}" style="padding-left:20px;">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <button class="remove-default-btn" style=" background: unset !important;
+                border: unset !important;
+                outline: unset !important;" type="submit">
+                    <i class="fa fa-thumbs-down" style="color: #FFF;"> <span>{{ comment.dislikes.all.count }}</span></i>
+                </button>
+
+            </form>
+            <div>
+                <button class="remove-default-btn" style="
+                margin-left: 20px;
+                color: #FFF;
+                background: unset !important;
+                border: unset !important;
+                outline: unset !important;" onclick="commentReplyToggle(parent_id='{{ comment.pk }}')">
+                    <i class="fa fa-commenting-o"></i>
+                </button>
+            </div>
+           
+        </div>
+        <div>
+            <div style="padding-left: 75px;padding-top: 10px;padding-bottom: 5px;" class="d-none" id="{{ comment.pk }}">
+                <form class="commentform" method="POST" action="{% url 'comment-reply' book.isbn comment.pk %}" >
+                    {% csrf_token %}
+                    {{form.as_p|safe }}
+                    <button type="submit" style="padding:5px;border-radius: 1rem;" onclick="reloadpage()">Submit</button>
+                </form>
+            </div>
+    </div>
+    {% for child_comment in comment.children %}
+
+    <div class=""col-md-6 col-sm-12 style="padding-left:40px;padding-top: 20px;">
+        <div class="commentsBox ">
+        <div class="njoftimi2">
+            <img class="avatar avatar-sm mr-2" style="margin-bottom: 10px;" src="{{comment.name.profileImg.url}}">
+           <b> {{ child_comment.name }}</b>
+           <time class="dateStyle">{{ child_comment.date_added }}</time>
+           {% if request.user == comment.name %}
+           <a href="{% url 'comment-edit' book.isbn child_comment.pk  %}" style="margin-left:10px;margin-top:4px;" ><i class="fa fa-pencil" style="color: rgb(0, 60, 255);"></i></a>
+           <a href="{% url 'comment-delete' book.isbn child_comment.pk  %}" style="margin-left:10px;margin-top:4px;" ><i class="fa fa-trash fa-1x" style="color: rgb(192, 87, 87);"></i></a>
+         
+           {% endif %}
+           <p>
+            {{ child_comment.body }}
+          </p>
+          <div class="d-flex flex-row">
+            <form method="POST" action="{% url 'child-comment-like' book.isbn child_comment.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <button class="remove-default-btn" type="submit" style=" background: unset !important;
+                border: unset !important;
+                outline: unset !important;">
+                    <i class="fa fa-thumbs-up" style="color: #FFF;"> <span>{{ child_comment.likes.all.count }}</span></i>
+                </button>
+            </form>
+    
+            <form method="POST" action="{% url 'child-comment-dislike' book.isbn child_comment.pk %}" style="padding-left:20px;">
+                {% csrf_token %}
+                <input type="hidden" name="next" value="{{ request.path }}">
+                <button class="remove-default-btn" style=" background: unset !important;
+                border: unset !important;
+                outline: unset !important;" type="submit">
+                    <i class="fa fa-thumbs-down" style="color: #FFF;"> <span>{{ child_comment.dislikes.all.count }}</span></i>
+                </button>
+            </form>
+            <div>
+                <button class="remove-default-btn" style="
+                margin-left: 20px;
+                color: #FFF;
+                background: unset !important;
+                border: unset !important;
+                outline: unset !important;" onclick="commentReplyToggle(parent_id='{{ child_comment.pk }}')">
+                    <i class="fa fa-commenting-o"></i>
+                </button>
+            </div>
+    </div>
+    </div> 
+     <div style="padding-left: 75px;padding-top: 10px;padding-bottom: 5px;" class="d-none" id="{{ child_comment.pk }}">
+        <form class="commentform" method="POST" action="{% url 'comment-reply' book.isbn comment.pk %}" >
+            {% csrf_token %}
+            {{form.as_p|safe }}
+            <button type="submit" style="padding:5px;border-radius: 1rem;" onclick="reloadpage()">Submit</button>
+        </form>
+    </div>
+            </div>
+            <div>
+        </div>
+    </div>
+    
+
+
+    {% endfor %}
+</div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% endfor%}
+</div>
+
+<script>
+function commentReplyToggle(parent_id) {
+	const row = document.getElementById(parent_id);
+
+	if (row.classList.contains('d-none')) {
+		row.classList.remove('d-none');
+	} else {
+		row.classList.add('d-none');
+	}
+}
+</script>
+<script>
+    function onClickFunction(book){
+        btnClickedId = "#clickReading"
+          $(document).on('click', btnClickedId, function(e) {
+          e.preventDefault();
+           });
+          $.ajax({
+          type: 'POST',
+          url:'{% url "post_reading" %}' ,
+          data: {
+              isbn: book,
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function() {
+            $.ajax({
+              url : '{% url "get_reading" %}',
+              type : "GET",
+              dataType: "json",
+              data: {
+                  isbn: book
+              },
+              success: function(json) {
+                // Change text in Want to read Button and vice-versa
+                  if(json.added){
+                      $('#clickWtr').text("Want to read")
+                      $('#clickRead').text("Read")
+
+                    $(btnClickedId).text("✓ Reading")
+                  } else {
+                    $(btnClickedId).text("Reading")
+                  }
+              },
+              failure: function(json) { 
+                  alert('Got an error dude GET');
+              }
+            });    
+          },
+          failure: function() {
+               alert('Got an error dude POST');
+          }
+        });
+        }
+   
+       function onClickFunctionRead(book){
+        btnClickedId = "#clickRead"
+          $(document).on('click', btnClickedId, function(e) {
+          e.preventDefault();
+           });
+          $.ajax({
+          type: 'POST',
+          url:'{% url "post_read" %}' ,
+          data: {
+              isbn: book,
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function() {
+            $.ajax({
+              url : '{% url "get_read" %}',
+              type : "GET",
+              dataType: "json",
+              data: {
+                  isbn: book
+              },
+              success: function(json) {
+                
+                // Change text in Want to read Button and vice-versa
+                  if(json.added){
+                    $('#clickWtr').text("Want to read")
+                    $('#clickReading').text("Reading")
+                    $(btnClickedId).text("✓ Read")
+                  } else {
+                    $(btnClickedId).text("Read")
+                  }
+              },
+              failure: function(json) { 
+                  alert('Got an error dude GET');
+              }
+            });    
+          },
+          failure: function() {
+               alert('Got an error dude POST');
+          }
+        });
+        }
+        
+          function onClickFunctionWtr(book){
+        btnClickedId = "#clickWtr"
+          $(document).on('click', btnClickedId, function(e) {
+          e.preventDefault();
+           });
+          $.ajax({
+          type: 'POST',
+          url:'{% url "post_wtr" %}' ,
+          data: {
+              isbn: book,
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function() {
+            $.ajax({
+              url : '{% url "get_wtr" %}',
+              type : "GET",
+              dataType: "json",
+              data: {
+                  isbn: book
+              },
+              success: function(json) {
+                
+                // Change text in Want to read Button and vice-versa
+                  if(json.added){
+                    $('#clickReading').text("Reading")
+                    $('#clickRead').text("Read")
+                    $(btnClickedId).text("✓ Want to read")
+                  } else {
+                    $(btnClickedId).text("Want to read")
+                  }
+              },
+              failure: function(json) { 
+                  alert('Got an error dude GET');
+              }
+            });    
+          },
+          failure: function() {
+               alert('Got an error dude POST');
+          }
+        });
+        }
+   </script>
+<script src="{% static 'libri_im/js/reloadpage.js' %}"></script>
+
+{% endblock content %}

@@ -1,0 +1,45 @@
+{% extends 'libri_im1/base1.html' %} {% load static %} {% block content %}
+
+<div class="navBg"></div>
+<div>
+  <h1 style="text-align:center;margin-top:3%;padding-bottom:2%;">Manage books</h1>
+  {% if user.is_authenticated and user.is_admin%}
+  
+  <!-- nese eshte useri i kyqt ateher del pershendetja + stili i frontendit-->
+  <table class="table table-hover">
+    <tr>
+      <th>ISBN</th>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Published Year</th>
+      <th>Image</th>
+      <th>View Book</th>
+      
+    </tr>
+    {% for book in books %}
+    <tr>
+      <td>{{ book.isbn }}</td>
+      <td>{{ book.titulli }}</td>
+      <td>{{ book.autori }}</td>
+      <td>{{ book.viti_publikimit }}</td>
+      <td><img src="{{book.image_link}}"></td>
+      <td style="width: 20%">
+        <a href="{% url 'book_detail' pk=book.id_libri %}" class="a_meshume">View Details</a>
+        <br />
+        <a href="{% url 'book_update' pk=book.id_libri %}" class="a_meshume">Update</a><br />
+        <a href="{% url 'delete' pk=book.id_libri %}" class="a_meshume">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  {% else %}
+  <!-- nese nuk eshte i kyqur del pa pershendetje +stili -->
+  <h2>
+    You should be loged in and have admin premissions to access this page's
+    content
+  </h2>
+  {% endif %}
+</div>
+
+{% endblock content %}

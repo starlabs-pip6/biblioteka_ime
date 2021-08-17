@@ -355,7 +355,7 @@ def shfleto_view(request):
 '''This is a class based view that is used to create and process the user registration form'''
 class RegistationView(View):
     def get(self, request):
-        return render(request, 'libri_im/register.html')
+        return render(request, 'libri_im1/register1.html')
 
     '''The method that defines what happens if the request is a POST request.
        This method is used to: GET USER DATA, VALIDATE, create a user account'''
@@ -378,12 +378,12 @@ class RegistationView(View):
                 if len(password) < 8:
                     messages.warning(
                         request, 'Password is too short, it has to be at least 8 characters.')
-                    return render(request, 'libri_im/register.html', context)
+                    return render(request, 'libri_im1/register1.html', context)
                     '''Check if the password and confirm password are the same'''
                 if password != password2:
                     messages.warning(
                         request, 'Password and confirmation does not match.')
-                    return render(request, 'libri_im/register.html', context)
+                    return render(request, 'libri_im1/register1.html', context)
                 '''Create a new user from the submited data''' 
                 user = NewUser.objects.create_user(
                     email=email, username=username)
@@ -396,15 +396,15 @@ class RegistationView(View):
                 utils.send_email_activation(request,user)
                 messages.success(
                     request, 'Your account has been created succesfully. To use this account, activate it with the link that we have sent you by email.')
-                return render(request, 'libri_im/register.html')
+                return render(request, 'libri_im1/register1.html')
             else:
                 messages.warning(
                     request, f'Email: "{request.POST["email"]}" it\'s taken.')
-                return render(request, 'libri_im/register.html')
+                return render(request, 'libri_im1/register1.html')
         else:
             messages.warning(
                 request, f'Username: "{request.POST["username"]}" it\'s taken.')
-            return render(request, 'libri_im/register.html')
+            return render(request, 'libri_im1/register1.html')
 
 '''This is a class based view that handles the authentication of the activation token and redirects the user to the login page'''
 class VerificationView(View):
@@ -416,26 +416,26 @@ class VerificationView(View):
             if not account_activation_token.check_token(user, token):
                 messages.warning(
                     request, 'Your account has been activated before. You can log in.')
-                return redirect('login')
+                return redirect('login1')
             '''What happensn after activation'''
             if user.is_active:
-                return redirect('login')
+                return redirect('login1')
             user.is_active = True
             user.save()
 
             messages.success(
                 request, 'Your account has been activated. You can log in now.')
-            return redirect('login')
+            return redirect('login1')
 
         except Exception as ex:
             pass
 
-        return redirect('login')
+        return redirect('login1')
 
 '''This is a function based view that defines where to redirect the user after he logs out'''
 def logout_view(request):
     logout(request)
-    return redirect("login")
+    return redirect("home1")
 
 '''This is a function based view that defines the process of checking the data and logging in the user after data validation'''
 def login_view(request, *args, **kwargs):
@@ -473,7 +473,7 @@ def login_view(request, *args, **kwargs):
                 return redirect("home1")
         else:
             messages.warning(request, 'Email or password is wrong.')
-            return redirect('login')
+            return redirect('login1')
     else:
         form = UserAuthenticationForm()
     context['login_form'] = form
@@ -495,7 +495,7 @@ class BookCreateView(CreateView):
               'mes_vleresimit', 'nr_vleresimit', 'nr_faqeve', 'viti_publikimit', 'image_link']
 
     def get_success_url(self):
-        return reverse('admin_home')
+        return reverse('admin_home1')
    
 '''Takes the Book model and returns to the home.html page
 This class based view lists all the books that are saved in
@@ -668,7 +668,7 @@ class BookDV(View):
 
         }
 
-        return render(request,'libri_im/book-detail.html' , context)
+        return render(request,'libri_im1/book-detail1.html' , context)
 
     def post(self,request,isbn,*args,**kwargs):
         book = Book.objects.get(isbn=isbn)

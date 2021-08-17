@@ -1,4 +1,7 @@
 /* ----- animation on scroll -----*/
+body{
+   
+}
 .reveal{
     position:relative;
     transform:translateY(150px);
@@ -15,7 +18,8 @@
 
 .navBg {
     height: 60px;
-    background-color: rgba(0, 0, 0, 0.426);
+    background-color: #444;
+    color:#bbb;
   }
 
 /* ----- book card designs -----*/

@@ -34,10 +34,45 @@
             </div>
          
             <div class="nav-links">
-                <a href="{% url 'home' %}">Home</a>
+                <a href="{% url 'home1' %}">Home</a>
                 <a href="{% url 'home' %}">Discover</a>
-                <a href="{% url 'home' %}">Profile</a>
-                <a href="{% url 'login1' %}">Login/Register</a>
+              
+               
+                   
+                   
+                 
+              
+                {% if user.is_authenticated %}
+                <div class="dropdown ">
+                    <a href="{% url 'profile_page' %}" class="dropdownBg"
+                        ><img
+                          class="profileImg "
+                          src="{{request.user.profileImg.url}}" 
+                          alt="noImg"
+                      /></a>
+                      {% csrf_token %}
+                    <div class="dropdown-content " class="dropDownLink1">
+                        <a href="{% url 'home' %}" class="dropDownLink">Profile</a>
+                        <a href="{% url 'home' %}" class="dropDownLink">My books</a>
+                       
+                        {% if user.is_admin %}
+                        <a href="{% url 'create' %}" class="dropDownLink">Create</a>
+                        <a href="{% url 'admin_home1' %}" class="dropDownLink">Admin Home</a>
+                        {% endif %}
+                        <a href="{% url 'logout' %}" class="dropDownLink">Logout</a>
+                    </div>
+                </div>
+               
+                  {% else %}
+                  <a href="{% url 'login1' %}">Login/Register</a>
+                  {% endif %}
+
+                
+                
+
+                
+               
+              
             </div>
         </div>
     </div>

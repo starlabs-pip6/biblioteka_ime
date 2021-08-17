@@ -22,8 +22,10 @@ urlpatterns = [
     path('home1/', views.home1,name="home1"),
     path('home1/profile', views.ProfilePageViewDetails,name="profile"),
     path('login1/', views.login_view, name="login1"),
-    path('register1/',views.register1, name="register1"),
+   path('register1/', views.RegistationView.as_view(), name='register1'),
     path('discover1/',views.discover1, name="disover1"),
+    path('backend1/home1/',
+         BookListView.as_view(template_name="backend1/admin_home1.html"), name="admin_home1"),
     
 
     #Comment likes and dislikes and replies
