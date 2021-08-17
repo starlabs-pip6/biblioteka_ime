@@ -120,7 +120,15 @@ body{
     bottom: 0;
     position: absolute;
   }
-
+.triangle-wtr{
+    border-color: transparent transparent  #f0a68b transparent;
+}
+.triangle-read{
+    border-color: transparent transparent  #a0dd9c transparent;
+}
+.triangle-reading{
+    border-color: transparent transparent  #8fc0ed transparent;
+}
 .bookCardFrame:hover .cardImage {
     opacity:0.5;
     transition:all 0.2s ease;

@@ -49,24 +49,43 @@
         
       <div class="booksCategory">
        <div class="booksContainer">
-                  {% csrf_token %}
-                  {% for book in books %}
+            {% csrf_token %}
+            {% for book in books %}
+           
                   <div class="bookCardFrame">
-                    <div class="bookCard">
-                          <div class="imgContainer">
-                             <img src="{{ book.image_link}}" class="bookCard cardImage">
-                          </div>
-                          <p class="bookTitleAuthor"><span class="bookTitle">{{book.titulli|truncatechars:15}}</span><br>
-                                                                          - {{book.autori|truncatechars:15}}</p>
-                                                                          
-                          {% if  book.isbn not in wtrBooks %}
-                            <button id="buttonclick{{book.isbn}}" onclick="onClickFunction2('{{book.isbn}}')" class="cardButton loginButton">Want to read</button>
-                          {% else %}
-                           <button id="buttonclick{{book.isbn}}" onclick="onClickFunction2('{{book.isbn}}')" class="cardButton loginButton">Added</button>
-                          {% endif %}                                                
+
+                    {% if  book.isbn in readBooks %}
+                    <div id="triangle{{book.isbn}}" class="triangle triangle-read"></div>
+                    {% elif book.isbn in wtrBooks %}
+                    <div id="triangle{{book.isbn}}" class="triangle triangle-wtr"></div>
+                    {% elif  book.isbn in readingBooks %}
+                    <div id="triangle{{book.isbn}}" class="triangle triangle-reading"></div>
+                    {% else %}
+                    <div id="triangle{{book.isbn}}" class="triangle"></div>
+                    {% endif %}
+                    
+                    <a href="{% url 'book-detail' book.isbn %}"  style="text-decoration: none; color:black">
+                   
+                  
+                <div class="bookCard">
+                    <div class="imgContainer">
+                      <img src="{{ book.image_link}}" class="bookCard cardImage">
                     </div>
-                  </div>
-                  {% endfor %}
+                    <p class="bookTitleAuthor"><span class="bookTitle">{{book.titulli|truncatechars:15}}</span><br>
+                                                                    - {{book.autori|truncatechars:15}}</p>
+                      </a>
+                                                                    
+                    {% if  book.isbn not in wtrBooks %}
+                      <button id="buttonclick{{book.isbn}}" onclick="onClickFunction2('{{book.isbn}}')" class="cardButton loginButton">Want to read</button>
+                    {% else %}
+                    <button id="buttonclick{{book.isbn}}" onclick="onClickFunction2('{{book.isbn}}')" class="cardButton loginButton">Added</button>
+                    {% endif %}                                                
+                    
+                  
+                </div>
+            </div>
+        
+        {% endfor %}
          </div>
       
       <!-- <div class="content-list col-sm-2 col-md-3 ">
@@ -112,6 +131,7 @@
       // POST and GET methods for the Want to read button in every book cover
       function onClickFunction2(book){
         btnClickedId = "#buttonclick"+book
+        triangleId = "#triangle"+book
           $(document).on('click', btnClickedId, function(e) {
           e.preventDefault();
            });
@@ -134,8 +154,10 @@
                 // Change text in Want to read Button and vice-versa
                   if(json.added){
                     $(btnClickedId).text("Added")
+                    $(triangleId).attr('class','triangle triangle-wtr')
                   } else {
                     $(btnClickedId).text("Want to read")
+                    $(triangleId).attr('class','triangle')
                   }
               },
               failure: function(json) { 

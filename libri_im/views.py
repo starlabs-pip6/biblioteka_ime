@@ -355,6 +355,7 @@ def shfleto_view(request):
 def shfleto_view1(request):
     current_user = request.user
     books = Book.objects.all()
+    booksAll = Book.objects.all()
     query = request.GET.get('search')
     categoryQuery = request.GET.get('category_name')
     sortQuery =request.GET.get('sort_name')
@@ -400,14 +401,19 @@ def shfleto_view1(request):
             books = paginator.page(1)
     books1 = Book.objects.all()[0:10]
     # categories = books.viti_publikimit
+    wtrBooks = Sirtar.objects.get(emri="Want to read", id_user=current_user).books
+    readBooks = Sirtar.objects.get(emri="Read", id_user=current_user).books
+    readingBooks = Sirtar.objects.get(emri="Reading", id_user=current_user).books
+    print(wtrBooks)
     context = {
-        'books': books,
+        'books': booksAll,
         'books1': books1,
         'sortQuery' : sortQuery,
         'categoryQuery' : categoryQuery,
- 
-
-        #  'categories' : categories,
+        'wtrBooks': Sirtar.objects.get(emri="Want to read", id_user=current_user).books,
+        'readBooks': Sirtar.objects.get(emri="Read", id_user=current_user).books,
+        'readingBooks': Sirtar.objects.get(emri="Reading", id_user=current_user).books,
+        
     }
     return render(request, 'libri_im1/discover1.html', context)
 
@@ -1307,7 +1313,10 @@ def discover1(request):
         'books1': books1,
         'sortQuery' : sortQuery,
         'categoryQuery' : categoryQuery,
-        'wtrBooks' : Sirtar.objects.get(emri="Want to read", id_user=current_user).books
+        'wtrBooks' : Sirtar.objects.get(emri="Want to read", id_user=current_user).books,
+        'readBooks' : Sirtar.objects.get(emri="Read", id_user=current_user).books ,
+        'readingBooks' : Sirtar.objects.get(emri="Reading", id_user=current_user).books,
+
         #  'categories' : categories,
     }
     return render(request,'libri_im1/discover1.html',context)
