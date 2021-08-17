@@ -52,8 +52,8 @@
                       /></a>
                       {% csrf_token %}
                     <div class="dropdown-content " class="dropDownLink1">
-                        <a href="{% url 'home' %}" class="dropDownLink">Profile</a>
-                        <a href="{% url 'home' %}" class="dropDownLink">My books</a>
+                        <a href="{% url 'profile1' %}" class="dropDownLink">Profile</a>
+                        
                        
                         {% if user.is_admin %}
                         <a href="{% url 'create1' %}" class="dropDownLink">Create</a>
@@ -64,7 +64,7 @@
                 </div>
                
                   {% else %}
-                  <a href="{% url 'login1' %}">Login/Register</a>
+                  <a href="{% url 'login1' %}" class="NotInDropDown">Login/Register</a>
                   {% endif %}
 
                 
