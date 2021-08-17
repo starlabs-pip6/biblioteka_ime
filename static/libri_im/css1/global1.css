@@ -1,3 +1,12 @@
+.body {
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+.body::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+    scrollbar-width: none;
+}
+
 /* ----- animation on scroll -----*/
 .reveal{
     position:relative;
@@ -102,3 +111,50 @@
     line-height:150%;
 }
 /* banner style ends here */
+
+/* profile image css */
+.profile {
+  height: 50px;
+  width: 50px;
+  margin-right: 10px;
+}
+
+.profileImg{
+  height: 100%;
+  width: 100%;
+  clip-path: circle(40% at center);
+  object-fit: cover;
+  object-position: 0 0%;
+}
+/* profile image css ends here */
+
+
+/* the official mybutton */
+.mybutton {
+    background:    #f3722c;
+    border-radius: 3px;
+    padding:       10px 20px;
+    color:         #ffffff;
+    display:       inline-block;
+    text-align:    center;
+    outline: none;  
+    border: none;
+
+}
+/* the official mybutton end */
+
+
+.tabcontent {
+    min-height: 70vh;
+}
+
+
+
+.booksContainer{
+  --auto-grid-min-size: 11rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 1fr));
+  column-gap:20px;
+  row-gap: 10px;
+  justify-items: center;
+}

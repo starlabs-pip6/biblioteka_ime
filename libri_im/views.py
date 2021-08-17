@@ -352,6 +352,65 @@ def shfleto_view(request):
     }
     return render(request, 'libri_im/shfleto.html', context)
 
+def shfleto_view1(request):
+    current_user = request.user
+    books = Book.objects.all()
+    query = request.GET.get('search')
+    categoryQuery = request.GET.get('category_name')
+    sortQuery =request.GET.get('sort_name')
+    try:
+        books = Book.objects.all().order_by(request.GET['sort_name'])
+        page = request.GET.get('page', 1)
+        paginator = Paginator(books, 42)
+        try:
+            books = paginator.page(page)
+        except PageNotAnInteger:
+            books = paginator.page(1)
+    except MultiValueDictKeyError:
+        books = Book.objects.all()
+        page = request.GET.get('page', 1)
+        paginator = Paginator(books, 42)
+        try:
+            books = paginator.page(page)
+        except PageNotAnInteger:
+            books = paginator.page(1)
+
+    if query:
+        books = Book.objects.filter(Q(titulli__icontains=query) | (Q(autori__icontains=query)) | (
+            Q(isbn__icontains=query)) | (Q(kategoria__icontains=query)) | (Q(viti_publikimit__icontains=query)))
+        page = request.GET.get('page', 1)
+        paginator = Paginator(books, 42)
+        try:
+            books = paginator.page(page)
+        except PageNotAnInteger:
+            books = paginator.page(1)
+    if categoryQuery:
+        books = []
+        booksAll = Book.objects.all()
+        for book in booksAll:
+            for kategori in book.kategoria:
+                if categoryQuery in kategori:
+                    books.append(book)
+        books = list(set(books))
+        page = request.GET.get('page', 1)
+        paginator = Paginator(books, 42)
+        try:
+            books = paginator.page(page)
+        except PageNotAnInteger:
+            books = paginator.page(1)
+    books1 = Book.objects.all()[0:10]
+    # categories = books.viti_publikimit
+    context = {
+        'books': books,
+        'books1': books1,
+        'sortQuery' : sortQuery,
+        'categoryQuery' : categoryQuery,
+ 
+
+        #  'categories' : categories,
+    }
+    return render(request, 'libri_im1/discover1.html', context)
+
 '''This is a class based view that is used to create and process the user registration form'''
 class RegistationView(View):
     def get(self, request):
@@ -599,6 +658,7 @@ def ProfilePageViewDetails(request):
     for bookIsbn in WtrSirtar:
         WtrBooks.append(Book.objects.get(isbn=bookIsbn))
     
+    userFriends = Relation.objects.filter(Q(user1=current_user) | Q(user2=current_user)).filter(status=2)
     Read = ReadBooks
     Reading = ReadingBooks
     WantToRead = WtrBooks
@@ -611,6 +671,8 @@ def ProfilePageViewDetails(request):
         'readCount': len(Read),
         'readingCount': len(Reading),
         'wantToReadCount': len(WantToRead),
+        'userFriendsCount': len(userFriends),
+
         
 
     }
