@@ -1,20 +1,64 @@
 /* ----- Style of left half of login page ----- */
-.sectionLogin{
+*{
+    margin: 0;
+    font-family:"Montserrat", sans-serif;
+
+}
+.containerLogin{
     display:flex;
-    border:1px solid black;
+    justify-content: center;
+    align-items: center;
+    margin-top:7%;
+}
+.firstSecondHalfs{
+display:flex;
+
+}
+.sectionLogin{
+
+    width:70%;
+    box-shadow: 0px 1px 9px 1px rgba(0,0,0,0.20);
+    -webkit-box-shadow: 0px 1px 9px 1px rgba(0,0,0,0.20);
+    -moz-box-shadow: 0px 1px 9px 1px rgba(0,0,0,0.20);
 
 }
 .firstHalf{
-    flex:1;
-    height:907px;
+    
+   flex:1;
+   background-image:url("../images/welcomeBooks.jpg");
+   background-repeat: no-repeat;
+   background-attachment: fixed;
+   background-size:90% auto;
+ 
+    height:70vh;
 }
 .secondHalf{
-    flex:1;
-    background-color: #fff;
-    height:907px;
+   flex:1;
+   background-color: rgb(221, 221, 221);
+ 
+     
+    height:70vh;
 }
 
+.nav-links{
+    display:flex;
+    justify-content:flex-end;
+    align-items:right;
+    margin-right:2%;
+}
 
+.nav-links a{
+    text-decoration:none;
+    padding:3%;
+    color:rgb(77, 77, 77);
+    text-transform: uppercase;
+    font-weight:500;
+}
+.nav-links a:hover{
+    background-color:rgba(148, 147, 147, 0.192);
+    padding:3%;
+    color:black;
+}
 
 @import url('https://fonts.googleapis.com/css?family=Raleway:400,700,900');
 .loginInput {
@@ -24,21 +68,22 @@
     transition: transform 250ms ease-in-out;
     font-size: 14px;
     line-height: 18px;
-    color: #fff;
+    color: black;
     background-color: transparent;
     background-repeat: no-repeat;
     background-size: 32px 32px;
     background-position: 95% center;
-    border-radius: 0px;
-    border: 1px solid white;
+  
+    border: 1px solid black;
     transition: all 250ms ease-in-out;
     backface-visibility: hidden;
     transform-style: preserve-3d;
+    margin-top:5%;
 
 }
 
 .loginInput::placeholder {
-        color: rgba(255, 251, 251, 0.8);
+        color: rgba(39, 38, 38, 0.8);
         text-transform: uppercase;
         letter-spacing: 1.5px;
     }
@@ -48,7 +93,7 @@
         padding: 8px 8px;
         outline: 0;
         border: 1px solid transparent;
-        border-bottom: 1px solid white;
+        border-bottom: 1px solid black;
         border-radius: 0;
         background-position: 100% center;
     }
@@ -58,11 +103,14 @@
     justify-content: center;
     align-items:center;
     flex-direction: column;
-    margin-top:25%;
+    margin-top:16%;
+    margin-left:-5%;
     
 }
 .inputElement-login{
-  margin-top:3%;
+  margin-top:2%;
+  margin-left:-7%;
+ 
 }
 
 .pass-icon{
@@ -71,7 +119,7 @@
     position: relative;
     z-index: 5;
     font-size:15px;
-    color: white;
+    color: black;
     margin-right:1.5%;
 }
 
@@ -79,15 +127,15 @@ input[type="email"],
 input[type="password"],
 input[type="name"]{
           
-    width:100%;       
+    width:130%;       
 }
 .loginButton{
-    width:390%;
-    margin-left:-133%;
+    margin-top: 15px;
+    margin-left: 1.5%;
+    width: 37.5%;
 }
 #password, #password1{
-    width:93%;
-    margin-left:3%;
+    width:130%;  
 }
 
 
@@ -96,24 +144,21 @@ input[type="name"]{
 }
 
 .welcomeText{
-    margin-top:-5%;
+    
     margin-bottom:5%;
 }
 .welcomeParagraph{
     font-size:smaller;
     opacity:0.7;
 }
-.welcome{
-    display:flex;
-    align-items:center;
-    justify-content: center;
-    height:100%;
 
-}
 
 .welcomeMoto{
-    font-size: 60px;
-    margin-top:5%;
+    font-size: 45px;
+    margin-top:40%;
+    margin-left:4%;
     width:100%;
     text-align:left;
+    color:white;
+
 }

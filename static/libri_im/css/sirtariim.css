@@ -24,7 +24,7 @@
 .sirtariim-container > * {
   border-radius: 20px;
   border: 2px solid white;
-  padding: 20px 20px 0 20px;
+  padding: 0px 20px 0 20px;
   height: 70%;
   margin: 0 20px 0 20px;
 }
@@ -68,14 +68,14 @@
   font-size: 12px;
 }
 .text {
-  color: white;
+  color: black;
 }
 
 .nrlibrave-container {
   display: flex;
   justify-content: space-between;
-
-  padding: 20px;
+  flex-direction: row;
+  padding: 5px 50px;
 }
 
 .centerFlex {

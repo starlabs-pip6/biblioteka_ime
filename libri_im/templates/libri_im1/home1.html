@@ -2,19 +2,51 @@
 {% load static%}
 {% block content %} 
 <link rel="stylesheet" type="text/css"  href="{% static 'libri_im/css1/home1.css' %}">
+<link rel="stylesheet" type="text/css"  href="{% static 'libri_im/css/sirtariim.css' %}">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <div class="banner">
        
 </div>
     <div class="bannerCards">
         <div class="bannerCard">
+            {% if user.is_authenticated %}
+             <div class="centerFlex">
+                <div class="sirtaret text">
+                    <div class="nrlibrave-container">
+                        <div style="width:100%; display: flex; justify-content: center; align-items: center;">
+                        <h4>Your shelfs</h4>
+                    </div>
+                    </div>
+                   
+                    <div class="nrlibrave-container">
+                        <p>Want to read</p>
+                        <p id="wtrtext">{{dtlcount}}</p>
+                    </div>
+                    <div class="nrlibrave-container">
+                        <p>Reading</p>
+                        <p id="readingtext">{{dlcount}}</p>
+                    </div>
+                    <div class="nrlibrave-container">
+                        <p>Read</p>
+                        <p id="readtext">{{klcount}}</p>
+                    </div>
+                    <div style="display: flex; justify-content: center;" class="viewAll">
+                            <a id="viewAllLink" style="color:#f3722c; text-decoration: none" href="{% url 'profile_page_view' %}"><p>View all</p></a>
+                    </div>
+                 </div>
+             </div>
+            {% else %}
             <div class="bookIcon">
-                <i class="fas fa-book-open"></i>
+            <i class="fas fa-book-open"></i>
             </div>
             <div class="bannerCard-text">
                 <div class="text-Center">
                     <p> You can search and view books. You can add new friends in our Sirtari platform.</p>
                 </div>
             </div>
+            {% endif %}
+         
         </div>
         <div class="bannerCard">
             <div class="bookIcon">
@@ -41,28 +73,29 @@
         <div class="section-home reveal">
                 <h1 class="h1-latestBooks text-center">Latest books</h1>
             <div class="books-container ">
-                <div class="bookCard">
-                    <div class="cardText">Want to read</div>
+                {% csrf_token %}
+                {% for book in booksRandom %}
+                      <div class="bookCardFrame">
+                    <div class="bookCard">
+                        <div class="imgContainer">
+                           <img src="{{ book.image_link}}" class="bookCard cardImage">
+                        </div>
+                        <p class="bookTitleAuthor"><span class="bookTitle">{{book.titulli|truncatechars:15}}</span><br>
+                                                                        - {{book.autori|truncatechars:15}}</p>
+                                                                        
+                        {% if  book.isbn not in wtrBooks %}
+                          <button id="buttonclick{{book.isbn}}" onclick="onClickFunction('{{book.isbn}}')" class="cardButton loginButton">Want to read</button>
+                        {% else %}
+                         <button class="cardButton loginButton">Added</button>
+                        {% endif %}                                                
+                      
+                       
+                    </div>
                 </div>
-                <div class="bookCard">
-                    <div class="cardText">Want to read</div>
-                </div>
-                <div class="bookCard">
-                    <div class="cardText">Want to read</div>
-                </div>
-                <div class="bookCard">
-                    <div class="cardText">Want to read</div>
-                </div>
-                <div class="bookCard">
-                    <div class="cardText">Want to read</div>
-                </div>
-                <div class="bookCard">
-                    <div class="cardText">Want to read</div>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>
-
 
   <script type="text/javascript">
     window.addEventListener('scroll',reveal);
@@ -82,7 +115,151 @@
             }
         } 
     }
+
+
+
+    // Show modal for selecting the book that you want to show on "My shelf"
+    $(document).on('click', '#progressBooksButton', function(e) {
+          $('#progressBooksModal').modal('show')
+      });
+       
+    // POST and GET methods for the Select book to show button
+    function selectOnClick(isbn){
+      btnClickedId = "select" + isbn
+        $(document).on('click', btnClickedId, function(e) {
+          e.preventDefault();
+           });
+         $.ajax({
+          type: 'POST',
+          url:'{% url "post_selectBook" %}' ,
+          data: {
+              isbn: isbn,
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function() {
+            $.ajax({
+              url : '{% url "get_selectBook" %}',
+              type : "GET",
+              dataType: "json",
+              success: function(json) {
+                 $('#progressImg').attr("src",json.progressBookImage)
+                 $('#progressTitulli').text(json.progressLibriTitulli)
+                let progressNowPages = json.progressNowPages
+                let progressAllPages = json.progressAllPages
+                let progressPercent = json.progressPercent.toFixed(1)
+                let allString = ""+progressNowPages+"/"+progressAllPages+" pages or "+progressPercent+"%"
+                 $('#progressShowText').text(allString)
+              },
+              failure: function(json) { 
+                  alert('Got an error dude GET');
+              }
+            });    
+          
+          },
+          failure: function() {
+               alert('Got an error dude POST');
+          }
+          
+        });
+        $('#progressBooksModal').modal('hide')
+    }
+
+    // Show modal for updating the book current pages that is shown in "My shelf"
+      $(document).on('click', '#progressButton', function(e) {
+          $('#progressUpdateModal').modal('show')
+      });
+
+    // POST and GET methods for the Update button to show the changes of current progress pages
+      $(document).on('click', '#updateProgress', function(e) {
+           $.ajax({
+          type: 'POST',
+          url:'{% url "post_progress" %}' ,
+          data: {
+              progressPages: $('#progressInput').val(),
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function() {
+              $.ajax({
+              url : '{% url "get_progress" %}',
+              type : "GET",
+              dataType: "json",
+              success: function(json) {
+                let progressNowPages = json.progressNowPages
+                let progressAllPages = json.progressAllPages
+                let progressPercent = json.progressPercent.toFixed(1)
+                let imageLink = json.progressImage
+                let progressTitle = json.progressTitle
+                let allString = ""+progressNowPages+"/"+progressAllPages+" pages or "+progressPercent+"%"
+                if (json.finalString==""){
+                      $('#progressImg').attr("src", imageLink)
+                      $('#progressTitulli').text(progressTitle)
+                      $('#progressShowText').text(allString)
+                }
+                else {
+                    $('#dukelexuarprogress').html("<p>You should add books to the Reading shelf to show the progress.</p>")
+                }
+                  $('#readtext').text(json.readCount)
+                  $('#readingtext').text(json.readingCount)
+                
+              },
+              failure: function(json) { 
+                  alert('Got an error dude GET');
+              }
+            });    
+          }
+             
+        });
+          $('#progressInput').val(''),
+         $('#progressUpdateModal').modal('hide')
+      });
+
+       // POST and GET methods for the Want to read button in every book cover
+      function onClickFunction(book){
+        btnClickedId = "#buttonclick"+book
+          $(document).on('click', btnClickedId, function(e) {
+          e.preventDefault();
+           });
+          $.ajax({
+          type: 'POST',
+          url:'{% url "post_wtr" %}' ,
+          data: {
+              isbn: book,
+              csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+          },
+          success: function() {
+            $.ajax({
+              url : '{% url "get_wtr" %}',
+              type : "GET",
+              dataType: "json",
+              data: {
+                  isbn: book
+              },
+              success: function(json) {
+                // Change number in Want to read Counter
+                  $('#wtrtext').text(json.wtrCount.books.length)
+                  $('#readtext').text(json.readCount.books.length)
+                  $('#readingtext').text(json.readingCount.books.length)
+
+                // Change text in Want to read Button and vice-versa
+                  if(json.added){
+                    $(btnClickedId).text("Added")
+                  } else {
+                    $(btnClickedId).text("Want to read")
+                  }
+              },
+              failure: function(json) { 
+                  alert('Got an error dude GET');
+              }
+            });    
+          },
+          failure: function() {
+               alert('Got an error dude POST');
+          }
+        });
+        }
+
+
     </script>
 
-    
-{% endblock %}
+
+{% endblock %} 

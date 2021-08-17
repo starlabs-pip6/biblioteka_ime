@@ -40,8 +40,8 @@
 .bookCard{ 
     width:178px;
     height:250px;
-    background-color:blueviolet;
-    margin-top:3%;
+    background-color:black;
+    opacity:1;
     z-index: 1;
     position:relative;
     
@@ -56,25 +56,86 @@
     -moz-transition: all 0.2s linear;
     -o-transition: all 0.2s linear;
     transition: all 0.2s linear;
-    margin-top:250px;
+   
 	position:absolute;
 	background-color:white;
-    opacity:0.5;
+    opacity:0.9;
 	font-size: 15px;
 	line-height: 18px;
 	text-align:center;
 	color: black;
+    z-index:2;
 }
 
-.bookCard:hover .cardText{
-    margin-top:160px;
-    height:80px;
-	padding-top: 10px;
+.bookCard:hover .cardText {
+    margin-top:-60px;
+    height:60px;
+	
 }
 /* book card design ends here*/
 
+.bookCardFrame{
+    background-color: white;
+    border:0.5px solid rgb(221, 221, 221);
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    padding:0.7%;
+    padding-bottom:3%;
+    transition:all 0.2s ease;
+}
+.bookTitleAuthor{
+    font-size:small;
+    margin-top:1%;
+    margin-left:3%;
+}
+.bookTitle{
+    font-size:large;
+}
+.bookCardFrame:hover{
+    box-shadow: 0px 1px 9px 1px rgba(0,0,0,0.20);
+    -webkit-box-shadow: 0px 1px 9px 1px rgba(0,0,0,0.20);
+    -moz-box-shadow: 0px 1px 9px 1px rgba(0,0,0,0.20);
+    transition:all 0.2s ease;
+    
+    
+}
+.imgContainer{
+    width: 178px;
+    height: 250px;
+}
 
+.cardImage{
 
+}
+
+.bookCardFrame:hover .cardImage {
+    opacity:0.5;
+    transition:all 0.2s ease;
+    
+    
+}
+
+.bookCardFrame:hover {
+    transform: scale(1.02);
+}
+
+.bookCardFrame:hover  .cardButton{
+    opacity:1;
+    
+    transition:all 0.2s ease;
+}
+.cardButton:hover{
+    background-color:#d0d0d7;
+}
+
+.cardImage::after{
+    transition: all 2s ease;
+    opacity:0;
+}
+.cardImage:hover::after{
+    opacity:1;
+}
 .bannerCard{
     width:400px;
     height:270px;
@@ -88,6 +149,28 @@
     flex-direction: column;
     
 }
+.cardButton{
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:80%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    align-items: center;
+    z-index:2;
+    opacity:0;
+    background-color:#e9e9ed;
+	border-radius:4px;
+	border:1px solid #5e5e5e;
+	display:inline-block;
+	cursor:pointer;
+	
+	padding:4px 4px;
+	text-decoration:none;
+	
+    
+}
+
 .bookIcon{
     display:flex;
     align-items: center;
@@ -96,7 +179,7 @@
 }
 .fa-book-open, .fa-user-friends, .fa-comments{
     font-size:50px;
-    
+
 }
 .bannerCard-text{
     display:flex;
@@ -157,4 +240,8 @@
   column-gap:20px;
   row-gap: 10px;
   justify-items: center;
+
+.mybutton{
+    margin-top:8%;
+    padding:3%;
 }
