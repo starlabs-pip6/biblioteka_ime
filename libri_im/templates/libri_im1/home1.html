@@ -161,10 +161,18 @@
             <div class="books-container ">
                 {% csrf_token %}
                 {% for book in booksRandom %}
+                <a href="{% url 'book-detail' book.isbn %}"  style="text-decoration: none; color:black">
                       <div class="bookCardFrame">
-                        <div class="triangle">
+                        {% if  book.isbn not in wtrBooks %}
+                        <div id="triangle{{book.isbn}}" class="triangle">
                           
                         </div>
+                      {% else %}
+                      <div id="triangle{{book.isbn}}" class="triangle triangle-wtr">
+                          
+                      </div>
+                      {% endif %} 
+                       
                     <div class="bookCard">
                         <div class="imgContainer">
                            <img src="{{ book.image_link}}" class="bookCard cardImage">
@@ -175,12 +183,13 @@
                         {% if  book.isbn not in wtrBooks %}
                           <button id="buttonclick{{book.isbn}}" onclick="onClickFunction('{{book.isbn}}')" class="cardButton loginButton">Want to read</button>
                         {% else %}
-                         <button class="cardButton loginButton">Added</button>
+                         <button id="buttonclick{{book.isbn}}" onclick="onClickFunction('{{book.isbn}}')" class="cardButton loginButton">Added</button>
                         {% endif %}                                                
                         
                        
                     </div>
                 </div>
+              </a>
                 {% endfor %}
             </div>
         </div>
@@ -305,6 +314,7 @@
        // POST and GET methods for the Want to read button in every book cover
       function onClickFunction(book){
         btnClickedId = "#buttonclick"+book
+        triangleId = "#triangle"+book
           $(document).on('click', btnClickedId, function(e) {
           e.preventDefault();
            });
@@ -332,8 +342,11 @@
                 // Change text in Want to read Button and vice-versa
                   if(json.added){
                     $(btnClickedId).text("Added")
+                    $(triangleId).attr('class','triangle triangle-wtr')
+
                   } else {
                     $(btnClickedId).text("Want to read")
+                    $(triangleId).attr('class','triangle')
                   }
               },
               failure: function(json) { 
