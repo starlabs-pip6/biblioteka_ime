@@ -23,11 +23,11 @@
       <td>{{ book.autori }}</td>
       <td>{{ book.viti_publikimit }}</td>
       <td><img src="{{book.image_link}}"></td>
-      <td style="width: 20%">
-        <a href="{% url 'book_detail' pk=book.id_libri %}" class="a_meshume">View Details</a>
-        <br />
-        <a href="{% url 'book_update' pk=book.id_libri %}" class="a_meshume">Update</a><br />
-        <a href="{% url 'delete' pk=book.id_libri %}" class="a_meshume">Delete</a>
+      <td style="width: 20%"><br>
+        <a href="{% url 'book_detail1' pk=book.id_libri %}" class="btn btn-dark">View Details</a>
+        <br /> <br>
+        <a href="{% url 'book_update1' pk=book.id_libri %}" class="btn btn-warning">Update</a><br /><br>
+        <a href="{% url 'delete1' pk=book.id_libri %}" class="btn btn-danger">Delete</a><br>
       </td>
     </tr>
     {% endfor %}

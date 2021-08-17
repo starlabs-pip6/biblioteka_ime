@@ -1,0 +1,62 @@
+{% extends 'libri_im1/base1.html' %} {% load static %} {% block content %}
+<link rel="stylesheet" type="text/css"  href="{% static 'libri_im/css1/updateBook1.css' %}">
+<div class="navBg"></div>
+{% if user.is_authenticated and user.is_admin %}
+<h1 style="text-align:center; margin-top:3%;">Add new book</h1>
+<div class="UpdateBookForm"> 
+ 
+      <form method="POST" class="updateBook">
+        {% csrf_token %}
+        <div class="inputElement">
+          <label  for="isbn">Isbn</label>
+          <input class="updateInput"  type="number" name = "isbn" id="isbn" >
+        </div>
+        <div class="inputElement">
+          <label  for="titulli">Title</label>
+          <input class="updateInput"  type="text" name = "titulli" id="titulli" >
+        </div>
+        <div class="inputElement">
+          <label  for="autori">Author</label>
+          <input class="updateInput"  type="text" name = "autori" id="autori" >
+        </div>
+        <div class="inputElement">
+          <label  for="kategoria">Category</label>
+          <input class="updateInput"  type="text" name = "kategoria" id="kategoria" >
+        </div>
+        <div class="inputElement">
+        <label  for="pershkrimi">Description</label>
+        <textarea name="pershkrimi" class="updateInput"  id="pershkrimi" rows="5" ></textarea>
+      </div>
+      <div class="inputElement">
+        <label  for="mes_vleresimit">Average rating</label>
+        <input class="updateInput"  type="number" name = "mes_vleresimit" id="mes_vleresimit" >
+      </div>
+      <div class="inputElement">
+        <label  for="nr_vleresimit">Number of ratings</label>
+        <input class="updateInput" type="number" name = "nr_vleresimit" id="nr_vleresimit" >
+      </div>
+      <div class="inputElement"> 
+        <label  for="nr_faqeve">Number of pages</label>
+        <input class="updateInput"  type="number" name = "nr_faqeve" id="nr_faqeve" >
+      </div>
+      <div class="inputElement">
+        <label  for="viti_publikimit">Published year</label>
+        <input class="updateInput"  type="number" name = "viti_publikimit" id="viti_publikimit" >
+      </div>
+      <div class="inputElement">
+        <label  for="image_link">Image link</label>
+        <input class="updateInput"  type="text" name = "image_link" id="image_link" value="https://www.directtextbook.com/medium/">
+      </div>
+
+      <div class="inputElement" style="margin-left:43%;">
+        <button type="submit" class="btn btn-dark" style=" padding:3% 5%;">Add</button>
+      </div>
+</form>
+</div>
+{% else %}
+<h2>
+  You should be loged in and have admin premissions to access this page's
+  content
+</h2>
+{% endif %}
+{% endblock content%}

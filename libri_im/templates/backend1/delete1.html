@@ -1,0 +1,16 @@
+{% extends 'libri_im1/base1.html' %} {% load static %} {% block content %}
+<div class="navBg"></div>
+<link rel="stylesheet" type="text/css"  href="{% static 'libri_im/css1/delete1.css' %}">
+ 
+        <form method="POST">
+            {% csrf_token %}
+         <h1 style="text-align:center; margin-top:3%;">Delete Book</h1>
+                <h2 style="text-align:center; margin-top:3%;">Are you sure you want to delete book titled <br>"{{ object.titulli }}"</h2>
+            </fieldset>
+            <div  class="deleteBooks"> 
+                <button type="submit" class="btn btn-danger" style="margin-right:10px;margin-top:10px;">Yes</button>
+                <a href="{% url 'admin_home1'   %}"    class="btn btn-secondary" style="margin-top:10px;">Cancel</a>
+            </div>
+        </form>
+    
+{% endblock content %}

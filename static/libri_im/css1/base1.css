@@ -42,10 +42,10 @@ body{
 }
 
 .nav-links a:hover{
-    background-color:rgba(230, 230, 230, 0.192);
+    background-color:rgba(97, 97, 97, 0.877);
     margin-top:10px;
     padding:10px;
-    color:#fff;
+    color:white;
 }
 .nav-logo {
     height: 50px;
@@ -71,7 +71,10 @@ body{
     align-items: center;
 }
 
+.NotInDropDown:hover{
+  background-color:rgba(230, 230, 230, 0.192) !important;
 
+}
 .dropbtn {
     background-color: transparent !important;
     color: white;
@@ -88,20 +91,23 @@ body{
     height: 50px;
     width: 50px;
     margin-top:7px;
+    margin-left:20px;
+    
   }
  
   .dropdown-content {
     display: none;
     position: absolute;
-    background-color: rgba(230, 230, 230, 0.192);
+    background-color: white;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
     padding-top:0;
+    right:0;
   }
   
   .dropdown-content a {
-    color: white;
+    color: #444;
     padding-top:0;
     text-decoration: none;
     display: block;
@@ -139,6 +145,7 @@ body{
     clip-path: circle(40% at center);
     object-fit: cover;
     object-position: 0 0%;
+    
   }
   .dropdownBg:hover {
       background-color: transparent !important;

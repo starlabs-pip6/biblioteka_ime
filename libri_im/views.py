@@ -579,10 +579,10 @@ it returns you to admin_home'''
 class BookDeleteView(DeleteView):
     model = Book
     success_url = '/'
-    template_name = 'backend/delete.html'
+    template_name = 'backend1/delete1.html'
 
     def get_success_url(self):
-        return reverse('admin_home')
+        return reverse('admin_home1')
 
 '''This class based view helps you to edit informations of a specific book, it takes fields that are
 declared below at variable fields and after clicking save it redirects you to admin_home '''
@@ -590,10 +590,10 @@ class EditBook(UpdateView):
     model = Book
     fields = ['isbn', 'titulli', 'autori', 'kategoria', 'pershkrimi',
               'mes_vleresimit', 'nr_vleresimit', 'nr_faqeve', 'viti_publikimit', 'image_link']
-    template_name = 'libri_im/backend/addbook.html'
+    template_name = 'libri_im1/backend1/book_update1.html'
 
     def get_success_url(self):
-        return reverse('admin_home')
+        return reverse('admin_home1')
 
 '''This is a class based view that shows to the user their data like Username, Email, Profile pic and registration date'''
 class ProfilePageView(DetailView):

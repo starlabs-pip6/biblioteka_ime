@@ -23,10 +23,17 @@ urlpatterns = [
     path('home1/profile', views.ProfilePageViewDetails,name="profile1"),
     path('login1/', views.login_view, name="login1"),
    path('register1/', views.RegistationView.as_view(), name='register1'),
-    path('discover1/',views.discover1, name="disover1"),
+    path('discover1/',views.discover1, name="discover1"),
     path('backend1/home1/',
          BookListView.as_view(template_name="backend1/admin_home1.html"), name="admin_home1"),
-    
+    path('backend1/book1/<int:pk>/', BookDetailView.as_view(
+        template_name="backend1/book_detail1.html"), name='book_detail1'),
+      path('backend1/book1/update1/<int:pk>/',
+         EditBook.as_view(template_name="backend1/book_update1.html"), name='book_update1'),
+      path('backend1/book1/create1/',
+         BookCreateView.as_view(template_name="backend1/book_create1.html"), name='create1'),
+          path('backend1/book1/delete1/<int:pk>/',
+         BookDeleteView.as_view(template_name="backend1/delete1.html"), name='delete1'),
 
     #Comment likes and dislikes and replies
     path('libri/<str:isbn>/comment/<int:pk>/reply', CommentReplyView.as_view(), name="comment-reply"), 

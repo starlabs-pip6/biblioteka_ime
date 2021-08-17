@@ -1,0 +1,45 @@
+.UpdateBookForm{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.inputElement{
+    margin-bottom:5%;
+   
+}
+.updateBook{
+    width:40%;
+}
+.updateInput{
+    width: 100%;
+    padding: 8px 8px ;
+    background-color: transparent;
+    transition: transform 250ms ease-in-out;
+    font-size: 14px;
+    line-height: 18px;
+    color: black;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 32px 32px;
+    background-position: 95% center;
+  
+    border: 1px solid black;
+    transition: all 250ms ease-in-out;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    
+}
+.updateInput::placeholder {
+    color: rgba(39, 38, 38, 0.8);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+.updateInput:hover,
+.updateInput:focus {
+    padding: 8px 8px;
+    outline: 0;
+    border: 1px solid transparent;
+    border-bottom: 1px solid black;
+    border-radius: 0;
+    background-position: 100% center;
+}

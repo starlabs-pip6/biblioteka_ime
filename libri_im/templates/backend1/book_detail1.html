@@ -1,0 +1,48 @@
+{% extends 'libri_im1/base1.html' %} {% load static %} {% block content %}
+
+<div class="navBg"></div>
+
+<div>
+  <h1 style="text-align:center; margin-top:3%; margin-bottom:3%">Details of book  '{{ object.titulli }}'</h1>
+  {% if user.is_authenticated %}
+  <!-- nese eshte useri i kyqt ateher del pershendetja + stili i frontendit-->
+   
+  {% else %}
+  <!-- nese nuk eshte i kyqur del pa pershendetje +stili -->
+  {% endif %}
+ 
+       
+          <table class="table table-hover" >
+            <tr>
+              <th>ISBN</th>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Categorie</th> 
+              <th>Description</th> 
+              <th>Avg.rate</th> 
+              <th>No. ratings</th> 
+              <th>No. pages</th> 
+              <th>Published Year</th> 
+              <th>Image</th>
+            </tr>
+       
+            <tr>
+             
+              <td>{{ object.isbn }}</td>
+              <td>{{ object.titulli }}</td>
+              <td>{{ object.autori }}</td>
+              <td>{{ object.kategoria }}</td> 
+              <td style="width:27%">{{ object.pershkrimi }}</td> 
+              <td>{{ object.mes_vleresimit }}</td> 
+              <td>{{ object.nr_vleresimit }}</td> 
+              <td>{{ object.nr_faqeve }}</td> 
+              <td>{{ object.viti_publikimit }}</td> 
+              <td><img src="{{object.image_link}}"></td>
+             
+            </tr>
+         
+          </table>
+ 
+</div>
+
+{% endblock content %}

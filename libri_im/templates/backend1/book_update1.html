@@ -1,0 +1,56 @@
+{% extends 'libri_im1/base1.html' %} {% load static %} {% block content %}
+<link rel="stylesheet" type="text/css"  href="{% static 'libri_im/css1/updateBook1.css' %}">
+<div class="navBg"></div>
+
+<h1 style="text-align:center; margin-top:3%;">Update book</h1>
+<div class="UpdateBookForm"> 
+ 
+      <form method="POST" class="updateBook">
+        {% csrf_token %}
+        <div class="inputElement">
+          <label  for="isbn">Isbn</label>
+          <input type="number" class="updateInput"  name = "isbn" id="isbn" value="{{ book.isbn }}">
+        </div>
+        <div class="inputElement">
+          <label  for="titulli">Title</label>
+          <input type="text" class="updateInput" name = "titulli" id="titulli" value="{{ book.titulli }}">
+        </div>
+        <div class="inputElement">
+          <label  for="autori">Author</label>
+          <input type="text"  class="updateInput" name = "autori" id="autori" value="{{ book.autori }}">
+        </div>
+        <div class="inputElement">
+          <label  for="kategoria">Category</label>
+          <input type="text" class="updateInput" name = "kategoria" id="kategoria"value="{{ book.kategoria }}" >
+        </div>
+        <div class="inputElement">
+        <label  for="pershkrimi">Description</label>
+        <textarea name="pershkrimi" class="updateInput" id="pershkrimi" rows="5" > {{ book.pershkrimi }}</textarea>
+      </div>
+      <div class="inputElement">
+        <label  for="mes_vleresimit">Average rating</label>
+        <input type="number" class="updateInput" name = "mes_vleresimit" id="mes_vleresimit" value="{{ book.mes_vleresimit }}">
+      </div>
+      <div class="inputElement">
+        <label  for="nr_vleresimit">Number of ratings</label>
+        <input type="number" class="updateInput" name = "nr_vleresimit" id="nr_vleresimit"value="{{ book.nr_vleresimit }}" >
+      </div>
+      <div class="inputElement">
+        <label  for="nr_faqeve">Number of pages</label>
+        <input type="number" class="updateInput" name = "nr_faqeve" id="nr_faqeve" value="{{ book.nr_faqeve }}">
+      </div>
+      <div class="inputElement">
+        <label  for="viti_publikimit">Published year</label>
+        <input type="number" class="updateInput" name = "viti_publikimit" id="viti_publikimit"value="{{ book.viti_publikimit }}" >
+      </div>
+      <div class="inputElement">
+        <label  for="image_link">Image link</label>
+        <input type="text" class="updateInput" name = "image_link" id="image_link" value="{{ book.image_link }}">
+      </div>
+
+        <div class="inputElement" style="margin-left:43%;">
+          <button type="submit" class="btn btn-dark" style=" padding:3% 5%;">Save</button>
+        </div>
+</form>
+</div>
+{% endblock content%}
