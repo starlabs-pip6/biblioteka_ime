@@ -75,13 +75,14 @@
 /* book card design ends here*/
 
 .bookCardFrame{
+    position: relative;
     background-color: white;
     border:0.5px solid rgb(221, 221, 221);
     display:flex;
     justify-content: center;
     align-items: center;
-    padding:0.7%;
-    padding-bottom:3%;
+    padding:10px;
+    padding-bottom:55px;
     transition:all 0.2s ease;
 }
 .bookTitleAuthor{
@@ -105,9 +106,16 @@
     height: 250px;
 }
 
-.cardImage{
-
-}
+.triangle {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 0px 20px 20px;
+    border-color: transparent transparent  #d0d0d7 transparent;
+    right: 0;
+    bottom: 0;
+    position: absolute;
+  }
 
 .bookCardFrame:hover .cardImage {
     opacity:0.5;
@@ -122,7 +130,6 @@
 
 .bookCardFrame:hover  .cardButton{
     opacity:1;
-    
     transition:all 0.2s ease;
 }
 .cardButton:hover{
@@ -170,6 +177,19 @@
 	
     
 }
+.normalButton {
+    align-items: center;
+    z-index:2;
+    color: white;
+    background-color:#ff9879;
+	border-radius:4px;
+	border:0px solid #5e5e5e; 
+	display:inline-block;
+	cursor:pointer;
+	padding:4px 10px;
+	text-decoration:none;
+	
+}
 
 .bookIcon{
     display:flex;
@@ -214,7 +234,7 @@
 
 /* the official mybutton */
 .mybutton {
-    background:    #f3722c;
+    background:    #ff9879;
     border-radius: 3px;
     padding:       10px 20px;
     color:         #ffffff;
@@ -237,10 +257,10 @@
   --auto-grid-min-size: 11rem;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 1fr));
-  column-gap:20px;
-  row-gap: 10px;
+  column-gap:50px;
+  row-gap: 30px;
   justify-items: center;
-
+}
 .mybutton{
     margin-top:8%;
     padding:3%;
