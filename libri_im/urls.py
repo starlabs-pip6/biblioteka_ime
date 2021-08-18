@@ -2,7 +2,7 @@ from collections import namedtuple
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from .views import CommentEditView,CommentDeleteView,BookCreateView, BookListView, BookDetailView, BookDeleteView, EditBook, ProfilePageView, EditProfile, BookDV,AddCommentDislike,AddCommentLike,CommentReplyView,AddChildCommentDislike,AddChildCommentLike,ProfileDetailView, send_friend_request
+from .views import CommentEditView,CommentDeleteView,BookCreateView, BookListView, BookDetailView, BookDeleteView, EditBook, ProfilePageView, EditProfile, BookDV,AddCommentDislike,AddCommentLike,CommentReplyView,AddChildCommentDislike,AddChildCommentLike,ProfileDetailView, send_friend_request,inbox
 
 
 urlpatterns = [
@@ -22,6 +22,14 @@ urlpatterns = [
     path('home1/', views.home1,name="home1"),
     path('home1/profile', views.ProfilePageViewDetails,name="profile"),
     path('home1/login', views.login1, name="login1"),
+
+
+    # path('direct/<str:curruser>', views.TemporaryDirectView ,name="tempdirectt"),
+    path('directs/', views.inbox, name='inbox'),
+   	# path('directs/<username>', Directs, name='directs'),
+   	# path('directs/new/', UserSearch, name='usersearch'),
+   	# path('directs/new/<username>', NewConversation, name='newconversation'),
+   	# path('directs/send/', SendDirect, name='send_direct'),
     
 
     #Comment likes and dislikes and replies

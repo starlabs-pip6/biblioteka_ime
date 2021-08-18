@@ -1,10 +1,11 @@
-
 from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db.models.deletion import CASCADE
 from django.urls import reverse
+
+from django.db.models import Max
 
 
 # Books Model
@@ -244,3 +245,40 @@ class Event(models.Model):
     
     def endDate(self):
         return self.end_date.strftime('%Y/%m/%d')
+
+
+class Message(models.Model):
+	user = models.ForeignKey(NewUser, on_delete=models.CASCADE, related_name='msguser')
+	sender = models.ForeignKey(NewUser, on_delete=models.CASCADE, related_name='from_user')
+	recipient = models.ForeignKey(NewUser, on_delete=models.CASCADE, related_name='to_user')
+	body = models.TextField(max_length=1000, blank=True, null=True)
+	date = models.DateTimeField(auto_now_add=True)
+	is_read = models.BooleanField(default=False)
+
+	def send_message(from_user, to_user, body):
+		sender_message = Message(
+			user=from_user,
+			sender=from_user,
+			recipient=to_user,
+			body=body,
+			is_read=True)
+		sender_message.save()
+
+		recipient_message = Message(
+			user=to_user,
+			sender=from_user,
+			body=body,
+			recipient=from_user,)
+		recipient_message.save()
+		return sender_message
+
+	def get_messages(user):
+		messages = Message.objects.filter(user=user).values('recipient').annotate(last=Max('date')).order_by('-last')
+		users = []
+		for message in messages:
+			users.append({
+				'user': NewUser.objects.get(pk=message['recipient']),
+				'last': message['last'],
+				'unread': Message.objects.filter(user=user, recipient__pk=message['recipient'], is_read=False).count()
+				})
+		return users

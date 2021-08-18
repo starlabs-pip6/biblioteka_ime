@@ -1,5 +1,7 @@
+from django import template
+from django.template import loader
 from libri_im.friend_request_status import FriendRequestStatus
-from django.utils.datastructures import MultiValueDictKeyError
+from django.utils.datastructures import DictWrapper, MultiValueDictKeyError
 from django import forms
 from django.http.response import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -12,7 +14,7 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 from .serializers import LibratSerializer, UsersSerializer, SirtarSerializer, ProgressSerializer
-from .models import Book, Event, FriendList, FriendRequest, NewUser, Progress, Sirtar,Comment, Relation
+from .models import Book, Event, FriendList,Message, FriendRequest, NewUser, Progress, Sirtar,Comment, Relation
 from .forms import NewCommentForm, RegistrationForm, UserAuthenticationForm, MyPasswordChangeForm
 from django.views.generic import (CreateView,
                                   ListView,
@@ -1161,3 +1163,61 @@ def getEvents(request):
         }
         return Response(data)
     return HttpResponse("GET Failed")
+
+
+
+def inbox(request):
+    user = request.user
+    messages = Message.get_messages(user=user)
+    active_direct = None
+    directs = None
+
+    if messages:
+        message = messages[0]
+        active_direct = message['user'].username
+        directs = Message.objects.filter(user=user, recipient=message['user'])
+        directs.update(is_read=True)
+
+        for message in messages:
+            if message['user'].username == active_direct:
+                message['unread'] = 0
+        
+    context = {
+        'directs':directs,
+        'messages':messages,
+        'active_direct':active_direct
+    }
+
+    template = loader.get_template('libri_im/direct.html')
+
+    return HttpResponse(template.render(context,request))
+
+
+# def TemporaryDirectView(request,username,*args,**kwargs):
+#     user = request.user
+#     messages = Message.get_messages(user=user)
+#     active_direct = username
+#     directs = Message.Objects.filter(user=user,recipient__username=username)
+#     directs.update(is_read=True)
+
+#     for message in messages:
+#         if message['user'].username == username:
+#             message['unread'] = 0
+
+#     context = {
+#         'directs':directs,
+#         'messages':messages,
+#         'active_direct':active_direct,
+#     }
+
+#     template = loader.get_template('libri_im/actualdirect.html')
+
+#     return HttpResponse(template.render(context,request))
+
+
+    # users = NewUser.objects.all()
+    # context = {
+    #     'currentuser':current_user,
+    #     'users':users
+    # }
+    # return render(request,'libri_im/actualdirect.html',context)

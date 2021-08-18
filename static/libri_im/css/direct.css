@@ -1,0 +1,88 @@
+.inbox-border {
+    border: 1px solid white;
+    border-radius: 0.2rem;
+    width:500px;
+    margin-left:60px !important;
+}
+
+.inbox-div {
+    overflow-y: scroll;
+    height: 90vh;
+    width: 500px;
+    padding-top:10px;
+}
+/* width */
+.inbox-div::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Track */
+.inbox-div::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  .inbox-div::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  .inbox-div::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
+  .iu-container {
+      padding-left:10px;
+      padding-top:3px;
+  }
+
+  .iu-img {
+      width:60px;
+      height:60px;
+  }
+
+  .iu-name {
+    margin-top: 13px;
+    margin-left: 10px;
+  }
+
+  .iu-lastmessage {
+      font-size:small;
+  }
+
+  .iu-lastmessage-div {
+    margin-top: -20px;
+    margin-left: 80px;
+}
+.messagebox-container {
+    margin-left:10px ;
+    height: 64.5vh;
+    width:1500px;
+    overflow-y: scroll;
+}
+.messagebox-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+/* Track */
+.messagebox-container::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
+  /* Handle */
+  .messagebox-container::-webkit-scrollbar-thumb {
+    background: #888; 
+  }
+  
+  /* Handle on hover */
+  .messagebox-container::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
+.mb-border {
+    border:1px solid white;
+    border-radius: 0.3rem;
+    height: 65vh;
+    width:1511.5px;
+    margin-left:10px;
+}

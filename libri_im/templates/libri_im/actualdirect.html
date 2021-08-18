@@ -1,0 +1,89 @@
+{% extends 'libri_im/base.html' %}
+
+{% load static %}
+
+
+{% block content %}
+
+<link rel="stylesheet" type=text/css href="{% static 'libri_im/css/direct.css' %}"> 
+
+
+<div class="startmsgtextdiv">
+    <h1 style="font-size: xx-large; margin-left:150px">
+        Messages {{currentuser}}
+    </h1>
+</div>
+
+<div class="inbox-border" style="float:left">
+<div class="inbox-div">
+    {% for user in users %}
+    <div class="iu-mastercontainer">
+    <div class="iu-container d-flex flex-row">
+        <div class="iu-img-div">    
+            <img class="rounded-circle shadow-6 img-fluid iu-img" src="{{user.profileImg.url}}" >
+        </div>
+        <div class="iu-name-div">
+            <p class="iu-name">{{user.username}} - {{ user.email }}</p>
+        </div>
+    </div>
+    <div class="iu-lastmessage-div">
+        <p class="iu-lastmessage">Last seen online:&nbsp; {{user.last_login}}</p>
+    </div>
+</div>
+
+{% endfor %}
+{% for user in users %}
+    <div class="iu-mastercontainer">
+    <div class="iu-container d-flex flex-row">
+        <div class="iu-img-div">    
+            <img class="rounded-circle shadow-6 img-fluid iu-img" src="{{user.profileImg.url}}" >
+        </div>
+        <div class="iu-name-div">
+            <p class="iu-name">{{user.username}} - {{ user.email }}</p>
+        </div>
+    </div>
+    <div class="iu-lastmessage-div">
+        <p class="iu-lastmessage">Last seen online:&nbsp; {{user.last_login}}</p>
+    </div>
+</div>
+
+{% endfor %}
+{% for user in users %}
+    <div class="iu-mastercontainer">
+    <div class="iu-container d-flex flex-row">
+        <div class="iu-img-div">    
+            <img class="rounded-circle shadow-6 img-fluid iu-img" src="{{user.profileImg.url}}" >
+        </div>
+        <div class="iu-name-div">
+            <p class="iu-name">{{user.username}} - {{ user.email }}</p>
+        </div>
+    </div>
+    <div class="iu-lastmessage-div">
+        <p class="iu-lastmessage">Last seen online:&nbsp; {{user.last_login}}</p>
+    </div>
+</div>
+
+{% endfor %}
+</div>
+</div>
+
+<div class="mb-border" style="float: left;">    
+    <div class="messagebox-container">
+       
+    </div>
+</div>
+
+
+
+
+
+{% for message in messages %}
+
+{% endfor %}
+
+
+
+    
+
+
+{% endblock %}
