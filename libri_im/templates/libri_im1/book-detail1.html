@@ -1,8 +1,9 @@
 {% extends 'libri_im1/base1.html' %} 
 {% load static %} 
 {% block content %}
-
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+ 
 <link rel="stylesheet" type=text/css  href="{% static 'libri_im/css1/mybooks1.css' %}">
 <link rel="stylesheet" type=text/css  href="{% static 'libri_im/css1/book-detail1.css' %}">
 
@@ -31,23 +32,23 @@
             <label for="star2" title="text">2 stars</label>
             <input type="radio" id="star1" name="rate" value="1" />
             <label for="star1" title="text">1 star</label>
-          </div>
+          </div><br><br>
         <div class="book_detail_button">
             {% if user.is_authenticated %}
             {% if book.isbn in wtrBooks %}
-            <button onclick="onClickFunctionWtr( book='{{ book.isbn }}');" id="clickWtr" class="mybutton fixedWidth">✓ Want to read</button>
+            <button onclick="onClickFunctionWtr( book='{{ book.isbn }}');" id="clickWtr" class="btn btn-dark bdbutton">✓ Want to read</button>
             {% else %}
-            <button onclick="onClickFunctionWtr( book='{{ book.isbn }}');" id="clickWtr" class="mybutton fixedWidth">Want to read</button>
+            <button onclick="onClickFunctionWtr( book='{{ book.isbn }}');" id="clickWtr" class="btn btn-dark bdbutton">Want to read</button>
             {%endif%}
             {% if book.isbn in readingBooks %}
-            <button onclick="onClickFunction( book='{{ book.isbn }}');" id="clickReading" class="mybutton fixedWidth">✓ Reading</button>
+            <button onclick="onClickFunction( book='{{ book.isbn }}');" id="clickReading" class="btn btn-dark bdbutton">✓ Reading</button>
             {% else %}
-            <button onclick="onClickFunction( book='{{ book.isbn }}');" id="clickReading" class="mybutton fixedWidth" >Reading</button>
+            <button onclick="onClickFunction( book='{{ book.isbn }}');" id="clickReading" class="btn btn-dark bdbutton" >Reading</button>
             {%endif%} 
              {% if book.isbn in readBooks %}
-            <button onclick="onClickFunctionRead( book='{{ book.isbn }}');" id="clickRead" class="mybutton fixedWidth">✓ Read</button>
+            <button onclick="onClickFunctionRead( book='{{ book.isbn }}');" id="clickRead" class="btn btn-dark bdbutton">✓ Read</button>
             {% else %}
-            <button onclick="onClickFunctionRead( book='{{ book.isbn }}');" id="clickRead" class="mybutton fixedWidth">Read</button>
+            <button onclick="onClickFunctionRead( book='{{ book.isbn }}');" id="clickRead" class="btn btn-dark bdbutton">Read</button>
             {%endif%}
             {% endif %}
         </div>
@@ -61,18 +62,19 @@
 <div class="commentContainer"col-md-6 col-sm-12 > 
     <div class="commentDiv"col-md-6 col-sm-12 > 
         <div style="margin-bottom: 20px;">
-        <h1 style="padding-bottom: 0px; ">{{ book.comments.all.count }} Comments</h1>
+        <h3 style="padding-bottom: 0px;   ">{{ book.comments.all.count }} Comments</h3>
          </div>
         {% if user.is_authenticated %}
       <br>
       <form method="POST" action="" >
-          <img class="avatar avatar-sm mr-2" style="margin-bottom: 10px;" src="{{request.user.profileImg.url}}">
+          <img class="profileImg2"  src="{{request.user.profileImg.url}}">
           <b> {{ request.user.username }}</b>
           <!-- <time class="dateStyle">12.12.2020</time> -->
-          <div class="media-body">
+          <div style="padding:0;" >
               {% csrf_token %}
-              {{ form.as_p|safe }}
-          <button type="submit" class="mybutton">Post</button>
+              <textarea name="body" class="inputElement" id="body" rows="5" > </textarea><Br>
+          <button type="submit" class="btn btn-dark">Post</button>
+          </div>
       </form>
         {% else %}
         <div class="loginToC">
@@ -84,7 +86,7 @@
         {% endif %}
     
     </div>
-    </div>
+</div>
     
 
 <!-- <div class="commentcontainer" style="padding-top: 10px;padding-left: 70px; "> -->
@@ -95,7 +97,7 @@
     
         <div class="commentsBox ">
         <div class="njoftimi1">
-            <img class="avatar avatar-sm mr-2" style="margin-bottom: 10px;" src="{{comment.name.profileImg.url}}" alt="">
+            <img class="profileImg2" style="margin-bottom: 10px;" src="{{comment.name.profileImg.url}}" alt="">
            <b> {{ comment.name }}</b>
            <time class="dateStyle">{{ comment.date_added }}</time>
            {% if request.user == comment.name %}
@@ -153,7 +155,7 @@
     <div class=""col-md-6 col-sm-12 style="padding-left:40px;padding-top: 20px;">
         <div class="commentsBox ">
         <div class="njoftimi2">
-            <img class="avatar avatar-sm mr-2" style="margin-bottom: 10px;" src="{{comment.name.profileImg.url}}">
+            <img class="profileImg2" src="{{comment.name.profileImg.url}}">
            <b> {{ child_comment.name }}</b>
            <time class="dateStyle">{{ child_comment.date_added }}</time>
            {% if request.user == comment.name %}

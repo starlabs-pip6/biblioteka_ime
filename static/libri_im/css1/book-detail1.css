@@ -1,4 +1,105 @@
 .imgStyle{
-    margin:5% 5%;
+ 
     width:250px;
 }
+.book{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    padding:5%;
+}
+.textDiv{
+    margin-left:3%;
+}
+.rate {
+    float: left;
+    
+     
+  }
+  .rate:not(:checked) > input {
+    position: absolute;
+    top: -9999px;
+  }
+  .rate:not(:checked) > label {
+    float: right;
+    width: 1em;
+    overflow: hidden;
+    white-space: nowrap;
+    cursor: pointer;
+    font-size: 25px;
+    color: #ccc;
+  }
+  .rate:not(:checked) > label:before {
+    content: "★ ";
+  }
+  .rate > input:checked ~ label {
+    color: #ffc700;
+  }
+  .rate:not(:checked) > label:hover,
+  .rate:not(:checked) > label:hover ~ label {
+    color: #deb217;
+  }
+  .rate > input:checked + label:hover,
+  .rate > input:checked + label:hover ~ label,
+  .rate > input:checked ~ label:hover,
+  .rate > input:checked ~ label:hover ~ label,
+  .rate > label:hover ~ input:checked ~ label {
+    color: #c59b08;
+  }
+
+  .bdbutton{
+      margin-right:150px;
+      padding:10px 25px;
+  }
+  .profileImg2{ height: 100%;
+  width: 4%;
+  clip-path: circle(40% at center);
+  object-fit: cover;
+  object-position: 0 0%;
+margin-bottom:0;
+padding-bottom: 0;
+ }
+  .commentContainer{
+      margin-left:4.5%;
+  }
+.inputElement{
+    width: 30%;
+    padding: 8px 8px ;
+    background-color: transparent;
+    transition: transform 250ms ease-in-out;
+    font-size: 14px;
+    line-height: 18px;
+    color: black;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 32px 32px;
+    background-position: 95% center;
+    margin-top:0;
+    border: 1px solid black;
+    transition: all 250ms ease-in-out;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    
+}
+.inputElement::placeholder {
+    color: rgba(39, 38, 38, 0.8);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+.inputElement:hover,
+.inputElement:focus {
+    padding: 8px 8px;
+    outline: 0;
+    border: 1px solid transparent;
+    border-bottom: 1px solid black;
+    border-radius: 0;
+    background-position: 100% center;
+}
+
+.njoftimi1{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+ 
+}
+ 
