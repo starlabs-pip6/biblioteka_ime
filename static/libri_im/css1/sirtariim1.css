@@ -40,11 +40,9 @@
 }
 .njoftimet {
   scrollbar-width: auto;
-  scrollbar-color: #f3722c #000000;
-  border-radius: 20px 0 0 20px;
+  scrollbar-color: rgb(39, 39, 39);
   overflow: scroll;
   overflow-x: hidden;
-  flex: 1;
 }
 
 .njoftimet::-webkit-scrollbar {
@@ -57,22 +55,23 @@
 }
 
 .njoftimet::-webkit-scrollbar-thumb {
-  background-color: #f3722c;
+  background-color: rgb(39, 39, 39);
   border-radius: 10px;
   border: rgba(0, 0, 0, 0);
 }
 
 .njoftimi {
-  border: 2px solid #f3722c;
-  border-radius: 10px;
-  margin-bottom: 10px;
+  width: 90%;
+  border: 1px solid rgb(39, 39, 39);
+  border-radius: 3px;
+  margin:0px 10px 10px 10px ;
 }
 .njoftimicontent {
   margin: 10px;
-  font-size: 12px;
+  font-size: 15px;
 }
 .text {
-  color: black;
+  color: #212529;
 }
 
 .nrlibrave-container {
@@ -154,4 +153,12 @@
 #viewAllLink:hover{
   color:white;
   text-decoration: underline;
+}
+
+
+.centerNotifications {
+  display: flex;
+  flex-direction: column;
+ align-items: center;
+  margin-top: 20px;
 }

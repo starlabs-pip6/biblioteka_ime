@@ -244,3 +244,23 @@ class Event(models.Model):
     
     def endDate(self):
         return self.end_date.strftime('%Y/%m/%d')
+
+class Notification(models.Model):
+    user = models.ForeignKey(NewUser,related_name="ntfcUser", on_delete=models.CASCADE)
+    action = models.CharField(max_length=100, blank=False, null=False)
+    toBook = models.ForeignKey(Book, on_delete=models.CASCADE,null=True, blank=True)
+    toUser = models.ForeignKey(NewUser,related_name="ntfcToUser", on_delete=models.CASCADE, null=True, blank=True)
+    dateCreated = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return str(self.user) + " | " + str(self.action) + " | "+ str(self.toBook.titulli  or "") +" | " + str(self.toUser or "")
+    
+
+class Review(models.Model):
+    user = models.ForeignKey(NewUser, on_delete=models.CASCADE)
+    toBook = models.ForeignKey(Book, on_delete=models.CASCADE)
+    reviewScore = models.IntegerField(null=False, blank=False)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.user.username + " | " + self.toBook.titulli+" | "+ self.reviewScore
+    
