@@ -12,7 +12,7 @@ from rest_framework.decorators import api_view, renderer_classes
 from rest_framework.renderers import JSONRenderer, TemplateHTMLRenderer
 from rest_framework.response import Response
 from .serializers import LibratSerializer, UsersSerializer, SirtarSerializer, ProgressSerializer
-from .models import Book, Event, FriendList, FriendRequest, NewUser, Progress, Sirtar,Comment, Relation
+from .models import Book, Event, FriendList, FriendRequest, NewUser, Progress, Sirtar,Comment, Relation, Notification
 from .forms import NewCommentForm, RegistrationForm, UserAuthenticationForm, MyPasswordChangeForm
 from django.views.generic import (CreateView,
                                   ListView,
@@ -177,7 +177,20 @@ def home_view(request):
         
         dukelexuar = []
         wtrBooks = []
+        friends = []
+        notifications=[]
         
+        relations = Relation.objects.filter(Q(user1=current_user)| Q(user2=current_user)).filter(status=2)
+        for relation in relations:   
+            if relation.user1.username == current_user.username:
+                friends.append(relation.user2)
+            else:
+                friends.append(relation.user1)
+        
+        for friend in friends:
+            friendNotifications= Notification.objects.filter(user=friend)
+            for fN in friendNotifications:
+                notifications.append(fN)
         dlcount = Sirtar.objects.get(emri="Reading", id_user=current_user)
         '''Add Reading isbn-s of books to the dukelexuar array so we can use it as a variable in the home template'''
         for isbn in dlcount.books:
@@ -197,6 +210,8 @@ def home_view(request):
     else:
         dukelexuar = []
         wtrBooks = []
+        friends = []
+        notifications=[]
         dlcount = "no data"
         dtlcount = "no data"
         klcount = "no data"   # userR = users.reading
@@ -247,8 +262,10 @@ def home_view(request):
         'progressLibriTitulli': progressLibriTitulli,                   #The title of the current Progress Book
         'progressPercent': progressPercent,                             #The calculated percentage of the current Progress Book
         'progressBookImage': progressBookImage,                         #The cover image of the current Progress Book
+        'friends': friends,
+        'notifications': notifications
     }
-
+    print("notifications: " + str(notifications.__str__()))
     return render(request, 'libri_im/home.html', context)
 
 def findFriends(request):
@@ -1185,12 +1202,28 @@ def home1(request):
         
         dukelexuar = []
         wtrBooks = []
-        
+        friends = []
+        notifications=[]
+
+        allNotifications= Notification.objects.all().order_by("-dateCreated")
+        relations = Relation.objects.filter(Q(user1=current_user)| Q(user2=current_user)).filter(status=2)
+
+        for relation in relations:   
+            if relation.user1.username == current_user.username:
+                friends.append(relation.user2)
+            else:
+                friends.append(relation.user1)
+
+        for notification in allNotifications:
+            if notification.user in friends:
+                notifications.append(notification)
+
+
         dlcount = Sirtar.objects.get(emri="Reading", id_user=current_user)
         '''Add Reading isbn-s of books to the dukelexuar array so we can use it as a variable in the home template'''
         for isbn in dlcount.books:
             dukelexuar.append(Book.objects.get(isbn=isbn))
-      
+
         '''Add Want to read isbn-s of books to the wtrarray array so we can use it as a variable in the home template'''
         dtlcount = Sirtar.objects.get(
             emri="Want to read", id_user=current_user)
@@ -1205,6 +1238,8 @@ def home1(request):
     else:
         dukelexuar = []
         wtrBooks = []
+        friends = []
+        notifications=[]
         dlcount = "no data"
         dtlcount = "no data"
         klcount = "no data"   # userR = users.reading
@@ -1251,6 +1286,8 @@ def home1(request):
         'progressLibriTitulli': progressLibriTitulli,                   #The title of the current Progress Book
         'progressPercent': progressPercent,                             #The calculated percentage of the current Progress Book
         'progressBookImage': progressBookImage,                         #The cover image of the current Progress Book
+        'friends': friends,
+        'notifications': notifications
     }
 
     return render(request, 'libri_im1/home1.html',context)

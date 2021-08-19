@@ -1,6 +1,6 @@
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from six import text_type
-from .models import NewUser, Sirtar, Progress, Book, FriendRequest
+from .models import NewUser, Sirtar, Progress, Book, FriendRequest, Notification
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.utils.encoding import force_bytes, force_text, DjangoUnicodeDecodeError
@@ -89,9 +89,11 @@ def add_to_sirtar(emri, isbn, request):
     '''Add or remove isbn from requestSirtar'''
     if isbn not in requestSirtar.books:
         requestSirtar.books.append(isbn)
+        Notification.objects.create(user = request.user,action=emri,toBook=Book.objects.get(isbn=isbn)).save()
         requestSirtar.save(update_fields=['books'])   
     else:
         requestSirtar.books.remove(isbn)
+        Notification.objects.get(user = request.user,action=emri,toBook=Book.objects.get(isbn=isbn)).delete()
         requestSirtar.save(update_fields=['books'])    
     '''Remove isbn from other sirtars'''
     if emri == "Read":
