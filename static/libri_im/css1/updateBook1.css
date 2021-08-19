@@ -69,3 +69,13 @@
       margin-left:80px;
       margin-bottom:10px;
   }
+
+  .myprofile1 {
+    margin-top: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+ .styleButton{
+     margin-left:200px;
+ }
