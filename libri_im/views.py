@@ -617,7 +617,42 @@ class EditBook(UpdateView):
 
     def get_success_url(self):
         return reverse('admin_home1')
+class EventCreateView(CreateView):
+    model = Event
+    fields = ['name', 'start_date', 'end_date', 'nr_books','books']
 
+    def get_success_url(self):
+        return reverse('admin_home1')
+
+class EventListView(ListView):
+   
+    model = Event
+    template_name = 'backend1/event.html'
+    context_object_name = 'events'
+
+    def get_success_url(self):
+        return reverse('admin_home1')
+    ordering = ['-id']
+class EventDetailView(DetailView):
+    model = Event
+
+'''This class deletes a book, it redirects you to delete.html file and asks you 
+if you are sure that you want to delete this specific home. After you click yes or cancel
+it returns you to admin_home'''
+class EventDeleteView(DeleteView):
+    model = Event
+    success_url = '/'
+    template_name = 'backend1/deleteEvent1.html'
+
+    def get_success_url(self):
+        return reverse('admin_home1')
+class EditEvent(UpdateView):
+    model = Event
+    fields = ['name', 'start_date', 'end_date', 'nr_books','books']
+    template_name = 'libri_im1/backend1/edit_event.html'
+
+    def get_success_url(self):
+        return reverse('admin_home1')
 '''This is a class based view that shows to the user their data like Username, Email, Profile pic and registration date'''
 class ProfilePageView(DetailView):
     model = NewUser

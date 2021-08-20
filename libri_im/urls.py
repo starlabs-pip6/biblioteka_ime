@@ -2,7 +2,7 @@ from collections import namedtuple
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
-from .views import CommentEditView,CommentDeleteView,BookCreateView, BookListView, BookDetailView, BookDeleteView, EditBook, ProfilePageView, EditProfile, BookDV,AddCommentDislike,AddCommentLike,CommentReplyView,AddChildCommentDislike,AddChildCommentLike,ProfileDetailView, send_friend_request
+from .views import CommentEditView,CommentDeleteView,BookCreateView,EventCreateView, BookListView, BookDetailView, BookDeleteView, EditBook, ProfilePageView, EditProfile, BookDV,AddCommentDislike,AddCommentLike,CommentReplyView,AddChildCommentDislike,AddChildCommentLike,ProfileDetailView, send_friend_request
 
 
 urlpatterns = [
@@ -87,6 +87,8 @@ urlpatterns = [
      #delete a book - admin_home
     path('team6/backend/book/delete/<int:pk>/',
          BookDeleteView.as_view(template_name="backend/delete.html"), name='delete'),
+     path('team6/backend/event/create/',
+         EventCreateView.as_view(template_name="backend1/create_event.html"), name='createEvent'),     
      
     path('team6/profile/', ProfilePageView.as_view(template_name="libri_im/profile_page.html"),
          name="profile_page"),

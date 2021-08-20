@@ -1,0 +1,32 @@
+{% extends 'libri_im1/base1.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .padding{
+        :5% !important;
+    }
+</style>
+<link rel="stylesheet" type="text/css"  href="{% static 'libri_im/css1/updateBook1.css' %}">
+<div class="navBg"></div>
+{% if user.is_authenticated and user.is_admin %}
+<h1 style="text-align:center; margin-top:3%;">Add new event</h1>
+<div class="UpdateBookForm"> 
+<form method="POST"  class="updateBook">
+    {% csrf_token %}
+    <label for="name">Name</label>
+    <input type="text" name="name" class="updateInput padding" maxlength="100" required="" id="id_name">
+    <label for="name">Start date</label>
+    <input type="text" name="start_date" class="updateInput padding" required="" id="id_start_date">
+    <label for="name">End date</label>
+    <input type="text" name="end_date"class="updateInput padding"  required="" id="id_end_date">
+    <label for="name">Number of Books</label>
+    <input type="number" name="nr_books" class="updateInput padding" required="" id="id_nr_books">
+    <label for="name">Books</label>
+    <input type="text" name="books" class="updateInput padding" id="id_books">
+<button type="submit" class="btn btn-dark" style="margin-left:380px;">Add</button>
+
+</button>
+</form>
+</div>
+{% endif %}
+{% endblock %}
