@@ -13,10 +13,6 @@ pipeline {
                 sh 'python3 manage.py makemigrations libri_im'
                 sh 'python3 manage.py migrate'
                 sh 'python3 manage.py loaddata Booksdata.json'
-                sh 'python3 manage.py createsuperuser'
-                echo "admin@admin.com"
-                echo "admin"
-                echo "admin"
             }
         }
         stage('Deploy') {
