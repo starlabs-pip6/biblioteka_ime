@@ -8,7 +8,6 @@ Web platforme sociale per adhuruesit e leximit
 4. terminal: pip install -r requirements.txt
 5. terminal: python manage.py makemigrations libri_im
 6. terminal: python manage.py migrate
-7. terminal: python manage.py loaddata Booksdata.json
-8. terminal: python manage.py createsuperuser
-9. continue on terminal: fill the email, password and repeat password of the superuser 
-10. terminal: python manage.py runserver
+7. terminal: python manage.py loaddata Alldata.json
+8. continue on terminal: fill the email, password and repeat password of the superuser 
+9. terminal: python manage.py runserver
